@@ -16,9 +16,10 @@
   --green-dark: #2E5040;
   --white:      #FFFFFF;
 
-  --ff-display: 'Bebas Neue', sans-serif;
-  --ff-body:    'Space Grotesk', sans-serif;
-  --ff-serif:   'Playfair Display', serif;
+  --ff-display:   'Bebas Neue', sans-serif;
+  --ff-funtastic: 'Funtastic', 'Bebas Neue', sans-serif;
+  --ff-body:      'Space Grotesk', sans-serif;
+  --ff-serif:     'Playfair Display', serif;
 
   --ease-expo:   cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.83, 0, 0.17, 1);
@@ -118,7 +119,6 @@ button { cursor: none; }
   height: 80px;
   width: auto;
   filter: invert(1);
-  mix-blend-mode: screen;
   object-fit: contain;
 }
 .preloader__text {
@@ -354,7 +354,7 @@ button { cursor: none; }
 }
 .hero__line span {
   display: block;
-  font-family: var(--ff-display);
+  font-family: var(--ff-funtastic);
   font-size: clamp(5rem, 12vw, 10.5rem);
   letter-spacing: .02em;
   color: var(--cream);
@@ -379,18 +379,26 @@ button { cursor: none; }
   transform: translateX(40px);
 }
 .hero__logo-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 160px; height: 160px;
-  border: 1px solid rgba(245,240,232,.12);
-  border-radius: 50%;
+  position: relative;
+}
+/* Rust glow detrás del logo */
+.hero__logo-box::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(ellipse at center, rgba(212,82,26,.18) 0%, transparent 70%);
+  pointer-events: none;
 }
 .hero__logo-img {
-  width: 110px; height: 110px;
+  width: clamp(200px, 28vw, 320px);
+  height: auto;
   object-fit: contain;
-  filter: invert(1);
-  mix-blend-mode: screen;
+  filter: invert(1) drop-shadow(0 0 24px rgba(212,82,26,.35));
+  transition: filter .4s var(--ease-expo), transform .5s var(--ease-expo);
+}
+.hero__logo-img:hover {
+  filter: invert(1) drop-shadow(0 0 40px rgba(212,82,26,.6));
+  transform: scale(1.03);
 }
 .hero__logo-fallback {
   font-family: var(--ff-display);
@@ -489,7 +497,7 @@ button { cursor: none; }
 }
 .vibe-header { margin-bottom: 3rem; }
 .vibe-title {
-  font-family: var(--ff-display);
+  font-family: var(--ff-funtastic);
   font-size: clamp(4rem, 11vw, 9.5rem);
   line-height: .9;
   color: var(--black);
@@ -675,7 +683,7 @@ button { cursor: none; }
 
 .page-hero__content { position: relative; z-index: 2; }
 .page-hero__title {
-  font-family: var(--ff-display);
+  font-family: var(--ff-funtastic);
   font-size: clamp(4.5rem, 13vw, 11rem);
   line-height: .88;
   color: var(--cream);
@@ -1020,7 +1028,7 @@ button { cursor: none; }
   display: flex; flex-direction: column; justify-content: flex-end;
 }
 .nos-hero__title {
-  font-family: var(--ff-display);
+  font-family: var(--ff-funtastic);
   font-size: clamp(5rem, 12vw, 10rem);
   line-height: .88; color: var(--black); margin-bottom: 0;
 }
