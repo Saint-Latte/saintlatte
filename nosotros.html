@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Saint Latte — Nuestra historia, filosofía y por qué el café de especialidad importa.">
+  <title>Nosotros — Saint Latte</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-nosotros">
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__brand">
+      <img src="assets/images/logo.png" alt="Saint Latte" class="nav__logo-img" onerror="this.style.display='none'">
+      <span class="nav__brand-text">SAINT LATTE</span>
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="menu.html"      class="nav__link">MENÚ</a></li>
+      <li><a href="comunidad.html" class="nav__link">COMUNIDAD</a></li>
+      <li><a href="nosotros.html"  class="nav__link nav__link--active">NOSOTROS</a></li>
+    </ul>
+    <button class="nav__hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu__inner">
+      <ul class="mobile-menu__list" role="list">
+        <li><a href="menu.html"      class="mobile-link">MENÚ</a></li>
+        <li><a href="comunidad.html" class="mobile-link">COMUNIDAD</a></li>
+        <li><a href="nosotros.html"  class="mobile-link">NOSOTROS</a></li>
+      </ul>
+      <div class="mobile-menu__footer">
+        <a href="https://instagram.com" target="_blank" rel="noopener">IG</a>
+        <span>—</span><a href="#">TK</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- PAGE HERO — full bleed cream -->
+  <header class="nos-hero">
+    <div class="nos-hero__left">
+      <span class="section-label">03 — NUESTRA HISTORIA</span>
+      <h1 class="nos-hero__title">
+        CAFÉ<br>COMO<br><em>ARTE.</em>
+      </h1>
+    </div>
+    <div class="nos-hero__right">
+      <img
+        src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1000&auto=format&fit=crop&q=80"
+        alt="Saint Latte interior"
+        class="nos-hero__img"
+        loading="lazy"
+      >
+      <div class="nos-hero__img-tag">EST.<br>2024</div>
+    </div>
+  </header>
+
+  <!-- MARQUEE -->
+  <div class="marquee-band marquee-band--black" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">NUESTRA HISTORIA</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">FILOSOFÍA</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">SPECIALTY COFFEE</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">ORIGEN</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">COMUNIDAD</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">MONTERREY</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">NUESTRA HISTORIA</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">FILOSOFÍA</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">SPECIALTY COFFEE</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">ORIGEN</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">COMUNIDAD</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">MONTERREY</span><span class="marquee-sep">◆</span>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       MANIFESTO COMPLETO
+  ══════════════════════════════════════ -->
+  <section class="nos-manifesto">
+    <div class="nos-manifesto__inner">
+      <div class="nos-manifesto__pull">
+        <blockquote>
+          "El café de especialidad no es elitismo. Es el resultado del trabajo de agricultores,
+          tostadores y baristas que se toman su oficio en serio."
+        </blockquote>
+      </div>
+      <div class="nos-manifesto__body">
+        <p>
+          Saint Latte nació de una obsesión simple: encontrar un lugar en Monterrey donde
+          el café fuera tratado como merece. No como commodity, no como pretexto para cobrar
+          más — sino como lo que es: el resultado de meses de trabajo, cuidado y ciencia.
+        </p>
+        <p>
+          Empezamos con granos de especialidad porque creemos que la diferencia entre un
+          café ordinario y uno extraordinario está en el origen. Los granos que servimos
+          tienen historia, tienen nombre, tienen cara. Rotan constantemente porque queremos
+          que cada visita sea diferente.
+        </p>
+        <p>
+          Pero Saint Latte nunca iba a ser solo café. Desde el primer día supimos que
+          queríamos un espacio donde la gente pudiera quedarse. Trabajar, crear, platicar,
+          descansar. Sin presión de tiempo, sin consumo mínimo, sin actitud.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       VALORES — 3 columnas
+  ══════════════════════════════════════ -->
+  <section class="valores-section">
+    <div class="valores-header">
+      <span class="section-label">LO QUE NOS IMPORTA</span>
+    </div>
+    <div class="valores-grid">
+
+      <div class="valor-card">
+        <span class="valor-card__num" aria-hidden="true">01</span>
+        <h3 class="valor-card__title">EL ORIGEN</h3>
+        <p class="valor-card__body">
+          Sabemos de dónde viene cada grano que servimos. La altitud, el proceso,
+          las notas de cata. El café tiene terroir, igual que el vino.
+          Eso nos importa y por eso lo comunicamos.
+        </p>
+      </div>
+
+      <div class="valor-card">
+        <span class="valor-card__num" aria-hidden="true">02</span>
+        <h3 class="valor-card__title">EL ESPACIO</h3>
+        <p class="valor-card__body">
+          Diseñamos Saint Latte para que sea tuyo. Ven a trabajar,
+          a platicar, a no hacer nada. El espacio funciona para ti,
+          no al revés. Si necesitas más de una hora, quédate.
+        </p>
+      </div>
+
+      <div class="valor-card">
+        <span class="valor-card__num" aria-hidden="true">03</span>
+        <h3 class="valor-card__title">LA COMUNIDAD</h3>
+        <p class="valor-card__body">
+          Un café que no le devuelve algo a su comunidad no es suficiente.
+          Eventos, artistas locales, talleres — queremos que Saint Latte
+          sea parte del tejido cultural de Monterrey.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       SPECIALTY COFFEE — EXPLICADO
+  ══════════════════════════════════════ -->
+  <section class="specialty-explainer">
+    <div class="specialty-explainer__grid">
+      <div class="specialty-explainer__img-col">
+        <img
+          src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800&auto=format&fit=crop&q=80"
+          alt="Método de preparación"
+          loading="lazy"
+        >
+        <img
+          src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop&q=80"
+          alt="Latte art"
+          loading="lazy"
+          class="specialty-explainer__img2"
+        >
+      </div>
+      <div class="specialty-explainer__text">
+        <span class="section-label">¿QUÉ ES SPECIALTY COFFEE?</span>
+        <h2 class="specialty-explainer__title">
+          NO TODO<br>EL CAFÉ ES<br><em>IGUAL.</em>
+        </h2>
+        <p>
+          El café de especialidad es una categoría con estándares internacionales.
+          Para ser considerado "specialty", un café debe obtener una puntuación de
+          80 o más puntos en la escala de la SCA (Specialty Coffee Association).
+        </p>
+        <p>
+          Eso significa granos sin defectos, cultivados a altitudes específicas,
+          procesados con cuidado y catados por expertos. Es menos del 3% de la
+          producción mundial de café.
+        </p>
+        <p>
+          En Saint Latte servimos exclusivamente café de especialidad, preparado
+          por baristas que entienden cada método y cada grano. El precio que pagas
+          refleja ese trabajo — desde el agricultor hasta tu taza.
+        </p>
+        <a href="menu.html#specialty" class="btn btn--outline-dark">
+          VER MÉTODOS DE PREPARACIÓN →
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       UBICACIÓN Y HORARIOS
+  ══════════════════════════════════════ -->
+  <section class="nos-location">
+    <div class="nos-location__inner">
+      <div class="nos-location__info">
+        <span class="section-label" style="color:var(--rust)">ENCUÉNTRANOS</span>
+        <h2 class="nos-location__title">VEN A<br><em>VERNOS.</em></h2>
+
+        <div class="nos-loc-row">
+          <span class="nos-loc-label">DIRECCIÓN</span>
+          <span class="nos-loc-val">Monterrey, Nuevo León<br><em style="font-size:.8rem;opacity:.6">Dirección exacta próximamente</em></span>
+        </div>
+        <div class="nos-loc-row">
+          <span class="nos-loc-label">LUNES — VIERNES</span>
+          <span class="nos-loc-val">7:00 am — 9:00 pm</span>
+        </div>
+        <div class="nos-loc-row">
+          <span class="nos-loc-label">SÁBADO — DOMINGO</span>
+          <span class="nos-loc-val">8:00 am — 10:00 pm</span>
+        </div>
+        <div class="nos-loc-row">
+          <span class="nos-loc-label">INSTAGRAM</span>
+          <span class="nos-loc-val">
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="nos-loc-link">@saintlatte</a>
+          </span>
+        </div>
+
+        <div class="nos-loc-ctas">
+          <a href="https://maps.google.com" target="_blank" rel="noopener" class="btn btn--solid">
+            VER EN MAPA →
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="btn btn--outline">
+            INSTAGRAM →
+          </a>
+        </div>
+      </div>
+
+      <div class="nos-location__visual">
+        <div class="nos-map-placeholder">
+          <span class="nos-map-text">MONTERREY<br>NL</span>
+          <div class="nos-map-pin" aria-hidden="true">◉</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="assets/images/logo.png" alt="" class="footer__logo" onerror="this.style.display='none'">
+        <span class="footer__brand-name">SAINT LATTE</span>
+        <p class="footer__brand-sub">Specialty Coffee Shop · Monterrey, MX</p>
+      </div>
+      <nav class="footer__nav">
+        <a href="menu.html">MENÚ</a>
+        <a href="comunidad.html">COMUNIDAD</a>
+        <a href="nosotros.html">NOSOTROS</a>
+      </nav>
+      <div class="footer__social">
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="footer__social-link">INSTAGRAM</a>
+        <a href="#" class="footer__social-link">TIKTOK</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2024 SAINT LATTE.</span>
+      <span>HECHO CON ♥ EN MONTERREY</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -3,49 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Saint Latte — Specialty Coffee Shop en Monterrey. Granos de especialidad, pizzas artesanales y brunch.">
-  <title>Saint Latte — Specialty Coffee Shop</title>
-
-  <!-- Favicon -->
+  <meta name="description" content="Saint Latte — No somos solo una cafetería. Somos tu comunidad en Monterrey.">
+  <title>Saint Latte</title>
   <link rel="icon" type="image/png" href="assets/images/logo.png">
-
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
-
-  <!-- GSAP CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-
-  <!-- Lenis smooth scroll -->
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- ░░ GRAIN OVERLAY ░░ -->
+  <!-- ░░ PRELOADER ░░ -->
+  <div class="preloader" id="preloader">
+    <div class="preloader__top"></div>
+    <div class="preloader__bottom"></div>
+    <div class="preloader__logo">
+      <img src="assets/images/logo.png" alt="Saint Latte"
+           onerror="this.style.display='none'; document.getElementById('plText').style.display='block'">
+      <span id="plText" style="display:none" class="preloader__text">SAINT LATTE</span>
+    </div>
+  </div>
+
+  <!-- ░░ GRAIN ░░ -->
   <div class="grain" aria-hidden="true"></div>
 
-  <!-- ░░ CUSTOM CURSOR ░░ -->
+  <!-- ░░ CURSOR ░░ -->
   <div class="cursor" id="cursor" aria-hidden="true"></div>
   <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
 
-  <!-- ░░ NAVIGATION ░░ -->
+  <!-- ░░ NAV ░░ -->
   <nav class="nav" id="nav">
-    <a href="#hero" class="nav__brand">
+    <a href="index.html" class="nav__brand">
       <img src="assets/images/logo.png" alt="Saint Latte" class="nav__logo-img"
            onerror="this.style.display='none'">
       <span class="nav__brand-text">SAINT LATTE</span>
     </a>
-
     <ul class="nav__links" role="list">
-      <li><a href="#menu" class="nav__link">MENÚ</a></li>
-      <li><a href="#nosotros" class="nav__link">NOSOTROS</a></li>
-      <li><a href="#ubicacion" class="nav__link">UBICACIÓN</a></li>
+      <li><a href="menu.html"      class="nav__link">MENÚ</a></li>
+      <li><a href="comunidad.html" class="nav__link">COMUNIDAD</a></li>
+      <li><a href="nosotros.html"  class="nav__link">NOSOTROS</a></li>
     </ul>
-
     <button class="nav__hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
       <span class="hamburger__bar"></span>
       <span class="hamburger__bar"></span>
@@ -57,938 +57,273 @@
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
     <div class="mobile-menu__inner">
       <ul class="mobile-menu__list" role="list">
-        <li class="mobile-menu__item"><a href="#menu"      class="mobile-link">MENÚ</a></li>
-        <li class="mobile-menu__item"><a href="#nosotros"  class="mobile-link">NOSOTROS</a></li>
-        <li class="mobile-menu__item"><a href="#ubicacion" class="mobile-link">UBICACIÓN</a></li>
+        <li><a href="menu.html"      class="mobile-link">MENÚ</a></li>
+        <li><a href="comunidad.html" class="mobile-link">COMUNIDAD</a></li>
+        <li><a href="nosotros.html"  class="mobile-link">NOSOTROS</a></li>
       </ul>
       <div class="mobile-menu__footer">
-        <a href="https://instagram.com" target="_blank" rel="noopener" class="mobile-social">IG</a>
-        <span class="mobile-social-sep">—</span>
-        <a href="#" class="mobile-social">TK</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener">IG</a>
+        <span>—</span>
+        <a href="#">TK</a>
       </div>
     </div>
   </div>
 
-  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░
-       SECTION 01 — HERO
-  ░░░░░░░░░░░░░░░░░░░░░░░░ -->
+
+  <!-- ══════════════════════════════════════
+       HERO — MANIFESTO
+  ══════════════════════════════════════ -->
   <section class="hero" id="hero">
-    <!-- Radial glow -->
-    <div class="hero__glow" aria-hidden="true"></div>
+    <div class="hero__bg-num" aria-hidden="true">SL</div>
 
-    <!-- Background number -->
-    <span class="hero__bignumber" aria-hidden="true">01</span>
+    <div class="hero__split">
 
-    <div class="hero__content">
-
-      <!-- Eyebrow row -->
-      <div class="hero__eyebrow" id="heroEyebrow">
-        <span>MONTERREY, MX</span>
-        <span class="eyebrow-dot" aria-hidden="true">●</span>
-        <span>SPECIALTY COFFEE</span>
-        <span class="eyebrow-dot" aria-hidden="true">●</span>
-        <span>EST. 2024</span>
-      </div>
-
-      <!-- Logo -->
-      <div class="hero__logo-wrap" id="heroLogo">
-        <img
-          src="assets/images/logo.png"
-          alt="Saint Latte"
-          class="hero__logo-img"
-          onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='block'"
-        >
-        <div class="hero__logo-fallback" id="logoFallback">
-          <span class="logo-fallback-sl">SL</span>
+      <!-- LEFT — Typography manifesto -->
+      <div class="hero__left">
+        <div class="hero__line hero__line--1" id="hLine1">
+          <span>NO</span>
+        </div>
+        <div class="hero__line hero__line--2" id="hLine2">
+          <span>SOMOS</span>
+        </div>
+        <div class="hero__line hero__line--3" id="hLine3">
+          <em>solo una</em>
+        </div>
+        <div class="hero__line hero__line--4" id="hLine4">
+          <span>CAFÉ.</span>
         </div>
       </div>
 
-      <!-- Tagline -->
-      <div class="hero__tagline" id="heroTagline">
-        <span class="tag-bold">SPECIALTY</span>
-        <span class="tag-serif">coffee</span>
-        <span class="tag-bold">SHOP</span>
+      <!-- RIGHT — Logo + sub -->
+      <div class="hero__right" id="heroRight">
+        <div class="hero__logo-box">
+          <img src="assets/images/logo.png" alt="Saint Latte"
+               class="hero__logo-img"
+               onerror="this.style.display='none'; document.getElementById('heroLogoText').style.display='block'">
+          <span id="heroLogoText" class="hero__logo-fallback" style="display:none">SL</span>
+        </div>
+        <p class="hero__right-sub">SPECIALTY COFFEE SHOP<br>MONTERREY, MX</p>
+        <div class="hero__ctas">
+          <a href="menu.html"      class="btn btn--solid">VER MENÚ</a>
+          <a href="comunidad.html" class="btn btn--outline">COMUNIDAD</a>
+        </div>
       </div>
-
-      <!-- Sub line -->
-      <p class="hero__sub" id="heroSub">
-        Granos de especialidad · Pizzas artesanales · Brunch
-      </p>
-
-      <!-- CTA -->
-      <a href="#menu" class="hero__cta" id="heroCta">
-        <span>VER MENÚ COMPLETO</span>
-        <svg class="hero__cta-arrow" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-          <path d="M3.5 9H14.5M14.5 9L10 4.5M14.5 9L10 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
 
     </div>
 
     <!-- Scroll indicator -->
     <div class="hero__scroll" aria-hidden="true">
-      <span class="scroll-label">SCROLL</span>
+      <span>SCROLL</span>
       <div class="scroll-line"></div>
     </div>
   </section>
 
-  <!-- ░░ MARQUEE BAND 1 ░░ -->
+
+  <!-- ░░ MARQUEE 1 — RUST ░░ -->
   <div class="marquee-band marquee-band--rust" aria-hidden="true">
-    <div class="marquee-track" id="marqueeRust">
-      <span class="marquee-item">SAINT LATTE</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">SPECIALTY COFFEE</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">MONTERREY</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">GRANOS DE ESPECIALIDAD</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">PIZZAS ARTESANALES</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">BRUNCH</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">SMOOTHIES</span>
-      <span class="marquee-sep">◆</span>
-      <!-- Duplicate for seamless loop -->
-      <span class="marquee-item">SAINT LATTE</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">SPECIALTY COFFEE</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">MONTERREY</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">GRANOS DE ESPECIALIDAD</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">PIZZAS ARTESANALES</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">BRUNCH</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">SMOOTHIES</span>
-      <span class="marquee-sep">◆</span>
+    <div class="marquee-track">
+      <span class="marquee-item">SAINT LATTE</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">SPECIALTY COFFEE</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">MONTERREY</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">TU COMUNIDAD</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">GRANOS DE ESPECIALIDAD</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">PIZZAS ARTESANALES</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">BRUNCH</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">SAINT LATTE</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">SPECIALTY COFFEE</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">MONTERREY</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">TU COMUNIDAD</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">GRANOS DE ESPECIALIDAD</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">PIZZAS ARTESANALES</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">BRUNCH</span><span class="marquee-sep">◆</span>
     </div>
   </div>
 
 
-  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░
-       SECTION 02 — MENÚ
-  ░░░░░░░░░░░░░░░░░░░░░░░░ -->
-  <section class="section-menu" id="menu">
-    <div class="section-num" aria-hidden="true">02</div>
-
-    <!-- Section header -->
-    <div class="menu-header">
-      <span class="section-label">LO QUE SERVIMOS</span>
-      <h2 class="menu-title">
-        EL<br><em>MENÚ</em>
-      </h2>
+  <!-- ══════════════════════════════════════
+       ESTA SEMANA — 3 cards
+  ══════════════════════════════════════ -->
+  <section class="week-section">
+    <div class="week-header">
+      <span class="section-label">↓ ESTA SEMANA EN SAINT LATTE</span>
     </div>
+    <div class="week-grid">
 
-    <!-- Category tabs -->
-    <div class="menu-tabs" role="tablist" aria-label="Categorías del menú">
-      <button class="menu-tab menu-tab--active" role="tab" aria-selected="true"  data-cat="caliente">CAFÉ HOT</button>
-      <button class="menu-tab" role="tab" aria-selected="false" data-cat="frio">CAFÉ FRÍO</button>
-      <button class="menu-tab" role="tab" aria-selected="false" data-cat="nocoffee">SIN CAFÉ</button>
-      <button class="menu-tab" role="tab" aria-selected="false" data-cat="specialty">SPECIALTY</button>
-      <button class="menu-tab" role="tab" aria-selected="false" data-cat="pizza">PIZZA</button>
-      <button class="menu-tab" role="tab" aria-selected="false" data-cat="brunch">BRUNCH</button>
-      <button class="menu-tab" role="tab" aria-selected="false" data-cat="frappe">FRAPPÉ</button>
-      <button class="menu-tab" role="tab" aria-selected="false" data-cat="smoothie">SMOOTHIES</button>
-      <button class="menu-tab" role="tab" aria-selected="false" data-cat="tea">TEA</button>
-    </div>
-
-    <!-- Menu grid -->
-    <div class="menu-grid" id="menuGrid">
-
-      <!-- ── CAFÉ HOT ── -->
-      <div class="menu-card" data-cat="caliente">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">ESPRESSO</span>
-            <span class="menu-card__price">$20</span>
-          </div>
-          <p class="menu-card__desc">Concentrado puro · Carácter intenso</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="caliente">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">AMERICANO</span>
-            <span class="menu-card__price">$40</span>
-          </div>
-          <p class="menu-card__desc">Espresso + agua caliente · Suave y limpio</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="caliente">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">CAPUCCINO</span>
-            <span class="menu-card__price">$53</span>
-          </div>
-          <p class="menu-card__desc">Espresso + leche vaporizada + microespuma</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="caliente">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">LATTE</span>
-            <span class="menu-card__price">$58</span>
-          </div>
-          <p class="menu-card__desc">Espresso + leche vaporizada sedosa</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="caliente">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">MOCHA</span>
-            <span class="menu-card__price">$65</span>
-          </div>
-          <p class="menu-card__desc">Espresso + chocolate + leche vaporizada</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="caliente">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">CARAMEL MACCHIATO</span>
-            <span class="menu-card__price">$70</span>
-          </div>
-          <p class="menu-card__desc">Vainilla + leche + espresso + caramelo</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="caliente">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">FLAT WHITE</span>
-            <span class="menu-card__price">$70</span>
-          </div>
-          <p class="menu-card__desc">Doble espresso + leche microespuma</p>
-        </div>
+      <div class="week-card week-card--rust">
+        <span class="week-card__tag">GRANO DE LA SEMANA</span>
+        <p class="week-card__title">Ethiopia<br><em>Yirgacheffe</em></p>
+        <p class="week-card__body">Notas de bergamota, flor de cerezo y cítrico brillante. Procesado en lavado. Taza limpia con retrogusto largo.</p>
+        <a href="menu.html#specialty" class="week-card__link">VER MÉTODOS →</a>
       </div>
 
-      <!-- ── CAFÉ FRÍO ── -->
-      <div class="menu-card" data-cat="frio">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">ICED AMERICANO</span>
-            <span class="menu-card__price">$50</span>
-          </div>
-          <p class="menu-card__desc">Espresso sobre hielo · Refrescante</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="frio">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">ICED LATTE</span>
-            <span class="menu-card__price">$67</span>
-          </div>
-          <p class="menu-card__desc">Espresso + leche fría + hielo</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="frio">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">COLD BREW</span>
-            <span class="menu-card__price">$70</span>
-          </div>
-          <p class="menu-card__desc">Infusión en frío 12h · Suave y concentrado</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="frio">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">ICED MOCHA</span>
-            <span class="menu-card__price">$76</span>
-          </div>
-          <p class="menu-card__desc">Espresso + chocolate + leche fría</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="frio">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">ESPRESSO TONIC</span>
-            <span class="menu-card__price">$75</span>
-          </div>
-          <p class="menu-card__desc">Espresso sobre agua tónica · Cítrico y burbujante</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="frio">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">MAZAPÁN LATTE</span>
-            <span class="menu-card__price">$77</span>
-          </div>
-          <p class="menu-card__desc">Espresso + mazapán + leche fría</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="frio">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">ICED CARAMEL MACCHIATO</span>
-            <span class="menu-card__price">$79</span>
-          </div>
-          <p class="menu-card__desc">Vainilla + leche + espresso + caramelo + hielo</p>
-        </div>
+      <div class="week-card week-card--black">
+        <span class="week-card__tag">PRÓXIMO EVENTO</span>
+        <p class="week-card__title">Cupping<br><em>Abierto</em></p>
+        <p class="week-card__body">Ven a aprender a catar café con nosotros. Sin costo. Sábado 5PM. Cupo limitado — escríbenos para reservar tu lugar.</p>
+        <a href="comunidad.html" class="week-card__link">MÁS INFO →</a>
       </div>
 
-      <!-- ── SIN CAFÉ ── -->
-      <div class="menu-card" data-cat="nocoffee">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">MATCHA</span>
-            <span class="menu-card__price">$58</span>
-          </div>
-          <p class="menu-card__desc">Té verde en polvo ceremonial + leche</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="nocoffee">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">TARO</span>
-            <span class="menu-card__price">$58</span>
-          </div>
-          <p class="menu-card__desc">Raíz de taro + leche · Dulce y cremoso</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="nocoffee">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">CHOCOLATE</span>
-            <span class="menu-card__price">$58</span>
-          </div>
-          <p class="menu-card__desc">Chocolate artesanal + leche vaporizada</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="nocoffee">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">CHAI</span>
-            <span class="menu-card__price">$65</span>
-          </div>
-          <p class="menu-card__desc">Mix de especias + té negro + leche</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="nocoffee">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">GOLDEN MILK</span>
-            <span class="menu-card__price">$60</span>
-          </div>
-          <p class="menu-card__desc">Cúrcuma + jengibre + miel + leche caliente</p>
-        </div>
-      </div>
-      <div class="menu-card menu-card--highlight" data-cat="nocoffee">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">STRAWBERRY MATCHA LATTE</span>
-            <span class="menu-card__price">$75</span>
-          </div>
-          <p class="menu-card__desc">Matcha + fresa + leche fría · Layered</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="nocoffee">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">MARACUYÁ TONIC</span>
-            <span class="menu-card__price">$80</span>
-          </div>
-          <p class="menu-card__desc">Maracuyá + agua tónica + hielo · Tropical</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="nocoffee">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">MOJITO FRUTOS ROJOS</span>
-            <span class="menu-card__price">$80</span>
-          </div>
-          <p class="menu-card__desc">Frutos rojos + menta + limón + soda</p>
-        </div>
+      <div class="week-card week-card--green">
+        <span class="week-card__tag">EN ROTACIÓN</span>
+        <p class="week-card__title">Flower Boy<br><em>Tyler, The Creator</em></p>
+        <p class="week-card__body">Así suena Saint Latte esta semana. Ven a tomar tu latte con el soundtrack perfecto. Pídele a tu barista lo que sigue.</p>
+        <a href="comunidad.html#playlist" class="week-card__link">LA PLAYLIST →</a>
       </div>
 
-      <!-- ── SPECIALTY COFFEE ── -->
-      <div class="menu-card menu-card--specialty" data-cat="specialty">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">AEROPRESS</span>
-            <span class="menu-card__price">PRECIO DEL GRANO</span>
-          </div>
-          <p class="menu-card__desc">Preparación manual · Presión + inmersión · Limpio y concentrado</p>
-        </div>
-      </div>
-      <div class="menu-card menu-card--specialty" data-cat="specialty">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">V60</span>
-            <span class="menu-card__price">PRECIO DEL GRANO</span>
-          </div>
-          <p class="menu-card__desc">Pour over japonés · Vertido circular · Taza brillante y aromática</p>
-        </div>
-      </div>
-      <div class="menu-card menu-card--specialty" data-cat="specialty">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">CHEMEX</span>
-            <span class="menu-card__price">PRECIO DEL GRANO</span>
-          </div>
-          <p class="menu-card__desc">Filtro grueso · Cuerpo limpio · Dulzura natural</p>
-        </div>
-      </div>
-      <div class="menu-card menu-card--specialty" data-cat="specialty">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">FRENCH PRESS</span>
-            <span class="menu-card__price">PRECIO DEL GRANO</span>
-          </div>
-          <p class="menu-card__desc">Inmersión total · Cuerpo completo · Aceites naturales</p>
-        </div>
-      </div>
-      <div class="menu-card menu-card--specialty" data-cat="specialty">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">ORIGAMI</span>
-            <span class="menu-card__price">PRECIO DEL GRANO</span>
-          </div>
-          <p class="menu-card__desc">Dripper japonés de origami · Inmersión + goteo · Equilibrado</p>
-        </div>
-      </div>
-      <div class="menu-card menu-card--specialty" data-cat="specialty">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">JAPANESE SIPHON</span>
-            <span class="menu-card__price">PRECIO DEL GRANO</span>
-          </div>
-          <p class="menu-card__desc">Método de vacío · Teatro + ciencia · Experiencia única</p>
-        </div>
-      </div>
-      <div class="menu-card menu-card--specialty menu-card--note" data-cat="specialty">
-        <div class="menu-card__inner">
-          <p class="menu-card__note">Los granos de especialidad rotan constantemente. Pregunta a tu barista por el origen del día y el precio.</p>
-        </div>
-      </div>
-
-      <!-- ── PIZZA ── -->
-      <div class="menu-card" data-cat="pizza">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">DI' NAPOLI</span>
-            <span class="menu-card__price">$70</span>
-          </div>
-          <p class="menu-card__desc">Blend italiano · Mozzarella · Tomate cherry · Albahaca fresca</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="pizza">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">FIAMMA RÚSTICA</span>
-            <span class="menu-card__price">$70</span>
-          </div>
-          <p class="menu-card__desc">Blend rústico toscano · Mozzarella · Champiñones · Pepperoni</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="pizza">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">BOSCO FIORITO</span>
-            <span class="menu-card__price">$70</span>
-          </div>
-          <p class="menu-card__desc">Mozzarella · Champiñones · Cebolla morada · Tomate cherry · Albahaca</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="pizza">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">SERATA TOSCANA</span>
-            <span class="menu-card__price">$80</span>
-          </div>
-          <p class="menu-card__desc">Blend toscano · Mozzarella fresco · Jamón serrano · Espinaca</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="pizza">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">PEPPERONI</span>
-            <span class="menu-card__price">$90</span>
-          </div>
-          <p class="menu-card__desc">Mozzarella · Pomodoro · Pepperoni · Napolitana</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="pizza">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">MARGHERITA</span>
-            <span class="menu-card__price">$90</span>
-          </div>
-          <p class="menu-card__desc">Albahaca · Tomate · Mozzarella · Pomodoro · Clásica</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="pizza">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">DIAVOLA</span>
-            <span class="menu-card__price">$100</span>
-          </div>
-          <p class="menu-card__desc">Salami calabrés · Mozzarella · Pimiento · Cebolla · Picante</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="pizza">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">CARBONARA</span>
-            <span class="menu-card__price">$100</span>
-          </div>
-          <p class="menu-card__desc">Tocino · Salami · Cebolla · Aceitunas · Mozzarella</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="pizza">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">CUATRO ESTACIONES</span>
-            <span class="menu-card__price">$100</span>
-          </div>
-          <p class="menu-card__desc">Pepperoni · Tocino · Tomate · Aceituna · Mozzarella</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="pizza">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">CAPRICCIOSA</span>
-            <span class="menu-card__price">$110</span>
-          </div>
-          <p class="menu-card__desc">Salami · Tocino · Champiñón · Pimiento · Cebolla · Tomate · Mozzarella</p>
-        </div>
-      </div>
-      <div class="menu-card menu-card--highlight" data-cat="pizza">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">JAMÓN Y HONGOS</span>
-            <span class="menu-card__price">$130</span>
-          </div>
-          <p class="menu-card__desc">Jamón serrano · Champiñón · Tomate · Mozzarella</p>
-        </div>
-      </div>
-      <div class="menu-card menu-card--highlight" data-cat="pizza">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">MEDITERRÁNEA</span>
-            <span class="menu-card__price">$130</span>
-          </div>
-          <p class="menu-card__desc">Tomate · Aceituna · Jamón serrano · Mozzarella · Balsámico</p>
-        </div>
-      </div>
-
-      <!-- ── BRUNCH ── -->
-      <div class="menu-card" data-cat="brunch">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">SAINT-DWICH</span>
-            <span class="menu-card__price">$55</span>
-          </div>
-          <p class="menu-card__desc">Sandwich crujiente y dorado · Queso derretido</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="brunch">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">THE GOLDEN ONE</span>
-            <span class="menu-card__price">$80</span>
-          </div>
-          <p class="menu-card__desc">Croissant · Jamón de pavo · Queso fundido · Mix verduras · Aderezo de la casa</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="brunch">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">A-B-CIABATTA</span>
-            <span class="menu-card__price">$80</span>
-          </div>
-          <p class="menu-card__desc">Ciabatta · Jamón de pavo · Queso fundido · Vinagre balsámico</p>
-        </div>
-      </div>
-      <div class="menu-card menu-card--highlight" data-cat="brunch">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">SWEET &amp; SAVORY</span>
-            <span class="menu-card__price">$98</span>
-          </div>
-          <p class="menu-card__desc">Croissant · Jamón serrano · Queso crema · Pesto · Durazno fresco · Miel</p>
-        </div>
-      </div>
-      <div class="menu-card menu-card--highlight" data-cat="brunch">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">CIABATTASTY</span>
-            <span class="menu-card__price">$98</span>
-          </div>
-          <p class="menu-card__desc">Ciabatta · Jamón serrano · Queso crema · Aceitunas negras · Pesto · Balsámico</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="brunch">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">CHICKEN TOAST</span>
-            <span class="menu-card__price">$97</span>
-          </div>
-          <p class="menu-card__desc">Masa madre · Pollo a la plancha · Manchego · Aguacate · Lechuga · Tomate</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="brunch">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">TURKEY TOAST</span>
-            <span class="menu-card__price">$97</span>
-          </div>
-          <p class="menu-card__desc">Masa madre · Jamón de pavo · Manchego · Aguacate · Lechuga · Tomate</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="brunch">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">CAESAR SALAD</span>
-            <span class="menu-card__price">$90</span>
-          </div>
-          <p class="menu-card__desc">Lechuga italiana · Pollo a la plancha · César · Parmesano · Crutones</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="brunch">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">DEL HUERTO</span>
-            <span class="menu-card__price">$90</span>
-          </div>
-          <p class="menu-card__desc">Mezcla de lechugas · Pollo · Cebolla · Tomate · Aguacate · Aderezo de cilantro</p>
-        </div>
-      </div>
-
-      <!-- ── FRAPPÉ ── -->
-      <div class="menu-card" data-cat="frappe">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">CAPUCCINO</span>
-            <span class="menu-card__price">$75</span>
-          </div>
-          <p class="menu-card__desc">Frappé cremoso de capuccino · Intenso</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="frappe">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">MATCHA</span>
-            <span class="menu-card__price">$77</span>
-          </div>
-          <p class="menu-card__desc">Frappé de matcha · Ceremonial + cremoso</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="frappe">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">TARO</span>
-            <span class="menu-card__price">$77</span>
-          </div>
-          <p class="menu-card__desc">Frappé morado de taro · Dulce y único</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="frappe">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">CHOCOLATE</span>
-            <span class="menu-card__price">$77</span>
-          </div>
-          <p class="menu-card__desc">Frappé de chocolate · Indulgente</p>
-        </div>
-      </div>
-      <div class="menu-card menu-card--highlight" data-cat="frappe">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">MAZAPÁN</span>
-            <span class="menu-card__price">$85</span>
-          </div>
-          <p class="menu-card__desc">Frappé de mazapán · Dulce de México en tu vaso</p>
-        </div>
-      </div>
-      <div class="menu-card menu-card--highlight" data-cat="frappe">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">OREO</span>
-            <span class="menu-card__price">$85</span>
-          </div>
-          <p class="menu-card__desc">Frappé de Oreo + crema batida + galleta</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="frappe">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">MOCHA</span>
-            <span class="menu-card__price">$85</span>
-          </div>
-          <p class="menu-card__desc">Frappé de café + chocolate · Equilibrado</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="frappe">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">CHAI</span>
-            <span class="menu-card__price">$90</span>
-          </div>
-          <p class="menu-card__desc">Frappé de chai · Especiado y cremoso</p>
-        </div>
-      </div>
-
-      <!-- ── SMOOTHIES ── -->
-      <div class="menu-card" data-cat="smoothie">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">BERRIES</span>
-            <span class="menu-card__price">$75</span>
-          </div>
-          <p class="menu-card__desc">Mix de frutos rojos · Antioxidante</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="smoothie">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">STRAWBERRY</span>
-            <span class="menu-card__price">$75</span>
-          </div>
-          <p class="menu-card__desc">Fresa natural · Cremoso y frutal</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="smoothie">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">KIWI</span>
-            <span class="menu-card__price">$75</span>
-          </div>
-          <p class="menu-card__desc">Kiwi fresco · Verde y refrescante</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="smoothie">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">MANGO</span>
-            <span class="menu-card__price">$75</span>
-          </div>
-          <p class="menu-card__desc">Mango natural · Tropical y dulce</p>
-        </div>
-      </div>
-      <div class="menu-card menu-card--highlight" data-cat="smoothie">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">PIÑA COCO</span>
-            <span class="menu-card__price">$85</span>
-          </div>
-          <p class="menu-card__desc">Piña + coco · Vacaciones en vaso</p>
-        </div>
-      </div>
-
-      <!-- ── TEA & INFUSIONS ── -->
-      <div class="menu-card" data-cat="tea">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">ICED HERBAL TEA</span>
-            <span class="menu-card__price">$45</span>
-          </div>
-          <p class="menu-card__desc">Infusión helada de hierbas · Pregunta por el sabor de temporada</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="tea">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">ICED FRUIT TEA</span>
-            <span class="menu-card__price">$70</span>
-          </div>
-          <p class="menu-card__desc">Infusión de fruta helada · Sabores de temporada</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="tea">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">HOT HERBAL TEA</span>
-            <span class="menu-card__price">$40</span>
-          </div>
-          <p class="menu-card__desc">Infusión caliente de hierbas · Reconfortante</p>
-        </div>
-      </div>
-      <div class="menu-card" data-cat="tea">
-        <div class="menu-card__inner">
-          <div class="menu-card__header">
-            <span class="menu-card__name">HOT FRUIT TEA</span>
-            <span class="menu-card__price">$65</span>
-          </div>
-          <p class="menu-card__desc">Infusión caliente de fruta · Pregunta por sabores</p>
-        </div>
-      </div>
-
-    </div><!-- /menu-grid -->
-
-    <!-- Extras note -->
-    <div class="menu-extras">
-      <p class="menu-extras__title">EXTRAS</p>
-      <div class="menu-extras__list">
-        <span>Crema batida +$5</span>
-        <span>Leche deslactosada/light +$6</span>
-        <span>Tapioca +$10</span>
-        <span>Perlas explosivas +$10</span>
-        <span>Syrup 1883 +$9</span>
-        <span>Leche almendra/coco +$10</span>
-        <span>Shot extra de café +$10</span>
-      </div>
-      <p class="menu-extras__bakery">Pregunta a tu barista por lo que se horneó tempranito 🥐</p>
-    </div>
-
-  </section><!-- /section-menu -->
-
-
-  <!-- ░░ MARQUEE BAND 2 ░░ -->
-  <div class="marquee-band marquee-band--green" aria-hidden="true">
-    <div class="marquee-track marquee-track--reverse">
-      <span class="marquee-item">AEROPRESS</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">V60</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">CHEMEX</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">FRENCH PRESS</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">ORIGAMI</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">JAPANESE SIPHON</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">SPECIALTY BEANS</span>
-      <span class="marquee-sep">◆</span>
-      <!-- Duplicate -->
-      <span class="marquee-item">AEROPRESS</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">V60</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">CHEMEX</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">FRENCH PRESS</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">ORIGAMI</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">JAPANESE SIPHON</span>
-      <span class="marquee-sep">◆</span>
-      <span class="marquee-item">SPECIALTY BEANS</span>
-      <span class="marquee-sep">◆</span>
-    </div>
-  </div>
-
-
-  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░
-       SECTION 03 — NOSOTROS
-  ░░░░░░░░░░░░░░░░░░░░░░░░ -->
-  <section class="section-about" id="nosotros">
-    <div class="section-num" aria-hidden="true">03</div>
-
-    <div class="about-grid">
-      <div class="about-text">
-        <span class="section-label">NUESTRA HISTORIA</span>
-        <h2 class="about-title">
-          CAFÉ<br>
-          COMO<br>
-          <em>ARTE.</em>
-        </h2>
-        <p class="about-body">
-          Saint Latte nació de la obsesión por el buen café. Granos de especialidad
-          que cambian con las estaciones, baristas que se toman su trabajo en serio,
-          y un espacio donde puedes quedarte todo el día.
-        </p>
-        <p class="about-body">
-          No somos solo una cafetería. Somos tu ritual matutino, tu reunión de trabajo,
-          tu lugar para desconectarte.
-        </p>
-      </div>
-      <div class="about-visual">
-        <div class="about-img-wrap">
-          <img
-            src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&auto=format&fit=crop&q=80"
-            alt="Interior Saint Latte"
-            class="about-img"
-            loading="lazy"
-          >
-          <div class="about-img-tag">SPECIALTY<br>COFFEE</div>
-        </div>
-        <div class="about-stat">
-          <span class="about-stat__num">6+</span>
-          <span class="about-stat__label">MÉTODOS DE<br>PREPARACIÓN</span>
-        </div>
-      </div>
     </div>
   </section>
 
 
-  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░
-       SECTION 04 — GALERÍA VIBE
-  ░░░░░░░░░░░░░░░░░░░░░░░░ -->
-  <section class="section-gallery">
-    <div class="gallery-strip">
-      <div class="gallery-img-wrap">
+  <!-- ══════════════════════════════════════
+       COMMUNITY PHOTO GRID
+  ══════════════════════════════════════ -->
+  <section class="vibe-section">
+    <div class="vibe-header">
+      <span class="section-label" style="color:var(--rust)">LA VIBRA</span>
+      <h2 class="vibe-title">EL AMBIENTE<br><em>LO HACEN</em><br>USTEDES.</h2>
+    </div>
+    <div class="vibe-mosaic">
+      <div class="vibe-cell vibe-cell--tall">
         <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&auto=format&fit=crop&q=80" alt="Latte art" loading="lazy">
       </div>
-      <div class="gallery-img-wrap">
-        <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&auto=format&fit=crop&q=80" alt="Coffee brewing" loading="lazy">
+      <div class="vibe-cell">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&auto=format&fit=crop&q=80" alt="Coffee shop" loading="lazy">
       </div>
-      <div class="gallery-img-wrap">
+      <div class="vibe-cell">
         <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&auto=format&fit=crop&q=80" alt="Coffee beans" loading="lazy">
       </div>
-      <div class="gallery-img-wrap">
-        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&auto=format&fit=crop&q=80" alt="Cafe interior" loading="lazy">
+      <div class="vibe-cell vibe-cell--wide">
+        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=900&auto=format&fit=crop&q=80" alt="Cafe" loading="lazy">
+        <div class="vibe-cell__overlay">
+          <span>@saintlatte</span>
+        </div>
       </div>
-      <div class="gallery-img-wrap">
-        <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?w=600&auto=format&fit=crop&q=80" alt="Espresso" loading="lazy">
+      <div class="vibe-cell">
+        <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&auto=format&fit=crop&q=80" alt="Coffee" loading="lazy">
+      </div>
+    </div>
+    <div class="vibe-cta">
+      <a href="https://instagram.com" target="_blank" rel="noopener" class="btn btn--outline-dark">
+        SÍGUENOS EN IG — @SAINTLATTE
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ░░ MARQUEE 2 — CREAM ░░ -->
+  <div class="marquee-band marquee-band--cream" aria-hidden="true">
+    <div class="marquee-track marquee-track--reverse">
+      <span class="marquee-item">TODOS BIENVENIDOS</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">TRAE TU LAPTOP</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">TRAE TU CREW</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">TRAE TU SKETCHBOOK</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">TRAE TU ENERGÍA</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">O SOLO TRAE LO TUYO</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">TODOS BIENVENIDOS</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">TRAE TU LAPTOP</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">TRAE TU CREW</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">TRAE TU SKETCHBOOK</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">TRAE TU ENERGÍA</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">O SOLO TRAE LO TUYO</span><span class="marquee-sep">◆</span>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       MANIFESTO
+  ══════════════════════════════════════ -->
+  <section class="manifesto">
+    <div class="manifesto__grid">
+      <div class="manifesto__text">
+        <blockquote class="manifesto__quote">
+          "AQUÍ PUEDES<br>
+          QUEDARTE<br>
+          TODO EL DÍA."
+        </blockquote>
+        <p class="manifesto__body">
+          Saint Latte nació de la obsesión por el buen café y por tener un espacio
+          en Monterrey donde la gente pudiera ser ella misma. Si traes tu laptop,
+          tu sketchbook, tu crew o nada más tu energía, eres bienvenido.
+        </p>
+        <p class="manifesto__body">
+          El café de especialidad no es elitismo. Es el resultado del trabajo
+          de agricultores, tostadores y baristas que se toman su trabajo en serio.
+          Nosotros solo conectamos los puntos.
+        </p>
+        <a href="nosotros.html" class="btn btn--solid">NUESTRA HISTORIA →</a>
+      </div>
+      <div class="manifesto__visual">
+        <img
+          src="https://images.unsplash.com/photo-1498804103079-a6351b050096?w=800&auto=format&fit=crop&q=80"
+          alt="Espresso"
+          class="manifesto__img"
+          loading="lazy"
+        >
+        <div class="manifesto__img-badge">
+          <span class="badge-num">2024</span>
+          <span class="badge-label">MONTERREY</span>
+        </div>
       </div>
     </div>
   </section>
 
 
-  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░
-       SECTION 05 — UBICACIÓN
-  ░░░░░░░░░░░░░░░░░░░░░░░░ -->
-  <section class="section-location" id="ubicacion">
-    <div class="section-num" aria-hidden="true">05</div>
+  <!-- ══════════════════════════════════════
+       PAGE NAVIGATION CARDS
+  ══════════════════════════════════════ -->
+  <section class="page-nav-section">
+    <div class="page-nav-label">
+      <span class="section-label">EXPLORA</span>
+    </div>
+    <div class="page-nav-grid">
 
-    <div class="location-grid">
-      <div class="location-info">
-        <span class="section-label">ENCUÉNTRANOS</span>
-        <h2 class="location-title">VEN A<br><em>VERNOS</em></h2>
+      <a href="menu.html" class="page-nav-card page-nav-card--dark">
+        <div class="page-nav-card__num">01</div>
+        <div class="page-nav-card__content">
+          <span class="page-nav-card__tag">CAFÉ · PIZZA · BRUNCH</span>
+          <h3 class="page-nav-card__title">EL<br>MENÚ</h3>
+          <p class="page-nav-card__sub">Bebidas calientes y frías, métodos de especialidad, pizzas artesanales, brunch y smoothies.</p>
+        </div>
+        <span class="page-nav-card__arrow">→</span>
+      </a>
 
-        <div class="location-detail">
-          <span class="location-detail__label">DIRECCIÓN</span>
-          <span class="location-detail__val">Monterrey, Nuevo León</span>
+      <a href="comunidad.html" class="page-nav-card page-nav-card--rust">
+        <div class="page-nav-card__num">02</div>
+        <div class="page-nav-card__content">
+          <span class="page-nav-card__tag">EVENTOS · ARTISTAS · VIBES</span>
+          <h3 class="page-nav-card__title">LA<br>COMUNIDAD</h3>
+          <p class="page-nav-card__sub">Agenda, grano de la semana, artistas en residencia y todo lo que está pasando.</p>
         </div>
-        <div class="location-detail">
-          <span class="location-detail__label">HORARIO</span>
-          <span class="location-detail__val">Lun–Vie: 7am – 9pm<br>Sáb–Dom: 8am – 10pm</span>
-        </div>
-        <div class="location-detail">
-          <span class="location-detail__label">CONTACTO</span>
-          <span class="location-detail__val">
-            <a href="https://instagram.com" target="_blank" rel="noopener" class="location-link">@saintlatte</a>
-          </span>
-        </div>
-      </div>
+        <span class="page-nav-card__arrow">→</span>
+      </a>
 
-      <div class="location-map-wrap">
-        <div class="location-map-placeholder">
-          <span>MAPA<br>PRÓXIMAMENTE</span>
+      <a href="nosotros.html" class="page-nav-card page-nav-card--cream">
+        <div class="page-nav-card__num">03</div>
+        <div class="page-nav-card__content">
+          <span class="page-nav-card__tag">HISTORIA · FILOSOFÍA</span>
+          <h3 class="page-nav-card__title">NOSOTROS</h3>
+          <p class="page-nav-card__sub">Por qué existimos, cómo seleccionamos nuestros granos y qué nos importa de verdad.</p>
         </div>
-      </div>
+        <span class="page-nav-card__arrow">→</span>
+      </a>
+
     </div>
   </section>
 
 
-  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░
-       FOOTER
-  ░░░░░░░░░░░░░░░░░░░░░░░░ -->
+  <!-- ░░ FOOTER ░░ -->
   <footer class="footer">
     <div class="footer__top">
       <div class="footer__brand">
         <img src="assets/images/logo.png" alt="Saint Latte" class="footer__logo"
              onerror="this.style.display='none'">
         <span class="footer__brand-name">SAINT LATTE</span>
-        <p class="footer__brand-sub">Specialty Coffee Shop · Monterrey</p>
+        <p class="footer__brand-sub">Specialty Coffee Shop · Monterrey, MX</p>
       </div>
-      <nav class="footer__nav" aria-label="Footer navigation">
-        <a href="#menu">MENÚ</a>
-        <a href="#nosotros">NOSOTROS</a>
-        <a href="#ubicacion">UBICACIÓN</a>
+      <nav class="footer__nav" aria-label="Footer">
+        <a href="menu.html">MENÚ</a>
+        <a href="comunidad.html">COMUNIDAD</a>
+        <a href="nosotros.html">NOSOTROS</a>
       </nav>
       <div class="footer__social">
         <a href="https://instagram.com" target="_blank" rel="noopener" class="footer__social-link">INSTAGRAM</a>

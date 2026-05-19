@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Saint Latte Comunidad — Eventos, artistas, el grano de la semana y todo lo que está pasando en Monterrey.">
+  <title>Comunidad — Saint Latte</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-comunidad">
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__brand">
+      <img src="assets/images/logo.png" alt="Saint Latte" class="nav__logo-img" onerror="this.style.display='none'">
+      <span class="nav__brand-text">SAINT LATTE</span>
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="menu.html"      class="nav__link">MENÚ</a></li>
+      <li><a href="comunidad.html" class="nav__link nav__link--active">COMUNIDAD</a></li>
+      <li><a href="nosotros.html"  class="nav__link">NOSOTROS</a></li>
+    </ul>
+    <button class="nav__hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu__inner">
+      <ul class="mobile-menu__list" role="list">
+        <li><a href="menu.html"      class="mobile-link">MENÚ</a></li>
+        <li><a href="comunidad.html" class="mobile-link">COMUNIDAD</a></li>
+        <li><a href="nosotros.html"  class="mobile-link">NOSOTROS</a></li>
+      </ul>
+      <div class="mobile-menu__footer">
+        <a href="https://instagram.com" target="_blank" rel="noopener">IG</a>
+        <span>—</span><a href="#">TK</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       HERO — COMUNIDAD
+  ══════════════════════════════════════ -->
+  <header class="page-hero page-hero--rust">
+    <div class="page-hero__content">
+      <span class="section-label" style="color:rgba(245,240,232,.6)">02 — LA COMUNIDAD</span>
+      <h1 class="page-hero__title" style="color:var(--cream)">
+        ESTE<br>LUGAR<br><em style="color:var(--black)">ES TUYO.</em>
+      </h1>
+      <p class="page-hero__sub" style="color:rgba(245,240,232,.7)">
+        Eventos · Artistas · El grano · La playlist
+      </p>
+    </div>
+    <div class="page-hero__bg-num" style="color:rgba(0,0,0,.06)" aria-hidden="true">COM</div>
+  </header>
+
+  <!-- MARQUEE -->
+  <div class="marquee-band marquee-band--black" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">TODOS BIENVENIDOS</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">TRAE TU CREW</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">CUPPING ABIERTO</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">ARTISTAS LOCALES</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">GRANOS DE ORIGEN</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">EVENTOS CADA SEMANA</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">TODOS BIENVENIDOS</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">TRAE TU CREW</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">CUPPING ABIERTO</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">ARTISTAS LOCALES</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">GRANOS DE ORIGEN</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">EVENTOS CADA SEMANA</span><span class="marquee-sep">◆</span>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       AGENDA — UPCOMING EVENTS
+  ══════════════════════════════════════ -->
+  <section class="agenda-section">
+    <div class="agenda-header">
+      <span class="section-label">↓ AGENDA</span>
+      <h2 class="agenda-title">QUÉ<br><em>VIENE</em></h2>
+    </div>
+
+    <div class="agenda-list">
+
+      <article class="agenda-item agenda-item--featured">
+        <div class="agenda-item__date">
+          <span class="date-day">SAB</span>
+          <span class="date-num">25</span>
+          <span class="date-month">ENE</span>
+        </div>
+        <div class="agenda-item__info">
+          <span class="agenda-item__tag">COFFEE EXPERIENCE</span>
+          <h3 class="agenda-item__title">Cupping Abierto</h3>
+          <p class="agenda-item__body">
+            Aprende a catar café de especialidad con nosotros. Sin experiencia necesaria.
+            Vamos a probar 3 orígenes diferentes y platicaremos sobre sus notas,
+            proceso y la gente detrás de cada grano. Cupo limitado a 15 personas.
+          </p>
+          <div class="agenda-item__meta">
+            <span>5:00 PM</span>
+            <span>·</span>
+            <span>SIN COSTO</span>
+            <span>·</span>
+            <span>CUPO LIMITADO</span>
+          </div>
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="btn btn--solid">
+            RESERVAR VÍA IG →
+          </a>
+        </div>
+        <div class="agenda-item__img">
+          <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&auto=format&fit=crop&q=80" alt="Cupping" loading="lazy">
+        </div>
+      </article>
+
+      <article class="agenda-item">
+        <div class="agenda-item__date">
+          <span class="date-day">VIE</span>
+          <span class="date-num">31</span>
+          <span class="date-month">ENE</span>
+        </div>
+        <div class="agenda-item__info">
+          <span class="agenda-item__tag">ARTE + MÚSICA</span>
+          <h3 class="agenda-item__title">Viernes de Artistas</h3>
+          <p class="agenda-item__body">
+            Música en vivo, obras de artistas locales en exhibición y el ambiente
+            de Saint Latte de noche. Abierto a todos. Trae tu mejor mood.
+          </p>
+          <div class="agenda-item__meta">
+            <span>7:00 PM — 10:00 PM</span>
+            <span>·</span>
+            <span>ENTRADA LIBRE</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="agenda-item">
+        <div class="agenda-item__date">
+          <span class="date-day">SAB</span>
+          <span class="date-num">08</span>
+          <span class="date-month">FEB</span>
+        </div>
+        <div class="agenda-item__info">
+          <span class="agenda-item__tag">WORKSHOP</span>
+          <h3 class="agenda-item__title">Latte Art para Principiantes</h3>
+          <p class="menu-card__body">
+            Aprende las bases del latte art con nuestros baristas. Desde la
+            textura de la leche hasta el primer corazón. Materiales incluidos.
+          </p>
+          <div class="agenda-item__meta">
+            <span>11:00 AM</span>
+            <span>·</span>
+            <span>$150 POR PERSONA</span>
+            <span>·</span>
+            <span>CUPO: 8</span>
+          </div>
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="btn btn--outline">
+            INFO EN IG →
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       GRANO DE LA SEMANA
+  ══════════════════════════════════════ -->
+  <section class="bean-section" id="grano">
+    <div class="bean-grid">
+      <div class="bean-visual">
+        <img
+          src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=800&auto=format&fit=crop&q=80"
+          alt="Granos de café de especialidad"
+          class="bean-img"
+          loading="lazy"
+        >
+        <div class="bean-origin-tag">ETHIOPIA</div>
+      </div>
+      <div class="bean-info">
+        <span class="section-label">GRANO DE LA SEMANA</span>
+        <h2 class="bean-title">Ethiopia<br><em>Yirgacheffe</em></h2>
+        <div class="bean-details">
+          <div class="bean-detail">
+            <span class="bean-detail__label">ORIGEN</span>
+            <span class="bean-detail__val">Zona Yirgacheffe, Etiopía</span>
+          </div>
+          <div class="bean-detail">
+            <span class="bean-detail__label">PROCESO</span>
+            <span class="bean-detail__val">Lavado</span>
+          </div>
+          <div class="bean-detail">
+            <span class="bean-detail__label">ALTITUD</span>
+            <span class="bean-detail__val">1,700 – 2,200 msnm</span>
+          </div>
+          <div class="bean-detail">
+            <span class="bean-detail__label">NOTAS DE CATA</span>
+            <span class="bean-detail__val">Bergamota · Flor de cerezo · Limón amarillo</span>
+          </div>
+          <div class="bean-detail">
+            <span class="bean-detail__label">CUERPO</span>
+            <span class="bean-detail__val">Ligero · Taza muy limpia · Retrogusto largo</span>
+          </div>
+        </div>
+        <p class="bean-story">
+          Yirgacheffe es considerada la cuna del café. Las plantas crecen silvestres entre
+          sombra de árboles nativos. El resultado es una taza con una complejidad floral
+          única que ninguna otra región del mundo puede replicar.
+        </p>
+        <a href="menu.html#specialty" class="btn btn--solid">
+          VER MÉTODOS DE PREPARACIÓN →
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       ARTISTA EN RESIDENCIA
+  ══════════════════════════════════════ -->
+  <section class="artist-section">
+    <div class="artist-header">
+      <span class="section-label">ARTISTA DEL MES</span>
+      <h2 class="artist-title">EL ARTE<br><em>VIVE</em><br>AQUÍ.</h2>
+    </div>
+    <div class="artist-grid">
+      <div class="artist-card artist-card--main">
+        <div class="artist-card__img-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1515405295579-ba7b45403062?w=800&auto=format&fit=crop&q=80"
+            alt="Arte en Saint Latte"
+            loading="lazy"
+          >
+        </div>
+        <div class="artist-card__info">
+          <span class="artist-card__tag">ENERO 2025</span>
+          <h3 class="artist-card__name">Artista Local</h3>
+          <p class="artist-card__bio">
+            Cada mes exhibimos el trabajo de un artista de Monterrey en nuestras paredes.
+            Si eres artista y quieres mostrar tu trabajo, escríbenos.
+          </p>
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="btn btn--outline">
+            CONTACTA EN IG →
+          </a>
+        </div>
+      </div>
+      <div class="artist-cta-card">
+        <span class="artist-cta-card__num" aria-hidden="true">?</span>
+        <h3 class="artist-cta-card__title">¿ERES<br>ARTISTA?</h3>
+        <p class="artist-cta-card__body">
+          Nuestras paredes siempre están abiertas para artistas locales de Monterrey.
+          Pintura, fotografía, ilustración, escultura — si tiene arte, tiene lugar aquí.
+        </p>
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="btn btn--solid">
+          ESCRÍBENOS →
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ░░ MARQUEE 2 ░░ -->
+  <div class="marquee-band marquee-band--green" aria-hidden="true">
+    <div class="marquee-track marquee-track--reverse">
+      <span class="marquee-item">FLOWER BOY</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">IGOR</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">CALL ME IF YOU GET LOST</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">GRADUATION</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">MY BEAUTIFUL DARK TWISTED FANTASY</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">THE COLLEGE DROPOUT</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">FLOWER BOY</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">IGOR</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">CALL ME IF YOU GET LOST</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">GRADUATION</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">MY BEAUTIFUL DARK TWISTED FANTASY</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">THE COLLEGE DROPOUT</span><span class="marquee-sep">◆</span>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       LA PLAYLIST
+  ══════════════════════════════════════ -->
+  <section class="playlist-section" id="playlist">
+    <div class="playlist-grid">
+      <div class="playlist-text">
+        <span class="section-label" style="color:var(--rust)">EN ROTACIÓN</span>
+        <h2 class="playlist-title">EL<br>SOUNDTRACK<br><em>DE SAINT LATTE.</em></h2>
+        <p class="playlist-body">
+          La música que suena aquí no es random. Cada semana armamos una selección
+          que va con el grano, con el clima y con el mood del lugar. Tyler, Kanye,
+          Frank Ocean, Sade, Mac Miller — lo que se siente bien.
+        </p>
+        <p class="playlist-body">
+          Esta semana: <strong>Flower Boy — Tyler, The Creator.</strong>
+        </p>
+        <a href="https://open.spotify.com" target="_blank" rel="noopener" class="btn btn--solid">
+          ESCUCHAR EN SPOTIFY →
+        </a>
+      </div>
+      <div class="playlist-visual">
+        <div class="playlist-album">
+          <img
+            src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&auto=format&fit=crop&q=80"
+            alt="Playlist vibes"
+            loading="lazy"
+            class="playlist-album__img"
+          >
+          <div class="playlist-album__overlay">
+            <span class="playlist-album__icon">▶</span>
+            <span class="playlist-album__label">REPRODUCIR</span>
+          </div>
+        </div>
+        <div class="playlist-tracks">
+          <div class="playlist-track">
+            <span class="track-num">01</span>
+            <span class="track-name">See You Again</span>
+            <span class="track-artist">Tyler, The Creator</span>
+          </div>
+          <div class="playlist-track">
+            <span class="track-num">02</span>
+            <span class="track-name">Redbone</span>
+            <span class="track-artist">Childish Gambino</span>
+          </div>
+          <div class="playlist-track">
+            <span class="track-num">03</span>
+            <span class="track-name">Runaway</span>
+            <span class="track-artist">Kanye West</span>
+          </div>
+          <div class="playlist-track">
+            <span class="track-num">04</span>
+            <span class="track-name">Pink + White</span>
+            <span class="track-artist">Frank Ocean</span>
+          </div>
+          <div class="playlist-track">
+            <span class="track-num">05</span>
+            <span class="track-name">Small Worlds</span>
+            <span class="track-artist">Mac Miller</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       COMPARTE TU VIBE
+  ══════════════════════════════════════ -->
+  <section class="share-section">
+    <div class="share-inner">
+      <span class="section-label">ÚNETE</span>
+      <h2 class="share-title">
+        COMPARTE<br><em>TU VIBE</em>
+      </h2>
+      <p class="share-body">
+        Etiquétanos en Instagram con <strong>@saintlatte</strong> o usa el hashtag
+        <strong>#SaintLatte</strong> y tu foto puede aparecer aquí.
+        Esta página es tan nuestra como tuya.
+      </p>
+      <div class="share-grid">
+        <div class="share-img-slot">
+          <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&auto=format&fit=crop&q=80" alt="" loading="lazy">
+        </div>
+        <div class="share-img-slot">
+          <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?w=400&auto=format&fit=crop&q=80" alt="" loading="lazy">
+        </div>
+        <div class="share-img-slot">
+          <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&auto=format&fit=crop&q=80" alt="" loading="lazy">
+        </div>
+        <div class="share-img-slot share-img-slot--cta">
+          <a href="https://instagram.com" target="_blank" rel="noopener">
+            <span class="share-slot-plus">+</span>
+            <span>TU FOTO<br>AQUÍ</span>
+          </a>
+        </div>
+      </div>
+      <a href="https://instagram.com" target="_blank" rel="noopener" class="btn btn--outline-dark">
+        IR A INSTAGRAM →
+      </a>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="assets/images/logo.png" alt="" class="footer__logo" onerror="this.style.display='none'">
+        <span class="footer__brand-name">SAINT LATTE</span>
+        <p class="footer__brand-sub">Specialty Coffee Shop · Monterrey, MX</p>
+      </div>
+      <nav class="footer__nav">
+        <a href="menu.html">MENÚ</a>
+        <a href="comunidad.html">COMUNIDAD</a>
+        <a href="nosotros.html">NOSOTROS</a>
+      </nav>
+      <div class="footer__social">
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="footer__social-link">INSTAGRAM</a>
+        <a href="#" class="footer__social-link">TIKTOK</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2024 SAINT LATTE.</span>
+      <span>HECHO CON ♥ EN MONTERREY</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
