@@ -117,7 +117,8 @@ button { cursor: none; }
 .preloader__logo img {
   height: 80px;
   width: auto;
-  filter: brightness(0) invert(1);
+  filter: invert(1);
+  mix-blend-mode: screen;
   object-fit: contain;
 }
 .preloader__text {
@@ -181,7 +182,7 @@ button { cursor: none; }
 }
 
 .nav__brand { display: flex; align-items: center; gap: .6rem; }
-.nav__logo-img { height: 30px; width: auto; filter: brightness(0) invert(1); object-fit: contain; }
+.nav__logo-img { height: 30px; width: auto; filter: invert(1); mix-blend-mode: screen; object-fit: contain; }
 .nav__brand-text {
   font-family: var(--ff-display);
   font-size: 1.1rem;
@@ -290,7 +291,7 @@ button { cursor: none; }
   align-items: start;
   padding: 4rem 2.5rem 3rem;
 }
-.footer__logo { height: 38px; width: auto; filter: brightness(0) invert(1); margin-bottom: .75rem; object-fit: contain; }
+.footer__logo { height: 38px; width: auto; filter: invert(1); mix-blend-mode: screen; margin-bottom: .75rem; object-fit: contain; }
 .footer__brand-name { display: block; font-family: var(--ff-display); font-size: 1.15rem; letter-spacing: .18em; }
 .footer__brand-sub  { font-size: .7rem; letter-spacing: .12em; color: rgba(245,240,232,.35); margin-top: .3rem; }
 .footer__nav  { display: flex; flex-direction: column; gap: .85rem; }
@@ -388,7 +389,8 @@ button { cursor: none; }
 .hero__logo-img {
   width: 110px; height: 110px;
   object-fit: contain;
-  filter: brightness(0) invert(1);
+  filter: invert(1);
+  mix-blend-mode: screen;
 }
 .hero__logo-fallback {
   font-family: var(--ff-display);
@@ -707,6 +709,13 @@ button { cursor: none; }
    ============================================== */
 .page-menu { background: var(--cream); color: var(--black); }
 .page-menu .grain { opacity: .025; }
+/* Nav siempre oscuro en páginas con fondo claro */
+.page-menu .nav,
+.page-nosotros .nav {
+  background: rgba(10,10,10,.95);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(245,240,232,.07);
+}
 
 .bakery-note {
   display: flex;
