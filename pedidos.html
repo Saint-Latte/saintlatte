@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Saint Latte — Haz tu pedido en línea y recógelo en tu sucursal favorita. Valle de Santiago, Gto.">
+  <meta name="description" content="Saint Latte — Haz tu pedido en línea y recógelo en tu sucursal. Valle de Santiago, Gto.">
   <title>Pedidos — Saint Latte</title>
   <link rel="icon" type="image/png" href="assets/images/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,9 +11,174 @@
   <link href="https://fonts.cdnfonts.com/css/funtastic" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <!-- Alpine.js for reactivity -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ── Pedidos page extras ── */
+    .page-pedidos { background: var(--black); }
+
+    /* Step chips */
+    .order-steps { display:flex; gap:0; border-bottom:1px solid rgba(245,240,232,.07); }
+    .order-step-tab {
+      flex:1; padding:.9rem .5rem;
+      font-size:.6rem; font-weight:700; letter-spacing:.18em;
+      color:rgba(245,240,232,.35); background:none; border:none;
+      border-bottom:2px solid transparent; cursor:pointer; transition:all .2s;
+      text-align:center;
+    }
+    .order-step-tab.done { color:var(--green); }
+    .order-step-tab.active { color:var(--cream); border-bottom-color:var(--rust); }
+
+    /* Category tabs */
+    .cat-scroll {
+      display:flex; overflow-x:auto; gap:0;
+      border-bottom:1px solid rgba(245,240,232,.07);
+      scrollbar-width:none; position:sticky; top:72px; z-index:40;
+      background:var(--black);
+    }
+    .cat-scroll::-webkit-scrollbar { display:none; }
+    .cat-btn {
+      flex-shrink:0; padding:.7rem 1.1rem;
+      font-size:.6rem; font-weight:700; letter-spacing:.15em; white-space:nowrap;
+      color:rgba(245,240,232,.4); background:none; border:none;
+      border-bottom:2px solid transparent; cursor:pointer; transition:all .2s;
+    }
+    .cat-btn.on { color:var(--cream); border-bottom-color:var(--rust); }
+
+    /* Item grid */
+    .items-section { padding:1.2rem 2.5rem 2rem; max-width:1300px; }
+    @media(max-width:768px) { .items-section { padding:.8rem 1.2rem 1.5rem; } }
+    .items-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+      gap:1px;
+    }
+    .item-card {
+      background:var(--black-mid); border:1px solid rgba(245,240,232,.06);
+      padding:1rem 1.1rem;
+      display:flex; align-items:center; justify-content:space-between; gap:1rem;
+      transition:border-color .2s;
+    }
+    .item-card:hover { border-color:rgba(245,240,232,.18); }
+    .item-card.in-cart { border-color:rgba(212,82,26,.35); background:rgba(212,82,26,.05); }
+    .item-card__info { min-width:0; flex:1; }
+    .item-card__name { font-size:.85rem; font-weight:600; color:var(--cream); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .item-card__price { font-size:.72rem; color:var(--rust); margin-top:.15rem; }
+    .item-card__ctrl { display:flex; align-items:center; gap:.4rem; flex-shrink:0; }
+    .qty-btn {
+      width:28px; height:28px;
+      background:rgba(255,255,255,.06); border:1px solid rgba(245,240,232,.12);
+      color:var(--cream); font-size:1rem; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:background .15s;
+    }
+    .qty-btn:hover { background:rgba(255,255,255,.15); }
+    .qty-btn.plus { background:rgba(212,82,26,.2); border-color:rgba(212,82,26,.4); }
+    .qty-btn.plus:hover { background:rgba(212,82,26,.45); }
+    .qty-num { font-size:.82rem; font-weight:700; min-width:18px; text-align:center; color:var(--cream); }
+
+    /* Cart bar */
+    .cart-bar {
+      position:fixed; bottom:0; left:0; right:0; z-index:100;
+      padding-bottom:env(safe-area-inset-bottom, 0);
+    }
+    .cart-bar-btn {
+      display:flex; align-items:center; gap:.8rem;
+      background:var(--rust); border:none; width:100%;
+      padding:1rem 1.5rem; cursor:pointer; transition:background .2s;
+    }
+    .cart-bar-btn:hover { background:var(--rust-dark); }
+    .cart-cnt { font-size:.62rem; font-weight:700; letter-spacing:.12em; background:rgba(0,0,0,.25); padding:.2rem .55rem; border-radius:20px; color:var(--cream); }
+    .cart-lbl { font-size:.8rem; font-weight:700; letter-spacing:.08em; color:var(--cream); }
+    .cart-total { margin-left:auto; font-family:var(--ff-display); font-size:1.2rem; letter-spacing:.04em; color:var(--cream); }
+
+    /* Cart overlay + sheet */
+    .cart-overlay { position:fixed; inset:0; background:rgba(0,0,0,.65); z-index:200; }
+    .cart-sheet {
+      position:fixed; bottom:0; left:0; right:0; z-index:210;
+      background:var(--black-mid); border-top:1px solid rgba(245,240,232,.1);
+      max-height:80vh; display:flex; flex-direction:column;
+      padding-bottom:env(safe-area-inset-bottom, 0);
+    }
+    .cart-sheet-head {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:.9rem 1.2rem; border-bottom:1px solid rgba(245,240,232,.07);
+      flex-shrink:0;
+    }
+    .cart-sheet-title { font-family:var(--ff-display); font-size:1.2rem; letter-spacing:.06em; color:var(--cream); }
+    .cart-sheet-body { overflow-y:auto; flex:1; }
+    .cart-row {
+      display:flex; align-items:center; gap:.8rem;
+      padding:.7rem 1.2rem; border-bottom:1px solid rgba(245,240,232,.04);
+    }
+    .cart-row__name { flex:1; font-size:.85rem; font-weight:600; color:var(--cream); }
+    .cart-row__price { font-size:.8rem; color:var(--rust); white-space:nowrap; }
+    .cart-row__ctrl { display:flex; align-items:center; gap:.35rem; }
+    .cart-sheet-foot {
+      padding:.9rem 1.2rem; border-top:1px solid rgba(245,240,232,.07);
+      display:flex; flex-direction:column; gap:.8rem; flex-shrink:0;
+    }
+    .cart-total-row { display:flex; justify-content:space-between; align-items:baseline; }
+    .total-lbl { font-size:.6rem; font-weight:700; letter-spacing:.2em; color:rgba(245,240,232,.4); }
+    .total-val { font-family:var(--ff-display); font-size:2rem; letter-spacing:.03em; color:var(--cream); }
+
+    /* Data form (step 2) */
+    .data-form { max-width:820px; padding:2.5rem 2.5rem; }
+    @media(max-width:768px) { .data-form { padding:1.5rem 1.2rem; } }
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem; }
+    @media(max-width:600px) { .form-grid { grid-template-columns:1fr; } }
+
+    /* Branch cards */
+    .branch-cards { display:flex; flex-direction:column; gap:1px; margin-bottom:1.5rem; }
+    .branch-card {
+      display:grid; grid-template-columns:28px 1fr; gap:1rem; align-items:center;
+      padding:1rem 1.2rem; background:var(--black-mid);
+      border:1px solid rgba(245,240,232,.07); cursor:pointer; transition:all .2s;
+    }
+    .branch-card:hover { border-color:rgba(245,240,232,.2); }
+    .branch-card.selected { border-color:rgba(212,82,26,.4); background:rgba(212,82,26,.06); }
+    .branch-radio {
+      width:18px; height:18px; border:1.5px solid rgba(245,240,232,.3);
+      border-radius:2px; display:flex; align-items:center; justify-content:center;
+      transition:all .2s; flex-shrink:0;
+    }
+    .branch-card.selected .branch-radio { background:var(--rust); border-color:var(--rust); }
+    .branch-radio-dot { font-size:.6rem; color:var(--cream); opacity:0; transition:opacity .15s; }
+    .branch-card.selected .branch-radio-dot { opacity:1; }
+    .branch-name { font-size:.85rem; font-weight:600; color:var(--cream); letter-spacing:.03em; }
+    .branch-addr { font-size:.72rem; color:rgba(245,240,232,.4); margin-top:.1rem; }
+    .branch-card.selected .branch-name { color:var(--rust); }
+
+    /* Cart summary in step 2 */
+    .order-summary {
+      background:rgba(245,240,232,.04); border:1px solid rgba(245,240,232,.08);
+      padding:1rem 1.2rem; margin-bottom:1.5rem;
+    }
+    .summary-title { font-size:.58rem; font-weight:700; letter-spacing:.2em; color:var(--rust); margin-bottom:.8rem; }
+    .summary-item { display:flex; justify-content:space-between; font-size:.82rem; color:rgba(245,240,232,.6); padding:.25rem 0; }
+    .summary-item strong { color:var(--cream); }
+    .summary-total { display:flex; justify-content:space-between; font-size:.88rem; font-weight:700; color:var(--cream); padding-top:.6rem; border-top:1px solid rgba(245,240,232,.08); margin-top:.4rem; }
+    .summary-edit { font-size:.6rem; color:var(--rust); letter-spacing:.12em; cursor:pointer; text-decoration:underline; }
+
+    /* Send button area */
+    .send-area { display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; }
+    .send-note { font-size:.75rem; color:rgba(245,240,232,.35); max-width:32ch; line-height:1.65; }
+    .send-btn { font-size:.85rem; padding:1rem 2.5rem; white-space:nowrap; }
+
+    /* Empty cart state */
+    .empty-cart { text-align:center; padding:4rem 2rem; color:rgba(245,240,232,.35); }
+    .empty-cart__icon { font-size:2.5rem; margin-bottom:.8rem; }
+    .empty-cart__txt { font-size:.85rem; line-height:1.7; }
+
+    /* Validation error */
+    .v-err {
+      padding:.7rem 1rem; background:rgba(212,82,26,.15); border:1px solid rgba(212,82,26,.4);
+      color:var(--rust); font-size:.78rem; letter-spacing:.06em; margin-bottom:1rem;
+    }
+  </style>
 </head>
 <body class="page-pedidos">
 
@@ -56,144 +221,206 @@
   </div>
 
 
-  <!-- HERO -->
-  <header class="order-hero">
-    <div class="order-hero__inner">
-      <span class="section-label">HECHO A TU GUSTO</span>
-      <h1 class="order-hero__title">HAZ TU<br><em>PEDIDO.</em></h1>
-      <p class="order-hero__sub">
-        Llena el formulario, elige tu sucursal y te mandamos un mensaje por WhatsApp
-        para confirmar. Listo para recoger cuando tú digas.
-      </p>
+  <!-- ══ ALPINE APP ══ -->
+  <div x-data="orderApp()" x-cloak>
+
+    <!-- Step tabs -->
+    <div class="order-steps" style="max-width:1300px;margin:0 auto;padding:0 2.5rem">
+      <button :class="['order-step-tab', step===1?'active':(cart.length?'done':'')]" @click="step=1">
+        01 — ELIGE TU PEDIDO
+      </button>
+      <button
+        :class="['order-step-tab', step===2?'active':'', cart.length&&step!==1?'':'']"
+        @click="cart.length && (step=2)"
+        :disabled="!cart.length"
+        style="transition:all .2s"
+      >
+        02 — TUS DATOS &amp; ENVIAR
+      </button>
     </div>
-    <div class="order-hero__numbers">
-      <div class="order-num-card">
-        <span class="order-num-card__label">SUC. LEANDRO VALLE</span>
-        <a href="https://wa.me/524561560813" target="_blank" rel="noopener" class="order-num-card__num">456 156 0813</a>
+
+
+    <!-- ══════ STEP 1: MENU ══════ -->
+    <div x-show="step===1">
+
+      <!-- Category tabs -->
+      <div class="cat-scroll">
+        <template x-for="cat in categories" :key="cat.id">
+          <button
+            :class="['cat-btn', activeCat===cat.id?'on':'']"
+            @click="activeCat=cat.id"
+            x-text="cat.name"
+          ></button>
+        </template>
       </div>
-      <div class="order-num-card">
-        <span class="order-num-card__label">SUC. JARRÓN AZUL</span>
-        <a href="https://wa.me/524561862343" target="_blank" rel="noopener" class="order-num-card__num">456 186 2343</a>
-      </div>
-      <div class="order-num-card">
-        <span class="order-num-card__label">PEDIDOS ESPECIALES</span>
-        <a href="https://wa.me/524645796026" target="_blank" rel="noopener" class="order-num-card__num">464 579 6026</a>
-        <span class="order-num-card__hint">Panadería, café en grano, catering</span>
-      </div>
-    </div>
-  </header>
 
-
-  <!-- FORM -->
-  <section class="order-section">
-    <div class="order-section__inner">
-
-      <form class="order-form" id="orderForm" novalidate>
-
-        <!-- SUCURSAL -->
-        <fieldset class="order-fieldset">
-          <legend class="order-legend">
-            <span class="order-step">01</span>
-            ¿Dónde recoges?
-          </legend>
-          <div class="order-radios">
-
-            <label class="order-radio" for="suc1">
-              <input type="radio" name="branch" id="suc1" value="suc1" checked>
-              <span class="order-radio__box">
-                <span class="order-radio__check" aria-hidden="true">◆</span>
-              </span>
-              <span class="order-radio__content">
-                <strong>Leandro Valle 43</strong>
-                <span>Centro · Valle de Santiago, Gto.</span>
-              </span>
-            </label>
-
-            <label class="order-radio" for="suc2">
-              <input type="radio" name="branch" id="suc2" value="suc2">
-              <span class="order-radio__box">
-                <span class="order-radio__check" aria-hidden="true">◆</span>
-              </span>
-              <span class="order-radio__content">
-                <strong>Clavel #2 — Jarrón Azul</strong>
-                <span>Valle de Santiago, Gto.</span>
-              </span>
-            </label>
-
-            <label class="order-radio" for="especial">
-              <input type="radio" name="branch" id="especial" value="especial">
-              <span class="order-radio__box">
-                <span class="order-radio__check" aria-hidden="true">◆</span>
-              </span>
-              <span class="order-radio__content">
-                <strong>Pedido Especial</strong>
-                <span>Panadería, café en grano, catering</span>
-              </span>
-            </label>
-
-          </div>
-        </fieldset>
-
-        <!-- DATOS -->
-        <fieldset class="order-fieldset">
-          <legend class="order-legend">
-            <span class="order-step">02</span>
-            Tus datos
-          </legend>
-          <div class="order-fields-row">
-            <div class="order-field">
-              <label class="order-field__label" for="orderName">NOMBRE</label>
-              <input class="order-field__input" type="text" id="orderName" name="name"
-                     placeholder="¿Cómo te llamamos?" autocomplete="given-name" required>
+      <!-- Items grid -->
+      <div class="items-section">
+        <div class="items-grid">
+          <template x-for="item in visibleItems()" :key="item.id">
+            <div :class="['item-card', qty(item.id)>0?'in-cart':'']">
+              <div class="item-card__info">
+                <div class="item-card__name" x-text="item.name"></div>
+                <div class="item-card__price" x-text="item.price ? '$' + item.price : 'PRECIO SEGÚN GRANO'"></div>
+              </div>
+              <div class="item-card__ctrl">
+                <template x-if="qty(item.id)>0">
+                  <button class="qty-btn" @click="remove(item)" aria-label="Quitar uno">−</button>
+                </template>
+                <template x-if="qty(item.id)>0">
+                  <span class="qty-num" x-text="qty(item.id)"></span>
+                </template>
+                <button class="qty-btn plus" @click="add(item)" aria-label="Agregar">+</button>
+              </div>
             </div>
-            <div class="order-field">
-              <label class="order-field__label" for="orderPhone">TELÉFONO</label>
-              <input class="order-field__input" type="tel" id="orderPhone" name="phone"
-                     placeholder="Para confirmarte" autocomplete="tel">
+          </template>
+        </div>
+      </div>
+
+      <!-- Cart bar -->
+      <template x-if="cart.length>0">
+        <div class="cart-bar">
+          <button class="cart-bar-btn" @click="sheetOpen=true">
+            <span class="cart-cnt" x-text="totalQty() + ' ITEMS'"></span>
+            <span class="cart-lbl">VER ORDEN</span>
+            <span class="cart-total" x-text="'$' + totalAmt()"></span>
+          </button>
+        </div>
+      </template>
+
+      <!-- Cart overlay -->
+      <template x-if="sheetOpen">
+        <div class="cart-overlay" @click="sheetOpen=false"></div>
+      </template>
+
+      <!-- Cart sheet -->
+      <template x-if="sheetOpen">
+        <div class="cart-sheet">
+          <div class="cart-sheet-head">
+            <span class="cart-sheet-title">TU ORDEN</span>
+            <button class="btn btn--outline-dark" style="font-size:.65rem;padding:.4rem .9rem" @click="sheetOpen=false">CERRAR</button>
+          </div>
+          <div class="cart-sheet-body">
+            <template x-for="(item,idx) in cart" :key="idx">
+              <div class="cart-row">
+                <span class="cart-row__name" x-text="item.name"></span>
+                <div class="cart-row__ctrl">
+                  <button class="qty-btn" @click="cartDec(idx)">−</button>
+                  <span class="qty-num" x-text="item.qty"></span>
+                  <button class="qty-btn plus" @click="cartInc(idx)">+</button>
+                </div>
+                <span class="cart-row__price" x-text="item.price ? '$' + (item.price * item.qty).toFixed(2) : '–'"></span>
+              </div>
+            </template>
+          </div>
+          <div class="cart-sheet-foot">
+            <div class="cart-total-row">
+              <span class="total-lbl">TOTAL ESTIMADO</span>
+              <span class="total-val" x-text="'$' + totalAmt()"></span>
+            </div>
+            <div style="display:flex;gap:.6rem">
+              <button class="btn btn--outline" @click="clearCart()" style="font-size:.72rem">LIMPIAR</button>
+              <button class="btn btn--solid" @click="sheetOpen=false; step=2" style="flex:1;font-size:.8rem">
+                CONTINUAR →
+              </button>
             </div>
           </div>
-        </fieldset>
+        </div>
+      </template>
 
-        <!-- PEDIDO -->
-        <fieldset class="order-fieldset">
-          <legend class="order-legend">
-            <span class="order-step">03</span>
-            Tu pedido
-          </legend>
+    </div><!-- /step 1 -->
+
+
+    <!-- ══════ STEP 2: DATOS + ENVÍO ══════ -->
+    <div x-show="step===2" style="padding-bottom:4rem">
+      <div class="data-form">
+
+        <!-- Order summary -->
+        <div class="order-summary">
+          <div class="summary-title">TU PEDIDO</div>
+          <template x-for="item in cart" :key="item.id">
+            <div class="summary-item">
+              <span x-text="item.qty + 'x ' + item.name"></span>
+              <span x-text="item.price ? '$' + (item.price * item.qty).toFixed(2) : '–'"></span>
+            </div>
+          </template>
+          <div class="summary-total">
+            <span>TOTAL</span>
+            <span x-text="'$' + totalAmt()"></span>
+          </div>
+          <div style="margin-top:.8rem">
+            <span class="summary-edit" @click="step=1">← modificar pedido</span>
+          </div>
+        </div>
+
+        <!-- Branch selection -->
+        <div class="order-legend" style="margin-bottom:1.2rem">
+          <span class="order-step" style="font-family:var(--ff-body);font-size:.6rem;font-weight:700;letter-spacing:.2em;color:var(--rust);background:rgba(212,82,26,.12);border:1px solid rgba(212,82,26,.3);padding:.25rem .6rem;border-radius:2px">01</span>
+          <span style="font-family:var(--ff-display);font-size:1.4rem;letter-spacing:.06em">¿Dónde recoges?</span>
+        </div>
+
+        <div class="branch-cards">
+          <label class="branch-card" :class="branch==='suc1'?'selected':''" @click="branch='suc1'">
+            <div class="branch-radio"><span class="branch-radio-dot">◆</span></div>
+            <div>
+              <div class="branch-name">Leandro Valle 43 — Centro</div>
+              <div class="branch-addr">Valle de Santiago, Gto. · 456 156 0813</div>
+            </div>
+          </label>
+          <label class="branch-card" :class="branch==='suc2'?'selected':''" @click="branch='suc2'">
+            <div class="branch-radio"><span class="branch-radio-dot">◆</span></div>
+            <div>
+              <div class="branch-name">Clavel #2 — Jarrón Azul</div>
+              <div class="branch-addr">Valle de Santiago, Gto. · 456 186 2343</div>
+            </div>
+          </label>
+          <label class="branch-card" :class="branch==='especial'?'selected':''" @click="branch='especial'">
+            <div class="branch-radio"><span class="branch-radio-dot">◆</span></div>
+            <div>
+              <div class="branch-name">Pedido Especial</div>
+              <div class="branch-addr">Panadería, café en grano, catering · 464 579 6026</div>
+            </div>
+          </label>
+        </div>
+
+        <!-- Name + phone -->
+        <div class="order-legend" style="margin-bottom:1.2rem;margin-top:1.8rem">
+          <span class="order-step" style="font-family:var(--ff-body);font-size:.6rem;font-weight:700;letter-spacing:.2em;color:var(--rust);background:rgba(212,82,26,.12);border:1px solid rgba(212,82,26,.3);padding:.25rem .6rem;border-radius:2px">02</span>
+          <span style="font-family:var(--ff-display);font-size:1.4rem;letter-spacing:.06em">Tus datos</span>
+        </div>
+
+        <div class="form-grid">
           <div class="order-field">
-            <label class="order-field__label" for="orderDetails">
-              ¿QUÉ TE LLEVÁS?
-              <a href="menu.html" class="order-field__link" target="_blank">ver menú →</a>
-            </label>
-            <textarea class="order-field__input order-field__textarea" id="orderDetails"
-                      name="details" rows="6"
-                      placeholder="Ej: 1 latte de vainilla, 1 V60 Ethiopia, 2 croissants de mantequilla..." required></textarea>
+            <label class="order-field__label">NOMBRE</label>
+            <input class="order-field__input" type="text" x-model="name" placeholder="¿Cómo te llamamos?" autocomplete="given-name">
           </div>
           <div class="order-field">
-            <label class="order-field__label" for="orderNotes">NOTAS ADICIONALES <span style="opacity:.4">(opcional)</span></label>
-            <input class="order-field__input" type="text" id="orderNotes" name="notes"
-                   placeholder="Alergias, personalización, hora de recogida...">
+            <label class="order-field__label">TELÉFONO <span style="opacity:.4">(opcional)</span></label>
+            <input class="order-field__input" type="tel" x-model="phone" placeholder="Para confirmarte" autocomplete="tel">
           </div>
-        </fieldset>
+        </div>
 
-        <!-- SUBMIT -->
-        <div class="order-submit-row">
-          <p class="order-submit-note">
-            Al dar clic se abrirá WhatsApp con tu pedido listo. Solo da enviar y listo.
-          </p>
-          <button type="submit" class="btn btn--solid order-submit-btn" id="submitBtn">
+        <!-- Notes -->
+        <div class="order-field" style="margin-bottom:1.5rem">
+          <label class="order-field__label">NOTAS ADICIONALES <span style="opacity:.4">(alergias, personalización, hora...)</span></label>
+          <input class="order-field__input" type="text" x-model="notes" placeholder="Ej: sin azúcar, para las 3pm...">
+        </div>
+
+        <!-- Error -->
+        <div class="v-err" x-show="showErr">Por favor ingresa tu nombre para continuar.</div>
+
+        <!-- Send -->
+        <div class="send-area">
+          <p class="send-note">Al dar clic se abrirá WhatsApp con tu pedido listo. Solo da enviar.</p>
+          <button class="btn btn--solid send-btn" @click="send()">
             ENVIAR POR WHATSAPP →
           </button>
         </div>
 
-        <div class="order-error" id="orderError" aria-live="polite" hidden>
-          Por favor llena los campos requeridos: nombre y pedido.
-        </div>
+      </div>
+    </div><!-- /step 2 -->
 
-      </form>
-
-    </div>
-  </section>
+  </div><!-- /x-data -->
 
 
   <!-- FOOTER -->
@@ -222,45 +449,160 @@
   </footer>
 
   <script src="main.js"></script>
+
   <script>
-    document.getElementById('orderForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+  function orderApp() {
+    return {
+      step: 1,
+      activeCat: 'hot',
+      cart: [],
+      sheetOpen: false,
+      branch: 'suc1',
+      name: '',
+      phone: '',
+      notes: '',
+      showErr: false,
 
-      const name    = document.getElementById('orderName').value.trim();
-      const phone   = document.getElementById('orderPhone').value.trim();
-      const details = document.getElementById('orderDetails').value.trim();
-      const notes   = document.getElementById('orderNotes').value.trim();
-      const branch  = document.querySelector('input[name="branch"]:checked').value;
-      const errEl   = document.getElementById('orderError');
+      categories: [
+        { id:'hot',       name:'☕ CAFÉ CALIENTE' },
+        { id:'iced',      name:'🧊 CAFÉ FRÍO' },
+        { id:'noncoffee', name:'🍵 SIN CAFÉ' },
+        { id:'specialty', name:'✦ SPECIALTY' },
+        { id:'pizza',     name:'🍕 PIZZA' },
+        { id:'brunch',    name:'🥑 BRUNCH' },
+        { id:'frappe',    name:'🧋 FRAPPÉ' },
+        { id:'smoothie',  name:'🍓 SMOOTHIES' },
+      ],
 
-      if (!name || !details) {
-        errEl.hidden = false;
-        return;
+      menu: [
+        // HOT COFFEE
+        { id:'e1',  cat:'hot',       name:'Espresso',           price:20 },
+        { id:'e2',  cat:'hot',       name:'Macchiato',           price:30 },
+        { id:'e3',  cat:'hot',       name:'Cortado',             price:40 },
+        { id:'e4',  cat:'hot',       name:'Americano',           price:35 },
+        { id:'e5',  cat:'hot',       name:'Cappuccino',          price:50 },
+        { id:'e6',  cat:'hot',       name:'Latte',               price:55 },
+        { id:'e7',  cat:'hot',       name:'Mocca',               price:60 },
+        { id:'e8',  cat:'hot',       name:'Flat White',          price:70 },
+        // ICED COFFEE
+        { id:'i1',  cat:'iced',      name:'Americano Frío',      price:50 },
+        { id:'i2',  cat:'iced',      name:'Cold Brew',           price:60 },
+        { id:'i3',  cat:'iced',      name:'Latte Frío',          price:65 },
+        { id:'i4',  cat:'iced',      name:'Caramel Macchiato',   price:79 },
+        { id:'i5',  cat:'iced',      name:'Iced Mocca',          price:72 },
+        // SIN CAFÉ
+        { id:'n1',  cat:'noncoffee', name:'Matcha Latte',        price:65 },
+        { id:'n2',  cat:'noncoffee', name:'Taro Latte',          price:65 },
+        { id:'n3',  cat:'noncoffee', name:'Chocolate Caliente',  price:55 },
+        { id:'n4',  cat:'noncoffee', name:'Chai Latte',          price:60 },
+        { id:'n5',  cat:'noncoffee', name:'Golden Milk',         price:60 },
+        { id:'n6',  cat:'noncoffee', name:'Matcha Frío',         price:68 },
+        // SPECIALTY
+        { id:'s1',  cat:'specialty', name:'Aeropress',           price:null },
+        { id:'s2',  cat:'specialty', name:'V60',                 price:null },
+        { id:'s3',  cat:'specialty', name:'Chemex',              price:null },
+        { id:'s4',  cat:'specialty', name:'French Press',        price:null },
+        { id:'s5',  cat:'specialty', name:'Origami',             price:null },
+        { id:'s6',  cat:'specialty', name:'Japanese Siphon',     price:null },
+        // PIZZA
+        { id:'p1',  cat:'pizza',     name:"Di'Napoli",           price:70 },
+        { id:'p2',  cat:'pizza',     name:'Salami',              price:75 },
+        { id:'p3',  cat:'pizza',     name:'Vegetariana',         price:75 },
+        { id:'p4',  cat:'pizza',     name:'Serata Toscana',      price:80 },
+        { id:'p5',  cat:'pizza',     name:'Napolitana',          price:90 },
+        { id:'p6',  cat:'pizza',     name:'4 Quesos',            price:95 },
+        // BRUNCH
+        { id:'b1',  cat:'brunch',    name:"Saint-dwich",         price:55 },
+        { id:'b2',  cat:'brunch',    name:'Toast de Aguacate',   price:65 },
+        { id:'b3',  cat:'brunch',    name:'Sweet & Savory',      price:98 },
+        { id:'b4',  cat:'brunch',    name:'Ciabattasty',         price:98 },
+        { id:'b5',  cat:'brunch',    name:'Ensalada Saint',      price:90 },
+        // FRAPPÉ
+        { id:'f1',  cat:'frappe',    name:'Frappé Café',         price:75 },
+        { id:'f2',  cat:'frappe',    name:'Frappé Caramelo',     price:80 },
+        { id:'f3',  cat:'frappe',    name:'Frappé Oreo',         price:80 },
+        { id:'f4',  cat:'frappe',    name:'Frappé Matcha',       price:85 },
+        { id:'f5',  cat:'frappe',    name:'Frappé Taro',         price:85 },
+        { id:'f6',  cat:'frappe',    name:'Frappé Nutella',      price:82 },
+        // SMOOTHIES
+        { id:'sm1', cat:'smoothie',  name:'Smoothie Fresa',      price:75 },
+        { id:'sm2', cat:'smoothie',  name:'Smoothie Mango',      price:75 },
+        { id:'sm3', cat:'smoothie',  name:'Smoothie Berry',      price:80 },
+        { id:'sm4', cat:'smoothie',  name:'Smoothie Tropical',   price:80 },
+        { id:'sm5', cat:'smoothie',  name:'Smoothie Verde',      price:78 },
+      ],
+
+      visibleItems() {
+        return this.menu.filter(i => i.cat === this.activeCat)
+      },
+
+      qty(id) {
+        return this.cart.find(c => c.id === id)?.qty ?? 0
+      },
+
+      add(item) {
+        const ex = this.cart.find(c => c.id === item.id)
+        if (ex) { ex.qty++ }
+        else this.cart.push({ ...item, qty: 1 })
+      },
+
+      remove(item) {
+        const idx = this.cart.findIndex(c => c.id === item.id)
+        if (idx === -1) return
+        if (this.cart[idx].qty > 1) this.cart[idx].qty--
+        else this.cart.splice(idx, 1)
+      },
+
+      cartInc(idx) { this.cart[idx].qty++ },
+      cartDec(idx) {
+        if (this.cart[idx].qty > 1) this.cart[idx].qty--
+        else this.cart.splice(idx, 1)
+      },
+
+      clearCart() { this.cart = []; this.sheetOpen = false },
+
+      totalQty() { return this.cart.reduce((s,i) => s + i.qty, 0) },
+
+      totalAmt() {
+        const t = this.cart.reduce((s,i) => s + (i.price ? i.price * i.qty : 0), 0)
+        return t > 0 ? t.toFixed(2) : '–'
+      },
+
+      send() {
+        if (!this.name.trim()) { this.showErr = true; return }
+        this.showErr = false
+
+        const waNumbers = {
+          suc1:     '524561560813',
+          suc2:     '524561862343',
+          especial: '524645796026',
+        }
+        const branchNames = {
+          suc1:     'Leandro Valle 43, Centro',
+          suc2:     'Clavel #2, Jarrón Azul',
+          especial: 'Pedido Especial',
+        }
+
+        let msg = `*PEDIDO — SAINT LATTE*\n\n`
+        msg += `*Nombre:* ${this.name.trim()}\n`
+        if (this.phone.trim()) msg += `*Tel:* ${this.phone.trim()}\n`
+        msg += `*Sucursal:* ${branchNames[this.branch]}\n\n`
+        msg += `*Pedido:*\n`
+        for (const item of this.cart) {
+          msg += `• ${item.qty}x ${item.name}`
+          if (item.price) msg += ` ($${(item.price * item.qty).toFixed(2)})`
+          msg += `\n`
+        }
+        const total = this.cart.reduce((s,i) => s + (i.price ? i.price * i.qty : 0), 0)
+        if (total > 0) msg += `\n*Total estimado: $${total.toFixed(2)}*`
+        if (this.notes.trim()) msg += `\n\n*Notas:* ${this.notes.trim()}`
+        msg += `\n\n_Enviado desde saintlatte.com_`
+
+        window.open(`https://wa.me/${waNumbers[this.branch]}?text=${encodeURIComponent(msg)}`, '_blank')
       }
-      errEl.hidden = true;
-
-      const waNumbers = {
-        suc1:     '524561560813',
-        suc2:     '524561862343',
-        especial: '524645796026'
-      };
-      const branchNames = {
-        suc1:     'Leandro Valle 43, Centro',
-        suc2:     'Clavel #2, Jarrón Azul',
-        especial: 'Pedido Especial'
-      };
-
-      let msg = `*NUEVO PEDIDO — SAINT LATTE*\n\n`;
-      msg += `*Nombre:* ${name}\n`;
-      if (phone) msg += `*Teléfono:* ${phone}\n`;
-      msg += `*Sucursal:* ${branchNames[branch]}\n\n`;
-      msg += `*Pedido:*\n${details}`;
-      if (notes) msg += `\n\n*Notas:* ${notes}`;
-      msg += `\n\n_Enviado desde saintlatte.com_`;
-
-      const url = `https://wa.me/${waNumbers[branch]}?text=${encodeURIComponent(msg)}`;
-      window.open(url, '_blank');
-    });
+    }
+  }
   </script>
+
 </body>
 </html>

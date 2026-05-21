@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Comandero ☕ Saint Latte</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --black:  #0A0A0A; --mid: #141414; --mid2: #1e1e1e;
+      --border: rgba(255,255,255,.09);
+      --cream:  #F5F0E8; --rust: #D4521A; --rust-d: #B84415;
+      --green:  #4A7B5E; --muted: rgba(245,240,232,.4);
+      --safe-b: env(safe-area-inset-bottom, 0px);
+      --ff-d: 'Bebas Neue', sans-serif;
+      --ff-b: 'Space Grotesk', sans-serif;
+    }
+    html, body { height:100%; background:var(--black); color:var(--cream); font-family:var(--ff-b); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+    #app { min-height:100dvh; display:flex; flex-direction:column; }
+    button { font-family:var(--ff-b); cursor:pointer; }
+    input, textarea { font-family:var(--ff-b); }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      position:sticky; top:0; z-index:100;
+      background:rgba(10,10,10,.97); backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+      height:52px; padding:0 1rem;
+      display:flex; align-items:center; gap:.6rem; flex-shrink:0;
+    }
+    .topbar__logo { font-family:var(--ff-d); font-size:1.05rem; letter-spacing:.1em; }
+    .topbar__badge {
+      font-size:.55rem; font-weight:700; letter-spacing:.2em;
+      background:var(--rust); padding:.2rem .5rem; border-radius:2px;
+    }
+    .topbar__table {
+      font-size:.72rem; font-weight:600;
+      background:rgba(74,123,94,.2); border:1px solid rgba(74,123,94,.4);
+      padding:.25rem .65rem; border-radius:20px; max-width:120px;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .topbar__sp { flex:1; }
+    .topbar__btn {
+      background:none; border:1px solid var(--border); color:var(--muted);
+      font-size:.6rem; font-weight:700; letter-spacing:.12em;
+      padding:.35rem .7rem; transition:all .2s;
+    }
+    .topbar__btn:hover { border-color:var(--cream); color:var(--cream); }
+
+    /* ── VIEWS ── */
+    .view { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+    .view--c { display:flex; flex-direction:column; justify-content:center; align-items:center; padding:2rem 1.2rem; gap:1.5rem; min-height:calc(100dvh - 52px); }
+
+    /* ── LOGIN ── */
+    .login-card { width:100%; max-width:380px; background:var(--mid); border:1px solid var(--border); padding:2rem 1.5rem; }
+    .login-title { font-family:var(--ff-d); font-size:2rem; letter-spacing:.06em; margin-bottom:.2rem; }
+    .login-sub { font-size:.75rem; color:var(--muted); margin-bottom:1.8rem; }
+
+    /* ── FIELDS ── */
+    .field { display:flex; flex-direction:column; gap:.4rem; margin-bottom:.9rem; }
+    .field label { font-size:.58rem; font-weight:700; letter-spacing:.2em; color:var(--muted); }
+    .field input {
+      background:rgba(255,255,255,.05); border:1px solid var(--border);
+      color:var(--cream); font-size:.9rem; padding:.7rem .9rem;
+      outline:none; transition:border-color .2s; width:100%;
+    }
+    .field input:focus { border-color:var(--rust); }
+    .field input::placeholder { color:rgba(245,240,232,.2); }
+
+    /* ── BUTTONS ── */
+    .btn-p {
+      width:100%; padding:.85rem;
+      background:var(--rust); color:var(--cream); border:none;
+      font-family:var(--ff-d); font-size:1.2rem; letter-spacing:.08em;
+      transition:background .2s;
+    }
+    .btn-p:hover { background:var(--rust-d); }
+    .btn-p:disabled { background:rgba(212,82,26,.35); cursor:not-allowed; }
+    .btn-o {
+      padding:.6rem 1.1rem;
+      background:none; border:1px solid var(--border); color:var(--muted);
+      font-size:.7rem; font-weight:700; letter-spacing:.1em; transition:all .2s;
+    }
+    .btn-o:hover { border-color:var(--cream); color:var(--cream); }
+    .btn-ghost { background:none; border:none; color:var(--muted); font-size:1rem; padding:.3rem .5rem; transition:color .15s; }
+    .btn-ghost:hover { color:var(--cream); }
+
+    /* ── ERROR ── */
+    .err { font-size:.75rem; color:#e55; margin-bottom:.8rem; padding:.5rem .8rem; background:rgba(220,50,50,.1); border:1px solid rgba(220,50,50,.3); }
+
+    /* ── TABLES ── */
+    .view-pad { padding:1.2rem; }
+    .slabel { font-size:.58rem; font-weight:700; letter-spacing:.2em; color:var(--rust); margin-bottom:1rem; display:block; }
+    .tables-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem; }
+    @media(min-width:500px) { .tables-grid { grid-template-columns:repeat(4,1fr); } }
+    .tcard {
+      background:var(--mid); border:1px solid var(--border);
+      padding:.9rem .5rem; text-align:center; cursor:pointer;
+      transition:border-color .2s, background .2s; position:relative;
+    }
+    .tcard:active { background:var(--mid2); }
+    .tcard:hover { border-color:rgba(212,82,26,.4); }
+    .tcard.active-order { border-color:rgba(74,123,94,.5); }
+    .tcard.active-order::after {
+      content:''; position:absolute; top:.35rem; right:.35rem;
+      width:6px; height:6px; border-radius:50%; background:var(--green);
+    }
+    .tcard__n { font-family:var(--ff-d); font-size:1.5rem; letter-spacing:.04em; line-height:1; }
+    .tcard__lbl { font-size:.58rem; color:var(--muted); margin-top:.15rem; letter-spacing:.04em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+    /* ── CAT TABS ── */
+    .cat-tabs {
+      position:sticky; top:52px; z-index:80;
+      background:rgba(10,10,10,.97); backdrop-filter:blur(8px);
+      border-bottom:1px solid var(--border);
+      display:flex; overflow-x:auto; flex-shrink:0;
+      scrollbar-width:none;
+    }
+    .cat-tabs::-webkit-scrollbar { display:none; }
+    .cat-tab {
+      flex-shrink:0; padding:.7rem 1rem;
+      font-size:.6rem; font-weight:700; letter-spacing:.14em; white-space:nowrap;
+      color:var(--muted); background:none; border:none;
+      border-bottom:2px solid transparent; transition:all .2s;
+    }
+    .cat-tab.on { color:var(--cream); border-bottom-color:var(--rust); }
+
+    /* ── ITEMS ── */
+    .items-wrap { padding:.6rem .8rem 140px; }
+    .item-row {
+      display:flex; align-items:center; gap:.8rem;
+      background:var(--mid); padding:.75rem .85rem;
+      border-bottom:1px solid var(--border);
+      transition:background .15s;
+    }
+    .item-row:active { background:var(--mid2); }
+    .item-info { flex:1; min-width:0; }
+    .item-name { font-size:.85rem; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .item-price { font-size:.72rem; color:var(--rust); margin-top:.1rem; }
+    .item-ctrl { display:flex; align-items:center; gap:.35rem; flex-shrink:0; }
+    .qty-btn {
+      width:26px; height:26px;
+      background:rgba(255,255,255,.07); border:1px solid var(--border);
+      color:var(--cream); font-size:.9rem;
+      display:flex; align-items:center; justify-content:center; transition:background .15s;
+    }
+    .qty-btn.add { background:rgba(212,82,26,.2); border-color:rgba(212,82,26,.4); }
+    .qty-btn:hover { background:rgba(255,255,255,.18); }
+    .qty-n { font-size:.82rem; font-weight:700; min-width:18px; text-align:center; }
+
+    /* ── CART BAR ── */
+    .cart-fab {
+      position:fixed; bottom:0; left:0; right:0; z-index:150;
+      padding-bottom:var(--safe-b);
+    }
+    .cart-fab-btn {
+      display:flex; align-items:center; gap:.7rem;
+      background:var(--rust); border:none; width:100%;
+      padding:1rem 1.2rem; color:var(--cream);
+    }
+    .fab-cnt {
+      font-size:.6rem; font-weight:700; letter-spacing:.12em;
+      background:rgba(0,0,0,.3); padding:.2rem .5rem; border-radius:20px;
+    }
+    .fab-lbl { font-size:.78rem; font-weight:700; letter-spacing:.08em; }
+    .fab-total { margin-left:auto; font-family:var(--ff-d); font-size:1.2rem; letter-spacing:.04em; }
+
+    /* ── CART SHEET ── */
+    .overlay { position:fixed; inset:0; background:rgba(0,0,0,.65); z-index:200; }
+    .sheet {
+      position:fixed; bottom:0; left:0; right:0; z-index:210;
+      background:var(--mid); border-top:1px solid var(--border);
+      max-height:80dvh; display:flex; flex-direction:column;
+      padding-bottom:var(--safe-b);
+      animation:slideUp .3s cubic-bezier(.16,1,.3,1);
+    }
+    @keyframes slideUp { from { transform:translateY(100%); } }
+    .sheet-head {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:.9rem 1.1rem; border-bottom:1px solid var(--border);
+      flex-shrink:0;
+    }
+    .sheet-title { font-family:var(--ff-d); font-size:1.2rem; letter-spacing:.06em; }
+    .sheet-body { overflow-y:auto; flex:1; -webkit-overflow-scrolling:touch; }
+    .cart-item {
+      display:grid; grid-template-columns:1fr auto auto;
+      align-items:center; gap:.6rem;
+      padding:.65rem 1.1rem; border-bottom:1px solid rgba(255,255,255,.04);
+    }
+    .ci-info { min-width:0; }
+    .ci-name { font-size:.82rem; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .ci-note { font-size:.68rem; color:var(--muted); margin-top:.1rem; display:flex; align-items:center; gap:.3rem; }
+    .ci-price { font-size:.78rem; color:var(--rust); white-space:nowrap; }
+    .ci-ctrl { display:flex; align-items:center; gap:.3rem; }
+    .note-input {
+      width:100%; background:rgba(255,255,255,.04);
+      border:none; border-top:1px solid rgba(255,255,255,.04);
+      color:rgba(245,240,232,.5); font-size:.72rem;
+      padding:.35rem 1.1rem .5rem; outline:none;
+    }
+    .note-input:focus { color:var(--cream); background:rgba(255,255,255,.06); }
+    .note-input::placeholder { color:rgba(245,240,232,.18); }
+    .sheet-foot {
+      padding:.9rem 1.1rem; border-top:1px solid var(--border); flex-shrink:0;
+      display:flex; flex-direction:column; gap:.7rem;
+    }
+    .total-row { display:flex; justify-content:space-between; align-items:baseline; }
+    .total-lbl { font-size:.58rem; font-weight:700; letter-spacing:.2em; color:var(--muted); }
+    .total-amt { font-family:var(--ff-d); font-size:2rem; letter-spacing:.03em; }
+    .sheet-actions { display:flex; gap:.5rem; }
+    .sheet-actions .btn-p { font-size:1rem; }
+
+    /* ── TOAST ── */
+    .toast {
+      position:fixed; top:62px; left:50%; transform:translateX(-50%);
+      background:var(--green); color:var(--cream);
+      font-size:.75rem; font-weight:700; letter-spacing:.1em;
+      padding:.65rem 1.4rem; z-index:9999; white-space:nowrap;
+      border-radius:2px; box-shadow:0 4px 24px rgba(0,0,0,.6);
+      animation:fadeIn .2s ease;
+    }
+    .toast.err { background:#c0392b; }
+    @keyframes fadeIn { from { opacity:0; transform:translateX(-50%) translateY(-6px); } }
+
+    /* ── SPINNER ── */
+    .spinner { width:28px; height:28px; border:2px solid rgba(245,240,232,.1); border-top-color:var(--rust); border-radius:50%; animation:spin .8s linear infinite; margin:2rem auto; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .load-txt { text-align:center; font-size:.75rem; color:var(--muted); margin-top:.4rem; }
+    .empty { text-align:center; padding:3rem 1.5rem; color:var(--muted); font-size:.82rem; line-height:1.7; }
+
+    /* ── ACTIVE ORDERS BADGE ── */
+    .orders-bar { padding:.8rem 1.2rem; border-bottom:1px solid var(--border); background:rgba(74,123,94,.08); display:flex; align-items:center; gap:.6rem; flex-wrap:wrap; }
+    .order-chip { font-size:.62rem; font-weight:700; letter-spacing:.1em; background:rgba(74,123,94,.25); border:1px solid rgba(74,123,94,.4); padding:.25rem .7rem; border-radius:2px; cursor:pointer; transition:background .15s; }
+    .order-chip:hover { background:rgba(74,123,94,.45); }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <span class="topbar__logo">SAINT LATTE</span>
+    <span class="topbar__badge">COMANDERO</span>
+    <span v-if="selectedTable" class="topbar__table">{{ selectedTable.name }}</span>
+    <span v-else-if="view==='menu'" class="topbar__table">PARA LLEVAR</span>
+    <div class="topbar__sp"></div>
+    <button v-if="view==='menu'" class="topbar__btn" @click="goToTables">◀ MESAS</button>
+    <button v-if="token" class="topbar__btn" @click="logout" style="color:#c0392b;border-color:rgba(192,57,43,.3)">SALIR</button>
+  </div>
+
+  <!-- TOAST -->
+  <div v-if="toast" :class="['toast', toast.t==='err'?'err':'']">{{ toast.msg }}</div>
+
+  <!-- ══ LOGIN ══ -->
+  <div v-if="view==='login'" class="view view--c">
+    <div class="login-card">
+      <div class="login-title">ACCESO</div>
+      <div class="login-sub">Credenciales Polotab</div>
+      <div class="field">
+        <label>API KEY</label>
+        <input v-model="apiKey" type="password" placeholder="krzV4HPL..." autocomplete="off" @keyup.enter="login">
+      </div>
+      <div class="field">
+        <label>RESTAURANT ID</label>
+        <input v-model="restaurantId" type="text" placeholder="0a717e1b-ffd5-..." @keyup.enter="login">
+      </div>
+      <div v-if="loginErr" class="err">{{ loginErr }}</div>
+      <button class="btn-p" @click="login" :disabled="busy">
+        {{ busy ? 'CONECTANDO...' : 'ENTRAR →' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- ══ TABLES ══ -->
+  <div v-else-if="view==='tables'" class="view view-pad">
+    <div v-if="busy"><div class="spinner"></div><div class="load-txt">Cargando mesas...</div></div>
+    <template v-else>
+      <!-- Active orders reminder -->
+      <div v-if="Object.keys(draftOrders).length>0" class="orders-bar">
+        <span style="font-size:.58rem;letter-spacing:.15em;color:var(--muted)">ÓRDENES ABIERTAS:</span>
+        <span v-for="(oid,tid) in draftOrders" :key="tid" class="order-chip" @click="resumeOrder(tid)">
+          {{ tableName(tid) }} ▸
+        </span>
+      </div>
+
+      <span class="slabel" style="margin-top:1rem">SELECCIONA UNA MESA</span>
+      <div v-if="tables.length===0" class="empty">No hay mesas configuradas en Polotab</div>
+      <div v-else class="tables-grid">
+        <div
+          v-for="t in tables" :key="t.id"
+          :class="['tcard', draftOrders[t.id]?'active-order':'']"
+          @click="selectTable(t)"
+        >
+          <div class="tcard__n">{{ tNum(t.name) }}</div>
+          <div class="tcard__lbl">{{ t.name }}</div>
+        </div>
+      </div>
+      <div style="margin-top:1rem">
+        <button class="btn-o" style="width:100%" @click="selectTable(null)">+ PARA LLEVAR / SIN MESA</button>
+      </div>
+    </template>
+  </div>
+
+  <!-- ══ MENU / ORDER ══ -->
+  <div v-else-if="view==='menu'" style="display:flex;flex-direction:column;flex:1">
+    <!-- Category tabs -->
+    <div class="cat-tabs">
+      <button
+        v-for="g in groups" :key="g.id"
+        :class="['cat-tab', activeCat===g.id?'on':'']"
+        @click="activeCat=g.id"
+      >{{ g.name }}</button>
+    </div>
+
+    <!-- Items list -->
+    <div class="items-wrap">
+      <div v-if="busy"><div class="spinner"></div><div class="load-txt">Cargando menú...</div></div>
+      <template v-else>
+        <div v-if="visibleItems.length===0" class="empty">Sin productos en esta categoría</div>
+        <div v-else>
+          <div v-for="item in visibleItems" :key="item.id" class="item-row">
+            <div class="item-info">
+              <div class="item-name">{{ item.name }}</div>
+              <div class="item-price">${{ fmt(item.price) }}</div>
+            </div>
+            <div class="item-ctrl">
+              <button v-if="cartQty(item.id)>0" class="qty-btn" @click="dec(item)">−</button>
+              <span v-if="cartQty(item.id)>0" class="qty-n">{{ cartQty(item.id) }}</span>
+              <button class="qty-btn add" @click="inc(item)">+</button>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <!-- Cart FAB -->
+    <div v-if="cart.length>0 && !sheetOpen" class="cart-fab">
+      <button class="cart-fab-btn" @click="sheetOpen=true">
+        <span class="fab-cnt">{{ totalQty }} ITEMS</span>
+        <span class="fab-lbl">VER ORDEN</span>
+        <span class="fab-total">${{ fmt(totalAmt) }}</span>
+      </button>
+    </div>
+
+    <!-- Overlay -->
+    <div v-if="sheetOpen" class="overlay" @click="sheetOpen=false"></div>
+
+    <!-- Cart Sheet -->
+    <div v-if="sheetOpen" class="sheet">
+      <div class="sheet-head">
+        <span class="sheet-title">{{ selectedTable?selectedTable.name:'PARA LLEVAR' }}</span>
+        <button class="btn-ghost" @click="sheetOpen=false">✕</button>
+      </div>
+      <div class="sheet-body">
+        <template v-for="(ci,idx) in cart" :key="idx">
+          <div class="cart-item">
+            <div class="ci-info">
+              <div class="ci-name">{{ ci.name }}</div>
+              <div v-if="ci.note" class="ci-note">📝 {{ ci.note }}</div>
+            </div>
+            <div class="ci-ctrl">
+              <button class="qty-btn" @click="cartDec(idx)">−</button>
+              <span class="qty-n">{{ ci.qty }}</span>
+              <button class="qty-btn add" @click="cartInc(idx)">+</button>
+            </div>
+            <div class="ci-price">${{ fmt(ci.price*ci.qty) }}</div>
+          </div>
+          <input
+            class="note-input"
+            type="text"
+            :placeholder="'Nota: ' + ci.name"
+            v-model="ci.note"
+          >
+        </template>
+      </div>
+      <div class="sheet-foot">
+        <div class="total-row">
+          <span class="total-lbl">TOTAL ORDEN</span>
+          <span class="total-amt">${{ fmt(totalAmt) }}</span>
+        </div>
+        <div class="sheet-actions">
+          <button class="btn-o" @click="clearCart">LIMPIAR</button>
+          <button class="btn-p" @click="sendOrder" :disabled="sending" style="flex:1">
+            {{ sending?'ENVIANDO...':'ENVIAR A COCINA →' }}
+          </button>
+        </div>
+        <div v-if="currentOrderId" style="font-size:.62rem;color:var(--muted);text-align:center">
+          Orden #{{ currentOrderId.slice(-6).toUpperCase() }} activa — se agregará a la existente
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script type="module">
+import { createApp, ref, computed, onMounted } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
+
+const BASE = 'https://api.polotab.com'
+const K = { ak:'sl_cmd_ak', rid:'sl_cmd_rid', tk:'sl_cmd_tk' }
+
+createApp({
+  setup() {
+    const view         = ref('login')
+    const apiKey       = ref(localStorage.getItem(K.ak)  || '')
+    const restaurantId = ref(localStorage.getItem(K.rid) || '')
+    const token        = ref(localStorage.getItem(K.tk)  || '')
+    const loginErr     = ref('')
+    const busy         = ref(false)
+    const sending      = ref(false)
+    const toast        = ref(null)
+
+    const tables       = ref([])
+    const selectedTable = ref(null)
+    const draftOrders  = ref({}) // tableId → orderId
+
+    const groups       = ref([])
+    const allItems     = ref([])
+    const activeCat    = ref(null)
+
+    const cart         = ref([])
+    const sheetOpen    = ref(false)
+    const currentOrderId = ref(null)
+
+    // ── utils ──────────────────────────────────────────────
+    const fmt = n => n != null ? Number(n).toFixed(2) : '–'
+
+    function tNum(name) {
+      const m = name.match(/\d+/)
+      return m ? m[0] : name.slice(0,2).toUpperCase()
+    }
+
+    function tableName(tid) {
+      return tables.value.find(t=>t.id===tid)?.name ?? 'Mesa'
+    }
+
+    function showToast(msg, t='ok') {
+      toast.value = { msg, t }
+      setTimeout(() => toast.value = null, 3200)
+    }
+
+    async function api(path, opts={}) {
+      const r = await fetch(`${BASE}${path}`, {
+        ...opts,
+        headers: {
+          'Content-Type':'application/json',
+          'Authorization':`Bearer ${token.value}`,
+          ...(opts.headers||{})
+        }
+      })
+      const body = await r.json().catch(()=>({}))
+      if (!r.ok) throw new Error(body.message || `HTTP ${r.status}`)
+      return body
+    }
+
+    // ── auth ───────────────────────────────────────────────
+    async function login() {
+      if (!apiKey.value || !restaurantId.value) {
+        loginErr.value = 'Ingresa API Key y Restaurant ID'; return
+      }
+      busy.value = true; loginErr.value = ''
+      try {
+        const d = await fetch(`${BASE}/auth/v1/restaurants/token`, {
+          method:'POST',
+          headers:{ 'Content-Type':'application/json', 'Authorization':`Bearer ${apiKey.value}` },
+          body: JSON.stringify({ restaurantId: restaurantId.value })
+        }).then(r=>r.json())
+        if (!d.token) throw new Error(d.message || 'Sin token')
+        token.value = d.token
+        localStorage.setItem(K.ak,  apiKey.value)
+        localStorage.setItem(K.rid, restaurantId.value)
+        localStorage.setItem(K.tk,  d.token)
+        await boot()
+        view.value = 'tables'
+      } catch(e) { loginErr.value = e.message }
+      finally { busy.value = false }
+    }
+
+    function logout() {
+      Object.values(K).forEach(k=>localStorage.removeItem(k))
+      token.value = ''; view.value = 'login'
+      cart.value = []; selectedTable.value = null; draftOrders.value = {}
+    }
+
+    // ── data ───────────────────────────────────────────────
+    async function boot() {
+      const [tData, gData, mData] = await Promise.all([
+        api('/restaurants/v1/tables'),
+        api(`/menus/v1/menu_groups?expand=menus&restaurant_id=${restaurantId.value}`),
+        api(`/menus/v1/menus?expand=items&restaurant_id=${restaurantId.value}`)
+      ])
+
+      // Tables
+      tables.value = Array.isArray(tData) ? tData : (tData.data ?? [])
+
+      // Menu groups
+      const rawGroups = Array.isArray(gData) ? gData : (gData.data ?? [])
+      const rawMenus  = Array.isArray(mData) ? mData : (mData.data ?? [])
+
+      // Flatten items
+      const items = []
+      for (const menu of rawMenus) {
+        const menuItems = menu.items ?? menu.menuItems ?? []
+        for (const item of menuItems) {
+          items.push({
+            id:      item.id,
+            menuId:  menu.id,
+            name:    item.name,
+            price:   item.price ?? item.prices?.[0]?.price ?? 0,
+            priceId: item.prices?.[0]?.id ?? null,
+            groupId: menu.menuGroupId ?? menu.groupId ?? menu.menu_group_id ?? '__all__',
+          })
+        }
+      }
+
+      const grpsWithItems = rawGroups.filter(g => items.some(i=>i.groupId===g.id))
+      if (!grpsWithItems.length && items.length) {
+        groups.value = [{ id:'__all__', name:'MENÚ' }]
+        items.forEach(i=>i.groupId='__all__')
+      } else {
+        groups.value = grpsWithItems
+      }
+      allItems.value = items
+      if (groups.value.length) activeCat.value = groups.value[0].id
+    }
+
+    // ── tables ─────────────────────────────────────────────
+    function selectTable(t) {
+      selectedTable.value = t
+      currentOrderId.value = t ? (draftOrders.value[t.id] ?? null) : null
+      cart.value = []
+      sheetOpen.value = false
+      view.value = 'menu'
+    }
+
+    function resumeOrder(tid) {
+      const t = tables.value.find(x=>x.id===tid)
+      if (t) selectTable(t)
+    }
+
+    function goToTables() {
+      view.value = 'tables'
+      selectedTable.value = null
+      sheetOpen.value = false
+    }
+
+    // ── cart ───────────────────────────────────────────────
+    const visibleItems = computed(() =>
+      activeCat.value
+        ? allItems.value.filter(i=>i.groupId===activeCat.value)
+        : allItems.value
+    )
+
+    const totalQty = computed(()=> cart.value.reduce((s,i)=>s+i.qty,0))
+    const totalAmt = computed(()=> cart.value.reduce((s,i)=>s+i.price*i.qty,0))
+
+    function cartQty(iid) { return cart.value.find(c=>c.itemId===iid)?.qty ?? 0 }
+
+    function inc(item) {
+      const ex = cart.value.find(c=>c.itemId===item.id)
+      if (ex) ex.qty++
+      else cart.value.push({ itemId:item.id, menuId:item.menuId, name:item.name, price:item.price, priceId:item.priceId, qty:1, note:'' })
+    }
+
+    function dec(item) {
+      const idx = cart.value.findIndex(c=>c.itemId===item.id)
+      if (idx===-1) return
+      if (cart.value[idx].qty>1) cart.value[idx].qty--
+      else cart.value.splice(idx,1)
+    }
+
+    function cartInc(idx) { cart.value[idx].qty++ }
+    function cartDec(idx) {
+      if (cart.value[idx].qty>1) cart.value[idx].qty--
+      else cart.value.splice(idx,1)
+    }
+
+    function clearCart() { cart.value=[]; sheetOpen.value=false; currentOrderId.value=null }
+
+    // ── order submit ───────────────────────────────────────
+    async function sendOrder() {
+      if (!cart.value.length) return
+      sending.value = true; sheetOpen.value = false
+      try {
+        const orderItems = cart.value.map(c => ({
+          id:                  crypto.randomUUID(),
+          itemId:              c.itemId,
+          menuId:              c.menuId,
+          quantity:            c.qty,
+          priceId:             c.priceId,
+          sizeId:              null,
+          sizePriceId:         null,
+          sizePrice:           null,
+          note:                c.note || null,
+          terminalDate:        new Date().toISOString(),
+          orderItemModifiers:  [],
+        }))
+
+        const payload = {
+          type:          selectedTable.value ? 'dine_in' : 'direct_sale',
+          customerCount: 1,
+          tableId:       selectedTable.value?.id ?? null,
+          orderItems,
+        }
+        if (currentOrderId.value) payload.id = currentOrderId.value
+
+        const order = await api('/orders/v1/orders', { method:'POST', body:JSON.stringify(payload) })
+        const oid = order.id ?? order.orderId
+
+        // Publish → thermal print
+        await api(`/orders/v1/orders/${oid}/publish`, { method:'POST', body:'{}' })
+
+        currentOrderId.value = oid
+        if (selectedTable.value) draftOrders.value[selectedTable.value.id] = oid
+
+        showToast('✓ ENVIADO A COCINA')
+        cart.value = []
+      } catch(e) {
+        showToast('Error: ' + e.message, 'err')
+        sheetOpen.value = true
+      } finally { sending.value = false }
+    }
+
+    // ── init ───────────────────────────────────────────────
+    onMounted(async () => {
+      if (!token.value || !restaurantId.value) return
+      busy.value = true
+      try { await boot(); view.value='tables' }
+      catch { localStorage.removeItem(K.tk); token.value=''; view.value='login' }
+      finally { busy.value = false }
+    })
+
+    return {
+      view, apiKey, restaurantId, token, loginErr, busy, sending, toast,
+      tables, selectedTable, draftOrders,
+      groups, allItems, activeCat, visibleItems,
+      cart, sheetOpen, currentOrderId, totalQty, totalAmt,
+      login, logout, selectTable, resumeOrder, goToTables,
+      cartQty, inc, dec, cartInc, cartDec, clearCart, sendOrder,
+      fmt, tNum, tableName,
+    }
+  }
+}).mount('#app')
+</script>
+</body>
+</html>
