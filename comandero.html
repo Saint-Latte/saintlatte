@@ -261,25 +261,11 @@
   <!-- ══════════════ LOGIN ══════════════ -->
   <div v-if="view==='login'" class="view view--c">
     <div class="login-card">
-      <div class="login-title">ACCESO</div>
-      <div class="login-sub">Conecta con tu cuenta de Polotab</div>
-
-      <div class="proxy-hint">
-        ⚡ Para usar desde el sitio web necesitas el Worker proxy.<br>
-        Instrucciones en <code>_proxy/worker.js</code> — es gratis y tarda 5 min.
-      </div>
-
+      <div class="login-title">SAINT LATTE</div>
+      <div class="login-sub">Ingresa la frase clave para abrir el comandero.</div>
       <div class="field">
-        <label>PROXY URL <span style="opacity:.5;font-weight:400">(tu Cloudflare Worker)</span></label>
-        <input v-model="proxyUrl" type="text" placeholder="https://polotab-proxy.usuario.workers.dev" @keyup.enter="login">
-      </div>
-      <div class="field">
-        <label>API KEY</label>
-        <input v-model="apiKey" type="password" placeholder="krzV4HPL..." autocomplete="off" @keyup.enter="login">
-      </div>
-      <div class="field">
-        <label>RESTAURANT ID</label>
-        <input v-model="restaurantId" type="text" placeholder="0a717e1b-ffd5-..." @keyup.enter="login">
+        <label>FRASE CLAVE</label>
+        <input v-model="passphrase" type="password" placeholder="••••••••••" autocomplete="off" @keyup.enter="login" autofocus>
       </div>
       <div v-if="loginErr" class="err">{{ loginErr }}</div>
       <button class="btn-p" @click="login" :disabled="busy">
@@ -473,17 +459,34 @@
 <script type="module">
 import { createApp, ref, computed, onMounted } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
 
+// ── CREDENCIALES CODIFICADAS ───────────────────────────────────────────────
+// Decodificadas en tiempo de ejecución con la frase clave del mesero.
+// Para re-generar: node -e "KEY='tuFrase'; encode = s => btoa([...s].map((c,i)=>String.fromCharCode(c.charCodeAt(0)^KEY.charCodeAt(i%KEY.length))).join('')); console.log(encode('tu-valor'))"
+const ENC_PROXY  = 'GxUdHgdWTlsWCRICAkMWHg4bH0hKUwgIWg0NEBtIHwQGAFkETwMbFxgEGx1aCAQC'
+const ENC_APIKEY = 'GBMTOEAkMTgjUhJTXTk5KClDMTpAO1AKK1RQAR0fAAUaOUwbCjIZDAciC1cXWyUXFScfBjoYO1gnETwCAwdcNDk5MTwzBz4W'
+const ENC_RID    = 'QwBeX0MJUBZZAxUFXENAWFhFWQdCBQ9DQAhSQUZVQFBQWEMI'
+// ──────────────────────────────────────────────────────────────────────────
+
 const POLOTAB = 'https://api.polotab.com'
-const K = { ak:'sl_cmd_ak', rid:'sl_cmd_rid', tk:'sl_cmd_tk', px:'sl_cmd_px' }
+const K = { tk:'sl_cmd_tk' }
+
+function decode(encoded, key) {
+  try {
+    const raw = atob(encoded)
+    return [...raw].map((c, i) =>
+      String.fromCharCode(c.charCodeAt(0) ^ key.charCodeAt(i % key.length))
+    ).join('')
+  } catch { return '' }
+}
 
 createApp({
   setup() {
     // ── state ────────────────────────────────────────────────────
     const view          = ref('login')
-    const apiKey        = ref(localStorage.getItem(K.ak)  || '')
-    const restaurantId  = ref(localStorage.getItem(K.rid) || '')
-    const token         = ref(localStorage.getItem(K.tk)  || '')
-    const proxyUrl      = ref(localStorage.getItem(K.px)  || '')
+    const passphrase    = ref('')
+    const token         = ref(localStorage.getItem(K.tk) || '')
+    // decoded at runtime, never stored
+    let apiKey = '', restaurantId = '', proxyUrl = ''
     const loginErr      = ref('')
     const busy          = ref(false)
     const sending       = ref(false)
@@ -518,7 +521,7 @@ createApp({
       setTimeout(() => toast.value = null, 3200)
     }
 
-    const base = () => proxyUrl.value.trim() || POLOTAB
+    const base = () => proxyUrl || POLOTAB
 
     async function api(path, opts={}) {
       const r = await fetch(`${base()}${path}`, {
@@ -532,29 +535,33 @@ createApp({
 
     // ── auth ──────────────────────────────────────────────────
     async function login() {
-      if (!apiKey.value || !restaurantId.value) { loginErr.value = 'Ingresa API Key y Restaurant ID'; return }
+      const key = passphrase.value.trim()
+      if (!key) { loginErr.value = 'Ingresa la frase clave'; return }
       busy.value = true; loginErr.value = ''
       try {
+        proxyUrl      = decode(ENC_PROXY,  key)
+        apiKey        = decode(ENC_APIKEY, key)
+        restaurantId  = decode(ENC_RID,    key)
+        if (!apiKey || !restaurantId) throw new Error('Frase incorrecta')
+
         const d = await fetch(`${base()}/auth/v1/restaurants/token`, {
           method: 'POST',
-          headers: { 'Content-Type':'application/json', 'Authorization':`Bearer ${apiKey.value}` },
-          body: JSON.stringify({ restaurantId: restaurantId.value })
+          headers: { 'Content-Type':'application/json', 'Authorization':`Bearer ${apiKey}` },
+          body: JSON.stringify({ restaurantId })
         }).then(r => r.json())
-        if (!d.token) throw new Error(d.message || 'No se recibió token')
+        if (!d.token) throw new Error('Frase incorrecta')
         token.value = d.token
-        localStorage.setItem(K.ak,  apiKey.value)
-        localStorage.setItem(K.rid, restaurantId.value)
-        localStorage.setItem(K.tk,  d.token)
-        if (proxyUrl.value) localStorage.setItem(K.px, proxyUrl.value.trim())
+        localStorage.setItem(K.tk, d.token)
         await boot()
         view.value = 'tables'
-      } catch(e) { loginErr.value = e.message }
+      } catch(e) { loginErr.value = e.message; proxyUrl = ''; apiKey = ''; restaurantId = '' }
       finally { busy.value = false }
     }
 
     function logout() {
-      [K.ak, K.rid, K.tk].forEach(k => localStorage.removeItem(k))
-      token.value = ''; view.value = 'login'
+      localStorage.removeItem(K.tk)
+      token.value = ''; passphrase.value = ''; view.value = 'login'
+      apiKey = ''; restaurantId = ''; proxyUrl = ''
       cart.value = []; selectedTable.value = null; draftOrders.value = {}
     }
 
@@ -562,8 +569,8 @@ createApp({
     async function boot() {
       const [tData, gData, mData] = await Promise.all([
         api('/restaurants/v1/tables'),
-        api(`/menus/v1/menu_groups?expand=menus&restaurant_id=${restaurantId.value}`),
-        api(`/menus/v1/menus?expand=items&restaurant_id=${restaurantId.value}`),
+        api(`/menus/v1/menu_groups?expand=menus&restaurant_id=${restaurantId}`),
+        api(`/menus/v1/menus?expand=items&restaurant_id=${restaurantId}`),
       ])
 
       tables.value = Array.isArray(tData) ? tData : (tData.data ?? [])
@@ -833,15 +840,13 @@ createApp({
 
     // ── init ─────────────────────────────────────────────────
     onMounted(async () => {
-      if (!token.value || !restaurantId.value) return
-      busy.value = true
-      try { await boot(); view.value = 'tables' }
-      catch { localStorage.removeItem(K.tk); token.value = ''; view.value = 'login' }
-      finally { busy.value = false }
+      // Cached token: still need passphrase to decode restaurantId for boot queries
+      // So always start at login — it's just one word
+      view.value = 'login'
     })
 
     return {
-      view, apiKey, restaurantId, proxyUrl, token, loginErr, busy, sending, toast,
+      view, passphrase, token, loginErr, busy, sending, toast,
       tables, selectedTable, draftOrders, groups, allItems, allModGroups,
       activeCat, search, filteredItems,
       cart, cartOpen, currentOrderId, totalQty, totalAmt,
