@@ -14,6 +14,7 @@
       --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.14);
       --cream:#FFFEF9; --rust:#D4521A; --rust-d:#B84415; --rust-a:rgba(212,82,26,.15);
       --green:#337958; --green-a:rgba(51,121,88,.2);
+      --amber:#C49A27; --amber-a:rgba(196,154,39,.15);
       --muted:rgba(255,254,249,.38);
       --safe-b:env(safe-area-inset-bottom,0px);
       --ff-d:'Bebas Neue',sans-serif; --ff-b:'Space Grotesk',sans-serif;
@@ -163,10 +164,11 @@
     .item-card:active { background:var(--mid2); transform:scale(.98); }
     .item-card:hover { border-color:var(--border2); }
     .item-card.in-cart { border-color:var(--rust); background:var(--rust-a); }
-    .item-card.has-mods { border-style:dashed; }
+    .item-card.has-mods { border-color:rgba(196,154,39,.3); }
+    .item-card.has-mods:hover { border-color:rgba(196,154,39,.6); }
     .item-card__name { font-size:.8rem; font-weight:600; line-height:1.25; color:var(--cream); }
     .item-card__price { font-size:.7rem; color:var(--rust); }
-    .item-card__mods-hint { font-size:.58rem; color:var(--muted); }
+    .item-card__mods-hint { font-size:.58rem; color:var(--amber); opacity:.8; }
     .item-card__badge {
       position:absolute; top:.4rem; right:.4rem;
       width:20px; height:20px; border-radius:50%;
@@ -695,61 +697,80 @@ createApp({
 
     // ── boot ────────────────────────────────────────────────
     async function boot() {
-      const [tData, gData, mData] = await Promise.all([
+      // Step 1: tables + channels in parallel
+      const [tData, chData] = await Promise.all([
         api('/restaurants/v1/tables'),
-        api(`/menus/v1/menu_groups?expand=menus&restaurant_id=${restaurantId}`),
-        api(`/menus/v1/menus?expand=items&restaurant_id=${restaurantId}`),
+        api('/menus/v1/channels').catch(() => []),
+      ])
+      tables.value = Array.isArray(tData) ? tData : (tData.data ?? [])
+      const channels = Array.isArray(chData) ? chData : (chData.data ?? [])
+      const chId = channels[0]?.id ?? null
+
+      // Step 2: channel menus (prices + modifierGroups) + menu_groups + modifier_groups in parallel
+      const menuEp = chId
+        ? `/menus/v1/channels/${chId}/menus?expand=items`
+        : `/menus/v1/menus?expand=items&restaurant_id=${restaurantId}`
+
+      const [mData, gData, mgRaw] = await Promise.all([
+        api(menuEp),
+        api(`/menus/v1/menu_groups?expand=menus&restaurant_id=${restaurantId}`).catch(() => []),
+        chId
+          ? api(`/menus/v1/modifier_groups?expand=modifierItems&channel_id=${chId}`).catch(() => [])
+          : Promise.resolve([]),
       ])
 
-      tables.value = Array.isArray(tData) ? tData : (tData.data ?? [])
+      const rawMenus  = Array.isArray(mData) ? mData : (mData.data ?? mData.menus ?? [])
       const rawGroups = Array.isArray(gData) ? gData : (gData.data ?? [])
-      const rawMenus  = Array.isArray(mData) ? mData : (mData.data ?? [])
+      const mgData    = Array.isArray(mgRaw) ? mgRaw : (mgRaw?.data ?? [])
 
-      // Load modifier groups by channel
-      let mgData = []
-      try {
-        const chData = await api('/menus/v1/channels')
-        const channels = Array.isArray(chData) ? chData : (chData.data ?? [])
-        if (channels.length) {
-          const mg = await api(`/menus/v1/modifier_groups?expand=modifierItems&channel_id=${channels[0].id}`)
-          mgData = Array.isArray(mg) ? mg : (mg.data ?? [])
-        }
-      } catch { /* modifiers optional */ }
       allModGroups.value = mgData
       const mgById = Object.fromEntries(mgData.map(g => [g.id, g]))
 
       const items = []
       for (const menu of rawMenus) {
         for (const item of (menu.items ?? menu.menuItems ?? [])) {
-          // Real Polotab price field: prices[0].amount
+          // Polotab price field: prices[0].amount
           const price   = item.prices?.[0]?.amount ?? item.price ?? item.basePrice ?? null
           const priceId = item.prices?.[0]?.id ?? item.priceId ?? null
 
-          // Modifier groups come embedded as item.modifierGroups (array of {id, name})
-          // Full objects (with modifierItems) are in mgById
-          const modGroupIds = (item.modifierGroups ?? []).map(g => g.id)
-          const modGroups   = modGroupIds.map(id => mgById[id]).filter(Boolean)
+          // Prefer embedded modifierGroups (channel endpoint includes modifierItems inside)
+          // Fall back to separately fetched mgById for full data
+          const embeddedMods = item.modifierGroups ?? []
+          const modGroups = embeddedMods.map(g =>
+            (g.modifierItems?.length || g.items?.length) ? g : (mgById[g.id] ?? g)
+          ).filter(g => g?.id)
 
           items.push({
-            id:        item.id,
-            menuId:    menu.id,
-            name:      item.name,
+            id:          item.id,
+            menuId:      menu.id,
+            name:        item.name,
             price,
             priceId,
-            groupId:   menu.menuGroupId ?? menu.groupId ?? menu.menu_group_id ?? '__all__',
-            modGroupIds,
+            groupId:     menu.menuGroupId ?? menu.groupId ?? menu.menu_group_id ?? menu.id,
+            modGroupIds: modGroups.map(g => g.id),
             modGroups,
           })
         }
       }
 
+      // Build category tabs: prefer menu_groups, fall back to menu names
       const grpsWithItems = rawGroups.filter(g => items.some(i => i.groupId === g.id))
-      if (!grpsWithItems.length && items.length) {
-        groups.value = [{ id:'__all__', name:'MENÚ' }]
-        items.forEach(i => i.groupId = '__all__')
-      } else {
+      if (grpsWithItems.length) {
         groups.value = grpsWithItems
+      } else {
+        // Use menu names as categories
+        const menuCats = rawMenus
+          .filter(m => items.some(i => i.menuId === m.id))
+          .map(m => ({ id: m.id, name: m.name }))
+        if (menuCats.length) {
+          groups.value = menuCats
+          items.forEach(i => { i.groupId = i.menuId })
+        } else {
+          groups.value = [{ id:'__all__', name:'MENÚ' }]
+          items.forEach(i => { i.groupId = '__all__' })
+        }
       }
+
       allItems.value = items
       if (groups.value.length) activeCat.value = groups.value[0].id
     }
