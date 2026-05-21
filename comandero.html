@@ -37,6 +37,7 @@
     .topbar__sp { flex:1; }
     .topbar__btn { background:none; border:1px solid var(--border); color:var(--muted); font-size:.58rem; font-weight:700; letter-spacing:.12em; padding:.32rem .65rem; transition:all .2s; }
     .topbar__btn:hover { border-color:var(--cream); color:var(--cream); }
+    .topbar__btn.on { border-color:rgba(74,123,94,.5); color:var(--green); }
 
     /* ──────────── VIEWS ──────────── */
     .view { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
@@ -51,8 +52,6 @@
     .field input { background:rgba(255,255,255,.05); border:1px solid var(--border); color:var(--cream); font-size:.88rem; padding:.65rem .9rem; transition:border-color .2s; width:100%; }
     .field input:focus { border-color:var(--rust); }
     .field input::placeholder { color:rgba(245,240,232,.18); }
-    .proxy-hint { font-size:.62rem; color:var(--muted); line-height:1.5; margin-bottom:.85rem; background:rgba(212,82,26,.08); border:1px solid rgba(212,82,26,.2); padding:.6rem .8rem; }
-    .proxy-hint a { color:var(--rust); text-decoration:underline; }
 
     /* ──────────── BUTTONS ──────────── */
     .btn-p { width:100%; padding:.82rem; background:var(--rust); color:var(--cream); font-family:var(--ff-d); font-size:1.15rem; letter-spacing:.08em; transition:background .2s; }
@@ -60,6 +59,10 @@
     .btn-p:disabled { background:rgba(212,82,26,.35); cursor:not-allowed; }
     .btn-o { padding:.55rem 1rem; background:none; border:1px solid var(--border); color:var(--muted); font-size:.68rem; font-weight:700; letter-spacing:.1em; transition:all .2s; }
     .btn-o:hover { border-color:var(--cream); color:var(--cream); }
+    .btn-void { padding:.55rem 1rem; background:none; border:1px solid rgba(200,60,60,.35); color:rgba(220,80,80,.8); font-size:.68rem; font-weight:700; letter-spacing:.1em; transition:all .2s; }
+    .btn-void:hover { border-color:rgba(220,80,80,.7); color:#e55; }
+    .btn-green { padding:.55rem 1rem; background:var(--green); color:var(--cream); font-size:.68rem; font-weight:700; letter-spacing:.1em; transition:opacity .2s; border:none; }
+    .btn-green:hover { opacity:.85; }
     .btn-ghost { background:none; color:var(--muted); font-size:1rem; padding:.3rem .4rem; transition:color .15s; }
     .btn-ghost:hover { color:var(--cream); }
     .err { font-size:.73rem; color:#e55; margin-bottom:.8rem; padding:.5rem .8rem; background:rgba(220,50,50,.1); border:1px solid rgba(220,50,50,.25); }
@@ -77,6 +80,38 @@
     .tcard.has-order::after { content:''; position:absolute; top:.35rem; right:.35rem; width:6px; height:6px; border-radius:50%; background:var(--green); }
     .tcard__n { font-family:var(--ff-d); font-size:1.4rem; letter-spacing:.04em; line-height:1; }
     .tcard__lbl { font-size:.56rem; color:var(--muted); margin-top:.12rem; letter-spacing:.04em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+    /* ──────────── OPEN ORDERS LIST ──────────── */
+    .olist { padding:.8rem 1rem 120px; }
+    .olist-empty { text-align:center; padding:3rem 1.5rem; color:var(--muted); font-size:.82rem; }
+    .ocard {
+      background:var(--mid); border:1px solid var(--border);
+      padding:.9rem 1rem; margin-bottom:.5rem; cursor:pointer;
+      display:grid; grid-template-columns:1fr auto;
+      gap:.3rem .8rem; transition:border-color .2s;
+    }
+    .ocard:hover { border-color:var(--border2); }
+    .ocard__num { font-family:var(--ff-d); font-size:1.1rem; letter-spacing:.06em; }
+    .ocard__table { font-size:.65rem; color:var(--muted); }
+    .ocard__items { font-size:.68rem; color:var(--muted); grid-column:1; }
+    .ocard__total { font-family:var(--ff-d); font-size:1.4rem; letter-spacing:.04em; grid-row:1/3; grid-column:2; align-self:center; color:var(--cream); }
+    .ocard__time { font-size:.58rem; color:var(--muted); }
+    .ocard__status { font-size:.55rem; font-weight:700; letter-spacing:.15em; padding:.15rem .5rem; border-radius:2px; }
+    .ocard__status.ip { background:rgba(74,123,94,.2); color:var(--green); border:1px solid rgba(74,123,94,.35); }
+    .ocard__status.ob { background:rgba(212,82,26,.15); color:var(--rust); border:1px solid rgba(212,82,26,.3); }
+
+    /* ──────────── ORDER DETAIL SHEET ──────────── */
+    .od-meta { padding:.6rem 1.1rem; border-bottom:1px solid var(--border); display:flex; gap:.8rem; align-items:center; flex-wrap:wrap; }
+    .od-meta-label { font-size:.55rem; font-weight:700; letter-spacing:.15em; color:var(--muted); }
+    .od-meta-val { font-size:.75rem; font-weight:600; color:var(--cream); }
+    .od-item-row { padding:.7rem 1.1rem; border-bottom:1px solid rgba(255,255,255,.04); }
+    .od-item-name { font-size:.82rem; font-weight:600; }
+    .od-item-sub { font-size:.65rem; color:var(--muted); margin-top:.15rem; line-height:1.5; }
+    .od-item-price { font-size:.75rem; color:var(--rust); margin-top:.2rem; }
+    .od-actions { display:flex; gap:.5rem; flex-wrap:wrap; }
+    .od-actions .btn-p { flex:2; font-size:.88rem; }
+    .od-actions .btn-void { flex:1; }
+    .od-actions .btn-o { flex:1; }
 
     /* ──────────── CAT TABS ──────────── */
     .cat-strip {
@@ -102,8 +137,7 @@
       border:1px solid var(--border);
       color:var(--cream); font-size:.82rem;
       padding:.55rem .9rem .55rem 2.2rem;
-      transition:border-color .2s;
-      border-radius:0;
+      transition:border-color .2s; border-radius:0;
     }
     .search-input:focus { border-color:rgba(212,82,26,.5); }
     .search-input::placeholder { color:rgba(245,240,232,.2); }
@@ -117,7 +151,6 @@
     .items-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:.5rem; }
     @media(min-width:480px){ .items-grid { grid-template-columns:repeat(3,1fr); } }
     @media(min-width:700px){ .items-grid { grid-template-columns:repeat(4,1fr); } }
-
     .item-card {
       background:var(--mid); border:1px solid var(--border);
       padding:.85rem .8rem .75rem;
@@ -165,7 +198,7 @@
     .sheet {
       position:fixed; bottom:0; left:0; right:0; z-index:210;
       background:var(--mid); border-top:1px solid var(--border2);
-      max-height:85dvh; display:flex; flex-direction:column;
+      max-height:88dvh; display:flex; flex-direction:column;
       padding-bottom:var(--safe-b);
       animation:slideUp .28s cubic-bezier(.16,1,.3,1);
     }
@@ -189,7 +222,6 @@
     .note-inp { width:100%; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.04); color:rgba(245,240,232,.5); font-size:.72rem; padding:.35rem .8rem; }
     .note-inp:focus { outline:none; border-color:rgba(212,82,26,.4); color:var(--cream); background:rgba(255,255,255,.06); }
     .note-inp::placeholder { color:rgba(245,240,232,.15); }
-
     .total-row { display:flex; justify-content:space-between; align-items:baseline; }
     .total-lbl { font-size:.58rem; font-weight:700; letter-spacing:.2em; color:var(--muted); }
     .total-val { font-family:var(--ff-d); font-size:2rem; letter-spacing:.03em; color:var(--cream); }
@@ -203,11 +235,7 @@
     .mod-group-title { font-size:.6rem; font-weight:700; letter-spacing:.18em; color:var(--muted); margin-bottom:.75rem; display:flex; align-items:center; gap:.6rem; }
     .mod-group-req { font-size:.55rem; background:rgba(212,82,26,.2); border:1px solid rgba(212,82,26,.35); color:var(--rust); padding:.1rem .4rem; border-radius:2px; }
     .mod-grid { display:flex; flex-wrap:wrap; gap:.4rem; }
-    .mod-btn {
-      padding:.5rem .9rem; background:var(--mid2); border:1px solid var(--border);
-      color:var(--muted); font-size:.72rem; font-weight:600; letter-spacing:.04em;
-      transition:all .18s; display:flex; align-items:center; gap:.35rem;
-    }
+    .mod-btn { padding:.5rem .9rem; background:var(--mid2); border:1px solid var(--border); color:var(--muted); font-size:.72rem; font-weight:600; letter-spacing:.04em; transition:all .18s; display:flex; align-items:center; gap:.35rem; }
     .mod-btn:hover { border-color:var(--border2); color:var(--cream); }
     .mod-btn.on { background:var(--rust-a); border-color:var(--rust); color:var(--cream); }
     .mod-btn__price { font-size:.62rem; color:var(--rust); }
@@ -237,6 +265,9 @@
     .order-chip { font-size:.6rem; font-weight:700; letter-spacing:.1em; background:rgba(74,123,94,.28); border:1px solid rgba(74,123,94,.4); padding:.22rem .65rem; border-radius:2px; cursor:pointer; transition:background .15s; }
     .order-chip:hover { background:rgba(74,123,94,.48); }
     .active-order-lbl { font-size:.56rem; letter-spacing:.15em; color:var(--muted); }
+
+    /* ──────────── PRINT ──────────── */
+    @media print { * { display:none !important; } }
   </style>
 </head>
 <body>
@@ -250,6 +281,7 @@
     <span v-else-if="view==='menu'" class="topbar__table">PARA LLEVAR</span>
     <div class="topbar__sp"></div>
     <button v-if="view==='menu'" class="topbar__btn" @click="goToTables">◀ MESAS</button>
+    <button v-if="token && view!=='login'" :class="['topbar__btn', view==='orders'?'on':'']" @click="toggleOrders">ÓRDENES</button>
     <button v-if="token" class="topbar__btn" style="color:rgba(200,80,80,.8);border-color:rgba(200,80,80,.25)" @click="logout">SALIR</button>
   </div>
 
@@ -298,6 +330,84 @@
     </template>
   </div>
 
+  <!-- ══════════════ OPEN ORDERS ══════════════ -->
+  <div v-else-if="view==='orders'" class="view">
+    <div v-if="ordersLoading"><div class="spinner"></div><div class="load-txt">Cargando órdenes...</div></div>
+    <template v-else>
+      <div class="olist">
+        <span class="slabel">ÓRDENES PENDIENTES</span>
+        <div v-if="!openOrders.length" class="olist-empty">No hay órdenes abiertas</div>
+        <div
+          v-for="o in openOrders" :key="o.id"
+          class="ocard"
+          @click="openOrderDetail(o)"
+        >
+          <div class="ocard__num">#{{ o.dayOrderNumber ?? o.id?.slice(-6).toUpperCase() }}</div>
+          <div class="ocard__total">${{ fmt(o.totalAmount ?? o.subtotalAmount ?? 0) }}</div>
+          <div class="ocard__table">{{ orderTableName(o) }}</div>
+          <div class="ocard__items">{{ (o.orderItems?.length ?? 0) }} producto(s)</div>
+          <div style="grid-column:1;display:flex;gap:.5rem;align-items:center;margin-top:.2rem">
+            <div class="ocard__time">{{ fmtTime(o.createdAt) }}</div>
+            <div :class="['ocard__status', o.status==='open_bill'?'ob':'ip']">{{ statusLabel(o.status) }}</div>
+          </div>
+        </div>
+      </div>
+      <div style="position:fixed;bottom:0;left:0;right:0;padding:.8rem 1rem;padding-bottom:calc(.8rem + var(--safe-b));background:rgba(10,10,10,.97);border-top:1px solid var(--border)">
+        <button class="btn-o" style="width:100%" @click="loadOpenOrders">↻ ACTUALIZAR</button>
+      </div>
+    </template>
+
+    <!-- ORDER DETAIL SHEET -->
+    <div v-if="orderDetailOpen" class="overlay" @click="orderDetailOpen=false"></div>
+    <div v-if="orderDetailOpen" class="sheet" style="max-height:92dvh">
+      <div class="sheet-head">
+        <span class="sheet-title">
+          #{{ selectedOrder?.dayOrderNumber ?? selectedOrder?.id?.slice(-6).toUpperCase() }}
+          — {{ orderTableName(selectedOrder) }}
+        </span>
+        <button class="btn-ghost" @click="orderDetailOpen=false">✕</button>
+      </div>
+      <div class="sheet-body">
+        <div class="od-meta">
+          <div>
+            <div class="od-meta-label">ESTADO</div>
+            <div class="od-meta-val">{{ statusLabel(selectedOrder?.status) }}</div>
+          </div>
+          <div>
+            <div class="od-meta-label">HORA</div>
+            <div class="od-meta-val">{{ fmtTime(selectedOrder?.createdAt) }}</div>
+          </div>
+          <div>
+            <div class="od-meta-label">ITEMS</div>
+            <div class="od-meta-val">{{ selectedOrder?.orderItems?.length ?? 0 }}</div>
+          </div>
+        </div>
+
+        <div v-for="oi in selectedOrder?.orderItems ?? []" :key="oi.id" class="od-item-row">
+          <div class="od-item-name">{{ oi.quantity }}× {{ oi.item?.name ?? itemNameById(oi.itemId) }}</div>
+          <div v-if="oi.orderItemModifiers?.length" class="od-item-sub">
+            + {{ oi.orderItemModifiers.map(m => m.item?.name ?? m.name ?? '').filter(Boolean).join(', ') }}
+          </div>
+          <div v-if="oi.note" class="od-item-sub" style="font-style:italic">* {{ oi.note }}</div>
+          <div class="od-item-price">
+            ${{ fmt((oi.item?.prices?.[0]?.amount ?? 0) * oi.quantity) }}
+          </div>
+        </div>
+      </div>
+      <div class="sheet-foot">
+        <div class="total-row">
+          <span class="total-lbl">TOTAL ORDEN</span>
+          <span class="total-val">${{ fmt(selectedOrder?.totalAmount ?? selectedOrder?.subtotalAmount ?? 0) }}</span>
+        </div>
+        <div class="od-actions">
+          <button class="btn-void" @click="voidOrder(selectedOrder.id)">✕ CANCELAR</button>
+          <button class="btn-o" @click="printTicket(selectedOrder)">⎙ TICKET</button>
+          <button class="btn-p" style="flex:2;font-size:.88rem" @click="finalizeOrder(selectedOrder.id)">✓ COBRADO →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ══════════════ MENU / ORDER ══════════════ -->
   <div v-else-if="view==='menu'" style="display:flex;flex-direction:column;flex:1;min-height:0">
 
@@ -326,12 +436,12 @@
           <div
             v-for="item in filteredItems"
             :key="item.id"
-            :class="['item-card', cartQty(item.id)>0?'in-cart':'', item.modGroupIds?.length?'has-mods':'']"
+            :class="['item-card', cartQty(item.id)>0?'in-cart':'', item.modGroups?.length?'has-mods':'']"
             @click="tapItem(item)"
           >
             <div class="item-card__name">{{ item.name }}</div>
             <div class="item-card__price">{{ item.price!=null ? '$'+fmt(item.price) : 'Precio variable' }}</div>
-            <div v-if="item.modGroupIds?.length" class="item-card__mods-hint">+ extras disponibles</div>
+            <div v-if="item.modGroups?.length" class="item-card__mods-hint">+ extras disponibles</div>
             <div v-if="cartQty(item.id)>0" class="item-card__badge">{{ cartQty(item.id) }}</div>
             <span class="item-card__plus">{{ cartQty(item.id)>0 ? '✕' : '+' }}</span>
           </div>
@@ -408,11 +518,10 @@
           <span v-if="modExtraTotal>0"> + ${{ fmt(modExtraTotal) }} extras = <strong style="color:var(--cream)">${{ fmt((mod.item?.price??0)+modExtraTotal) }}</strong></span>
         </div>
 
-        <!-- Modifier groups -->
         <div v-for="grp in mod.groups" :key="grp.id" class="mod-group">
           <div class="mod-group-title">
             {{ grp.name }}
-            <span v-if="grp.min>0" class="mod-group-req">REQUERIDO</span>
+            <span v-if="grp.quantityConstraint?.min>0" class="mod-group-req">REQUERIDO</span>
           </div>
           <div class="mod-grid">
             <button
@@ -422,12 +531,11 @@
               @click="toggleMod(grp, mi)"
             >
               {{ mi.name }}
-              <span v-if="mi.price>0" class="mod-btn__price">+${{ fmt(mi.price) }}</span>
+              <span v-if="modItemPrice(mi)>0" class="mod-btn__price">+${{ fmt(modItemPrice(mi)) }}</span>
             </button>
           </div>
         </div>
 
-        <!-- Qty -->
         <div class="mod-qty-row">
           <span class="mod-qty-lbl">CANTIDAD</span>
           <div class="mod-qty-ctrl">
@@ -437,7 +545,6 @@
           </div>
         </div>
 
-        <!-- Note -->
         <div class="mod-note-area">
           <input class="mod-note-inp" type="text" v-model="mod.note" :placeholder="'Nota para '+mod.item?.name+'...'">
         </div>
@@ -460,8 +567,6 @@
 import { createApp, ref, computed, onMounted } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
 
 // ── CREDENCIALES CODIFICADAS ───────────────────────────────────────────────
-// Decodificadas en tiempo de ejecución con la frase clave del mesero.
-// Para re-generar: node -e "KEY='tuFrase'; encode = s => btoa([...s].map((c,i)=>String.fromCharCode(c.charCodeAt(0)^KEY.charCodeAt(i%KEY.length))).join('')); console.log(encode('tu-valor'))"
 const ENC_PROXY  = 'GxUdHgdWTlsWCRICAkMWHg4bH0hKUwgIWg0NEBtIHwQGAFkETwMbFxgEGx1aCAQC'
 const ENC_APIKEY = 'GBMTOEAkMTgjUhJTXTk5KClDMTpAO1AKK1RQAR0fAAUaOUwbCjIZDAciC1cXWyUXFScfBjoYO1gnETwCAwdcNDk5MTwzBz4W'
 const ENC_RID    = 'QwBeX0MJUBZZAxUFXENAWFhFWQdCBQ9DQAhSQUZVQFBQWEMI'
@@ -485,7 +590,6 @@ createApp({
     const view          = ref('login')
     const passphrase    = ref('')
     const token         = ref(localStorage.getItem(K.tk) || '')
-    // decoded at runtime, never stored
     let apiKey = '', restaurantId = '', proxyUrl = ''
     const loginErr      = ref('')
     const busy          = ref(false)
@@ -506,15 +610,39 @@ createApp({
     const cartOpen      = ref(false)
     const currentOrderId = ref(null)
 
-    // modifier sheet state
     const modOpen = ref(false)
     const mod = ref({ item: null, groups: [], selected: {}, qty: 1, note: '' })
 
+    // open orders
+    const openOrders     = ref([])
+    const ordersLoading  = ref(false)
+    const orderDetailOpen = ref(false)
+    const selectedOrder  = ref(null)
+
     // ── utils ──────────────────────────────────────────────────
     const fmt = n => n != null ? Number(n).toFixed(2) : '0.00'
-
     function tNum(name) { const m = name.match(/\d+/); return m ? m[0] : name.slice(0,2).toUpperCase() }
     function tableName(tid) { return tables.value.find(t=>t.id===tid)?.name ?? 'Mesa' }
+    function itemNameById(id) { return allItems.value.find(i=>i.id===id)?.name ?? id }
+
+    function orderTableName(o) {
+      if (!o) return ''
+      if (o.tableId) return tables.value.find(t=>t.id===o.tableId)?.name ?? 'Mesa'
+      return 'Para llevar'
+    }
+
+    function statusLabel(s) {
+      return { in_progress:'EN COCINA', open_bill:'CUENTA', draft:'BORRADOR', void:'CANCELADA', finalized:'COBRADA' }[s] ?? (s ?? '—')
+    }
+
+    function fmtTime(iso) {
+      if (!iso) return ''
+      return new Date(iso).toLocaleTimeString('es-MX', { hour:'2-digit', minute:'2-digit' })
+    }
+
+    function modItemPrice(mi) {
+      return mi.prices?.[0]?.amount ?? mi.price ?? 0
+    }
 
     function showToast(msg, t='ok') {
       toast.value = { msg, t }
@@ -539,9 +667,9 @@ createApp({
       if (!key) { loginErr.value = 'Ingresa la frase clave'; return }
       busy.value = true; loginErr.value = ''
       try {
-        proxyUrl      = decode(ENC_PROXY,  key)
-        apiKey        = decode(ENC_APIKEY, key)
-        restaurantId  = decode(ENC_RID,    key)
+        proxyUrl     = decode(ENC_PROXY,  key)
+        apiKey       = decode(ENC_APIKEY, key)
+        restaurantId = decode(ENC_RID,    key)
         if (!apiKey || !restaurantId) throw new Error('Frase incorrecta')
 
         const d = await fetch(`${base()}/auth/v1/restaurants/token`, {
@@ -565,7 +693,7 @@ createApp({
       cart.value = []; selectedTable.value = null; draftOrders.value = {}
     }
 
-    // ── boot (load tables + menu + modifiers) ────────────────
+    // ── boot ────────────────────────────────────────────────
     async function boot() {
       const [tData, gData, mData] = await Promise.all([
         api('/restaurants/v1/tables'),
@@ -574,69 +702,165 @@ createApp({
       ])
 
       tables.value = Array.isArray(tData) ? tData : (tData.data ?? [])
-
       const rawGroups = Array.isArray(gData) ? gData : (gData.data ?? [])
       const rawMenus  = Array.isArray(mData) ? mData : (mData.data ?? [])
 
-      // Load channels to get modifier groups
+      // Load modifier groups by channel
       let mgData = []
       try {
         const chData = await api('/menus/v1/channels')
         const channels = Array.isArray(chData) ? chData : (chData.data ?? [])
         if (channels.length) {
-          const chId = channels[0].id
-          const mg = await api(`/menus/v1/modifier_groups?expand=modifierItems&channel_id=${chId}`)
+          const mg = await api(`/menus/v1/modifier_groups?expand=modifierItems&channel_id=${channels[0].id}`)
           mgData = Array.isArray(mg) ? mg : (mg.data ?? [])
         }
       } catch { /* modifiers optional */ }
       allModGroups.value = mgData
-
-      // Build modifier group lookup by id
       const mgById = Object.fromEntries(mgData.map(g => [g.id, g]))
 
-      // Flatten items
       const items = []
       for (const menu of rawMenus) {
-        const menuItems = menu.items ?? menu.menuItems ?? []
-        for (const item of menuItems) {
-          // Try various price field names
-          const price =
-            item.price      != null ? item.price :
-            item.basePrice  != null ? item.basePrice :
-            item.prices?.[0]?.price != null ? item.prices[0].price :
-            null
+        for (const item of (menu.items ?? menu.menuItems ?? [])) {
+          // Real Polotab price field: prices[0].amount
+          const price   = item.prices?.[0]?.amount ?? item.price ?? item.basePrice ?? null
+          const priceId = item.prices?.[0]?.id ?? item.priceId ?? null
 
-          const priceId = item.priceId ?? item.prices?.[0]?.id ?? null
-
-          // Modifier group IDs for this item
-          const modGroupIds =
-            item.modifierGroupIds ??
-            item.modifier_group_ids ??
-            (item.modifierGroups?.map(g => g.id)) ??
-            []
+          // Modifier groups come embedded as item.modifierGroups (array of {id, name})
+          // Full objects (with modifierItems) are in mgById
+          const modGroupIds = (item.modifierGroups ?? []).map(g => g.id)
+          const modGroups   = modGroupIds.map(id => mgById[id]).filter(Boolean)
 
           items.push({
-            id:          item.id,
-            menuId:      menu.id,
-            name:        item.name,
+            id:        item.id,
+            menuId:    menu.id,
+            name:      item.name,
             price,
             priceId,
-            groupId:     menu.menuGroupId ?? menu.groupId ?? menu.menu_group_id ?? '__all__',
+            groupId:   menu.menuGroupId ?? menu.groupId ?? menu.menu_group_id ?? '__all__',
             modGroupIds,
+            modGroups,
           })
         }
       }
 
-      // Build category groups
       const grpsWithItems = rawGroups.filter(g => items.some(i => i.groupId === g.id))
       if (!grpsWithItems.length && items.length) {
-        groups.value = [{ id: '__all__', name: 'MENÚ' }]
+        groups.value = [{ id:'__all__', name:'MENÚ' }]
         items.forEach(i => i.groupId = '__all__')
       } else {
         groups.value = grpsWithItems
       }
       allItems.value = items
       if (groups.value.length) activeCat.value = groups.value[0].id
+    }
+
+    // ── open orders ──────────────────────────────────────────
+    async function loadOpenOrders() {
+      ordersLoading.value = true
+      try {
+        const data = await api('/orders/v1/orders?limit=100')
+        const rows = Array.isArray(data) ? data : (data?.orders ?? data?.data ?? data?.items ?? [])
+        // Show only non-final, non-void orders
+        openOrders.value = rows.filter(o => !['void','finalized','cancelled','closed'].includes(o.status))
+          .sort((a,b) => new Date(b.createdAt)-new Date(a.createdAt))
+      } catch(e) { showToast('Error: ' + e.message, 'err') }
+      finally { ordersLoading.value = false }
+    }
+
+    function toggleOrders() {
+      if (view.value === 'orders') {
+        view.value = 'tables'
+      } else {
+        view.value = 'orders'
+        cartOpen.value = false
+        modOpen.value = false
+        loadOpenOrders()
+      }
+    }
+
+    function openOrderDetail(o) {
+      selectedOrder.value = o
+      orderDetailOpen.value = true
+    }
+
+    async function voidOrder(orderId) {
+      if (!confirm('¿Cancelar esta orden? No se puede deshacer.')) return
+      try {
+        await api(`/orders/v1/orders/${orderId}/void`, { method:'POST', body:'{}' })
+        showToast('Orden cancelada')
+        orderDetailOpen.value = false
+        draftOrders.value = Object.fromEntries(
+          Object.entries(draftOrders.value).filter(([,id]) => id !== orderId)
+        )
+        await loadOpenOrders()
+      } catch(e) { showToast('Error: ' + e.message, 'err') }
+    }
+
+    async function finalizeOrder(orderId) {
+      try {
+        await api(`/orders/v1/orders/${orderId}/finalize`, { method:'POST', body:'{}' })
+        showToast('✓ Orden cobrada')
+        orderDetailOpen.value = false
+        draftOrders.value = Object.fromEntries(
+          Object.entries(draftOrders.value).filter(([,id]) => id !== orderId)
+        )
+        await loadOpenOrders()
+      } catch(e) { showToast('Error: ' + e.message, 'err') }
+    }
+
+    function printTicket(o) {
+      const tblName = orderTableName(o)
+      const dateStr = o.createdAt ? new Date(o.createdAt).toLocaleDateString('es-MX') : ''
+      const timeStr = fmtTime(o.createdAt)
+      const orderNum = o.dayOrderNumber ?? o.id?.slice(-6).toUpperCase()
+      const total = Number(o.totalAmount ?? o.subtotalAmount ?? 0).toFixed(2)
+
+      const itemRows = (o.orderItems ?? []).map(oi => {
+        const name  = oi.item?.name ?? itemNameById(oi.itemId)
+        const price = oi.item?.prices?.[0]?.amount ?? 0
+        const qty   = oi.quantity ?? 1
+        const mods  = (oi.orderItemModifiers ?? []).map(m => m.item?.name ?? m.name ?? '').filter(Boolean)
+        const note  = oi.note ?? ''
+        const sub   = (price * qty).toFixed(2)
+        return `
+<div class="row"><span>${qty}× ${name}</span><span>$${sub}</span></div>
+${mods.length ? `<div class="indent">+ ${mods.join(', ')}</div>` : ''}
+${note ? `<div class="indent note">* ${note}</div>` : ''}`
+      }).join('')
+
+      const win = window.open('', '_blank', 'width=360,height=640')
+      win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
+<title>Ticket #${orderNum}</title>
+<style>
+  body{font-family:monospace;font-size:13px;margin:0;padding:12px;max-width:300px}
+  .c{text-align:center} .b{font-weight:bold} .lg{font-size:16px}
+  .dash{border-top:1px dashed #000;margin:7px 0}
+  .row{display:flex;justify-content:space-between;margin:2px 0}
+  .indent{padding-left:14px;color:#555;font-size:11px;margin:1px 0}
+  .note{font-style:italic}
+  .total{font-size:15px;font-weight:bold}
+  .btn{display:block;width:100%;padding:8px;margin-top:12px;font-size:14px;cursor:pointer}
+  @media print{.btn{display:none}}
+</style></head><body>
+<div class="c lg b">SAINT LATTE</div>
+<div class="c">Specialty Coffee</div>
+<div class="c">Valle de Santiago, Gto.</div>
+<div class="dash"></div>
+<div class="c">${dateStr}  ${timeStr}</div>
+<div class="c b">Orden #${orderNum}</div>
+<div class="c">${tblName}</div>
+<div class="dash"></div>
+${itemRows}
+<div class="dash"></div>
+<div class="row total"><span>TOTAL</span><span>$${total}</span></div>
+<div class="dash"></div>
+<div class="c" style="margin-top:8px;font-size:12px">¡Gracias por tu visita!</div>
+<div class="c" style="font-size:11px;color:#666">@saint_latte</div>
+<button class="btn" onclick="window.print()">🖨 Imprimir</button>
+</body></html>`)
+      win.document.close()
+      win.focus()
+      setTimeout(() => win.print(), 400)
     }
 
     // ── table selection ──────────────────────────────────────
@@ -660,21 +884,17 @@ createApp({
       modOpen.value = false
     }
 
-    function setCategory(id) {
-      activeCat.value = id
-      // Don't clear search — user might want to filter within category
-    }
+    function setCategory(id) { activeCat.value = id }
 
     // ── filtered items ───────────────────────────────────────
     const filteredItems = computed(() => {
-      let items = activeCat.value
-        ? allItems.value.filter(i => i.groupId === activeCat.value)
-        : allItems.value
       if (search.value.trim()) {
         const q = search.value.trim().toLowerCase()
-        items = allItems.value.filter(i => i.name.toLowerCase().includes(q))
+        return allItems.value.filter(i => i.name.toLowerCase().includes(q))
       }
-      return items
+      return activeCat.value
+        ? allItems.value.filter(i => i.groupId === activeCat.value)
+        : allItems.value
     })
 
     // ── cart helpers ─────────────────────────────────────────
@@ -699,72 +919,47 @@ createApp({
     }
     function clearCart() { cart.value = []; cartOpen.value = false; currentOrderId.value = null }
 
-    // ── item tap → maybe open modifier sheet ─────────────────
+    // ── item tap ─────────────────────────────────────────────
     function tapItem(item) {
-      if (cartQty(item.id) > 0 && cartOpen.value === false) {
-        // If already in cart and sheet is closed, open cart
-        cartOpen.value = true
-        return
+      if (cartQty(item.id) > 0 && !cartOpen.value) {
+        cartOpen.value = true; return
       }
-
-      const mgById = Object.fromEntries(allModGroups.value.map(g => [g.id, g]))
-      const itemGroups = (item.modGroupIds ?? [])
-        .map(id => mgById[id])
-        .filter(Boolean)
-
-      if (itemGroups.length > 0) {
-        mod.value = { item, groups: itemGroups, selected: {}, qty: 1, note: '' }
+      if (item.modGroups?.length > 0) {
+        mod.value = { item, groups: item.modGroups, selected: {}, qty: 1, note: '' }
         modOpen.value = true
         cartOpen.value = false
       } else {
         addToCart(item, [], 1, '')
+        showToast(`✓ ${item.name}`)
       }
     }
 
     function addToCart(item, mods, qty, note) {
-      cart.value.push({
-        itemId:  item.id,
-        menuId:  item.menuId,
-        name:    item.name,
-        price:   item.price,
-        priceId: item.priceId,
-        mods:    mods,
-        qty,
-        note: note || '',
-      })
+      cart.value.push({ itemId:item.id, menuId:item.menuId, name:item.name, price:item.price, priceId:item.priceId, mods, qty, note:note||'' })
     }
 
     // ── modifier sheet ───────────────────────────────────────
-    function isModOn(groupId, modId) {
-      return !!(mod.value.selected[groupId]?.includes(modId))
-    }
+    function isModOn(groupId, modId) { return !!(mod.value.selected[groupId]?.includes(modId)) }
 
     function toggleMod(grp, mi) {
       const sel = mod.value.selected
       if (!sel[grp.id]) sel[grp.id] = []
       const idx = sel[grp.id].indexOf(mi.id)
-      const isMulti = (grp.max ?? grp.maxQuantity ?? 1) > 1
-
-      if (idx >= 0) {
-        sel[grp.id].splice(idx, 1)
-      } else {
-        if (!isMulti) sel[grp.id] = [mi.id]
-        else sel[grp.id].push(mi.id)
-      }
+      const isMulti = (grp.quantityConstraint?.max ?? 1) > 1
+      if (idx >= 0) sel[grp.id].splice(idx, 1)
+      else if (!isMulti) sel[grp.id] = [mi.id]
+      else sel[grp.id].push(mi.id)
       mod.value.selected = { ...sel }
     }
 
     const modExtraTotal = computed(() => {
-      if (!mod.value.groups.length) return 0
       let total = 0
-      const mgById = Object.fromEntries(allModGroups.value.map(g => [g.id, g]))
       for (const [gid, mids] of Object.entries(mod.value.selected)) {
-        const grp = mgById[gid]
+        const grp = mod.value.groups.find(g => g.id === gid)
         if (!grp) continue
-        const items = grp.modifierItems ?? grp.items ?? []
         for (const mid of mids) {
-          const mi = items.find(i => i.id === mid)
-          if (mi?.price) total += mi.price
+          const mi = (grp.modifierItems ?? grp.items ?? []).find(i => i.id === mid)
+          if (mi) total += modItemPrice(mi)
         }
       }
       return total
@@ -772,21 +967,22 @@ createApp({
 
     function confirmMod() {
       const item = mod.value.item
-      // Flatten selected modifiers
       const mods = []
-      const mgById = Object.fromEntries(allModGroups.value.map(g => [g.id, g]))
       for (const [gid, mids] of Object.entries(mod.value.selected)) {
-        const grp = mgById[gid]
+        const grp = mod.value.groups.find(g => g.id === gid)
         if (!grp) continue
-        const items = grp.modifierItems ?? grp.items ?? []
         for (const mid of mids) {
-          const mi = items.find(i => i.id === mid)
-          if (mi) mods.push({ id: mi.id, name: mi.name, price: mi.price ?? 0, priceId: mi.priceId ?? mi.prices?.[0]?.id ?? null })
+          const mi = (grp.modifierItems ?? grp.items ?? []).find(i => i.id === mid)
+          if (mi) mods.push({
+            id: mi.id, name: mi.name,
+            price: modItemPrice(mi),
+            priceId: mi.prices?.[0]?.id ?? mi.priceId ?? null
+          })
         }
       }
       addToCart(item, mods, mod.value.qty, mod.value.note)
       modOpen.value = false
-      mod.value = { item: null, groups: [], selected: {}, qty: 1, note: '' }
+      mod.value = { item:null, groups:[], selected:{}, qty:1, note:'' }
       showToast(`✓ ${item.name} agregado`)
     }
 
@@ -823,7 +1019,7 @@ createApp({
         }
         if (currentOrderId.value) payload.id = currentOrderId.value
 
-        const order = await api('/orders/v1/orders', { method:'POST', body: JSON.stringify(payload) })
+        const order = await api('/orders/v1/orders', { method:'POST', body:JSON.stringify(payload) })
         const oid = order.id ?? order.orderId
         currentOrderId.value = oid
         if (selectedTable.value) draftOrders.value[selectedTable.value.id] = oid
@@ -839,22 +1035,20 @@ createApp({
     }
 
     // ── init ─────────────────────────────────────────────────
-    onMounted(async () => {
-      // Cached token: still need passphrase to decode restaurantId for boot queries
-      // So always start at login — it's just one word
-      view.value = 'login'
-    })
+    onMounted(() => { view.value = 'login' })
 
     return {
       view, passphrase, token, loginErr, busy, sending, toast,
-      tables, selectedTable, draftOrders, groups, allItems, allModGroups,
+      tables, selectedTable, draftOrders, groups, allItems,
       activeCat, search, filteredItems,
       cart, cartOpen, currentOrderId, totalQty, totalAmt,
       mod, modOpen, modExtraTotal,
-      login, logout, selectTable, resumeOrder, goToTables, setCategory,
+      openOrders, ordersLoading, orderDetailOpen, selectedOrder,
+      login, logout, selectTable, resumeOrder, goToTables, setCategory, toggleOrders,
       cartQty, cartInc, cartDec, clearCart, tapItem,
       isModOn, toggleMod, confirmMod, sendOrder,
-      fmt, tNum, tableName, itemTotal,
+      loadOpenOrders, openOrderDetail, voidOrder, finalizeOrder, printTicket,
+      fmt, tNum, tableName, itemNameById, orderTableName, statusLabel, fmtTime, modItemPrice, itemTotal,
     }
   }
 }).mount('#app')
