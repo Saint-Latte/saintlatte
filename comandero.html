@@ -773,16 +773,6 @@ createApp({
         }
       }
 
-      // Modifier groups not linked to any specific item → apply globally to all items
-      const usedMgIds = new Set(items.flatMap(i => i.modGroupIds))
-      const globalMgs = mgData.filter(g => !usedMgIds.has(g.id) && (g.modifierItems?.length || g.items?.length))
-      if (globalMgs.length) {
-        items.forEach(i => {
-          i.modGroups    = [...i.modGroups, ...globalMgs]
-          i.modGroupIds  = i.modGroups.map(g => g.id)
-        })
-      }
-
       allItems.value = items
       if (groups.value.length) activeCat.value = groups.value[0].id
     }
@@ -1045,9 +1035,9 @@ ${itemRows}
         }))
 
         const payload = {
-          type:          selectedTable.value ? 'dine_in' : 'direct_sale',
+          type:          'direct_sale',
           customerCount: 1,
-          tableId:       selectedTable.value?.id ?? null,
+          tableId:       selectedTable.value?.id || undefined,
           orderItems,
         }
         if (currentOrderId.value) payload.id = currentOrderId.value
