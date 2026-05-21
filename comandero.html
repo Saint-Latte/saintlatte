@@ -260,6 +260,10 @@
       <div class="login-title">ACCESO</div>
       <div class="login-sub">Credenciales Polotab</div>
       <div class="field">
+        <label>PROXY URL <span style="opacity:.5;font-weight:400;letter-spacing:.05em">(Cloudflare Worker — ver _proxy/worker.js)</span></label>
+        <input v-model="proxyUrl" type="text" placeholder="https://polotab-proxy.tu-usuario.workers.dev" autocomplete="off" @keyup.enter="login">
+      </div>
+      <div class="field">
         <label>API KEY</label>
         <input v-model="apiKey" type="password" placeholder="krzV4HPL..." autocomplete="off" @keyup.enter="login">
       </div>
@@ -399,8 +403,8 @@
 <script type="module">
 import { createApp, ref, computed, onMounted } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
 
-const BASE = 'https://api.polotab.com'
-const K = { ak:'sl_cmd_ak', rid:'sl_cmd_rid', tk:'sl_cmd_tk' }
+const POLOTAB = 'https://api.polotab.com'
+const K = { ak:'sl_cmd_ak', rid:'sl_cmd_rid', tk:'sl_cmd_tk', px:'sl_cmd_px' }
 
 createApp({
   setup() {
@@ -408,6 +412,7 @@ createApp({
     const apiKey       = ref(localStorage.getItem(K.ak)  || '')
     const restaurantId = ref(localStorage.getItem(K.rid) || '')
     const token        = ref(localStorage.getItem(K.tk)  || '')
+    const proxyUrl     = ref(localStorage.getItem(K.px)  || '')
     const loginErr     = ref('')
     const busy         = ref(false)
     const sending      = ref(false)
@@ -442,8 +447,10 @@ createApp({
       setTimeout(() => toast.value = null, 3200)
     }
 
+    const base = () => (proxyUrl.value || POLOTAB)
+
     async function api(path, opts={}) {
-      const r = await fetch(`${BASE}${path}`, {
+      const r = await fetch(`${base()}${path}`, {
         ...opts,
         headers: {
           'Content-Type':'application/json',
@@ -463,7 +470,7 @@ createApp({
       }
       busy.value = true; loginErr.value = ''
       try {
-        const d = await fetch(`${BASE}/auth/v1/restaurants/token`, {
+        const d = await fetch(`${base()}/auth/v1/restaurants/token`, {
           method:'POST',
           headers:{ 'Content-Type':'application/json', 'Authorization':`Bearer ${apiKey.value}` },
           body: JSON.stringify({ restaurantId: restaurantId.value })
@@ -473,6 +480,7 @@ createApp({
         localStorage.setItem(K.ak,  apiKey.value)
         localStorage.setItem(K.rid, restaurantId.value)
         localStorage.setItem(K.tk,  d.token)
+        if (proxyUrl.value) localStorage.setItem(K.px, proxyUrl.value)
         await boot()
         view.value = 'tables'
       } catch(e) { loginErr.value = e.message }
@@ -480,7 +488,7 @@ createApp({
     }
 
     function logout() {
-      Object.values(K).forEach(k=>localStorage.removeItem(k))
+      [K.ak, K.rid, K.tk].forEach(k=>localStorage.removeItem(k))
       token.value = ''; view.value = 'login'
       cart.value = []; selectedTable.value = null; draftOrders.value = {}
     }
@@ -634,7 +642,7 @@ createApp({
     })
 
     return {
-      view, apiKey, restaurantId, token, loginErr, busy, sending, toast,
+      view, apiKey, restaurantId, proxyUrl, token, loginErr, busy, sending, toast,
       tables, selectedTable, draftOrders,
       groups, allItems, activeCat, visibleItems,
       cart, sheetOpen, currentOrderId, totalQty, totalAmt,
