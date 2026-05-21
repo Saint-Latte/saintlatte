@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Saint Latte — Haz tu pedido en línea y recógelo en tu sucursal favorita. Valle de Santiago, Gto.">
+  <title>Pedidos — Saint Latte</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.cdnfonts.com/css/funtastic" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-pedidos">
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__brand">
+      <img src="assets/images/logo.png" alt="Saint Latte" class="nav__logo-img" onerror="this.style.display='none'">
+      <span class="nav__brand-text">SAINT LATTE</span>
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="menu.html"      class="nav__link">MENÚ</a></li>
+      <li><a href="comunidad.html" class="nav__link">COMUNIDAD</a></li>
+      <li><a href="nosotros.html"  class="nav__link">NOSOTROS</a></li>
+      <li><a href="pedidos.html"   class="nav__link nav__link--active nav__link--cta">PEDIDOS</a></li>
+    </ul>
+    <button class="nav__hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu__inner">
+      <ul class="mobile-menu__list" role="list">
+        <li><a href="menu.html"      class="mobile-link">MENÚ</a></li>
+        <li><a href="comunidad.html" class="mobile-link">COMUNIDAD</a></li>
+        <li><a href="nosotros.html"  class="mobile-link">NOSOTROS</a></li>
+        <li><a href="pedidos.html"   class="mobile-link">PEDIDOS</a></li>
+      </ul>
+      <div class="mobile-menu__footer">
+        <a href="https://instagram.com/saint_latte" target="_blank" rel="noopener">IG</a>
+        <span>—</span><a href="#">TK</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- HERO -->
+  <header class="order-hero">
+    <div class="order-hero__inner">
+      <span class="section-label">HECHO A TU GUSTO</span>
+      <h1 class="order-hero__title">HAZ TU<br><em>PEDIDO.</em></h1>
+      <p class="order-hero__sub">
+        Llena el formulario, elige tu sucursal y te mandamos un mensaje por WhatsApp
+        para confirmar. Listo para recoger cuando tú digas.
+      </p>
+    </div>
+    <div class="order-hero__numbers">
+      <div class="order-num-card">
+        <span class="order-num-card__label">SUC. LEANDRO VALLE</span>
+        <a href="https://wa.me/524561560813" target="_blank" rel="noopener" class="order-num-card__num">456 156 0813</a>
+      </div>
+      <div class="order-num-card">
+        <span class="order-num-card__label">SUC. JARRÓN AZUL</span>
+        <a href="https://wa.me/524561862343" target="_blank" rel="noopener" class="order-num-card__num">456 186 2343</a>
+      </div>
+      <div class="order-num-card">
+        <span class="order-num-card__label">PEDIDOS ESPECIALES</span>
+        <a href="https://wa.me/524645796026" target="_blank" rel="noopener" class="order-num-card__num">464 579 6026</a>
+        <span class="order-num-card__hint">Panadería, café en grano, catering</span>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- FORM -->
+  <section class="order-section">
+    <div class="order-section__inner">
+
+      <form class="order-form" id="orderForm" novalidate>
+
+        <!-- SUCURSAL -->
+        <fieldset class="order-fieldset">
+          <legend class="order-legend">
+            <span class="order-step">01</span>
+            ¿Dónde recoges?
+          </legend>
+          <div class="order-radios">
+
+            <label class="order-radio" for="suc1">
+              <input type="radio" name="branch" id="suc1" value="suc1" checked>
+              <span class="order-radio__box">
+                <span class="order-radio__check" aria-hidden="true">◆</span>
+              </span>
+              <span class="order-radio__content">
+                <strong>Leandro Valle 43</strong>
+                <span>Centro · Valle de Santiago, Gto.</span>
+              </span>
+            </label>
+
+            <label class="order-radio" for="suc2">
+              <input type="radio" name="branch" id="suc2" value="suc2">
+              <span class="order-radio__box">
+                <span class="order-radio__check" aria-hidden="true">◆</span>
+              </span>
+              <span class="order-radio__content">
+                <strong>Clavel #2 — Jarrón Azul</strong>
+                <span>Valle de Santiago, Gto.</span>
+              </span>
+            </label>
+
+            <label class="order-radio" for="especial">
+              <input type="radio" name="branch" id="especial" value="especial">
+              <span class="order-radio__box">
+                <span class="order-radio__check" aria-hidden="true">◆</span>
+              </span>
+              <span class="order-radio__content">
+                <strong>Pedido Especial</strong>
+                <span>Panadería, café en grano, catering</span>
+              </span>
+            </label>
+
+          </div>
+        </fieldset>
+
+        <!-- DATOS -->
+        <fieldset class="order-fieldset">
+          <legend class="order-legend">
+            <span class="order-step">02</span>
+            Tus datos
+          </legend>
+          <div class="order-fields-row">
+            <div class="order-field">
+              <label class="order-field__label" for="orderName">NOMBRE</label>
+              <input class="order-field__input" type="text" id="orderName" name="name"
+                     placeholder="¿Cómo te llamamos?" autocomplete="given-name" required>
+            </div>
+            <div class="order-field">
+              <label class="order-field__label" for="orderPhone">TELÉFONO</label>
+              <input class="order-field__input" type="tel" id="orderPhone" name="phone"
+                     placeholder="Para confirmarte" autocomplete="tel">
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- PEDIDO -->
+        <fieldset class="order-fieldset">
+          <legend class="order-legend">
+            <span class="order-step">03</span>
+            Tu pedido
+          </legend>
+          <div class="order-field">
+            <label class="order-field__label" for="orderDetails">
+              ¿QUÉ TE LLEVÁS?
+              <a href="menu.html" class="order-field__link" target="_blank">ver menú →</a>
+            </label>
+            <textarea class="order-field__input order-field__textarea" id="orderDetails"
+                      name="details" rows="6"
+                      placeholder="Ej: 1 latte de vainilla, 1 V60 Ethiopia, 2 croissants de mantequilla..." required></textarea>
+          </div>
+          <div class="order-field">
+            <label class="order-field__label" for="orderNotes">NOTAS ADICIONALES <span style="opacity:.4">(opcional)</span></label>
+            <input class="order-field__input" type="text" id="orderNotes" name="notes"
+                   placeholder="Alergias, personalización, hora de recogida...">
+          </div>
+        </fieldset>
+
+        <!-- SUBMIT -->
+        <div class="order-submit-row">
+          <p class="order-submit-note">
+            Al dar clic se abrirá WhatsApp con tu pedido listo. Solo da enviar y listo.
+          </p>
+          <button type="submit" class="btn btn--solid order-submit-btn" id="submitBtn">
+            ENVIAR POR WHATSAPP →
+          </button>
+        </div>
+
+        <div class="order-error" id="orderError" aria-live="polite" hidden>
+          Por favor llena los campos requeridos: nombre y pedido.
+        </div>
+
+      </form>
+
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="assets/images/logo.png" alt="" class="footer__logo" onerror="this.style.display='none'">
+        <span class="footer__brand-name">SAINT LATTE</span>
+        <p class="footer__brand-sub">Specialty Coffee Shop · Valle de Santiago, Gto.</p>
+      </div>
+      <nav class="footer__nav">
+        <a href="menu.html">MENÚ</a>
+        <a href="comunidad.html">COMUNIDAD</a>
+        <a href="nosotros.html">NOSOTROS</a>
+        <a href="pedidos.html">PEDIDOS</a>
+      </nav>
+      <div class="footer__social">
+        <a href="https://instagram.com/saint_latte" target="_blank" rel="noopener" class="footer__social-link">INSTAGRAM</a>
+        <a href="#" class="footer__social-link">TIKTOK</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 SAINT LATTE.</span>
+      <span>HECHO CON ♥ EN VALLE DE SANTIAGO</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    document.getElementById('orderForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name    = document.getElementById('orderName').value.trim();
+      const phone   = document.getElementById('orderPhone').value.trim();
+      const details = document.getElementById('orderDetails').value.trim();
+      const notes   = document.getElementById('orderNotes').value.trim();
+      const branch  = document.querySelector('input[name="branch"]:checked').value;
+      const errEl   = document.getElementById('orderError');
+
+      if (!name || !details) {
+        errEl.hidden = false;
+        return;
+      }
+      errEl.hidden = true;
+
+      const waNumbers = {
+        suc1:     '524561560813',
+        suc2:     '524561862343',
+        especial: '524645796026'
+      };
+      const branchNames = {
+        suc1:     'Leandro Valle 43, Centro',
+        suc2:     'Clavel #2, Jarrón Azul',
+        especial: 'Pedido Especial'
+      };
+
+      let msg = `*NUEVO PEDIDO — SAINT LATTE*\n\n`;
+      msg += `*Nombre:* ${name}\n`;
+      if (phone) msg += `*Teléfono:* ${phone}\n`;
+      msg += `*Sucursal:* ${branchNames[branch]}\n\n`;
+      msg += `*Pedido:*\n${details}`;
+      if (notes) msg += `\n\n*Notas:* ${notes}`;
+      msg += `\n\n_Enviado desde saintlatte.com_`;
+
+      const url = `https://wa.me/${waNumbers[branch]}?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    });
+  </script>
+</body>
+</html>
