@@ -359,6 +359,12 @@
             <div class="ocard__time">{{ fmtTime(o.createdAt) }}</div>
             <div :class="['ocard__status', o.status==='open_bill'?'ob':'ip']">{{ statusLabel(o.status) }}</div>
           </div>
+          <!-- Quick actions directly on card -->
+          <div style="grid-column:1/-1;display:flex;gap:.4rem;margin-top:.6rem;padding-top:.6rem;border-top:1px solid var(--border)">
+            <button class="btn-void"  style="flex:1;font-size:.56rem;padding:.32rem .4rem;letter-spacing:.08em" @click.stop="voidOrder(o.id)">✕ CANCELAR</button>
+            <button class="btn-o"     style="flex:1;font-size:.56rem;padding:.32rem .4rem;letter-spacing:.08em" @click.stop="openBill(o.id)" v-if="o.status!=='open_bill'">CUENTA →</button>
+            <button class="btn-green" style="flex:2;font-size:.6rem;padding:.32rem .5rem;letter-spacing:.1em"   @click.stop="finalizeOrder(o.id)">✓ COBRAR →</button>
+          </div>
         </div>
       </div>
       <div style="position:fixed;bottom:0;left:0;right:0;padding:.8rem 1rem;padding-bottom:calc(.8rem + var(--safe-b));background:rgba(5,5,5,.97);border-top:1px solid var(--border)">
@@ -411,6 +417,7 @@
         <div class="od-actions">
           <button class="btn-void" @click="voidOrder(selectedOrder.id)">✕ CANCELAR</button>
           <button class="btn-o" @click="printTicket(selectedOrder)">⎙ TICKET</button>
+          <button v-if="selectedOrder?.status==='in_progress'" class="btn-o" style="flex:1.5" @click="openBill(selectedOrder.id)">PEDIR CUENTA</button>
           <button class="btn-p" style="flex:2;font-size:.88rem" @click="finalizeOrder(selectedOrder.id)">✓ COBRADO →</button>
         </div>
       </div>
@@ -912,8 +919,20 @@ createApp({
       } catch(e) { showToast('Error: ' + e.message, 'err') }
     }
 
+    async function openBill(orderId) {
+      try {
+        await api(`/orders/v1/orders/${orderId}/open_bill`, { method:'POST', body:'{}' })
+        showToast('Cuenta solicitada')
+        orderDetailOpen.value = false
+        await loadOpenOrders()
+      } catch(e) { showToast('Error: ' + e.message, 'err') }
+    }
+
     async function finalizeOrder(orderId) {
       try {
+        // Polotab workflow: in_progress → open_bill → finalized
+        // Try open_bill silently first in case order is still in_progress
+        await api(`/orders/v1/orders/${orderId}/open_bill`, { method:'POST', body:'{}' }).catch(() => {})
         await api(`/orders/v1/orders/${orderId}/finalize`, { method:'POST', body:'{}' })
         showToast('✓ Orden cobrada')
         orderDetailOpen.value = false
@@ -1172,7 +1191,7 @@ ${itemRows}
       login, logout, selectTable, resumeOrder, goToTables, setCategory, toggleOrders,
       cartQty, cartInc, cartDec, clearCart, tapItem,
       isModOn, toggleMod, confirmMod, sendOrder,
-      loadOpenOrders, openOrderDetail, voidOrder, finalizeOrder, printTicket,
+      loadOpenOrders, openOrderDetail, voidOrder, openBill, finalizeOrder, printTicket,
       fmt, tNum, tableName, itemNameById, orderTableName, statusLabel, fmtTime, modItemPrice, itemTotal,
     }
   }
