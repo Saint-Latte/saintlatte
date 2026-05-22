@@ -598,35 +598,81 @@ function decode(encoded, key) {
 }
 
 // ── MODIFIER RULES ──────────────────────────────────────────────────────────
-// Assigns modifier groups to items based on drink type, since Polotab doesn't
-// always embed modifierGroups in the channel menus response.
+// Rules confirmed by owner. "ctx" = menuName + itemName combined for matching.
+// Zona (delivery) intentionally excluded — not relevant in-store.
 function applyModRules(items, mgData) {
   const norm = s => (s ?? '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
-  const find = kw => mgData.find(g => norm(g.name).includes(norm(kw)))
+  const findExact = kw => mgData.find(g => norm(g.name) === norm(kw))
+  const findKw    = kw => mgData.find(g => norm(g.name).includes(norm(kw)))
 
-  const MG_GRANO      = find('grano')
-  const MG_LECHE      = find('leche')
-  const MG_ENDULZANTE = find('endulzante') || find('dulce') || find('azucar') || find('jarabe')
-  const MG_FRIOS      = find('batid') || find('crema batida') || find('cold extra') || find('extras fr')
+  const MG = {
+    endulzante:   findExact('endulzante'),
+    tipoLeche:    findKw('leche'),
+    tipoGrano:    findKw('grano'),
+    extras:       findExact('extras'),
+    shot1883:     findKw('1883'),
+    specialty:    findExact('specialty coffee') || findKw('specialty'),
+    tipoSabor:    findKw('tipo sabor'),
+    sabor:        findExact('sabor'),
+    tipoProteina: findKw('proteina') || findKw('proteína'),
+    toppings:     mgData.filter(g => norm(g.name).includes('topping')),
+  }
 
-  const isCoffee   = n => /espresso|americano|macchiato|capuchino|cappuccino|cortado|caf[eé]|latte|flat\s?white|mocha|specialt|cold brew|affogato|lungo/i.test(n)
-  const hasMilk    = n => /latte|capuchino|cappuccino|cortado|flat|mocha|golden|chai|matcha|au lait|con leche/i.test(n)
-  const isEspresso = n => /^espresso(\s+doble)?$/i.test(n.trim())
-  const isCold     = n => /fr[ií]o|iced|cold brew|granizado|frappe|smoothie|batid/i.test(n)
+  // ctx = menu category name + item name — lets rules match by either
+  const ctx = item => ((item.menuName ?? '') + ' ' + item.name).toLowerCase()
+
+  const is = {
+    coffee:    c => /espresso|americano|macchiato|capuchino|cappuccino|cortado|caf[eé]|latte|flat\s?white|mocha|cold brew|affogato|lungo/i.test(c),
+    hasMilk:   c => /latte|capuchino|cappuccino|cortado|flat|mocha|golden|chai|matcha|con leche/i.test(c),
+    capuchino: c => /capuchino|cappuccino/i.test(c),
+    cold:      c => /frape|frappe|frappé|iced|frío|frio|granizado/i.test(c),
+    specialty: c => /specialt/i.test(c),
+    protein:   c => /prote[ií]na|protein|blend/i.test(c),
+    roles:     c => /roles?|rolls?|rollo/i.test(c),
+    hogazas:   c => /hogaza/i.test(c),
+  }
 
   for (const item of items) {
-    const n = item.name
+    const c = ctx(item)
     const existing = new Set(item.modGroupIds)
+
     const add = (mg, required = false) => {
       if (!mg || existing.has(mg.id)) return
       item.modGroups.push(required ? { ...mg, _required: true } : mg)
       item.modGroupIds.push(mg.id)
       existing.add(mg.id)
     }
-    if (isCoffee(n))    add(MG_GRANO,      true)
-    if (hasMilk(n))     add(MG_LECHE,      true)
-    if (!isEspresso(n)) add(MG_ENDULZANTE, false)
-    if (isCold(n))      add(MG_FRIOS,      false)
+    const addAll = (mgs, required = false) => mgs.forEach(mg => add(mg, required))
+
+    // Endulzante → everything
+    add(MG.endulzante)
+
+    // All coffee drinks → Tipo de grano (required) + Tipo de Leche if milk (required)
+    if (is.coffee(c)) {
+      add(MG.tipoGrano, true)
+      if (is.hasMilk(c)) add(MG.tipoLeche, true)
+    }
+
+    // Specialty Coffee menu → Specialty Coffee modifier (required)
+    if (is.specialty(c)) add(MG.specialty, true)
+
+    // Capuchinos (incl. frape capuchino) → Shot 1883
+    if (is.capuchino(c)) add(MG.shot1883)
+
+    // Cold drinks / frappes / iced → Extras
+    if (is.cold(c)) add(MG.extras)
+
+    // Protein blends / batidos → Sabor + Tipo de proteina (both required)
+    if (is.protein(c)) {
+      add(MG.sabor, true)
+      add(MG.tipoProteina, true)
+    }
+
+    // Roles → all topping groups
+    if (is.roles(c)) addAll(MG.toppings)
+
+    // Hogazas → Tipo Sabor (required)
+    if (is.hogazas(c)) add(MG.tipoSabor, true)
   }
 }
 // ────────────────────────────────────────────────────────────────────────────
@@ -788,6 +834,7 @@ createApp({
           items.push({
             id:          item.id,
             menuId:      menu.id,
+            menuName:    menu.name ?? '',
             name:        item.name,
             price,
             priceId,
