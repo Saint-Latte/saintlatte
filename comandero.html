@@ -1257,18 +1257,18 @@ createApp({
     }
 
     async function openBill(orderId) {
+      // open_bill no es un endpoint público de Polotab — solo enviamos push notification a caja
       try {
-        await api(`/orders/v1/orders/${orderId}/open_bill`, { method:'POST', body:'{}' })
-        showToast('Cuenta solicitada')
-        // Push a caja/todos los terminales
         const o = openOrders.value.find(x => x.id === orderId)
+          ?? (mesaOrder.value?.id === orderId ? mesaOrder.value : null)
         const tName = o ? orderTableName(o) : (selectedTable.value?.name ?? 'Mesa')
         const total = o ? fmt(o.totalAmount ?? o.subtotalAmount ?? 0) : ''
-        pushNotif(
+        await pushNotif(
           `💳 Piden la Cuenta — ${tName}`,
-          total ? `Total: $${total}` : 'Preparar cobro',
-          { playSound: true, important: true, icon: '💳', disappearAfter: 10000 }
+          total ? `Total: $${total} · Preparar cobro` : 'Preparar cobro',
+          { playSound: true, important: true, icon: '💳', disappearAfter: 12000 }
         )
+        showToast('✓ Notificación enviada a caja')
         orderDetailOpen.value = false
         await loadOpenOrders()
       } catch(e) { showToast('Error: ' + e.message, 'err') }
@@ -1276,8 +1276,7 @@ createApp({
 
     async function finalizeOrder(orderId) {
       try {
-        // Polotab workflow: in_progress → open_bill → finalized
-        await api(`/orders/v1/orders/${orderId}/open_bill`, { method:'POST', body:'{}' }).catch(() => {})
+        // Polotab: directo a finalize (open_bill no es endpoint público)
         await api(`/orders/v1/orders/${orderId}/finalize`, { method:'POST', body:'{}' })
         showToast('✓ Orden cobrada')
         // Push confirmación de cobro
