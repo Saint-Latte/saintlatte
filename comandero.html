@@ -91,6 +91,10 @@
     .mesa-stat.ip { background:rgba(51,121,88,.2); color:var(--green); border:1px solid rgba(51,121,88,.35); }
     .mesa-stat.ob { background:var(--amber-a); color:var(--amber); border:1px solid rgba(196,154,39,.35); }
     .mesa-stat.dr { background:rgba(255,255,255,.05); color:var(--muted); border:1px solid var(--border); }
+    .mesa-stat.wp { background:rgba(80,130,220,.18); color:#7ba4f5; border:1px solid rgba(80,130,220,.35); }
+    .od-item-row { position:relative; }
+    .item-remove-btn { position:absolute; top:.5rem; right:.5rem; background:none; border:none; color:rgba(200,60,60,.55); font-size:.85rem; padding:.15rem .35rem; cursor:pointer; transition:color .15s; line-height:1; }
+    .item-remove-btn:hover { color:var(--danger); }
 
     /* ──────────── OPEN ORDERS LIST ──────────── */
     .olist { padding:.8rem 1rem 120px; }
@@ -110,6 +114,9 @@
     .ocard__status { font-size:.55rem; font-weight:700; letter-spacing:.15em; padding:.15rem .5rem; border-radius:2px; }
     .ocard__status.ip { background:rgba(51,121,88,.2); color:var(--green); border:1px solid rgba(51,121,88,.35); }
     .ocard__status.ob { background:var(--amber-a); color:var(--amber); border:1px solid rgba(196,154,39,.35); }
+    .ocard__status.wp { background:rgba(80,130,220,.18); color:#7ba4f5; border:1px solid rgba(80,130,220,.35); }
+    .ocard__status.dr { background:rgba(255,255,255,.05); color:var(--muted); border:1px solid var(--border); }
+    .ocard__items { font-size:.65rem; color:var(--muted); grid-column:1; line-height:1.65; }
 
     /* ──────────── ORDER DETAIL SHEET ──────────── */
     .od-meta { padding:.6rem 1.1rem; border-bottom:1px solid var(--border); display:flex; gap:.8rem; align-items:center; flex-wrap:wrap; }
@@ -374,7 +381,7 @@
         <div style="display:flex;flex-direction:column;gap:.2rem">
           <span class="sheet-title">{{ selectedTable?.name }}</span>
           <div style="display:flex;gap:.5rem;align-items:center">
-            <span v-if="mesaOrder" :class="['mesa-stat', mesaOrder.status==='open_bill'?'ob':mesaOrder.status==='draft'?'dr':'ip']">
+            <span v-if="mesaOrder" :class="['mesa-stat', statusClass(mesaOrder.status)]">
               {{ statusLabel(mesaOrder.status) }}
             </span>
             <span v-if="mesaOrder" style="font-size:.6rem;color:var(--muted)">
@@ -411,13 +418,16 @@
             </div>
           </div>
           <!-- Items -->
-          <div v-for="oi in mesaOrder.orderItems ?? []" :key="oi.id" class="od-item-row">
+          <div v-for="oi in mesaOrder.orderItems ?? []" :key="oi.id" class="od-item-row" style="padding-right:2.2rem">
             <div class="od-item-name">{{ oi.quantity }}× {{ oi.item?.name ?? itemNameById(oi.itemId) }}</div>
             <div v-if="oi.orderItemModifiers?.length" class="od-item-sub">
               + {{ oi.orderItemModifiers.map(m => m.item?.name ?? m.name ?? '').filter(Boolean).join(', ') }}
             </div>
             <div v-if="oi.note" class="od-item-sub" style="font-style:italic">✎ {{ oi.note }}</div>
-            <div class="od-item-price">${{ fmt((oi.item?.prices?.[0]?.amount ?? 0) * oi.quantity) }}</div>
+            <div class="od-item-price">
+              ${{ fmt(itemOrderPrice(oi)) }}
+            </div>
+            <button class="item-remove-btn" @click.stop="removeOrderItem(oi.id)" title="Quitar ítem">✕</button>
           </div>
         </template>
       </div>
@@ -454,11 +464,29 @@
         >
           <div class="ocard__num">#{{ o.dayOrderNumber ?? o.id?.slice(-6).toUpperCase() }}</div>
           <div class="ocard__total">${{ fmt(o.totalAmount ?? o.subtotalAmount ?? 0) }}</div>
-          <div class="ocard__table">{{ orderTableName(o) }}</div>
-          <div class="ocard__items">{{ (o.orderItems?.length ?? 0) }} producto(s)</div>
-          <div style="grid-column:1;display:flex;gap:.5rem;align-items:center;margin-top:.2rem">
+          <div style="display:flex;gap:.5rem;align-items:center;grid-column:1">
+            <div class="ocard__table">{{ orderTableName(o) }}</div>
+            <div :class="['ocard__status', statusClass(o.status)]">{{ statusLabel(o.status) }}</div>
+          </div>
+          <!-- Items inline -->
+          <div class="ocard__items" style="grid-column:1;margin-top:.1rem">
+            <template v-if="o.orderItems?.length">
+              <div v-for="(oi,idx) in (o.orderItems ?? []).slice(0,5)" :key="oi.id"
+                style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px">
+                <span style="color:var(--amber);font-size:.62rem;font-weight:700">{{ oi.quantity }}×</span>
+                {{ oi.item?.name ?? itemNameById(oi.itemId) }}
+                <span v-if="oi.orderItemModifiers?.length" style="color:rgba(255,254,249,.25);font-size:.6rem">
+                  · {{ oi.orderItemModifiers.map(m=>m.item?.name??m.name??'').filter(Boolean).join(', ') }}
+                </span>
+              </div>
+              <div v-if="(o.orderItems?.length??0) > 5" style="color:var(--muted);font-size:.6rem">
+                +{{ o.orderItems.length - 5 }} más
+              </div>
+            </template>
+            <div v-else style="color:var(--muted)">Sin ítems</div>
+          </div>
+          <div style="grid-column:2;grid-row:1/4;display:flex;flex-direction:column;align-items:flex-end;gap:.2rem">
             <div class="ocard__time">{{ fmtTime(o.createdAt) }}</div>
-            <div :class="['ocard__status', o.status==='open_bill'?'ob':'ip']">{{ statusLabel(o.status) }}</div>
           </div>
           <!-- Quick actions directly on card -->
           <div style="grid-column:1/-1;display:flex;gap:.4rem;margin-top:.6rem;padding-top:.6rem;border-top:1px solid var(--border)">
@@ -487,7 +515,9 @@
         <div class="od-meta">
           <div>
             <div class="od-meta-label">ESTADO</div>
-            <div class="od-meta-val">{{ statusLabel(selectedOrder?.status) }}</div>
+            <span :class="['mesa-stat', statusClass(selectedOrder?.status)]" style="margin-top:.2rem;display:inline-flex">
+              {{ statusLabel(selectedOrder?.status) }}
+            </span>
           </div>
           <div>
             <div class="od-meta-label">HORA</div>
@@ -499,15 +529,14 @@
           </div>
         </div>
 
-        <div v-for="oi in selectedOrder?.orderItems ?? []" :key="oi.id" class="od-item-row">
+        <div v-for="oi in selectedOrder?.orderItems ?? []" :key="oi.id" class="od-item-row" style="padding-right:2.2rem">
           <div class="od-item-name">{{ oi.quantity }}× {{ oi.item?.name ?? itemNameById(oi.itemId) }}</div>
           <div v-if="oi.orderItemModifiers?.length" class="od-item-sub">
             + {{ oi.orderItemModifiers.map(m => m.item?.name ?? m.name ?? '').filter(Boolean).join(', ') }}
           </div>
           <div v-if="oi.note" class="od-item-sub" style="font-style:italic">* {{ oi.note }}</div>
-          <div class="od-item-price">
-            ${{ fmt((oi.item?.prices?.[0]?.amount ?? 0) * oi.quantity) }}
-          </div>
+          <div class="od-item-price">${{ fmt(itemOrderPrice(oi)) }}</div>
+          <button class="item-remove-btn" @click.stop="removeOrderItemFromDetail(oi.id)" title="Quitar">✕</button>
         </div>
       </div>
       <div class="sheet-foot">
@@ -845,7 +874,104 @@ createApp({
     }
 
     function statusLabel(s) {
-      return { in_progress:'EN COCINA', open_bill:'CUENTA', draft:'BORRADOR', void:'CANCELADA', finalized:'COBRADA' }[s] ?? (s ?? '—')
+      return {
+        draft:              'BORRADOR',
+        in_progress:        'EN COCINA',
+        needs_approval:     'PENDIENTE',
+        waiting_for_pickup: 'LISTO',
+        open_bill:          'CUENTA',
+        void:               'CANCELADA',
+        completed:          'COBRADA',
+        finalized:          'COBRADA',
+      }[s] ?? (s ?? '—')
+    }
+
+    function statusClass(s) {
+      if (s === 'open_bill')                                return 'ob'
+      if (s === 'needs_approval' || s === 'waiting_for_pickup') return 'wp'
+      if (s === 'draft')                                    return 'dr'
+      return 'ip' // in_progress y otros activos
+    }
+
+    // Calcula el precio de un ítem dentro de una orden (busca en menú local si falta)
+    function itemOrderPrice(oi) {
+      const qty   = oi.quantity ?? 1
+      const base  = oi.item?.prices?.[0]?.amount
+        ?? allItems.value.find(i => i.id === oi.itemId)?.price
+        ?? 0
+      const modsTotal = (oi.orderItemModifiers ?? []).reduce((s, m) => {
+        const mp = m.item?.prices?.[0]?.amount ?? m.price ?? 0
+        return s + mp
+      }, 0)
+      return (base + modsTotal) * qty
+    }
+
+    // ── Modificar orden (quitar ítem) ────────────────────────
+    async function _doRemoveItem(order, orderItemId, reloadFn) {
+      const updatedItems = (order.orderItems ?? [])
+        .filter(oi => oi.id !== orderItemId)
+        .map(oi => {
+          const mi = allItems.value.find(i => i.id === oi.itemId)
+          return {
+            id:           oi.id,
+            itemId:       oi.itemId,
+            menuId:       mi?.menuId ?? oi.menuId ?? null,
+            quantity:     oi.quantity,
+            priceId:      mi?.priceId ?? oi.item?.prices?.[0]?.id ?? oi.priceId ?? null,
+            sizeId:       null, sizePriceId: null, sizePrice: null,
+            note:         oi.note ?? null,
+            terminalDate: oi.terminalDate ?? new Date().toISOString(),
+            orderItemModifiers: (oi.orderItemModifiers ?? []).map(m => ({
+              id:       m.id,
+              itemId:   m.itemId ?? m.item?.id ?? null,
+              priceId:  m.priceId ?? m.item?.prices?.[0]?.id ?? null,
+              quantity: m.quantity ?? 1,
+              sizeId:   null,
+            })),
+          }
+        })
+
+      const payload = {
+        id:            order.id,
+        type:          order.type ?? 'direct_sale',
+        customerCount: order.customerCount ?? 1,
+        tableId:       order.tableId ?? undefined,
+        orderItems:    updatedItems,
+      }
+      await api('/orders/v1/orders', { method:'POST', body: JSON.stringify(payload) })
+
+      // Re-publicar si ya estaba en cocina
+      if (['in_progress','needs_approval','waiting_for_pickup'].includes(order.status)) {
+        await api(`/orders/v1/orders/${order.id}/publish`, { method:'POST', body:'{}' }).catch(() => {})
+      }
+
+      if (reloadFn) await reloadFn(order.id)
+      showToast('Ítem quitado de la orden')
+    }
+
+    async function removeOrderItem(orderItemId) {
+      if (!mesaOrder.value) return
+      if (!confirm('¿Quitar este ítem de la orden?')) return
+      mesaLoading.value = true
+      try {
+        await _doRemoveItem(mesaOrder.value, orderItemId, async (oid) => {
+          mesaOrder.value = await api(`/orders/v1/orders/${oid}`)
+          const newTotal = mesaOrder.value.totalAmount ?? mesaOrder.value.subtotalAmount ?? 0
+          if (selectedTable.value) mesaAmounts.value = { ...mesaAmounts.value, [selectedTable.value.id]: newTotal }
+        })
+      } catch(e) { showToast('Error: ' + e.message, 'err') }
+      finally { mesaLoading.value = false }
+    }
+
+    async function removeOrderItemFromDetail(orderItemId) {
+      if (!selectedOrder.value) return
+      if (!confirm('¿Quitar este ítem de la orden?')) return
+      try {
+        await _doRemoveItem(selectedOrder.value, orderItemId, async (oid) => {
+          selectedOrder.value = await api(`/orders/v1/orders/${oid}`)
+        })
+        await loadOpenOrders()
+      } catch(e) { showToast('Error: ' + e.message, 'err') }
     }
 
     function fmtTime(iso) {
@@ -1434,7 +1560,8 @@ createApp({
       isModOn, toggleMod, confirmMod, sendOrder,
       loadOpenOrders, openOrderDetail, voidOrder, openBill, finalizeOrder, printTicket, printCurrentTicket,
       openMesaDetail, goToMenuFromMesa, requestBillFromMesa, finalizeFromMesa, printTicketFromMesa,
-      fmt, tNum, tableName, itemNameById, orderTableName, statusLabel, fmtTime, modItemPrice, itemTotal,
+      removeOrderItem, removeOrderItemFromDetail,
+      fmt, tNum, tableName, itemNameById, orderTableName, statusLabel, statusClass, itemOrderPrice, fmtTime, modItemPrice, itemTotal,
     }
   }
 }).mount('#app')
