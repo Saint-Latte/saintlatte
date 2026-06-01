@@ -83,6 +83,14 @@
     .tcard.has-order::after { content:''; position:absolute; top:.35rem; right:.35rem; width:6px; height:6px; border-radius:50%; background:var(--green); }
     .tcard__n { font-family:var(--ff-d); font-size:1.4rem; letter-spacing:.04em; line-height:1; }
     .tcard__lbl { font-size:.56rem; color:var(--muted); margin-top:.12rem; letter-spacing:.04em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .tcard__amt { font-size:.62rem; color:var(--amber); margin-top:.2rem; font-weight:700; }
+    .tcard.active-mesa { border-color:var(--amber); background:rgba(196,154,39,.07); }
+
+    /* ──────────── MESA DETAIL ──────────── */
+    .mesa-stat { display:inline-flex; align-items:center; gap:.35rem; font-size:.62rem; font-weight:700; letter-spacing:.1em; padding:.22rem .65rem; border-radius:2px; }
+    .mesa-stat.ip { background:rgba(51,121,88,.2); color:var(--green); border:1px solid rgba(51,121,88,.35); }
+    .mesa-stat.ob { background:var(--amber-a); color:var(--amber); border:1px solid rgba(196,154,39,.35); }
+    .mesa-stat.dr { background:rgba(255,255,255,.05); color:var(--muted); border:1px solid var(--border); }
 
     /* ──────────── OPEN ORDERS LIST ──────────── */
     .olist { padding:.8rem 1rem 120px; }
@@ -346,15 +354,90 @@
       <span class="slabel" style="margin-top:.8rem">SELECCIONA UNA MESA</span>
       <div v-if="!tables.length" class="empty">No hay mesas en Polotab</div>
       <div v-else class="tables-grid">
-        <div v-for="t in tables" :key="t.id" :class="['tcard', draftOrders[t.id]?'has-order':'']" @click="selectTable(t)">
+        <div v-for="t in tables" :key="t.id"
+          :class="['tcard', draftOrders[t.id]?'has-order':'', mesaAmounts[t.id]?'active-mesa':'']"
+          @click="openMesaDetail(t)">
           <div class="tcard__n">{{ tNum(t.name) }}</div>
           <div class="tcard__lbl">{{ t.name }}</div>
+          <div v-if="mesaAmounts[t.id]" class="tcard__amt">${{ fmt(mesaAmounts[t.id]) }}</div>
         </div>
       </div>
       <div style="margin-top:.9rem">
         <button class="btn-o" style="width:100%" @click="selectTable(null)">+ PARA LLEVAR / SIN MESA</button>
       </div>
     </template>
+
+    <!-- ── MESA DETAIL SHEET ── -->
+    <div v-if="mesaDetailOpen" class="overlay" @click="mesaDetailOpen=false"></div>
+    <div v-if="mesaDetailOpen" class="sheet" style="max-height:94dvh">
+      <div class="sheet-head">
+        <div style="display:flex;flex-direction:column;gap:.2rem">
+          <span class="sheet-title">{{ selectedTable?.name }}</span>
+          <div style="display:flex;gap:.5rem;align-items:center">
+            <span v-if="mesaOrder" :class="['mesa-stat', mesaOrder.status==='open_bill'?'ob':mesaOrder.status==='draft'?'dr':'ip']">
+              {{ statusLabel(mesaOrder.status) }}
+            </span>
+            <span v-if="mesaOrder" style="font-size:.6rem;color:var(--muted)">
+              #{{ mesaOrder.dayOrderNumber ?? mesaOrder.id?.slice(-6).toUpperCase() }}
+              · {{ fmtTime(mesaOrder.createdAt) }}
+            </span>
+          </div>
+        </div>
+        <button class="btn-ghost" @click="mesaDetailOpen=false">✕</button>
+      </div>
+      <div class="sheet-body">
+        <div v-if="mesaLoading" style="padding:2rem"><div class="spinner"></div><div class="load-txt">Cargando mesa...</div></div>
+        <template v-else-if="!mesaOrder">
+          <div class="olist-empty" style="padding:2.5rem 1.5rem">
+            <div style="font-size:2.2rem;margin-bottom:.6rem">🍽️</div>
+            <div>Sin órdenes activas en esta mesa</div>
+            <div style="font-size:.72rem;color:var(--muted);margin-top:.4rem">Toca "NUEVA ORDEN" para comenzar</div>
+          </div>
+        </template>
+        <template v-else>
+          <!-- Resumen financiero -->
+          <div style="display:flex;gap:0;border-bottom:1px solid var(--border)">
+            <div style="flex:1;padding:.75rem 1.1rem;border-right:1px solid var(--border)">
+              <div class="od-meta-label">SUBTOTAL</div>
+              <div style="font-family:var(--ff-d);font-size:1.3rem;color:var(--cream)">${{ fmt(mesaOrder.subtotalAmount ?? 0) }}</div>
+            </div>
+            <div style="flex:1;padding:.75rem 1.1rem;border-right:1px solid var(--border)">
+              <div class="od-meta-label">DESCUENTO</div>
+              <div style="font-family:var(--ff-d);font-size:1.3rem;color:var(--danger)">-${{ fmt(mesaOrder.discountAmount ?? 0) }}</div>
+            </div>
+            <div style="flex:1;padding:.75rem 1.1rem">
+              <div class="od-meta-label">TOTAL</div>
+              <div style="font-family:var(--ff-d);font-size:1.3rem;color:var(--amber)">${{ fmt(mesaOrder.totalAmount ?? 0) }}</div>
+            </div>
+          </div>
+          <!-- Items -->
+          <div v-for="oi in mesaOrder.orderItems ?? []" :key="oi.id" class="od-item-row">
+            <div class="od-item-name">{{ oi.quantity }}× {{ oi.item?.name ?? itemNameById(oi.itemId) }}</div>
+            <div v-if="oi.orderItemModifiers?.length" class="od-item-sub">
+              + {{ oi.orderItemModifiers.map(m => m.item?.name ?? m.name ?? '').filter(Boolean).join(', ') }}
+            </div>
+            <div v-if="oi.note" class="od-item-sub" style="font-style:italic">✎ {{ oi.note }}</div>
+            <div class="od-item-price">${{ fmt((oi.item?.prices?.[0]?.amount ?? 0) * oi.quantity) }}</div>
+          </div>
+        </template>
+      </div>
+      <div class="sheet-foot">
+        <div v-if="mesaOrder" class="total-row">
+          <span class="total-lbl">TOTAL MESA</span>
+          <span class="total-val">${{ fmt(mesaOrder.totalAmount ?? mesaOrder.subtotalAmount ?? 0) }}</span>
+        </div>
+        <div style="display:flex;gap:.45rem;flex-wrap:wrap">
+          <button class="btn-o" style="flex:2;font-size:.7rem" @click="goToMenuFromMesa">
+            {{ mesaOrder ? '+ AGREGAR ITEMS' : '+ NUEVA ORDEN' }}
+          </button>
+          <template v-if="mesaOrder">
+            <button class="btn-o" style="flex:1;font-size:.62rem;padding:.45rem .5rem" @click="printTicketFromMesa">⎙ TICKET</button>
+            <button v-if="mesaOrder.status!=='open_bill'" class="btn-o" style="flex:1.4;font-size:.62rem;padding:.45rem .5rem" @click="requestBillFromMesa">CUENTA →</button>
+            <button class="btn-green" style="flex:2;font-size:.7rem" @click="finalizeFromMesa">✓ COBRAR</button>
+          </template>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ══════════════ OPEN ORDERS ══════════════ -->
@@ -725,6 +808,10 @@ createApp({
     const tables        = ref([])
     const selectedTable = ref(null)
     const draftOrders   = ref({})
+    const mesaDetailOpen = ref(false)
+    const mesaOrder      = ref(null)
+    const mesaLoading    = ref(false)
+    const mesaAmounts    = ref({})   // tableId → totalAmount visible en la grid
 
     const groups        = ref([])
     const allItems      = ref([])
@@ -773,6 +860,91 @@ createApp({
     function showToast(msg, t='ok') {
       toast.value = { msg, t }
       setTimeout(() => toast.value = null, 3200)
+    }
+
+    // ── push notifications ───────────────────────────────────
+    async function pushNotif(title, message, opts = {}) {
+      try {
+        await fetch(`${proxyUrl || POLOTAB}/notifications/v1/notifications`, {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json', 'Authorization':`Bearer ${token.value}` },
+          body: JSON.stringify({
+            terminalId: opts.terminalId ?? undefined,
+            payload: {
+              icon:           opts.icon ?? '☕',
+              title,
+              message,
+              important:      opts.important ?? false,
+              playSound:      opts.playSound ?? true,
+              disappearAfter: opts.disappearAfter ?? 5000,
+            }
+          })
+        })
+      } catch(e) { /* silent — push notification is non-critical */ }
+    }
+
+    // ── mesa detail ───────────────────────────────────────────
+    async function openMesaDetail(t) {
+      selectedTable.value = t
+      currentOrderId.value = draftOrders.value[t.id] ?? null
+      mesaOrder.value = null
+      mesaDetailOpen.value = true
+      mesaLoading.value = true
+      try {
+        // 1. Fetch table with activeOrders from Polotab
+        const tableData = await api(`/restaurants/v1/tables/${t.id}`)
+        const activeIds = tableData.activeOrders ?? []
+        // 2. Prefer live Polotab activeOrders, fallback to local draftOrder
+        const orderId = activeIds[0] ?? draftOrders.value[t.id] ?? null
+        if (orderId) {
+          currentOrderId.value = orderId
+          draftOrders.value = { ...draftOrders.value, [t.id]: orderId }
+          const o = await api(`/orders/v1/orders/${orderId}`)
+          mesaOrder.value = o
+          mesaAmounts.value = { ...mesaAmounts.value, [t.id]: o.totalAmount ?? o.subtotalAmount ?? 0 }
+        }
+      } catch(e) {
+        // Fallback: try local draft order if table fetch fails
+        const localId = draftOrders.value[t.id]
+        if (localId) {
+          try {
+            mesaOrder.value = await api(`/orders/v1/orders/${localId}`)
+            currentOrderId.value = localId
+          } catch {}
+        }
+      } finally { mesaLoading.value = false }
+    }
+
+    function goToMenuFromMesa() {
+      mesaDetailOpen.value = false
+      cart.value = []
+      cartOpen.value = false
+      view.value = 'menu'
+    }
+
+    async function requestBillFromMesa() {
+      if (!mesaOrder.value) return
+      await openBill(mesaOrder.value.id)
+      // Reload order to update status in sheet
+      try { mesaOrder.value = await api(`/orders/v1/orders/${mesaOrder.value.id}`) } catch {}
+    }
+
+    async function finalizeFromMesa() {
+      if (!mesaOrder.value) return
+      await finalizeOrder(mesaOrder.value.id)
+      mesaDetailOpen.value = false
+      mesaOrder.value = null
+      mesaAmounts.value = { ...mesaAmounts.value, [selectedTable.value?.id]: 0 }
+    }
+
+    function printTicketFromMesa() {
+      if (!mesaOrder.value) return
+      printTicket(mesaOrder.value)
+      pushNotif(
+        '🖨 Imprimir Ticket',
+        `${selectedTable.value?.name ?? 'Mesa'} — #${mesaOrder.value.dayOrderNumber ?? mesaOrder.value.id?.slice(-6).toUpperCase()} · $${fmt(mesaOrder.value.totalAmount ?? 0)}`,
+        { playSound: false, important: false, icon: '🖨' }
+      )
     }
 
     const base = () => proxyUrl || POLOTAB
@@ -827,6 +999,19 @@ createApp({
         api('/menus/v1/channels').catch(() => []),
       ])
       tables.value = Array.isArray(tData) ? tData : (tData.data ?? [])
+
+      // Pre-populate mesaAmounts from activeOrders on each table
+      const tablesArr = tables.value
+      const tablesWithOrders = tablesArr.filter(t => t.activeOrders?.length > 0)
+      if (tablesWithOrders.length) {
+        await Promise.allSettled(tablesWithOrders.map(async t => {
+          try {
+            const o = await api(`/orders/v1/orders/${t.activeOrders[0]}`)
+            mesaAmounts.value = { ...mesaAmounts.value, [t.id]: o.totalAmount ?? o.subtotalAmount ?? 0 }
+            draftOrders.value  = { ...draftOrders.value, [t.id]: t.activeOrders[0] }
+          } catch {}
+        }))
+      }
       const channels = Array.isArray(chData) ? chData : (chData.data ?? [])
       const chId = channels[0]?.id ?? null
 
@@ -949,6 +1134,15 @@ createApp({
       try {
         await api(`/orders/v1/orders/${orderId}/open_bill`, { method:'POST', body:'{}' })
         showToast('Cuenta solicitada')
+        // Push a caja/todos los terminales
+        const o = openOrders.value.find(x => x.id === orderId)
+        const tName = o ? orderTableName(o) : (selectedTable.value?.name ?? 'Mesa')
+        const total = o ? fmt(o.totalAmount ?? o.subtotalAmount ?? 0) : ''
+        pushNotif(
+          `💳 Piden la Cuenta — ${tName}`,
+          total ? `Total: $${total}` : 'Preparar cobro',
+          { playSound: true, important: true, icon: '💳', disappearAfter: 10000 }
+        )
         orderDetailOpen.value = false
         await loadOpenOrders()
       } catch(e) { showToast('Error: ' + e.message, 'err') }
@@ -957,11 +1151,22 @@ createApp({
     async function finalizeOrder(orderId) {
       try {
         // Polotab workflow: in_progress → open_bill → finalized
-        // Try open_bill silently first in case order is still in_progress
         await api(`/orders/v1/orders/${orderId}/open_bill`, { method:'POST', body:'{}' }).catch(() => {})
         await api(`/orders/v1/orders/${orderId}/finalize`, { method:'POST', body:'{}' })
         showToast('✓ Orden cobrada')
+        // Push confirmación de cobro
+        const o = openOrders.value.find(x => x.id === orderId)
+        const tName = o ? orderTableName(o) : (selectedTable.value?.name ?? 'Mesa')
+        const total = o ? fmt(o.totalAmount ?? o.subtotalAmount ?? 0) : ''
+        pushNotif(
+          `✓ Cobrado — ${tName}`,
+          total ? `$${total} · Orden cerrada` : 'Orden cerrada',
+          { playSound: false, important: false, icon: '✓', disappearAfter: 4000 }
+        )
         orderDetailOpen.value = false
+        // Limpiar del tracker de montos
+        const tid = Object.keys(draftOrders.value).find(k => draftOrders.value[k] === orderId)
+        if (tid) mesaAmounts.value = { ...mesaAmounts.value, [tid]: 0 }
         draftOrders.value = Object.fromEntries(
           Object.entries(draftOrders.value).filter(([,id]) => id !== orderId)
         )
@@ -1192,7 +1397,20 @@ createApp({
 
         await api(`/orders/v1/orders/${oid}/publish`, { method:'POST', body:'{}' })
 
+        // Notificación push a todos los terminales POS
+        const tName = selectedTable.value?.name ?? 'Para llevar'
+        const itemCount = orderItems.length
+        pushNotif(
+          `🛎 Nueva Orden — ${tName}`,
+          `${itemCount} item${itemCount > 1 ? 's' : ''} · $${fmt(cart.value.reduce((s,i) => s + itemTotal(i), 0))}`,
+          { playSound: true, important: true, icon: '🛎', disappearAfter: 8000 }
+        )
+
         showToast('✓ ENVIADO A COCINA')
+        // Update mesa amount tracker
+        if (selectedTable.value) {
+          mesaAmounts.value = { ...mesaAmounts.value, [selectedTable.value.id]: totalAmt.value }
+        }
         cart.value = []
       } catch(e) {
         showToast('Error: ' + e.message, 'err')
@@ -1210,10 +1428,12 @@ createApp({
       cart, cartOpen, currentOrderId, totalQty, totalAmt,
       mod, modOpen, modExtraTotal,
       openOrders, ordersLoading, orderDetailOpen, selectedOrder,
+      mesaDetailOpen, mesaOrder, mesaLoading, mesaAmounts,
       login, logout, selectTable, resumeOrder, goToTables, setCategory, toggleOrders,
       cartQty, cartInc, cartDec, clearCart, tapItem,
       isModOn, toggleMod, confirmMod, sendOrder,
       loadOpenOrders, openOrderDetail, voidOrder, openBill, finalizeOrder, printTicket, printCurrentTicket,
+      openMesaDetail, goToMenuFromMesa, requestBillFromMesa, finalizeFromMesa, printTicketFromMesa,
       fmt, tNum, tableName, itemNameById, orderTableName, statusLabel, fmtTime, modItemPrice, itemTotal,
     }
   }
