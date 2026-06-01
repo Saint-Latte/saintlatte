@@ -276,7 +276,23 @@
     .active-order-lbl { font-size:.56rem; letter-spacing:.15em; color:var(--muted); }
 
     /* ──────────── PRINT ──────────── */
-    @media print { * { display:none !important; } }
+    #print-ticket { display:none; }
+    @media print {
+      #app { display:none !important; }
+      #print-ticket {
+        display:block !important;
+        font-family:monospace; font-size:13px;
+        max-width:300px; margin:0 auto; padding:12px; color:#000; background:#fff;
+      }
+      #print-ticket .c  { text-align:center; }
+      #print-ticket .b  { font-weight:bold; }
+      #print-ticket .lg { font-size:16px; }
+      #print-ticket .dash { border-top:1px dashed #000; margin:7px 0; }
+      #print-ticket .row  { display:flex; justify-content:space-between; margin:2px 0; }
+      #print-ticket .indent { padding-left:14px; color:#555; font-size:11px; margin:1px 0; }
+      #print-ticket .note { font-style:italic; }
+      #print-ticket .total { font-size:15px; font-weight:bold; }
+    }
   </style>
 </head>
 <body>
@@ -290,6 +306,8 @@
     <span v-else-if="view==='menu'" class="topbar__table">PARA LLEVAR</span>
     <div class="topbar__sp"></div>
     <button v-if="view==='menu'" class="topbar__btn" @click="goToTables">◀ MESAS</button>
+    <button v-if="view==='menu' && currentOrderId" class="topbar__btn" style="font-size:.54rem;padding:.28rem .55rem" @click="printCurrentTicket">⎙</button>
+    <button v-if="view==='menu' && currentOrderId" class="topbar__btn on" style="font-size:.54rem;padding:.28rem .55rem;color:var(--amber);border-color:rgba(196,154,39,.4)" @click="finalizeOrder(currentOrderId)">✓ COBRAR</button>
     <button v-if="token && view!=='login'" :class="['topbar__btn', view==='orders'?'on':'']" @click="toggleOrders">ÓRDENES</button>
     <button v-if="token" class="topbar__btn" style="color:rgba(200,80,80,.8);border-color:rgba(200,80,80,.25)" @click="logout">SALIR</button>
   </div>
@@ -519,8 +537,13 @@
             {{ sending ? 'ENVIANDO...' : 'ENVIAR A COCINA →' }}
           </button>
         </div>
-        <div v-if="currentOrderId" style="font-size:.6rem;color:var(--muted);text-align:center">
+        <div v-if="currentOrderId" style="font-size:.6rem;color:var(--muted);text-align:center;margin-bottom:.3rem">
           Orden activa #{{ currentOrderId.slice(-6).toUpperCase() }} — se agregarán los items
+        </div>
+        <div v-if="currentOrderId" style="display:flex;gap:.4rem">
+          <button class="btn-o"    style="flex:1;font-size:.6rem;padding:.4rem .5rem" @click="printCurrentTicket">⎙ TICKET</button>
+          <button class="btn-o"    style="flex:1;font-size:.6rem;padding:.4rem .5rem" @click="openBill(currentOrderId)">CUENTA →</button>
+          <button class="btn-green" style="flex:1.5;font-size:.6rem;padding:.4rem .5rem" @click="finalizeOrder(currentOrderId)">✓ COBRAR</button>
         </div>
       </div>
     </div>
@@ -582,6 +605,9 @@
   </div><!-- /menu view -->
 
 </div><!-- /#app -->
+
+<!-- Hidden ticket for in-page printing (no popup needed) -->
+<div id="print-ticket"></div>
 
 <script type="module">
 import { createApp, ref, computed, onMounted } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
@@ -654,9 +680,9 @@ function applyModRules(items, mgData) {
     // Endulzante → everything
     add(MG.endulzante)
 
-    // All coffee drinks → Tipo de grano (required) + Tipo de Leche if milk (required)
+    // All coffee drinks → Tipo de grano (optional) + Tipo de Leche if milk (required)
     if (is.coffee(c)) {
-      add(MG.tipoGrano, true)
+      add(MG.tipoGrano)
       if (is.hasMilk(c)) add(MG.tipoLeche, true)
     }
 
@@ -944,11 +970,12 @@ createApp({
     }
 
     function printTicket(o) {
-      const tblName = orderTableName(o)
-      const dateStr = o.createdAt ? new Date(o.createdAt).toLocaleDateString('es-MX') : ''
-      const timeStr = fmtTime(o.createdAt)
+      if (!o) return
+      const tblName  = orderTableName(o)
+      const dateStr  = o.createdAt ? new Date(o.createdAt).toLocaleDateString('es-MX') : ''
+      const timeStr  = fmtTime(o.createdAt)
       const orderNum = o.dayOrderNumber ?? o.id?.slice(-6).toUpperCase()
-      const total = Number(o.totalAmount ?? o.subtotalAmount ?? 0).toFixed(2)
+      const total    = Number(o.totalAmount ?? o.subtotalAmount ?? 0).toFixed(2)
 
       const itemRows = (o.orderItems ?? []).map(oi => {
         const name  = oi.item?.name ?? itemNameById(oi.itemId)
@@ -957,45 +984,40 @@ createApp({
         const mods  = (oi.orderItemModifiers ?? []).map(m => m.item?.name ?? m.name ?? '').filter(Boolean)
         const note  = oi.note ?? ''
         const sub   = (price * qty).toFixed(2)
-        return `
-<div class="row"><span>${qty}× ${name}</span><span>$${sub}</span></div>
-${mods.length ? `<div class="indent">+ ${mods.join(', ')}</div>` : ''}
-${note ? `<div class="indent note">* ${note}</div>` : ''}`
+        return `<div class="row"><span>${qty}× ${name}</span><span>$${sub}</span></div>` +
+          (mods.length ? `<div class="indent">+ ${mods.join(', ')}</div>` : '') +
+          (note ? `<div class="indent note">* ${note}</div>` : '')
       }).join('')
 
-      const win = window.open('', '_blank', 'width=360,height=640')
-      win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
-<title>Ticket #${orderNum}</title>
-<style>
-  body{font-family:monospace;font-size:13px;margin:0;padding:12px;max-width:300px}
-  .c{text-align:center} .b{font-weight:bold} .lg{font-size:16px}
-  .dash{border-top:1px dashed #000;margin:7px 0}
-  .row{display:flex;justify-content:space-between;margin:2px 0}
-  .indent{padding-left:14px;color:#555;font-size:11px;margin:1px 0}
-  .note{font-style:italic}
-  .total{font-size:15px;font-weight:bold}
-  .btn{display:block;width:100%;padding:8px;margin-top:12px;font-size:14px;cursor:pointer}
-  @media print{.btn{display:none}}
-</style></head><body>
-<div class="c lg b">SAINT LATTE</div>
-<div class="c">Specialty Coffee</div>
-<div class="c">Valle de Santiago, Gto.</div>
-<div class="dash"></div>
-<div class="c">${dateStr}  ${timeStr}</div>
-<div class="c b">Orden #${orderNum}</div>
-<div class="c">${tblName}</div>
-<div class="dash"></div>
-${itemRows}
-<div class="dash"></div>
-<div class="row total"><span>TOTAL</span><span>$${total}</span></div>
-<div class="dash"></div>
-<div class="c" style="margin-top:8px;font-size:12px">¡Gracias por tu visita!</div>
-<div class="c" style="font-size:11px;color:#666">@saint_latte</div>
-<button class="btn" onclick="window.print()">🖨 Imprimir</button>
-</body></html>`)
-      win.document.close()
-      win.focus()
-      setTimeout(() => win.print(), 400)
+      // Use in-page hidden div — no popup needed, works on mobile
+      const el = document.getElementById('print-ticket')
+      el.innerHTML = `
+        <div class="c lg b">SAINT LATTE</div>
+        <div class="c">Specialty Coffee</div>
+        <div class="c">Valle de Santiago, Gto.</div>
+        <div class="dash"></div>
+        <div class="c">${dateStr}&nbsp;&nbsp;${timeStr}</div>
+        <div class="c b">Orden #${orderNum}</div>
+        <div class="c">${tblName}</div>
+        <div class="dash"></div>
+        ${itemRows}
+        <div class="dash"></div>
+        <div class="row total"><span>TOTAL</span><span>$${total}</span></div>
+        <div class="dash"></div>
+        <div class="c" style="margin-top:8px;font-size:12px">¡Gracias por tu visita!</div>
+        <div class="c" style="font-size:11px;color:#555">@saint_latte</div>
+      `
+      window.print()
+    }
+
+    // Print ticket for the currently active order in menu view
+    async function printCurrentTicket() {
+      let o = openOrders.value.find(x => x.id === currentOrderId.value)
+      if (!o && currentOrderId.value) {
+        try { o = await api(`/orders/v1/orders/${currentOrderId.value}`) } catch(e) {}
+      }
+      if (o) printTicket(o)
+      else showToast('No se encontró la orden', 'err')
     }
 
     // ── table selection ──────────────────────────────────────
@@ -1191,7 +1213,7 @@ ${itemRows}
       login, logout, selectTable, resumeOrder, goToTables, setCategory, toggleOrders,
       cartQty, cartInc, cartDec, clearCart, tapItem,
       isModOn, toggleMod, confirmMod, sendOrder,
-      loadOpenOrders, openOrderDetail, voidOrder, openBill, finalizeOrder, printTicket,
+      loadOpenOrders, openOrderDetail, voidOrder, openBill, finalizeOrder, printTicket, printCurrentTicket,
       fmt, tNum, tableName, itemNameById, orderTableName, statusLabel, fmtTime, modItemPrice, itemTotal,
     }
   }
