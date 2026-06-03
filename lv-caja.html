@@ -998,6 +998,15 @@ createApp({
       azucar: { id: 'azucar', label: 'Azúcar', options: [
         { label: 'Normal', extra: 0 }, { label: 'Poco azúcar', extra: 0 }, { label: 'Sin azúcar', extra: 0 },
       ]},
+      jarabe: { id: 'jarabe', label: 'Shot de jarabe', options: [
+        { label: 'Sin jarabe', extra: 0 },
+        { label: 'Vainilla', extra: 9 }, { label: 'Caramelo', extra: 9 },
+        { label: 'Avellana', extra: 9 }, { label: 'Cajeta', extra: 9 },
+        { label: 'Fresa', extra: 9 },
+      ]},
+      crema: { id: 'crema', label: 'Crema batida', options: [
+        { label: 'Sin crema', extra: 0 }, { label: 'Con crema batida', extra: 0 },
+      ]},
     }
     // Modifier groups per category
     const catModifiers = {
@@ -1005,7 +1014,7 @@ createApp({
       'ICED COFFEE': ['leche', 'shot', 'azucar'],
       'SIN CAFÉ':    ['leche', 'temp', 'azucar'],
       'SPECIALTY':   [],
-      'FRAPPÉ':      ['leche', 'azucar'],
+      'FRAPPÉ':      ['leche', 'azucar', 'jarabe', 'crema'],
       'SMOOTHIES':   [],
       'TEA':         ['azucar'],
       'BRUNCH':      [],
