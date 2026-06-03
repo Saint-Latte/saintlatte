@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jarrón Azul — Menú completo. Café de especialidad, bebidas frías, brunch 8:30–12 y pizza artesanal 18–21:30 en Valle de Santiago, Gto.">
+  <title>Jarrón Azul — Saint Latte</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.cdnfonts.com/css/funtastic" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Jarrón Azul — Back tag ──────────────────────────────── */
+    .ja-back-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .68rem;
+      letter-spacing: .18em;
+      color: rgba(255,254,249,.45);
+      text-decoration: none;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,254,249,.12);
+      padding: .3rem .75rem;
+      border-radius: 2rem;
+      transition: color .2s, border-color .2s;
+      margin-bottom: 1rem;
+    }
+    .ja-back-tag:hover { color: var(--cream); border-color: rgba(255,254,249,.35); }
+    .ja-back-tag svg { width: 11px; height: 11px; flex-shrink: 0; }
+
+    /* ── Timed section wrapper ───────────────────────────────── */
+    .ja-timed { position: relative; }
+
+    .ja-timed__inner {
+      transition: filter .6s ease, opacity .6s ease;
+    }
+    .ja-timed.is-blurred .ja-timed__inner {
+      filter: blur(12px);
+      opacity: .35;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Overlay — shown only when unavailable */
+    .ja-timed__overlay {
+      display: none;
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .9rem;
+      text-align: center;
+      padding: 2rem;
+      pointer-events: none;
+    }
+    .ja-timed.is-unavailable .ja-timed__overlay { display: flex; }
+
+    .ja-timed__overlay-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      letter-spacing: .14em;
+      color: var(--cream);
+      line-height: 1.05;
+    }
+    .ja-timed__overlay-sub {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .72rem;
+      letter-spacing: .12em;
+      color: var(--amber);
+      text-transform: uppercase;
+    }
+    .ja-timed__overlay-countdown {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      letter-spacing: .06em;
+      color: var(--rust);
+      line-height: 1;
+    }
+    .ja-timed__overlay-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .62rem;
+      letter-spacing: .16em;
+      color: rgba(255,254,249,.35);
+      text-transform: uppercase;
+    }
+
+    /* Available badge (shown when it IS open) */
+    .ja-available-badge {
+      display: none;
+      align-items: center;
+      gap: .45rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .64rem;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: var(--rust);
+      padding: .28rem .65rem;
+      border: 1px solid var(--rust-a);
+      border-radius: 2rem;
+      margin-bottom: 1rem;
+    }
+    .ja-timed.is-available .ja-available-badge { display: inline-flex; }
+
+    .ja-available-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--rust);
+      animation: pulse-dot 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: .4; transform: scale(.65); }
+    }
+
+    /* rufus. brand header inside pizza section */
+    .ja-rufus-header {
+      padding: 1.8rem 0 1.2rem;
+      text-align: center;
+    }
+    .ja-rufus-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 6vw, 3rem);
+      letter-spacing: .3em;
+      color: var(--rust);
+      line-height: 1;
+    }
+    .ja-rufus-sub {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .6rem;
+      letter-spacing: .22em;
+      color: rgba(255,254,249,.3);
+      text-transform: uppercase;
+      margin-top: .3rem;
+    }
+  </style>
+</head>
+<body class="page-menu">
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__brand">
+      <img src="assets/images/logo.png" alt="Saint Latte" class="nav__logo-img" onerror="this.style.display='none'">
+      <span class="nav__brand-text">SAINT LATTE</span>
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="menu.html"        class="nav__link">MENÚ</a></li>
+      <li><a href="comunidad.html"   class="nav__link">COMUNIDAD</a></li>
+      <li><a href="nosotros.html"    class="nav__link">NOSOTROS</a></li>
+      <li><a href="jarron-azul.html" class="nav__link nav__link--active">JARRÓN AZUL</a></li>
+      <li><a href="pedidos.html"     class="nav__link nav__link--cta">PEDIDOS</a></li>
+    </ul>
+    <button class="nav__hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu__inner">
+      <ul class="mobile-menu__list" role="list">
+        <li><a href="menu.html"        class="mobile-link">MENÚ</a></li>
+        <li><a href="comunidad.html"   class="mobile-link">COMUNIDAD</a></li>
+        <li><a href="nosotros.html"    class="mobile-link">NOSOTROS</a></li>
+        <li><a href="jarron-azul.html" class="mobile-link">JARRÓN AZUL</a></li>
+        <li><a href="pedidos.html"     class="mobile-link">PEDIDOS</a></li>
+      </ul>
+      <div class="mobile-menu__footer">
+        <a href="https://instagram.com" target="_blank" rel="noopener">IG</a>
+        <span>—</span><a href="#">TK</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE HERO -->
+  <header class="page-hero page-hero--dark">
+    <div class="page-hero__content">
+      <a href="index.html" class="ja-back-tag">
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M7.5 2.5 L3.5 6 L7.5 9.5"/>
+        </svg>
+        SAINT LATTE
+      </a>
+      <span class="section-label">UN RINCÓN DE LA FAMILIA</span>
+      <h1 class="page-hero__title">JARRÓN<br><em>AZUL</em></h1>
+      <p class="page-hero__sub">Café · Bebidas · Brunch 8:30–12:00 · Pizza 18:00–21:30</p>
+    </div>
+    <div class="page-hero__bg-num" aria-hidden="true">JA</div>
+  </header>
+
+  <!-- MARQUEE -->
+  <div class="marquee-band marquee-band--rust" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">CAFÉ HOT</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">ICED COFFEE</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">SIN CAFÉ</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">SPECIALTY</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">FRAPPÉ</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">SMOOTHIES</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">BRUNCH 8:30–12:00</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">PIZZA 18:00–21:30</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">CAFÉ HOT</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">ICED COFFEE</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">SIN CAFÉ</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">SPECIALTY</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">FRAPPÉ</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">SMOOTHIES</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">BRUNCH 8:30–12:00</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">PIZZA 18:00–21:30</span><span class="marquee-sep">◆</span>
+    </div>
+  </div>
+
+  <!-- MENU SECTION -->
+  <section class="menu-section" id="menu">
+
+    <!-- Tabs -->
+    <div class="menu-tabs" role="tablist" aria-label="Categorías">
+      <button class="menu-tab menu-tab--active" role="tab" aria-selected="true"  data-cat="caliente">HOT COFFEE</button>
+      <button class="menu-tab" role="tab" aria-selected="false" data-cat="frio">ICED COFFEE</button>
+      <button class="menu-tab" role="tab" aria-selected="false" data-cat="nocoffee">SIN CAFÉ</button>
+      <button class="menu-tab" role="tab" aria-selected="false" data-cat="specialty">SPECIALTY</button>
+      <button class="menu-tab" role="tab" aria-selected="false" data-cat="frappe">FRAPPÉ</button>
+      <button class="menu-tab" role="tab" aria-selected="false" data-cat="smoothie">SMOOTHIES</button>
+      <button class="menu-tab" role="tab" aria-selected="false" data-cat="tea">TEA</button>
+      <button class="menu-tab" role="tab" aria-selected="false" data-cat="brunch">BRUNCH</button>
+      <button class="menu-tab" role="tab" aria-selected="false" data-cat="pizza">PIZZA</button>
+    </div>
+
+    <!-- Active category label -->
+    <div class="menu-cat-label">
+      <span id="activeCatLabel">HOT COFFEE</span>
+    </div>
+
+    <!-- Regular items grid -->
+    <div class="menu-grid" id="menuGrid">
+
+      <!-- ── HOT COFFEE ──────────────────────────────────── -->
+      <div class="menu-card" data-cat="caliente">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">ESPRESSO</span><span class="menu-card__price">$20</span></div>
+          <p class="menu-card__desc">Concentrado puro · Carácter intenso</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="caliente">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">AMERICANO</span><span class="menu-card__price">$40</span></div>
+          <p class="menu-card__desc">Espresso + agua caliente · Suave y limpio</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="caliente">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">CAPUCCINO</span><span class="menu-card__price">$53</span></div>
+          <p class="menu-card__desc">Espresso + leche vaporizada + microespuma</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="caliente">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">LATTE</span><span class="menu-card__price">$58</span></div>
+          <p class="menu-card__desc">Espresso + leche sedosa y vaporizada</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="caliente">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">MOCHA</span><span class="menu-card__price">$65</span></div>
+          <p class="menu-card__desc">Espresso + chocolate + leche vaporizada</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="caliente">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">CARAMEL MACCHIATO</span><span class="menu-card__price">$70</span></div>
+          <p class="menu-card__desc">Vainilla + leche + espresso + caramelo</p>
+        </div>
+      </div>
+      <div class="menu-card menu-card--highlight" data-cat="caliente">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">FLAT WHITE</span><span class="menu-card__price">$70</span></div>
+          <p class="menu-card__desc">Doble espresso + microespuma · Intenso y cremoso</p>
+        </div>
+      </div>
+
+      <!-- ── ICED COFFEE ──────────────────────────────────── -->
+      <div class="menu-card" data-cat="frio">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">ICED AMERICANO</span><span class="menu-card__price">$50</span></div>
+          <p class="menu-card__desc">Espresso sobre hielo · Refrescante</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="frio">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">ICED LATTE</span><span class="menu-card__price">$67</span></div>
+          <p class="menu-card__desc">Espresso + leche fría + hielo</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="frio">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">COLD BREW</span><span class="menu-card__price">$70</span></div>
+          <p class="menu-card__desc">Infusión en frío 12 horas · Suave y concentrado</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="frio">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">ICED MOCHA</span><span class="menu-card__price">$76</span></div>
+          <p class="menu-card__desc">Espresso + chocolate + leche fría</p>
+        </div>
+      </div>
+      <div class="menu-card menu-card--highlight" data-cat="frio">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">ESPRESSO TONIC</span><span class="menu-card__price">$75</span></div>
+          <p class="menu-card__desc">Espresso sobre agua tónica · Cítrico y burbujante</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="frio">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">MAZAPÁN LATTE</span><span class="menu-card__price">$77</span></div>
+          <p class="menu-card__desc">Espresso + mazapán + leche fría</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="frio">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">ICED CARAMEL MACCHIATO</span><span class="menu-card__price">$79</span></div>
+          <p class="menu-card__desc">Vainilla + leche + espresso + caramelo + hielo</p>
+        </div>
+      </div>
+
+      <!-- ── SIN CAFÉ ──────────────────────────────────── -->
+      <div class="menu-card" data-cat="nocoffee">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">MATCHA</span><span class="menu-card__price">$58</span></div>
+          <p class="menu-card__desc">Té verde ceremonial + leche vaporizada</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="nocoffee">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">TARO</span><span class="menu-card__price">$58</span></div>
+          <p class="menu-card__desc">Raíz de taro + leche · Dulce y cremoso</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="nocoffee">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">CHOCOLATE</span><span class="menu-card__price">$58</span></div>
+          <p class="menu-card__desc">Chocolate artesanal + leche vaporizada</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="nocoffee">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">CHAI</span><span class="menu-card__price">$65</span></div>
+          <p class="menu-card__desc">Especias + té negro + leche · Reconfortante</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="nocoffee">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">GOLDEN MILK</span><span class="menu-card__price">$60</span></div>
+          <p class="menu-card__desc">Cúrcuma + jengibre + miel + leche caliente</p>
+        </div>
+      </div>
+      <div class="menu-card menu-card--highlight" data-cat="nocoffee">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">STRAWBERRY MATCHA</span><span class="menu-card__price">$75</span></div>
+          <p class="menu-card__desc">Matcha + fresa + leche fría · Layers de color</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="nocoffee">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">TARO LATTE</span><span class="menu-card__price">$67</span></div>
+          <p class="menu-card__desc">Taro + leche fría · Suave y morado</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="nocoffee">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">MATCHA LATTE</span><span class="menu-card__price">$67</span></div>
+          <p class="menu-card__desc">Matcha + leche fría · Limpio y vegetal</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="nocoffee">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">MOJITO</span><span class="menu-card__price">$70</span></div>
+          <p class="menu-card__desc">Limón + menta + soda · Sin alcohol, pura frescura</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="nocoffee">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">SAINT FIZZ</span><span class="menu-card__price">$70</span></div>
+          <p class="menu-card__desc">Bebida especial de la casa + soda · Pregunta al barista</p>
+        </div>
+      </div>
+      <div class="menu-card menu-card--highlight" data-cat="nocoffee">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">MOJITO FRUTOS ROJOS</span><span class="menu-card__price">$80</span></div>
+          <p class="menu-card__desc">Frutos rojos + menta + limón + soda</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="nocoffee">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">CHAI LATTE</span><span class="menu-card__price">$75</span></div>
+          <p class="menu-card__desc">Chai concentrado + leche fría · Especiado y frío</p>
+        </div>
+      </div>
+      <div class="menu-card menu-card--highlight" data-cat="nocoffee">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">MARACUYÁ TONIC</span><span class="menu-card__price">$80</span></div>
+          <p class="menu-card__desc">Maracuyá + agua tónica + hielo · Tropical</p>
+        </div>
+      </div>
+
+      <!-- ── SPECIALTY ──────────────────────────────────── -->
+      <div class="menu-card menu-card--specialty" data-cat="specialty">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">AEROPRESS</span><span class="menu-card__price">GRANO DEL DÍA</span></div>
+          <p class="menu-card__desc">Presión + inmersión · Limpio y concentrado</p>
+        </div>
+      </div>
+      <div class="menu-card menu-card--specialty" data-cat="specialty">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">V60</span><span class="menu-card__price">GRANO DEL DÍA</span></div>
+          <p class="menu-card__desc">Pour over japonés · Brillante y aromático</p>
+        </div>
+      </div>
+      <div class="menu-card menu-card--specialty" data-cat="specialty">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">KALITA</span><span class="menu-card__price">GRANO DEL DÍA</span></div>
+          <p class="menu-card__desc">Extracción pareja · Dulzura natural equilibrada</p>
+        </div>
+      </div>
+      <div class="menu-card menu-card--specialty" data-cat="specialty">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">ORIGAMI</span><span class="menu-card__price">GRANO DEL DÍA</span></div>
+          <p class="menu-card__desc">Dripper japonés · Inmersión + goteo · Equilibrado</p>
+        </div>
+      </div>
+      <div class="menu-card menu-card--specialty" data-cat="specialty">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">CHEMEX</span><span class="menu-card__price">GRANO DEL DÍA</span></div>
+          <p class="menu-card__desc">Filtro grueso · Cuerpo limpio · Dulzura natural</p>
+        </div>
+      </div>
+      <div class="menu-card menu-card--specialty" data-cat="specialty">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">FRENCH PRESS</span><span class="menu-card__price">GRANO DEL DÍA</span></div>
+          <p class="menu-card__desc">Inmersión total · Cuerpo completo · Aceites naturales</p>
+        </div>
+      </div>
+      <div class="menu-card menu-card--specialty" data-cat="specialty">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">JAPANESE SIPHON</span><span class="menu-card__price">GRANO DEL DÍA</span></div>
+          <p class="menu-card__desc">Método de vacío · Teatro puro · Experiencia única</p>
+        </div>
+      </div>
+      <div class="menu-card menu-card--specialty menu-card--note" data-cat="specialty">
+        <div class="menu-card__inner">
+          <p class="menu-card__note">Los granos de especialidad rotan constantemente. El precio depende del origen seleccionado — pregunta a tu barista.</p>
+        </div>
+      </div>
+
+      <!-- ── FRAPPÉ ──────────────────────────────────── -->
+      <div class="menu-card" data-cat="frappe">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">CAPUCCINO</span><span class="menu-card__price">$75</span></div>
+          <p class="menu-card__desc">Frappé cremoso de capuccino</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="frappe">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">MATCHA</span><span class="menu-card__price">$77</span></div>
+          <p class="menu-card__desc">Frappé de matcha ceremonial · Cremoso</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="frappe">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">TARO</span><span class="menu-card__price">$77</span></div>
+          <p class="menu-card__desc">Frappé morado de taro · Dulce y único</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="frappe">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">CHOCOLATE</span><span class="menu-card__price">$77</span></div>
+          <p class="menu-card__desc">Frappé de chocolate · Indulgente</p>
+        </div>
+      </div>
+      <div class="menu-card menu-card--highlight" data-cat="frappe">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">OREO</span><span class="menu-card__price">$85</span></div>
+          <p class="menu-card__desc">Frappé de Oreo + crema batida</p>
+        </div>
+      </div>
+      <div class="menu-card menu-card--highlight" data-cat="frappe">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">MAZAPÁN</span><span class="menu-card__price">$85</span></div>
+          <p class="menu-card__desc">Frappé de mazapán · México en tu vaso</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="frappe">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">MOCHA</span><span class="menu-card__price">$85</span></div>
+          <p class="menu-card__desc">Frappé de café + chocolate</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="frappe">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">CHAI</span><span class="menu-card__price">$90</span></div>
+          <p class="menu-card__desc">Frappé de chai · Especiado y cremoso</p>
+        </div>
+      </div>
+
+      <!-- ── SMOOTHIES ──────────────────────────────────── -->
+      <div class="menu-card" data-cat="smoothie">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">BERRIES</span><span class="menu-card__price">$75</span></div>
+          <p class="menu-card__desc">Mix de frutos rojos · Antioxidante</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="smoothie">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">STRAWBERRY</span><span class="menu-card__price">$75</span></div>
+          <p class="menu-card__desc">Fresa natural · Cremoso y frutal</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="smoothie">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">KIWI</span><span class="menu-card__price">$75</span></div>
+          <p class="menu-card__desc">Kiwi fresco · Verde y refrescante</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="smoothie">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">MANGO</span><span class="menu-card__price">$75</span></div>
+          <p class="menu-card__desc">Mango natural · Tropical y dulce</p>
+        </div>
+      </div>
+      <div class="menu-card menu-card--highlight" data-cat="smoothie">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">PIÑA COCO</span><span class="menu-card__price">$85</span></div>
+          <p class="menu-card__desc">Piña + coco · Vacaciones en un vaso</p>
+        </div>
+      </div>
+
+      <!-- ── TEA ──────────────────────────────────── -->
+      <div class="menu-card" data-cat="tea">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">ICED HERBAL TEA</span><span class="menu-card__price">$45</span></div>
+          <p class="menu-card__desc">Infusión de hierbas helada · Sabores de temporada</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="tea">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">ICED FRUIT TEA</span><span class="menu-card__price">$70</span></div>
+          <p class="menu-card__desc">Infusión de fruta helada · Pregunta por el sabor del día</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="tea">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">HOT HERBAL TEA</span><span class="menu-card__price">$40</span></div>
+          <p class="menu-card__desc">Infusión caliente de hierbas · Reconfortante</p>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="tea">
+        <div class="menu-card__inner">
+          <div class="menu-card__header"><span class="menu-card__name">HOT FRUIT TEA</span><span class="menu-card__price">$65</span></div>
+          <p class="menu-card__desc">Infusión caliente de fruta · Sabores de temporada</p>
+        </div>
+      </div>
+
+    </div><!-- /menu-grid -->
+
+    <!-- ── TIMED: BRUNCH ─────────────────────────────────── -->
+    <div class="ja-timed" id="timedBrunch" style="display:none">
+      <div class="ja-available-badge">
+        <span class="ja-available-dot"></span>
+        DISPONIBLE AHORA
+      </div>
+      <div class="ja-timed__inner">
+        <div class="menu-grid">
+          <div class="menu-card" data-cat="brunch">
+            <div class="menu-card__inner">
+              <div class="menu-card__header"><span class="menu-card__name">THE GOLDEN ONE</span><span class="menu-card__price">$80</span></div>
+              <p class="menu-card__desc">Croissant · Jamón de pavo · Queso fundido · Verduras · Aderezo de la casa</p>
+            </div>
+          </div>
+          <div class="menu-card" data-cat="brunch">
+            <div class="menu-card__inner">
+              <div class="menu-card__header"><span class="menu-card__name">A-B-CIABATTA</span><span class="menu-card__price">$80</span></div>
+              <p class="menu-card__desc">Ciabatta · Jamón de pavo · Queso fundido · Vinagre balsámico</p>
+            </div>
+          </div>
+          <div class="menu-card menu-card--highlight" data-cat="brunch">
+            <div class="menu-card__inner">
+              <div class="menu-card__header"><span class="menu-card__name">SWEET &amp; SAVORY</span><span class="menu-card__price">$98</span></div>
+              <p class="menu-card__desc">Croissant · Jamón serrano · Queso crema · Pesto · Durazno · Miel</p>
+            </div>
+          </div>
+          <div class="menu-card menu-card--highlight" data-cat="brunch">
+            <div class="menu-card__inner">
+              <div class="menu-card__header"><span class="menu-card__name">CIABATASTY</span><span class="menu-card__price">$98</span></div>
+              <p class="menu-card__desc">Ciabatta · Jamón serrano · Queso crema · Aceitunas · Pesto · Balsámico</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ja-timed__overlay">
+        <div class="ja-timed__overlay-title">NO PODEMOS<br>SERVIRTE AÚN</div>
+        <div class="ja-timed__overlay-sub">Brunch disponible 8:30 – 12:00</div>
+        <div class="ja-timed__overlay-countdown" id="brunchCountdown">--:--:--</div>
+        <div class="ja-timed__overlay-label">para que abra</div>
+      </div>
+    </div>
+
+    <!-- ── TIMED: PIZZA ──────────────────────────────────── -->
+    <div class="ja-timed" id="timedPizza" style="display:none">
+      <div class="ja-available-badge">
+        <span class="ja-available-dot"></span>
+        DISPONIBLE AHORA
+      </div>
+      <div class="ja-timed__inner">
+        <div class="ja-rufus-header">
+          <div class="ja-rufus-name">rufus.</div>
+          <div class="ja-rufus-sub">Pizza artesanal · Noches en Jarrón Azul</div>
+        </div>
+        <div class="menu-grid">
+          <div class="menu-card" data-cat="pizza">
+            <div class="menu-card__inner">
+              <div class="menu-card__header"><span class="menu-card__name">PEPPERONI</span><span class="menu-card__price">$90</span></div>
+              <p class="menu-card__desc">Pomodoro · Mozzarella · Pepperoni · Napolitana</p>
+            </div>
+          </div>
+          <div class="menu-card" data-cat="pizza">
+            <div class="menu-card__inner">
+              <div class="menu-card__header"><span class="menu-card__name">MARGHERITA</span><span class="menu-card__price">$90</span></div>
+              <p class="menu-card__desc">Albahaca · Tomate · Mozzarella · Pomodoro · Clásica</p>
+            </div>
+          </div>
+          <div class="menu-card" data-cat="pizza">
+            <div class="menu-card__inner">
+              <div class="menu-card__header"><span class="menu-card__name">DIAVOLA</span><span class="menu-card__price">$100</span></div>
+              <p class="menu-card__desc">Salami calabrés · Mozzarella · Pimiento · Picante</p>
+            </div>
+          </div>
+          <div class="menu-card" data-cat="pizza">
+            <div class="menu-card__inner">
+              <div class="menu-card__header"><span class="menu-card__name">CARBONARA</span><span class="menu-card__price">$100</span></div>
+              <p class="menu-card__desc">Tocino · Salami · Cebolla · Aceitunas · Mozzarella</p>
+            </div>
+          </div>
+          <div class="menu-card" data-cat="pizza">
+            <div class="menu-card__inner">
+              <div class="menu-card__header"><span class="menu-card__name">CUATRO ESTACIONES</span><span class="menu-card__price">$100</span></div>
+              <p class="menu-card__desc">Pepperoni · Tocino · Tomate · Aceituna · Mozzarella</p>
+            </div>
+          </div>
+          <div class="menu-card" data-cat="pizza">
+            <div class="menu-card__inner">
+              <div class="menu-card__header"><span class="menu-card__name">CAPRICCIOSA</span><span class="menu-card__price">$110</span></div>
+              <p class="menu-card__desc">Salami · Tocino · Champiñón · Pimiento · Cebolla · Mozzarella</p>
+            </div>
+          </div>
+          <div class="menu-card menu-card--highlight" data-cat="pizza">
+            <div class="menu-card__inner">
+              <div class="menu-card__header"><span class="menu-card__name">JAMÓN Y HONGOS</span><span class="menu-card__price">$130</span></div>
+              <p class="menu-card__desc">Jamón serrano · Champiñón · Tomate · Mozzarella</p>
+            </div>
+          </div>
+          <div class="menu-card menu-card--highlight" data-cat="pizza">
+            <div class="menu-card__inner">
+              <div class="menu-card__header"><span class="menu-card__name">MEDITERRÁNEA</span><span class="menu-card__price">$130</span></div>
+              <p class="menu-card__desc">Tomate · Aceituna · Jamón serrano · Mozzarella · Balsámico</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ja-timed__overlay">
+        <div class="ja-timed__overlay-title">NO PODEMOS<br>SERVIRTE AÚN</div>
+        <div class="ja-timed__overlay-sub">Pizza disponible 18:00 – 21:30</div>
+        <div class="ja-timed__overlay-countdown" id="pizzaCountdown">--:--:--</div>
+        <div class="ja-timed__overlay-label">para que abra</div>
+      </div>
+    </div>
+
+  </section><!-- /menu-section -->
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="assets/images/logo.png" alt="" class="footer__logo" onerror="this.style.display='none'">
+        <span class="footer__brand-name">SAINT LATTE</span>
+        <p class="footer__brand-sub">Specialty Coffee Shop · Valle de Santiago, Gto.</p>
+      </div>
+      <nav class="footer__nav">
+        <a href="menu.html">MENÚ</a>
+        <a href="comunidad.html">COMUNIDAD</a>
+        <a href="nosotros.html">NOSOTROS</a>
+        <a href="jarron-azul.html">JARRÓN AZUL</a>
+        <a href="pedidos.html">PEDIDOS</a>
+      </nav>
+      <div class="footer__social">
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="footer__social-link">INSTAGRAM</a>
+        <a href="#" class="footer__social-link">TIKTOK</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2024 SAINT LATTE.</span>
+      <span>HECHO CON ♥ EN VALLE DE SANTIAGO</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    // ── Tab filtering ────────────────────────────────────────────────────────
+    const tabs      = document.querySelectorAll('.menu-tab')
+    const cards     = document.querySelectorAll('#menuGrid .menu-card')
+    const grid      = document.getElementById('menuGrid')
+    const timedEls  = {
+      brunch: document.getElementById('timedBrunch'),
+      pizza:  document.getElementById('timedPizza'),
+    }
+    const labelEl   = document.getElementById('activeCatLabel')
+
+    const catNames = {
+      caliente: 'HOT COFFEE',
+      frio:     'ICED COFFEE',
+      nocoffee: 'SIN CAFÉ',
+      specialty:'SPECIALTY',
+      frappe:   'FRAPPÉ',
+      smoothie: 'SMOOTHIES',
+      tea:      'TEA & INFUSIONS',
+      brunch:   'BRUNCH — 8:30 A 12:00',
+      pizza:    'PIZZA — 18:00 A 21:30',
+    }
+
+    function showCat(cat) {
+      // Show/hide regular cards
+      cards.forEach(c => { c.style.display = c.dataset.cat === cat ? '' : 'none' })
+      // Toggle grid vs timed section
+      const timedEl = timedEls[cat]
+      if (timedEl) {
+        grid.style.display = 'none'
+        Object.values(timedEls).forEach(el => { el.style.display = 'none' })
+        timedEl.style.display = ''
+      } else {
+        grid.style.display = ''
+        Object.values(timedEls).forEach(el => { el.style.display = 'none' })
+      }
+      // Label
+      labelEl.textContent = catNames[cat] || cat.toUpperCase()
+      // Animate visible cards
+      const visCards = timedEl
+        ? [...timedEl.querySelectorAll('.menu-card')]
+        : [...cards].filter(c => c.style.display !== 'none')
+      if (typeof gsap !== 'undefined' && visCards.length) {
+        gsap.fromTo(visCards,
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, stagger: .04, duration: .35, ease: 'power2.out' }
+        )
+      }
+    }
+
+    tabs.forEach(t => {
+      t.addEventListener('click', () => {
+        tabs.forEach(x => { x.classList.remove('menu-tab--active'); x.setAttribute('aria-selected', 'false') })
+        t.classList.add('menu-tab--active')
+        t.setAttribute('aria-selected', 'true')
+        showCat(t.dataset.cat)
+      })
+    })
+
+    showCat('caliente')
+
+    // ── Timed section logic ──────────────────────────────────────────────────
+    function setupTimed(elId, startH, startM, endH, endM, countdownId) {
+      const el    = document.getElementById(elId)
+      const cntEl = document.getElementById(countdownId)
+      let blurHandle = null
+
+      function inWindow() {
+        const now  = new Date()
+        const mins = now.getHours() * 60 + now.getMinutes()
+        return mins >= startH * 60 + startM && mins < endH * 60 + endM
+      }
+
+      function secsUntilOpen() {
+        const now   = new Date()
+        const nowS  = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()
+        const openS = startH * 3600 + startM * 60
+        let diff    = openS - nowS
+        if (diff <= 0) diff += 86400  // wraps to next day
+        return diff
+      }
+
+      function fmt(s) {
+        const h   = Math.floor(s / 3600)
+        const m   = Math.floor((s % 3600) / 60)
+        const sec = s % 60
+        return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`
+      }
+
+      function applyAvailability() {
+        const avail = inWindow()
+        el.classList.toggle('is-available',   avail)
+        el.classList.toggle('is-unavailable', !avail)
+      }
+
+      function scheduleBlink() {
+        if (inWindow()) {
+          el.classList.remove('is-blurred')
+          return
+        }
+        el.classList.add('is-blurred')
+        // 2.5s blurred → clear
+        blurHandle = setTimeout(() => {
+          el.classList.remove('is-blurred')
+          // 7.5s clear → blink again (10s total cycle)
+          blurHandle = setTimeout(scheduleBlink, 7500)
+        }, 2500)
+      }
+
+      // Countdown tick
+      function tick() {
+        applyAvailability()
+        if (!inWindow() && cntEl) {
+          cntEl.textContent = fmt(secsUntilOpen())
+        }
+        if (inWindow() && cntEl) {
+          cntEl.textContent = ''
+        }
+      }
+
+      applyAvailability()
+      if (!inWindow()) scheduleBlink()
+      setInterval(tick, 1000)
+      tick()
+    }
+
+    setupTimed('timedBrunch', 8,  30, 12,  0,  'brunchCountdown')
+    setupTimed('timedPizza',  18,  0, 21, 30, 'pizzaCountdown')
+  </script>
+</body>
+</html>
