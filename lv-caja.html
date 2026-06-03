@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caja — Leandro Valle</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #141414;
+      --surface2: #1e1e1e;
+      --surface3: #282828;
+      --border: #2a2a2a;
+      --text: #f0ede8;
+      --muted: #888;
+      --green: #337958;
+      --green-light: #4aaa7a;
+      --amber: #C49A27;
+      --red: #c0392b;
+      --blue: #2980b9;
+      --cream: #FFFEF9;
+      --rust: #337958;
+    }
+
+    html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; }
+
+    /* ── LOCK SCREEN ── */
+    .lock-screen {
+      position: fixed; inset: 0; background: var(--bg);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 1000; gap: 2rem;
+    }
+    .lock-brand { text-align: center; }
+    .lock-brand h1 { font-size: 2.2rem; letter-spacing: .3em; font-weight: 700; color: var(--cream); }
+    .lock-brand p { color: var(--muted); letter-spacing: .2em; font-size: .75rem; margin-top: .4rem; }
+    .pin-display {
+      display: flex; gap: .75rem;
+    }
+    .pin-dot {
+      width: 16px; height: 16px; border-radius: 50%;
+      border: 2px solid var(--green);
+      background: transparent;
+      transition: background .15s;
+    }
+    .pin-dot.filled { background: var(--green); }
+    .pin-pad {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; width: 240px;
+    }
+    .pin-btn {
+      background: var(--surface2); border: 1px solid var(--border); color: var(--text);
+      padding: 1rem; border-radius: 10px; font-size: 1.2rem; font-weight: 600; cursor: pointer;
+      transition: background .1s, transform .08s;
+      user-select: none;
+    }
+    .pin-btn:active { background: var(--surface3); transform: scale(.96); }
+    .pin-btn.del { font-size: .9rem; color: var(--muted); }
+    .pin-btn.enter { background: var(--green); color: #fff; }
+    .pin-btn.enter:active { background: var(--green-light); }
+    .pin-error { color: var(--red); font-size: .8rem; letter-spacing: .05em; min-height: 1.2em; text-align: center; }
+
+    /* ── APP SHELL ── */
+    .app { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: .6rem 1rem; flex-shrink: 0; gap: 1rem;
+    }
+    .topbar__brand { font-weight: 700; letter-spacing: .15em; font-size: .85rem; color: var(--cream); }
+    .topbar__tabs { display: flex; gap: .25rem; }
+    .topbar__tab {
+      padding: .45rem .9rem; border-radius: 6px; cursor: pointer; font-size: .78rem;
+      letter-spacing: .08em; font-weight: 600; color: var(--muted);
+      transition: all .15s; border: 1px solid transparent;
+    }
+    .topbar__tab.active { background: var(--green); color: #fff; border-color: var(--green); }
+    .topbar__tab:not(.active):hover { background: var(--surface2); color: var(--text); }
+    .topbar__session {
+      font-size: .72rem; color: var(--muted); text-align: right; line-height: 1.4;
+    }
+    .topbar__session strong { color: var(--amber); }
+    .session-badge {
+      display: inline-block; padding: .2rem .55rem; border-radius: 20px; font-size: .65rem;
+      font-weight: 700; letter-spacing: .08em;
+    }
+    .session-badge.open { background: rgba(51,121,88,.2); color: var(--green-light); border: 1px solid var(--green); }
+    .session-badge.closed { background: rgba(192,57,43,.15); color: #e74c3c; border: 1px solid var(--red); }
+
+    /* ── VIEWS ── */
+    .view { flex: 1; overflow: hidden; display: flex; }
+
+    /* ══════════════════════════════
+       COMANDAR VIEW
+    ══════════════════════════════ */
+    .pos-layout { display: flex; width: 100%; gap: 0; }
+    .pos-menu { flex: 1; display: flex; flex-direction: column; overflow: hidden; border-right: 1px solid var(--border); }
+    .pos-menu__cats { display: flex; gap: .3rem; padding: .75rem; overflow-x: auto; flex-shrink: 0; background: var(--surface); border-bottom: 1px solid var(--border); }
+    .pos-menu__cats::-webkit-scrollbar { height: 3px; }
+    .pos-menu__cats::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .cat-btn {
+      padding: .4rem .85rem; border-radius: 20px; font-size: .73rem; letter-spacing: .08em;
+      font-weight: 600; cursor: pointer; white-space: nowrap; border: 1px solid var(--border);
+      background: var(--surface2); color: var(--muted); transition: all .12s;
+    }
+    .cat-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
+    .cat-btn:not(.active):hover { background: var(--surface3); color: var(--text); }
+
+    .pos-menu__search { padding: .5rem .75rem; flex-shrink: 0; }
+    .search-input {
+      width: 100%; background: var(--surface2); border: 1px solid var(--border); color: var(--text);
+      padding: .5rem .75rem; border-radius: 8px; font-size: .82rem;
+      outline: none; transition: border-color .15s;
+    }
+    .search-input:focus { border-color: var(--green); }
+    .search-input::placeholder { color: var(--muted); }
+
+    .pos-menu__grid {
+      flex: 1; overflow-y: auto; padding: .75rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .5rem;
+      align-content: start;
+    }
+    .pos-menu__grid::-webkit-scrollbar { width: 4px; }
+    .pos-menu__grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .item-card {
+      background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;
+      padding: .75rem; cursor: pointer; transition: all .12s; position: relative;
+      display: flex; flex-direction: column; gap: .3rem;
+    }
+    .item-card:hover { background: var(--surface3); border-color: var(--green); }
+    .item-card__cat { font-size: .6rem; letter-spacing: .1em; color: var(--muted); text-transform: uppercase; }
+    .item-card__name { font-size: .8rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .item-card__price { font-size: .82rem; font-weight: 700; color: var(--amber); margin-top: auto; padding-top: .3rem; }
+    .item-card__price.specialty { color: var(--muted); font-size: .7rem; font-style: italic; }
+    .item-card__badge {
+      position: absolute; top: .4rem; right: .4rem; background: var(--green); color: #fff;
+      border-radius: 50%; width: 18px; height: 18px; font-size: .65rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── CART ── */
+    .pos-cart { width: 320px; flex-shrink: 0; display: flex; flex-direction: column; background: var(--surface); }
+    .pos-cart__header { padding: .75rem 1rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .pos-cart__title { font-weight: 700; letter-spacing: .1em; font-size: .85rem; }
+    .pos-cart__count { background: var(--surface3); padding: .2rem .55rem; border-radius: 20px; font-size: .7rem; color: var(--muted); }
+    .pos-cart__note { padding: .5rem .75rem; flex-shrink: 0; }
+    .cart-note-input {
+      width: 100%; background: var(--surface2); border: 1px solid var(--border); color: var(--text);
+      padding: .45rem .65rem; border-radius: 7px; font-size: .78rem;
+      outline: none; resize: none;
+    }
+    .cart-note-input:focus { border-color: var(--amber); }
+    .cart-note-input::placeholder { color: var(--muted); }
+    .pos-cart__items { flex: 1; overflow-y: auto; padding: .5rem .75rem; }
+    .pos-cart__items::-webkit-scrollbar { width: 3px; }
+    .pos-cart__items::-webkit-scrollbar-thumb { background: var(--border); }
+    .cart-empty { text-align: center; color: var(--muted); padding: 2rem 1rem; font-size: .82rem; line-height: 1.6; }
+
+    .cart-item { display: flex; align-items: center; gap: .5rem; padding: .5rem 0; border-bottom: 1px solid var(--border); }
+    .cart-item:last-child { border-bottom: none; }
+    .cart-item__qty-ctrl { display: flex; align-items: center; gap: .3rem; }
+    .qty-btn { width: 22px; height: 22px; border-radius: 5px; background: var(--surface3); border: 1px solid var(--border); color: var(--text); cursor: pointer; font-size: .9rem; display: flex; align-items: center; justify-content: center; transition: background .1s; }
+    .qty-btn:hover { background: var(--surface2); }
+    .qty-btn.del-btn { color: var(--red); }
+    .cart-item__qty { font-size: .8rem; font-weight: 700; min-width: 20px; text-align: center; }
+    .cart-item__info { flex: 1; min-width: 0; }
+    .cart-item__name { font-size: .78rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cart-item__note { font-size: .68rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cart-item__price { font-size: .8rem; font-weight: 700; color: var(--amber); white-space: nowrap; }
+
+    .pos-cart__footer { padding: .75rem; border-top: 1px solid var(--border); flex-shrink: 0; }
+    .cart-summary { margin-bottom: .75rem; }
+    .cart-sum-row { display: flex; justify-content: space-between; font-size: .78rem; padding: .2rem 0; color: var(--muted); }
+    .cart-sum-row.total { color: var(--text); font-weight: 700; font-size: 1rem; border-top: 1px solid var(--border); margin-top: .3rem; padding-top: .4rem; }
+
+    .payment-select { width: 100%; background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: .5rem .7rem; border-radius: 8px; font-size: .82rem; margin-bottom: .5rem; outline: none; cursor: pointer; }
+    .cash-row { display: flex; gap: .5rem; margin-bottom: .5rem; align-items: center; }
+    .cash-input {
+      flex: 1; background: var(--surface2); border: 1px solid var(--border); color: var(--text);
+      padding: .45rem .65rem; border-radius: 7px; font-size: .82rem; outline: none;
+    }
+    .cash-input:focus { border-color: var(--amber); }
+    .cash-change { font-size: .8rem; color: var(--green-light); padding: .3rem 0; }
+    .cash-change.negative { color: var(--red); }
+
+    .btn-cobrar {
+      width: 100%; padding: .75rem; background: var(--green); color: #fff; border: none;
+      border-radius: 10px; font-size: .9rem; font-weight: 700; letter-spacing: .12em;
+      cursor: pointer; transition: background .15s;
+    }
+    .btn-cobrar:hover { background: var(--green-light); }
+    .btn-cobrar:disabled { background: var(--surface3); color: var(--muted); cursor: not-allowed; }
+    .btn-clear { width: 100%; padding: .45rem; background: transparent; border: 1px solid var(--border); color: var(--muted); border-radius: 7px; font-size: .75rem; cursor: pointer; margin-top: .4rem; transition: all .12s; }
+    .btn-clear:hover { border-color: var(--red); color: var(--red); }
+
+    /* ══════════════════════════════
+       ÓRDENES VIEW
+    ══════════════════════════════ */
+    .orders-view { flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 1rem; gap: .75rem; }
+    .orders-toolbar { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+    .date-input {
+      background: var(--surface2); border: 1px solid var(--border); color: var(--text);
+      padding: .45rem .75rem; border-radius: 8px; font-size: .82rem; outline: none;
+      cursor: pointer;
+    }
+    .date-input:focus { border-color: var(--green); }
+    .orders-kpi { display: flex; gap: .75rem; flex-wrap: wrap; }
+    .kpi-chip { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: .5rem .9rem; font-size: .75rem; }
+    .kpi-chip span { display: block; color: var(--muted); font-size: .65rem; letter-spacing: .08em; margin-bottom: .15rem; }
+    .kpi-chip strong { color: var(--amber); font-size: .95rem; }
+
+    .orders-table-wrap { flex: 1; overflow-y: auto; }
+    .orders-table-wrap::-webkit-scrollbar { width: 4px; }
+    .orders-table-wrap::-webkit-scrollbar-thumb { background: var(--border); }
+    .orders-table { width: 100%; border-collapse: collapse; }
+    .orders-table th { position: sticky; top: 0; background: var(--surface); padding: .6rem .75rem; text-align: left; font-size: .7rem; letter-spacing: .1em; color: var(--muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
+    .orders-table td { padding: .55rem .75rem; border-bottom: 1px solid var(--border); font-size: .8rem; vertical-align: middle; }
+    .orders-table tr:hover td { background: var(--surface2); }
+    .orders-table tr.cancelled td { opacity: .45; text-decoration: line-through; }
+
+    .badge { display: inline-block; padding: .18rem .5rem; border-radius: 20px; font-size: .65rem; font-weight: 700; letter-spacing: .06em; }
+    .badge-efectivo { background: rgba(51,121,88,.2); color: var(--green-light); }
+    .badge-tarjeta { background: rgba(41,128,185,.2); color: #5dade2; }
+    .badge-transfer { background: rgba(196,154,39,.2); color: var(--amber); }
+    .badge-cancelled { background: rgba(192,57,43,.15); color: #e74c3c; }
+
+    .btn-cancel-order { background: transparent; border: 1px solid var(--border); color: var(--muted); padding: .25rem .55rem; border-radius: 5px; font-size: .68rem; cursor: pointer; transition: all .12s; }
+    .btn-cancel-order:hover { border-color: var(--red); color: var(--red); }
+
+    .order-items-detail { font-size: .72rem; color: var(--muted); line-height: 1.5; }
+
+    /* ══════════════════════════════
+       REPORTES VIEW
+    ══════════════════════════════ */
+    .reports-view { flex: 1; overflow-y: auto; padding: 1rem; }
+    .reports-view::-webkit-scrollbar { width: 4px; }
+    .reports-view::-webkit-scrollbar-thumb { background: var(--border); }
+    .reports-header { display: flex; gap: .75rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; }
+    .reports-header h2 { font-size: 1rem; letter-spacing: .12em; font-weight: 700; flex: 1; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: .75rem; margin-bottom: 1.25rem; }
+    .kpi-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: .9rem 1rem; }
+    .kpi-card__label { font-size: .65rem; letter-spacing: .12em; color: var(--muted); margin-bottom: .35rem; text-transform: uppercase; }
+    .kpi-card__val { font-size: 1.5rem; font-weight: 700; color: var(--cream); line-height: 1; }
+    .kpi-card__val.green { color: var(--green-light); }
+    .kpi-card__val.amber { color: var(--amber); }
+    .kpi-card__sub { font-size: .68rem; color: var(--muted); margin-top: .25rem; }
+
+    .reports-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+    @media (max-width: 900px) { .reports-grid { grid-template-columns: 1fr; } }
+    .report-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: .9rem 1rem; }
+    .report-card__title { font-size: .72rem; letter-spacing: .1em; color: var(--muted); margin-bottom: .75rem; font-weight: 700; text-transform: uppercase; }
+
+    /* Bar chart */
+    .bar-chart { display: flex; flex-direction: column; gap: .45rem; }
+    .bar-row { display: flex; align-items: center; gap: .5rem; }
+    .bar-label { font-size: .72rem; color: var(--text); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bar-track { flex: 1; height: 8px; background: var(--surface3); border-radius: 4px; overflow: hidden; }
+    .bar-fill { height: 100%; background: var(--green); border-radius: 4px; transition: width .4s; }
+    .bar-val { font-size: .7rem; color: var(--muted); min-width: 30px; text-align: right; }
+
+    /* Hourly chart */
+    .hourly-chart { display: flex; align-items: flex-end; gap: 2px; height: 80px; padding-top: .5rem; }
+    .hour-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; height: 100%; justify-content: flex-end; }
+    .hour-bar { width: 100%; background: var(--surface3); border-radius: 2px 2px 0 0; min-height: 2px; transition: height .3s; position: relative; }
+    .hour-bar.has-val { background: var(--green); }
+    .hour-bar:hover::after { content: attr(data-val); position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: .6rem; color: var(--text); background: var(--surface); padding: .1rem .3rem; border-radius: 3px; white-space: nowrap; pointer-events: none; }
+    .hour-label { font-size: .55rem; color: var(--muted); white-space: nowrap; }
+
+    /* Payment breakdown */
+    .pay-breakdown { display: flex; flex-direction: column; gap: .5rem; }
+    .pay-row { display: flex; align-items: center; gap: .6rem; }
+    .pay-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .pay-name { font-size: .78rem; flex: 1; }
+    .pay-pct { font-size: .72rem; color: var(--muted); }
+    .pay-amt { font-size: .78rem; font-weight: 700; color: var(--amber); }
+
+    /* ══════════════════════════════
+       CAJA VIEW
+    ══════════════════════════════ */
+    .caja-view { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 1rem; }
+    .caja-view::-webkit-scrollbar { width: 4px; }
+    .caja-view::-webkit-scrollbar-thumb { background: var(--border); }
+    .caja-section { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; }
+    .caja-section__title { font-size: .72rem; letter-spacing: .15em; color: var(--muted); font-weight: 700; text-transform: uppercase; margin-bottom: .9rem; display: flex; align-items: center; gap: .5rem; }
+    .caja-section__title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .session-status-big { display: flex; align-items: center; gap: 1rem; margin-bottom: .9rem; }
+    .session-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--red); }
+    .session-dot.open { background: var(--green); box-shadow: 0 0 8px var(--green); }
+    .session-info { font-size: .82rem; }
+    .session-info strong { font-size: 1rem; }
+
+    .caja-form { display: grid; gap: .65rem; }
+    .form-row { display: flex; gap: .65rem; align-items: center; }
+    .form-label { font-size: .75rem; color: var(--muted); width: 120px; flex-shrink: 0; }
+    .form-input {
+      flex: 1; background: var(--surface3); border: 1px solid var(--border); color: var(--text);
+      padding: .5rem .75rem; border-radius: 8px; font-size: .85rem; outline: none;
+    }
+    .form-input:focus { border-color: var(--green); }
+    .form-input[type=password] { letter-spacing: .2em; }
+
+    .caja-btns { display: flex; gap: .6rem; flex-wrap: wrap; }
+    .btn-primary { padding: .6rem 1.2rem; background: var(--green); color: #fff; border: none; border-radius: 8px; font-size: .82rem; font-weight: 700; letter-spacing: .08em; cursor: pointer; transition: background .15s; }
+    .btn-primary:hover { background: var(--green-light); }
+    .btn-secondary { padding: .6rem 1.2rem; background: var(--surface3); color: var(--text); border: 1px solid var(--border); border-radius: 8px; font-size: .82rem; font-weight: 600; cursor: pointer; transition: all .15s; }
+    .btn-secondary:hover { border-color: var(--amber); color: var(--amber); }
+    .btn-danger { padding: .6rem 1.2rem; background: rgba(192,57,43,.15); color: #e74c3c; border: 1px solid rgba(192,57,43,.3); border-radius: 8px; font-size: .82rem; font-weight: 600; cursor: pointer; transition: all .15s; }
+    .btn-danger:hover { background: rgba(192,57,43,.3); }
+
+    .arqueo-table { width: 100%; border-collapse: collapse; }
+    .arqueo-table td { padding: .45rem .6rem; font-size: .8rem; border-bottom: 1px solid var(--border); }
+    .arqueo-table td:last-child { text-align: right; font-weight: 600; color: var(--amber); }
+    .arqueo-table tr:last-child td { border-bottom: none; font-weight: 700; color: var(--text); font-size: .85rem; }
+    .arqueo-diff-pos { color: var(--green-light); }
+    .arqueo-diff-neg { color: var(--red); }
+
+    .sessions-history { display: flex; flex-direction: column; gap: .5rem; max-height: 220px; overflow-y: auto; }
+    .sessions-history::-webkit-scrollbar { width: 3px; }
+    .sessions-history::-webkit-scrollbar-thumb { background: var(--border); }
+    .session-hist-item { background: var(--surface3); border: 1px solid var(--border); border-radius: 8px; padding: .6rem .85rem; font-size: .75rem; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .3rem; }
+    .session-hist-item span { color: var(--muted); font-size: .65rem; }
+    .session-hist-item strong { color: var(--text); }
+
+    /* ── MODAL ── */
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.75); z-index: 500; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+    .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; width: 100%; max-width: 400px; }
+    .modal h3 { font-size: 1rem; letter-spacing: .1em; margin-bottom: .5rem; }
+    .modal p { font-size: .82rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.5; }
+    .modal-input { width: 100%; background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: .6rem .8rem; border-radius: 8px; font-size: .9rem; outline: none; margin-bottom: .75rem; }
+    .modal-input:focus { border-color: var(--green); }
+    .modal-btns { display: flex; gap: .5rem; justify-content: flex-end; }
+    .modal-btn { padding: .55rem 1.1rem; border-radius: 8px; font-size: .82rem; font-weight: 600; cursor: pointer; border: none; }
+    .modal-btn.confirm { background: var(--green); color: #fff; }
+    .modal-btn.cancel { background: var(--surface3); color: var(--muted); }
+
+    /* ── TOAST ── */
+    .toast-container { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 900; display: flex; flex-direction: column; gap: .5rem; }
+    .toast { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: .65rem 1rem; font-size: .8rem; min-width: 200px; box-shadow: 0 4px 20px rgba(0,0,0,.4); display: flex; align-items: center; gap: .5rem; animation: slideIn .2s ease; }
+    @keyframes slideIn { from { transform: translateX(20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    .toast.success { border-color: var(--green); }
+    .toast.error { border-color: var(--red); }
+    .toast.info { border-color: var(--amber); }
+    .toast__icon { font-size: 1rem; }
+
+    /* ── UTILITIES ── */
+    .text-muted { color: var(--muted); }
+    .text-green { color: var(--green-light); }
+    .text-amber { color: var(--amber); }
+    .text-red { color: #e74c3c; }
+    .empty-state { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: .85rem; line-height: 1.7; }
+    .empty-state .icon { font-size: 2.5rem; margin-bottom: .75rem; opacity: .4; }
+
+    /* Specialty modal items */
+    .spec-label { display: flex; align-items: center; gap: .5rem; padding: .4rem 0; cursor: pointer; border-bottom: 1px solid var(--border); }
+    .spec-label:last-child { border-bottom: none; }
+    .spec-label input { accent-color: var(--green); }
+    .spec-name { flex: 1; font-size: .82rem; }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ══════════════════ LOCK SCREEN ══════════════════ -->
+  <div v-if="!unlocked" class="lock-screen">
+    <div class="lock-brand">
+      <h1>SAINT LATTE</h1>
+      <p>CAJA · LEANDRO VALLE</p>
+    </div>
+    <div class="pin-display">
+      <div v-for="i in 4" :key="i" class="pin-dot" :class="{filled: pinInput.length >= i}"></div>
+    </div>
+    <div class="pin-pad">
+      <button v-for="n in [1,2,3,4,5,6,7,8,9]" :key="n" class="pin-btn" @click="pinPress(String(n))">{{n}}</button>
+      <button class="pin-btn del" @click="pinPress('del')">⌫</button>
+      <button class="pin-btn" @click="pinPress('0')">0</button>
+      <button class="pin-btn enter" @click="pinPress('enter')">OK</button>
+    </div>
+    <p class="pin-error">{{pinError}}</p>
+  </div>
+
+  <!-- ══════════════════ APP ══════════════════ -->
+  <template v-else>
+    <div class="app">
+
+      <!-- TOP BAR -->
+      <div class="topbar">
+        <span class="topbar__brand">SAINT LATTE · LV</span>
+        <div class="topbar__tabs">
+          <div v-for="t in tabs" :key="t.id" class="topbar__tab" :class="{active: activeTab===t.id}" @click="activeTab=t.id">{{t.label}}</div>
+        </div>
+        <div class="topbar__session">
+          <span class="session-badge" :class="session.open ? 'open' : 'closed'">{{session.open ? 'CAJA ABIERTA' : 'CAJA CERRADA'}}</span>
+          <template v-if="session.open">
+            <br><strong>Fondo: ${{session.opening}}</strong>
+          </template>
+        </div>
+      </div>
+
+      <!-- VIEWS -->
+      <div class="view">
+
+        <!-- ══ COMANDAR ══ -->
+        <template v-if="activeTab==='pos'">
+          <div class="pos-layout">
+            <!-- MENU -->
+            <div class="pos-menu">
+              <div class="pos-menu__cats">
+                <button v-for="cat in categories" :key="cat" class="cat-btn" :class="{active: activeCat===cat}" @click="activeCat=cat">{{cat}}</button>
+              </div>
+              <div class="pos-menu__search">
+                <input class="search-input" v-model="searchQ" placeholder="Buscar producto…">
+              </div>
+              <div class="pos-menu__grid">
+                <div v-for="item in filteredItems" :key="item.id" class="item-card" @click="addItem(item)">
+                  <span class="item-card__cat">{{item.cat}}</span>
+                  <span class="item-card__name">{{item.name}}</span>
+                  <span class="item-card__price" :class="{specialty: !item.price}">
+                    {{item.price ? '$'+item.price : 'Precio especial'}}
+                  </span>
+                  <span v-if="cartQty(item.id)" class="item-card__badge">{{cartQty(item.id)}}</span>
+                </div>
+                <div v-if="filteredItems.length===0" style="grid-column:1/-1">
+                  <div class="empty-state"><div class="icon">☕</div>Sin resultados</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CART -->
+            <div class="pos-cart">
+              <div class="pos-cart__header">
+                <span class="pos-cart__title">COMANDA</span>
+                <span class="pos-cart__count">{{cart.length}} productos</span>
+              </div>
+              <div class="pos-cart__note">
+                <textarea class="cart-note-input" v-model="orderNote" placeholder="Notas de la orden…" rows="2"></textarea>
+              </div>
+              <div class="pos-cart__items">
+                <div v-if="cart.length===0" class="cart-empty">
+                  Sin productos.<br>Toca un item del menú para agregar.
+                </div>
+                <div v-for="(ci,idx) in cart" :key="ci.uid" class="cart-item">
+                  <div class="cart-item__qty-ctrl">
+                    <button class="qty-btn del-btn" @click="removeFromCart(idx)">×</button>
+                    <button class="qty-btn" @click="changeQty(idx,-1)">−</button>
+                    <span class="cart-item__qty">{{ci.qty}}</span>
+                    <button class="qty-btn" @click="changeQty(idx,1)">+</button>
+                  </div>
+                  <div class="cart-item__info">
+                    <div class="cart-item__name">{{ci.name}}</div>
+                    <div v-if="ci.note" class="cart-item__note">{{ci.note}}</div>
+                  </div>
+                  <span class="cart-item__price">
+                    {{ci.price ? '$'+(ci.price*ci.qty) : '—'}}
+                  </span>
+                </div>
+              </div>
+              <div class="pos-cart__footer">
+                <div class="cart-summary">
+                  <div class="cart-sum-row"><span>Subtotal</span><span>${{cartSubtotal}}</span></div>
+                  <div class="cart-sum-row total"><span>TOTAL</span><span>${{cartTotal}}</span></div>
+                </div>
+                <select class="payment-select" v-model="payMethod">
+                  <option value="Efectivo">💵 Efectivo</option>
+                  <option value="Tarjeta">💳 Tarjeta</option>
+                  <option value="Transferencia">📲 Transferencia</option>
+                </select>
+                <template v-if="payMethod==='Efectivo'">
+                  <div class="cash-row">
+                    <input class="cash-input" v-model.number="cashReceived" type="number" placeholder="Monto recibido…">
+                  </div>
+                  <div class="cash-change" :class="{negative: change < 0}" v-if="cashReceived">
+                    <template v-if="change >= 0">Cambio: <strong>${{change}}</strong></template>
+                    <template v-else>Faltan: <strong>${{Math.abs(change)}}</strong></template>
+                  </div>
+                </template>
+                <button class="btn-cobrar" :disabled="!canCobrar" @click="cobrar">COBRAR ${{cartTotal}}</button>
+                <button class="btn-clear" @click="clearCart" v-if="cart.length">LIMPIAR COMANDA</button>
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <!-- ══ ÓRDENES ══ -->
+        <template v-else-if="activeTab==='orders'">
+          <div class="orders-view">
+            <div class="orders-toolbar">
+              <input type="date" class="date-input" v-model="filterDate">
+              <button class="btn-secondary" @click="filterDate=todayStr">HOY</button>
+              <div class="orders-kpi">
+                <div class="kpi-chip"><span>ÓRDENES</span><strong>{{dayOrders.length}}</strong></div>
+                <div class="kpi-chip"><span>VENTAS</span><strong>${{dayTotal}}</strong></div>
+                <div class="kpi-chip"><span>TICKET PROM.</span><strong>${{dayAvg}}</strong></div>
+                <div class="kpi-chip"><span>CANCELADAS</span><strong>{{dayCancelled}}</strong></div>
+              </div>
+            </div>
+            <div class="orders-table-wrap">
+              <div v-if="dayOrders.length===0" class="empty-state">
+                <div class="icon">📋</div>
+                No hay órdenes para esta fecha.
+              </div>
+              <table v-else class="orders-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>HORA</th>
+                    <th>PRODUCTOS</th>
+                    <th>PAGO</th>
+                    <th>TOTAL</th>
+                    <th>NOTAS</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(o,i) in dayOrders" :key="o.id" :class="{cancelled: o.cancelled}">
+                    <td class="text-muted">{{String(i+1).padStart(2,'0')}}</td>
+                    <td>{{o.timeStr}}</td>
+                    <td>
+                      <div class="order-items-detail">
+                        <div v-for="ci in o.items" :key="ci.uid">{{ci.qty}}× {{ci.name}}<template v-if="ci.price"> (${{ci.price*ci.qty}})</template></div>
+                      </div>
+                    </td>
+                    <td>
+                      <span v-if="o.cancelled" class="badge badge-cancelled">CANCELADA</span>
+                      <span v-else class="badge" :class="'badge-'+o.payment.toLowerCase().replace('ó','o')">{{o.payment}}</span>
+                    </td>
+                    <td><strong class="text-amber">${{o.total}}</strong></td>
+                    <td class="text-muted" style="font-size:.72rem">{{o.note || '—'}}</td>
+                    <td>
+                      <button v-if="!o.cancelled" class="btn-cancel-order" @click="cancelOrder(o.id)">Cancelar</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </template>
+
+        <!-- ══ REPORTES ══ -->
+        <template v-else-if="activeTab==='reports'">
+          <div class="reports-view">
+            <div class="reports-header">
+              <h2>REPORTES</h2>
+              <input type="date" class="date-input" v-model="filterDate">
+              <button class="btn-secondary" @click="filterDate=todayStr">HOY</button>
+            </div>
+
+            <div class="kpi-grid">
+              <div class="kpi-card">
+                <div class="kpi-card__label">Ventas totales</div>
+                <div class="kpi-card__val green">${{dayTotal}}</div>
+                <div class="kpi-card__sub">{{dayOrders.filter(o=>!o.cancelled).length}} órdenes</div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-card__label">Ticket promedio</div>
+                <div class="kpi-card__val amber">${{dayAvg}}</div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-card__label">Total en efectivo</div>
+                <div class="kpi-card__val">${{payTotals.Efectivo}}</div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-card__label">Tarjeta + Transfer.</div>
+                <div class="kpi-card__val">${{payTotals.Tarjeta + payTotals.Transferencia}}</div>
+              </div>
+            </div>
+
+            <div class="reports-grid">
+              <!-- Top productos -->
+              <div class="report-card">
+                <div class="report-card__title">TOP PRODUCTOS</div>
+                <div v-if="topProducts.length===0" class="empty-state" style="padding:1rem">Sin datos</div>
+                <div v-else class="bar-chart">
+                  <div v-for="p in topProducts" :key="p.name" class="bar-row">
+                    <span class="bar-label" :title="p.name">{{p.name}}</span>
+                    <div class="bar-track">
+                      <div class="bar-fill" :style="{width: (p.qty/topProducts[0].qty*100)+'%'}"></div>
+                    </div>
+                    <span class="bar-val">{{p.qty}}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Ventas por hora -->
+              <div class="report-card">
+                <div class="report-card__title">VENTAS POR HORA</div>
+                <div v-if="hourlyData.every(h=>h===0)" class="empty-state" style="padding:1rem">Sin datos</div>
+                <div v-else>
+                  <div class="hourly-chart">
+                    <div v-for="(val,h) in hourlyData" :key="h" class="hour-bar-wrap">
+                      <div class="hour-bar" :class="{has_val: val>0}"
+                        :style="{height: val>0 ? (val/Math.max(...hourlyData)*70+10)+'px' : '4px'}"
+                        :data-val="val>0 ? '$'+val : ''"
+                        :title="val>0 ? h+'h: $'+val : ''">
+                      </div>
+                      <span class="hour-label">{{h}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Métodos de pago -->
+              <div class="report-card">
+                <div class="report-card__title">MÉTODOS DE PAGO</div>
+                <div v-if="dayTotal===0" class="empty-state" style="padding:1rem">Sin datos</div>
+                <div v-else class="pay-breakdown">
+                  <div v-for="pm in payMethods" :key="pm.name" class="pay-row">
+                    <div class="pay-dot" :style="{background: pm.color}"></div>
+                    <span class="pay-name">{{pm.name}}</span>
+                    <span class="pay-pct">{{Math.round(payTotals[pm.name]/dayTotal*100)||0}}%</span>
+                    <span class="pay-amt">${{payTotals[pm.name]}}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Ingresos por categoría -->
+              <div class="report-card">
+                <div class="report-card__title">INGRESOS POR CATEGORÍA</div>
+                <div v-if="topCats.length===0" class="empty-state" style="padding:1rem">Sin datos</div>
+                <div v-else class="bar-chart">
+                  <div v-for="c in topCats" :key="c.cat" class="bar-row">
+                    <span class="bar-label" :title="c.cat">{{c.cat}}</span>
+                    <div class="bar-track">
+                      <div class="bar-fill" :style="{width: (c.total/topCats[0].total*100)+'%', background: 'var(--amber)'}"></div>
+                    </div>
+                    <span class="bar-val">${{c.total}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <!-- ══ CAJA ══ -->
+        <template v-else-if="activeTab==='caja'">
+          <div class="caja-view">
+
+            <!-- Estado de caja -->
+            <div class="caja-section">
+              <div class="caja-section__title">Estado de caja</div>
+              <div class="session-status-big">
+                <div class="session-dot" :class="{open: session.open}"></div>
+                <div class="session-info">
+                  <strong>{{session.open ? 'CAJA ABIERTA' : 'CAJA CERRADA'}}</strong>
+                  <div class="text-muted" style="font-size:.75rem;margin-top:.2rem">
+                    {{session.open ? 'Abierta: '+session.openedAt+' · Fondo inicial: $'+session.opening : 'No hay turno activo'}}
+                  </div>
+                </div>
+              </div>
+              <template v-if="!session.open">
+                <div class="caja-form">
+                  <div class="form-row">
+                    <span class="form-label">Fondo inicial</span>
+                    <input class="form-input" v-model.number="openingCash" type="number" placeholder="$0.00">
+                  </div>
+                </div>
+                <br>
+                <div class="caja-btns">
+                  <button class="btn-primary" @click="openSession">ABRIR CAJA</button>
+                </div>
+              </template>
+              <template v-else>
+                <div class="caja-btns">
+                  <button class="btn-danger" @click="confirmCloseSession">CERRAR CAJA</button>
+                </div>
+              </template>
+            </div>
+
+            <!-- Arqueo -->
+            <div class="caja-section" v-if="session.open">
+              <div class="caja-section__title">Arqueo de caja</div>
+              <div class="form-row" style="margin-bottom:.75rem">
+                <span class="form-label">Efectivo contado</span>
+                <input class="form-input" v-model.number="arqueoCount" type="number" placeholder="Cuenta el efectivo…" style="max-width:160px">
+              </div>
+              <table class="arqueo-table" style="margin-bottom:.75rem">
+                <tbody>
+                  <tr>
+                    <td>Fondo inicial</td>
+                    <td>${{session.opening}}</td>
+                  </tr>
+                  <tr>
+                    <td>Ventas efectivo (hoy)</td>
+                    <td>+${{todayEfectivo}}</td>
+                  </tr>
+                  <tr>
+                    <td>Esperado en caja</td>
+                    <td>${{session.opening + todayEfectivo}}</td>
+                  </tr>
+                  <tr v-if="arqueoCount !== null && arqueoCount !== ''">
+                    <td>Contado</td>
+                    <td>${{arqueoCount}}</td>
+                  </tr>
+                  <tr v-if="arqueoCount !== null && arqueoCount !== ''">
+                    <td>Diferencia</td>
+                    <td :class="arqueoDiff >= 0 ? 'arqueo-diff-pos' : 'arqueo-diff-neg'">
+                      {{arqueoDiff >= 0 ? '+' : ''}}${{arqueoDiff}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Cambiar PIN -->
+            <div class="caja-section">
+              <div class="caja-section__title">Seguridad</div>
+              <div class="caja-form">
+                <div class="form-row">
+                  <span class="form-label">PIN actual</span>
+                  <input class="form-input" type="password" v-model="pinChange.current" maxlength="4" placeholder="••••" style="max-width:120px">
+                </div>
+                <div class="form-row">
+                  <span class="form-label">Nuevo PIN</span>
+                  <input class="form-input" type="password" v-model="pinChange.nuevo" maxlength="4" placeholder="••••" style="max-width:120px">
+                </div>
+                <div class="form-row">
+                  <span class="form-label">Confirmar PIN</span>
+                  <input class="form-input" type="password" v-model="pinChange.confirm" maxlength="4" placeholder="••••" style="max-width:120px">
+                </div>
+              </div>
+              <br>
+              <div class="caja-btns">
+                <button class="btn-primary" @click="changePin">CAMBIAR PIN</button>
+              </div>
+            </div>
+
+            <!-- Exportar datos -->
+            <div class="caja-section">
+              <div class="caja-section__title">Datos</div>
+              <div class="caja-btns">
+                <button class="btn-secondary" @click="exportJSON">EXPORTAR JSON</button>
+                <button class="btn-secondary" @click="exportCSV">EXPORTAR CSV</button>
+                <button class="btn-danger" @click="confirmClearData">BORRAR DATOS DEL DÍA</button>
+              </div>
+            </div>
+
+            <!-- Historial de sesiones -->
+            <div class="caja-section">
+              <div class="caja-section__title">Historial de turnos</div>
+              <div v-if="allSessions.length===0" class="text-muted" style="font-size:.8rem">Sin historial.</div>
+              <div v-else class="sessions-history">
+                <div v-for="s in allSessions.slice().reverse()" :key="s.id" class="session-hist-item">
+                  <div><span>APERTURA</span><strong>{{s.openedAt}}</strong></div>
+                  <div><span>CIERRE</span><strong>{{s.closedAt || 'Activo'}}</strong></div>
+                  <div><span>VENTAS</span><strong>${{s.totalSales||0}}</strong></div>
+                  <div><span>FONDO</span><strong>${{s.opening}}</strong></div>
+                  <div><span>EFECTIVO</span><strong>${{s.totalEfectivo||0}}</strong></div>
+                  <div><span>ÓRDENES</span><strong>{{s.orderCount||0}}</strong></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </template>
+
+      </div><!-- /view -->
+    </div><!-- /app -->
+
+    <!-- ══ MODAL SPECIALTY ══ -->
+    <div class="modal-backdrop" v-if="specialtyModal.show" @click.self="specialtyModal.show=false">
+      <div class="modal">
+        <h3>{{specialtyModal.item?.name}}</h3>
+        <p>Ingresa el precio para este café de especialidad:</p>
+        <input class="modal-input" v-model.number="specialtyModal.price" type="number" placeholder="$0" @keyup.enter="confirmSpecialty">
+        <div class="modal-btns">
+          <button class="modal-btn cancel" @click="specialtyModal.show=false">Cancelar</button>
+          <button class="modal-btn confirm" @click="confirmSpecialty">AGREGAR</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ MODAL CIERRE CAJA ══ -->
+    <div class="modal-backdrop" v-if="closeModal.show" @click.self="closeModal.show=false">
+      <div class="modal">
+        <h3>CERRAR CAJA</h3>
+        <p>¿Confirmas el cierre del turno? Se guardará el registro en el historial.</p>
+        <div style="background:var(--surface2);border-radius:8px;padding:.75rem;margin-bottom:1rem;font-size:.82rem">
+          <div style="display:flex;justify-content:space-between;margin-bottom:.35rem"><span class="text-muted">Ventas del turno</span><strong>${{todaySales}}</strong></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:.35rem"><span class="text-muted">Efectivo</span><strong>${{todayEfectivo}}</strong></div>
+          <div style="display:flex;justify-content:space-between"><span class="text-muted">Órdenes</span><strong>{{todayOrderCount}}</strong></div>
+        </div>
+        <div class="modal-btns">
+          <button class="modal-btn cancel" @click="closeModal.show=false">Cancelar</button>
+          <button class="modal-btn confirm" style="background:var(--red)" @click="closeSession">CERRAR</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ MODAL CONFIRMACIÓN ══ -->
+    <div class="modal-backdrop" v-if="confirmModal.show" @click.self="confirmModal.show=false">
+      <div class="modal">
+        <h3>{{confirmModal.title}}</h3>
+        <p>{{confirmModal.body}}</p>
+        <div class="modal-btns">
+          <button class="modal-btn cancel" @click="confirmModal.show=false">Cancelar</button>
+          <button class="modal-btn confirm" style="background:var(--red)" @click="confirmModal.action(); confirmModal.show=false">CONFIRMAR</button>
+        </div>
+      </div>
+    </div>
+
+  </template>
+
+  <!-- TOASTS -->
+  <div class="toast-container">
+    <div v-for="t in toasts" :key="t.id" class="toast" :class="t.type">
+      <span class="toast__icon">{{t.icon}}</span>
+      <span>{{t.msg}}</span>
+    </div>
+  </div>
+
+</div><!-- /app -->
+
+<script>
+const { createApp, ref, computed, watch, onMounted, reactive } = Vue;
+
+createApp({
+  setup() {
+
+    /* ─── MENU DATA ─── */
+    const menu = [
+      // HOT COFFEE
+      { id: 'h1', cat: 'HOT COFFEE', name: 'Espresso', price: 20 },
+      { id: 'h2', cat: 'HOT COFFEE', name: 'Americano', price: 40 },
+      { id: 'h3', cat: 'HOT COFFEE', name: 'Capuccino', price: 53 },
+      { id: 'h4', cat: 'HOT COFFEE', name: 'Latte', price: 58 },
+      { id: 'h5', cat: 'HOT COFFEE', name: 'Mocha', price: 65 },
+      { id: 'h6', cat: 'HOT COFFEE', name: 'Caramel Macchiato', price: 70 },
+      { id: 'h7', cat: 'HOT COFFEE', name: 'Flat White', price: 70 },
+      // ICED COFFEE
+      { id: 'i1', cat: 'ICED COFFEE', name: 'Iced Americano', price: 50 },
+      { id: 'i2', cat: 'ICED COFFEE', name: 'Iced Latte', price: 67 },
+      { id: 'i3', cat: 'ICED COFFEE', name: 'Cold Brew', price: 70 },
+      { id: 'i4', cat: 'ICED COFFEE', name: 'Iced Mocha', price: 76 },
+      { id: 'i5', cat: 'ICED COFFEE', name: 'Espresso Tonic', price: 75 },
+      { id: 'i6', cat: 'ICED COFFEE', name: 'Mazapán Latte', price: 77 },
+      { id: 'i7', cat: 'ICED COFFEE', name: 'Iced Caramel Macchiato', price: 79 },
+      // SIN CAFÉ
+      { id: 'sc1', cat: 'SIN CAFÉ', name: 'Matcha', price: 58 },
+      { id: 'sc2', cat: 'SIN CAFÉ', name: 'Taro', price: 58 },
+      { id: 'sc3', cat: 'SIN CAFÉ', name: 'Chocolate', price: 58 },
+      { id: 'sc4', cat: 'SIN CAFÉ', name: 'Chai', price: 65 },
+      { id: 'sc5', cat: 'SIN CAFÉ', name: 'Golden Milk', price: 60 },
+      { id: 'sc6', cat: 'SIN CAFÉ', name: 'Strawberry Matcha', price: 75 },
+      { id: 'sc7', cat: 'SIN CAFÉ', name: 'Taro Latte', price: 67 },
+      { id: 'sc8', cat: 'SIN CAFÉ', name: 'Matcha Latte', price: 67 },
+      { id: 'sc9', cat: 'SIN CAFÉ', name: 'Mojito', price: 70 },
+      { id: 'sc10', cat: 'SIN CAFÉ', name: 'Saint Fizz', price: 70 },
+      { id: 'sc11', cat: 'SIN CAFÉ', name: 'Mojito Frutos Rojos', price: 80 },
+      { id: 'sc12', cat: 'SIN CAFÉ', name: 'Chai Latte', price: 75 },
+      { id: 'sc13', cat: 'SIN CAFÉ', name: 'Maracuyá Tonic', price: 80 },
+      // SPECIALTY
+      { id: 'sp1', cat: 'SPECIALTY', name: 'Aeropress', price: null },
+      { id: 'sp2', cat: 'SPECIALTY', name: 'V60', price: null },
+      { id: 'sp3', cat: 'SPECIALTY', name: 'Kalita', price: null },
+      { id: 'sp4', cat: 'SPECIALTY', name: 'Origami', price: null },
+      { id: 'sp5', cat: 'SPECIALTY', name: 'Chemex', price: null },
+      { id: 'sp6', cat: 'SPECIALTY', name: 'French Press', price: null },
+      { id: 'sp7', cat: 'SPECIALTY', name: 'Japanese Siphon', price: null },
+      // FRAPPÉ
+      { id: 'f1', cat: 'FRAPPÉ', name: 'Capuccino Frappé', price: 75 },
+      { id: 'f2', cat: 'FRAPPÉ', name: 'Matcha Frappé', price: 77 },
+      { id: 'f3', cat: 'FRAPPÉ', name: 'Taro Frappé', price: 77 },
+      { id: 'f4', cat: 'FRAPPÉ', name: 'Chocolate Frappé', price: 77 },
+      { id: 'f5', cat: 'FRAPPÉ', name: 'Oreo Frappé', price: 85 },
+      { id: 'f6', cat: 'FRAPPÉ', name: 'Mazapán Frappé', price: 85 },
+      { id: 'f7', cat: 'FRAPPÉ', name: 'Mocha Frappé', price: 85 },
+      { id: 'f8', cat: 'FRAPPÉ', name: 'Chai Frappé', price: 90 },
+      // SMOOTHIES
+      { id: 'sm1', cat: 'SMOOTHIES', name: 'Berries', price: 75 },
+      { id: 'sm2', cat: 'SMOOTHIES', name: 'Strawberry', price: 75 },
+      { id: 'sm3', cat: 'SMOOTHIES', name: 'Kiwi', price: 75 },
+      { id: 'sm4', cat: 'SMOOTHIES', name: 'Mango', price: 75 },
+      { id: 'sm5', cat: 'SMOOTHIES', name: 'Piña Coco', price: 85 },
+      // TEA
+      { id: 't1', cat: 'TEA', name: 'Iced Herbal', price: 45 },
+      { id: 't2', cat: 'TEA', name: 'Iced Fruit', price: 70 },
+      { id: 't3', cat: 'TEA', name: 'Hot Herbal', price: 40 },
+      { id: 't4', cat: 'TEA', name: 'Hot Fruit', price: 65 },
+      // BRUNCH (timed 8:30–12:00)
+      { id: 'b1', cat: 'BRUNCH', name: 'Saint-Dwich', price: 55 },
+      { id: 'b2', cat: 'BRUNCH', name: 'The Golden One', price: 80 },
+      { id: 'b3', cat: 'BRUNCH', name: 'A-B-Ciabatta', price: 80 },
+      { id: 'b4', cat: 'BRUNCH', name: 'Sweet & Savory', price: 98 },
+      { id: 'b5', cat: 'BRUNCH', name: 'Ciabatasty', price: 98 },
+      // PIZZA (timed 18:00–21:30)
+      { id: 'p1', cat: 'PIZZA', name: "Di'Napoli", price: 70 },
+      { id: 'p2', cat: 'PIZZA', name: 'Fiamma Rústica', price: 70 },
+      { id: 'p3', cat: 'PIZZA', name: 'Bosco Fiorito', price: 70 },
+      { id: 'p4', cat: 'PIZZA', name: 'Serata Toscana', price: 80 },
+    ]
+
+    const categories = ['TODO', 'HOT COFFEE', 'ICED COFFEE', 'SIN CAFÉ', 'SPECIALTY', 'FRAPPÉ', 'SMOOTHIES', 'TEA', 'BRUNCH', 'PIZZA']
+
+    /* ─── STATE ─── */
+    const unlocked = ref(false)
+    const pinInput = ref('')
+    const pinError = ref('')
+
+    const tabs = [
+      { id: 'pos', label: 'COMANDAR' },
+      { id: 'orders', label: 'ÓRDENES' },
+      { id: 'reports', label: 'REPORTES' },
+      { id: 'caja', label: 'CAJA' },
+    ]
+    const activeTab = ref('pos')
+
+    // POS
+    const activeCat = ref('TODO')
+    const searchQ = ref('')
+    const cart = ref([])
+    const orderNote = ref('')
+    const payMethod = ref('Efectivo')
+    const cashReceived = ref(null)
+
+    // Specialty modal
+    const specialtyModal = reactive({ show: false, item: null, price: null })
+
+    // Orders
+    const orders = ref([])
+
+    // Filter date
+    const todayStr = new Date().toISOString().split('T')[0]
+    const filterDate = ref(todayStr)
+
+    // Session
+    const session = ref({ open: false, opening: 0, openedAt: '', id: null })
+    const allSessions = ref([])
+    const openingCash = ref(500)
+    const arqueoCount = ref('')
+
+    // PIN change
+    const pinChange = reactive({ current: '', nuevo: '', confirm: '' })
+
+    // Modals
+    const closeModal = reactive({ show: false })
+    const confirmModal = reactive({ show: false, title: '', body: '', action: () => {} })
+
+    // Toasts
+    const toasts = ref([])
+
+    let uidCounter = 0
+
+    /* ─── LOAD FROM STORAGE ─── */
+    onMounted(() => {
+      try {
+        const saved = localStorage.getItem('lv_orders')
+        if (saved) orders.value = JSON.parse(saved)
+        const savedSession = localStorage.getItem('lv_session')
+        if (savedSession) session.value = JSON.parse(savedSession)
+        const savedSessions = localStorage.getItem('lv_sessions')
+        if (savedSessions) allSessions.value = JSON.parse(savedSessions)
+      } catch(e) { console.warn('Storage error', e) }
+    })
+
+    /* ─── SAVE WATCHERS ─── */
+    watch(orders, v => {
+      try { localStorage.setItem('lv_orders', JSON.stringify(v)) } catch(e) {}
+    }, { deep: true })
+    watch(session, v => {
+      try { localStorage.setItem('lv_session', JSON.stringify(v)) } catch(e) {}
+    }, { deep: true })
+    watch(allSessions, v => {
+      try { localStorage.setItem('lv_sessions', JSON.stringify(v)) } catch(e) {}
+    }, { deep: true })
+
+    /* ─── LOCK ─── */
+    function getPin() { return localStorage.getItem('lv_pin') || '1234' }
+    function pinPress(k) {
+      pinError.value = ''
+      if (k === 'del') { pinInput.value = pinInput.value.slice(0,-1); return }
+      if (k === 'enter') { checkPin(); return }
+      if (pinInput.value.length >= 4) return
+      pinInput.value += k
+      if (pinInput.value.length === 4) setTimeout(checkPin, 100)
+    }
+    function checkPin() {
+      if (pinInput.value === getPin()) {
+        unlocked.value = true
+      } else {
+        pinError.value = 'PIN incorrecto'
+        setTimeout(() => { pinInput.value = ''; pinError.value = '' }, 700)
+      }
+    }
+
+    /* ─── MENU FILTERING ─── */
+    const filteredItems = computed(() => {
+      let items = menu
+      if (activeCat.value !== 'TODO') items = items.filter(i => i.cat === activeCat.value)
+      if (searchQ.value.trim()) {
+        const q = searchQ.value.toLowerCase()
+        items = items.filter(i => i.name.toLowerCase().includes(q))
+      }
+      return items
+    })
+
+    function cartQty(itemId) {
+      return cart.value.filter(c => c.itemId === itemId).reduce((s,c) => s+c.qty, 0)
+    }
+
+    /* ─── CART ─── */
+    function addItem(item) {
+      if (item.price === null) {
+        specialtyModal.item = item
+        specialtyModal.price = null
+        specialtyModal.show = true
+        return
+      }
+      const existing = cart.value.find(c => c.itemId === item.id)
+      if (existing) { existing.qty++; return }
+      cart.value.push({ uid: ++uidCounter, itemId: item.id, cat: item.cat, name: item.name, price: item.price, qty: 1, note: '' })
+    }
+
+    function confirmSpecialty() {
+      if (!specialtyModal.price || specialtyModal.price <= 0) { toast('Ingresa un precio válido', 'error', '⚠️'); return }
+      const item = specialtyModal.item
+      cart.value.push({ uid: ++uidCounter, itemId: item.id, cat: item.cat, name: item.name, price: specialtyModal.price, qty: 1, note: '' })
+      specialtyModal.show = false
+      toast(`${item.name} agregado`, 'success', '☕')
+    }
+
+    function changeQty(idx, delta) {
+      const item = cart.value[idx]
+      item.qty += delta
+      if (item.qty <= 0) cart.value.splice(idx, 1)
+    }
+
+    function removeFromCart(idx) { cart.value.splice(idx, 1) }
+    function clearCart() { cart.value = []; orderNote.value = ''; cashReceived.value = null; payMethod.value = 'Efectivo' }
+
+    const cartSubtotal = computed(() => cart.value.reduce((s,c) => s + (c.price||0)*c.qty, 0))
+    const cartTotal = computed(() => cartSubtotal.value)
+    const change = computed(() => cashReceived.value ? cashReceived.value - cartTotal.value : 0)
+    const canCobrar = computed(() => {
+      if (cart.value.length === 0) return false
+      if (!session.value.open) return false
+      if (payMethod.value === 'Efectivo' && cashReceived.value && cashReceived.value < cartTotal.value) return false
+      return true
+    })
+
+    function cobrar() {
+      if (!canCobrar.value) return
+      const now = new Date()
+      const timeStr = now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' })
+      const dateStr = now.toISOString().split('T')[0]
+      const order = {
+        id: Date.now(),
+        dateStr,
+        timeStr,
+        hour: now.getHours(),
+        items: cart.value.map(c => ({...c})),
+        total: cartTotal.value,
+        payment: payMethod.value,
+        note: orderNote.value,
+        cashReceived: payMethod.value === 'Efectivo' ? (cashReceived.value || cartTotal.value) : null,
+        change: payMethod.value === 'Efectivo' ? change.value : null,
+        cancelled: false,
+      }
+      orders.value.push(order)
+      toast(`Cobrado $${cartTotal.value} — ${payMethod.value}`, 'success', '✅')
+      clearCart()
+    }
+
+    /* ─── ORDERS ─── */
+    const dayOrders = computed(() => orders.value.filter(o => o.dateStr === filterDate.value))
+    const dayTotal = computed(() => dayOrders.value.filter(o => !o.cancelled).reduce((s,o) => s+o.total, 0))
+    const dayAvg = computed(() => {
+      const valid = dayOrders.value.filter(o => !o.cancelled)
+      return valid.length ? Math.round(dayTotal.value / valid.length) : 0
+    })
+    const dayCancelled = computed(() => dayOrders.value.filter(o => o.cancelled).length)
+
+    function cancelOrder(id) {
+      const o = orders.value.find(o => o.id === id)
+      if (o) { o.cancelled = true; toast('Orden cancelada', 'info', 'ℹ️') }
+    }
+
+    /* ─── REPORTS ─── */
+    const todaySales = computed(() => orders.value.filter(o => o.dateStr === todayStr && !o.cancelled).reduce((s,o) => s+o.total, 0))
+    const todayOrderCount = computed(() => orders.value.filter(o => o.dateStr === todayStr && !o.cancelled).length)
+    const todayEfectivo = computed(() => orders.value.filter(o => o.dateStr === todayStr && !o.cancelled && o.payment === 'Efectivo').reduce((s,o) => s+o.total, 0))
+
+    const payMethods = [
+      { name: 'Efectivo', color: '#337958' },
+      { name: 'Tarjeta', color: '#2980b9' },
+      { name: 'Transferencia', color: '#C49A27' },
+    ]
+    const payTotals = computed(() => {
+      const valid = dayOrders.value.filter(o => !o.cancelled)
+      return {
+        Efectivo: valid.filter(o => o.payment === 'Efectivo').reduce((s,o) => s+o.total, 0),
+        Tarjeta: valid.filter(o => o.payment === 'Tarjeta').reduce((s,o) => s+o.total, 0),
+        Transferencia: valid.filter(o => o.payment === 'Transferencia').reduce((s,o) => s+o.total, 0),
+      }
+    })
+
+    const topProducts = computed(() => {
+      const map = {}
+      dayOrders.value.filter(o => !o.cancelled).forEach(o => {
+        o.items.forEach(ci => {
+          if (!map[ci.name]) map[ci.name] = { name: ci.name, qty: 0, revenue: 0 }
+          map[ci.name].qty += ci.qty
+          map[ci.name].revenue += (ci.price||0) * ci.qty
+        })
+      })
+      return Object.values(map).sort((a,b) => b.qty - a.qty).slice(0, 8)
+    })
+
+    const topCats = computed(() => {
+      const map = {}
+      dayOrders.value.filter(o => !o.cancelled).forEach(o => {
+        o.items.forEach(ci => {
+          if (!map[ci.cat]) map[ci.cat] = { cat: ci.cat, total: 0 }
+          map[ci.cat].total += (ci.price||0) * ci.qty
+        })
+      })
+      return Object.values(map).sort((a,b) => b.total - a.total)
+    })
+
+    const hourlyData = computed(() => {
+      const arr = Array(24).fill(0)
+      dayOrders.value.filter(o => !o.cancelled).forEach(o => {
+        arr[o.hour] += o.total
+      })
+      return arr
+    })
+
+    /* ─── CAJA ─── */
+    const arqueoDiff = computed(() => {
+      if (arqueoCount.value === '' || arqueoCount.value === null) return 0
+      return arqueoCount.value - (session.value.opening + todayEfectivo.value)
+    })
+
+    function openSession() {
+      const now = new Date()
+      session.value = {
+        open: true,
+        opening: openingCash.value || 0,
+        openedAt: now.toLocaleString('es-MX'),
+        id: Date.now(),
+      }
+      toast(`Caja abierta con fondo $${openingCash.value}`, 'success', '🔓')
+    }
+
+    function confirmCloseSession() { closeModal.show = true }
+
+    function closeSession() {
+      closeModal.show = false
+      const now = new Date()
+      const closed = {
+        id: session.value.id,
+        openedAt: session.value.openedAt,
+        closedAt: now.toLocaleString('es-MX'),
+        opening: session.value.opening,
+        totalSales: todaySales.value,
+        totalEfectivo: todayEfectivo.value,
+        orderCount: todayOrderCount.value,
+      }
+      allSessions.value.push(closed)
+      session.value = { open: false, opening: 0, openedAt: '', id: null }
+      toast('Caja cerrada y registrada', 'info', '🔒')
+    }
+
+    function changePin() {
+      if (pinChange.current !== getPin()) { toast('PIN actual incorrecto', 'error', '⚠️'); return }
+      if (pinChange.nuevo.length !== 4 || !/^\d+$/.test(pinChange.nuevo)) { toast('El nuevo PIN debe ser 4 dígitos', 'error', '⚠️'); return }
+      if (pinChange.nuevo !== pinChange.confirm) { toast('Los PINs no coinciden', 'error', '⚠️'); return }
+      localStorage.setItem('lv_pin', pinChange.nuevo)
+      pinChange.current = ''; pinChange.nuevo = ''; pinChange.confirm = ''
+      toast('PIN actualizado', 'success', '🔑')
+    }
+
+    function exportJSON() {
+      const data = { orders: orders.value, sessions: allSessions.value, exported: new Date().toISOString() }
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob)
+      a.download = `lv-caja-${todayStr}.json`; a.click()
+      toast('JSON exportado', 'success', '📁')
+    }
+
+    function exportCSV() {
+      const rows = [['ID','Fecha','Hora','Productos','Total','Pago','Notas','Cancelada']]
+      orders.value.forEach(o => {
+        rows.push([
+          o.id, o.dateStr, o.timeStr,
+          o.items.map(c => `${c.qty}x ${c.name}`).join('; '),
+          o.total, o.payment, o.note||'', o.cancelled ? 'Sí' : 'No'
+        ])
+      })
+      const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n')
+      const blob = new Blob(['﻿'+csv], { type: 'text/csv;charset=utf-8' })
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob)
+      a.download = `lv-ordenes-${todayStr}.csv`; a.click()
+      toast('CSV exportado', 'success', '📊')
+    }
+
+    function confirmClearData() {
+      confirmModal.title = 'BORRAR ÓRDENES DEL DÍA'
+      confirmModal.body = `¿Eliminar todas las órdenes del ${filterDate.value}? Esta acción no se puede deshacer.`
+      confirmModal.action = () => {
+        orders.value = orders.value.filter(o => o.dateStr !== filterDate.value)
+        toast('Órdenes del día eliminadas', 'info', '🗑️')
+      }
+      confirmModal.show = true
+    }
+
+    /* ─── TOASTS ─── */
+    let toastId = 0
+    function toast(msg, type='success', icon='✅') {
+      const id = ++toastId
+      toasts.value.push({ id, msg, type, icon })
+      setTimeout(() => { toasts.value = toasts.value.filter(t => t.id !== id) }, 2500)
+    }
+
+    return {
+      unlocked, pinInput, pinError, pinPress,
+      tabs, activeTab,
+      categories, activeCat, searchQ, filteredItems, cartQty,
+      cart, orderNote, payMethod, cashReceived, cartSubtotal, cartTotal, change, canCobrar,
+      addItem, changeQty, removeFromCart, clearCart, cobrar,
+      specialtyModal, confirmSpecialty,
+      orders, filterDate, todayStr,
+      dayOrders, dayTotal, dayAvg, dayCancelled, cancelOrder,
+      payMethods, payTotals, topProducts, topCats, hourlyData,
+      session, allSessions, openingCash, arqueoCount, arqueoDiff,
+      todaySales, todayOrderCount, todayEfectivo,
+      openSession, confirmCloseSession, closeSession, closeModal,
+      pinChange, changePin,
+      exportJSON, exportCSV, confirmClearData,
+      confirmModal, toasts,
+    }
+  }
+}).mount('#app')
+</script>
+</body>
+</html>
