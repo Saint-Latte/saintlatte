@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Jarrón Azul — Menú completo. Café de especialidad, bebidas frías, brunch 8:30–12 y pizza artesanal 18–21:30 en Valle de Santiago, Gto.">
-  <title>Jarrón Azul — Saint Latte</title>
+  <meta name="description" content="Saint Latte Leandro Valle — Menú completo. Café de especialidad, bebidas frías, pizza artesanal y brunch en Valle de Santiago, Gto.">
+  <title>Leandro Valle — Saint Latte</title>
   <link rel="icon" type="image/png" href="assets/images/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,8 +15,8 @@
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* ── Jarrón Azul — Back tag ──────────────────────────────── */
-    .ja-back-tag {
+    /* ── Leandro Valle — Back tag ──────────────────────────── */
+    .lv-back-tag {
       display: inline-flex;
       align-items: center;
       gap: .45rem;
@@ -32,24 +32,23 @@
       transition: color .2s, border-color .2s;
       margin-bottom: 1rem;
     }
-    .ja-back-tag:hover { color: var(--cream); border-color: rgba(255,254,249,.35); }
-    .ja-back-tag svg { width: 11px; height: 11px; flex-shrink: 0; }
+    .lv-back-tag:hover { color: var(--cream); border-color: rgba(255,254,249,.35); }
+    .lv-back-tag svg { width: 11px; height: 11px; flex-shrink: 0; }
 
-    /* ── Timed section wrapper ───────────────────────────────── */
-    .ja-timed { position: relative; }
+    /* ── Timed section wrapper ─────────────────────────────── */
+    .lv-timed { position: relative; }
 
-    .ja-timed__inner {
+    .lv-timed__inner {
       transition: filter .6s ease, opacity .6s ease;
     }
-    .ja-timed.is-blurred .ja-timed__inner {
+    .lv-timed.is-blurred .lv-timed__inner {
       filter: blur(12px);
       opacity: .35;
       pointer-events: none;
       user-select: none;
     }
 
-    /* Overlay — shown only when unavailable */
-    .ja-timed__overlay {
+    .lv-timed__overlay {
       display: none;
       position: absolute;
       inset: 0;
@@ -62,30 +61,30 @@
       padding: 2rem;
       pointer-events: none;
     }
-    .ja-timed.is-blurred .ja-timed__overlay { display: flex; }
+    .lv-timed.is-blurred .lv-timed__overlay { display: flex; }
 
-    .ja-timed__overlay-title {
+    .lv-timed__overlay-title {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(1.5rem, 4vw, 2.4rem);
       letter-spacing: .14em;
       color: var(--black);
       line-height: 1.05;
     }
-    .ja-timed__overlay-sub {
+    .lv-timed__overlay-sub {
       font-family: 'Space Grotesk', sans-serif;
       font-size: .72rem;
       letter-spacing: .12em;
       color: var(--black);
       text-transform: uppercase;
     }
-    .ja-timed__overlay-countdown {
+    .lv-timed__overlay-countdown {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(2rem, 6vw, 3.2rem);
       letter-spacing: .06em;
       color: var(--rust);
       line-height: 1;
     }
-    .ja-timed__overlay-label {
+    .lv-timed__overlay-label {
       font-family: 'Space Grotesk', sans-serif;
       font-size: .62rem;
       letter-spacing: .16em;
@@ -93,8 +92,8 @@
       text-transform: uppercase;
     }
 
-    /* Available badge (shown when it IS open) */
-    .ja-available-badge {
+    /* Available badge */
+    .lv-available-badge {
       display: none;
       align-items: center;
       gap: .45rem;
@@ -108,9 +107,9 @@
       border-radius: 2rem;
       margin-bottom: 1rem;
     }
-    .ja-timed.is-available .ja-available-badge { display: inline-flex; }
+    .lv-timed.is-available .lv-available-badge { display: inline-flex; }
 
-    .ja-available-dot {
+    .lv-available-dot {
       width: 6px; height: 6px;
       border-radius: 50%;
       background: var(--rust);
@@ -119,27 +118,6 @@
     @keyframes pulse-dot {
       0%,100% { opacity: 1; transform: scale(1); }
       50%      { opacity: .4; transform: scale(.65); }
-    }
-
-    /* rufus. brand header inside pizza section */
-    .ja-rufus-header {
-      padding: 1.8rem 0 1.2rem;
-      text-align: center;
-    }
-    .ja-rufus-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2rem, 6vw, 3rem);
-      letter-spacing: .3em;
-      color: var(--rust);
-      line-height: 1;
-    }
-    .ja-rufus-sub {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: .6rem;
-      letter-spacing: .22em;
-      color: rgba(255,254,249,.3);
-      text-transform: uppercase;
-      margin-top: .3rem;
     }
   </style>
 </head>
@@ -156,11 +134,12 @@
       <span class="nav__brand-text">SAINT LATTE</span>
     </a>
     <ul class="nav__links" role="list">
-      <li><a href="menu.html"        class="nav__link">MENÚ</a></li>
-      <li><a href="comunidad.html"   class="nav__link">COMUNIDAD</a></li>
-      <li><a href="nosotros.html"    class="nav__link">NOSOTROS</a></li>
-      <li><a href="jarron-azul.html" class="nav__link nav__link--active">JARRÓN AZUL</a></li>
-      <li><a href="pedidos.html"     class="nav__link nav__link--cta">PEDIDOS</a></li>
+      <li><a href="menu.html"           class="nav__link">MENÚ</a></li>
+      <li><a href="comunidad.html"      class="nav__link">COMUNIDAD</a></li>
+      <li><a href="nosotros.html"       class="nav__link">NOSOTROS</a></li>
+      <li><a href="jarron-azul.html"    class="nav__link">JARRÓN AZUL</a></li>
+      <li><a href="leandro-valle.html"  class="nav__link nav__link--active">LEANDRO VALLE</a></li>
+      <li><a href="pedidos.html"        class="nav__link nav__link--cta">PEDIDOS</a></li>
     </ul>
     <button class="nav__hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
       <span class="hamburger__bar"></span>
@@ -173,11 +152,12 @@
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
     <div class="mobile-menu__inner">
       <ul class="mobile-menu__list" role="list">
-        <li><a href="menu.html"        class="mobile-link">MENÚ</a></li>
-        <li><a href="comunidad.html"   class="mobile-link">COMUNIDAD</a></li>
-        <li><a href="nosotros.html"    class="mobile-link">NOSOTROS</a></li>
-        <li><a href="jarron-azul.html" class="mobile-link">JARRÓN AZUL</a></li>
-        <li><a href="pedidos.html"     class="mobile-link">PEDIDOS</a></li>
+        <li><a href="menu.html"          class="mobile-link">MENÚ</a></li>
+        <li><a href="comunidad.html"     class="mobile-link">COMUNIDAD</a></li>
+        <li><a href="nosotros.html"      class="mobile-link">NOSOTROS</a></li>
+        <li><a href="jarron-azul.html"   class="mobile-link">JARRÓN AZUL</a></li>
+        <li><a href="leandro-valle.html" class="mobile-link">LEANDRO VALLE</a></li>
+        <li><a href="pedidos.html"       class="mobile-link">PEDIDOS</a></li>
       </ul>
       <div class="mobile-menu__footer">
         <a href="https://instagram.com" target="_blank" rel="noopener">IG</a>
@@ -189,17 +169,17 @@
   <!-- PAGE HERO -->
   <header class="page-hero page-hero--dark">
     <div class="page-hero__content">
-      <a href="index.html" class="ja-back-tag">
+      <a href="index.html" class="lv-back-tag">
         <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6">
           <path d="M7.5 2.5 L3.5 6 L7.5 9.5"/>
         </svg>
         SAINT LATTE
       </a>
       <span class="section-label">UN RINCÓN DE LA FAMILIA</span>
-      <h1 class="page-hero__title">JARRÓN<br><em>AZUL</em></h1>
+      <h1 class="page-hero__title">LEANDRO<br><em>VALLE</em></h1>
       <p class="page-hero__sub">Café · Bebidas · Brunch 8:30–12:00 · Pizza 18:00–21:30</p>
     </div>
-    <div class="page-hero__bg-num" aria-hidden="true">JA</div>
+    <div class="page-hero__bg-num" aria-hidden="true">LV</div>
   </header>
 
   <!-- MARQUEE -->
@@ -211,7 +191,7 @@
       <span class="marquee-item">SPECIALTY</span><span class="marquee-sep">◆</span>
       <span class="marquee-item">FRAPPÉ</span><span class="marquee-sep">◆</span>
       <span class="marquee-item">SMOOTHIES</span><span class="marquee-sep">◆</span>
-      <span class="marquee-item">DESAYUNO 8:30–12:00</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">BRUNCH 8:30–12:00</span><span class="marquee-sep">◆</span>
       <span class="marquee-item">PIZZA 18:00–21:30</span><span class="marquee-sep">◆</span>
       <span class="marquee-item">CAFÉ HOT</span><span class="marquee-sep">◆</span>
       <span class="marquee-item">ICED COFFEE</span><span class="marquee-sep">◆</span>
@@ -219,7 +199,7 @@
       <span class="marquee-item">SPECIALTY</span><span class="marquee-sep">◆</span>
       <span class="marquee-item">FRAPPÉ</span><span class="marquee-sep">◆</span>
       <span class="marquee-item">SMOOTHIES</span><span class="marquee-sep">◆</span>
-      <span class="marquee-item">DESAYUNO 8:30–12:00</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">BRUNCH 8:30–12:00</span><span class="marquee-sep">◆</span>
       <span class="marquee-item">PIZZA 18:00–21:30</span><span class="marquee-sep">◆</span>
     </div>
   </div>
@@ -236,7 +216,7 @@
       <button class="menu-tab" role="tab" aria-selected="false" data-cat="frappe">FRAPPÉ</button>
       <button class="menu-tab" role="tab" aria-selected="false" data-cat="smoothie">SMOOTHIES</button>
       <button class="menu-tab" role="tab" aria-selected="false" data-cat="tea">TEA</button>
-      <button class="menu-tab" role="tab" aria-selected="false" data-cat="brunch">DESAYUNO</button>
+      <button class="menu-tab" role="tab" aria-selected="false" data-cat="brunch">BRUNCH</button>
       <button class="menu-tab" role="tab" aria-selected="false" data-cat="pizza">PIZZA</button>
     </div>
 
@@ -388,7 +368,7 @@
       <div class="menu-card" data-cat="nocoffee">
         <div class="menu-card__inner">
           <div class="menu-card__header"><span class="menu-card__name">MOJITO</span><span class="menu-card__price">$70</span></div>
-          <p class="menu-card__desc">Limón + menta + soda · Sin alcohol, pura frescura</p>
+          <p class="menu-card__desc">Limón + menta + soda · Sin alcohol</p>
         </div>
       </div>
       <div class="menu-card" data-cat="nocoffee">
@@ -461,7 +441,7 @@
       </div>
       <div class="menu-card menu-card--specialty menu-card--note" data-cat="specialty">
         <div class="menu-card__inner">
-          <p class="menu-card__note">Los granos de especialidad rotan constantemente. El precio depende del origen seleccionado — pregunta a tu barista.</p>
+          <p class="menu-card__note">Los granos rotan constantemente. El precio depende del origen — pregunta a tu barista.</p>
         </div>
       </div>
 
@@ -576,158 +556,92 @@
     </div><!-- /menu-grid -->
 
     <!-- ── TIMED: BRUNCH ─────────────────────────────────── -->
-    <div class="ja-timed" id="timedBrunch" style="display:none">
-      <div class="ja-available-badge">
-        <span class="ja-available-dot"></span>
+    <div class="lv-timed" id="timedBrunch" style="display:none">
+      <div class="lv-available-badge">
+        <span class="lv-available-dot"></span>
         DISPONIBLE AHORA
       </div>
-      <div class="ja-timed__inner">
-        <!-- DESAYUNO TIME header -->
-        <div style="padding:1.6rem 0 .8rem;text-align:center">
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,5vw,2.6rem);letter-spacing:.28em;color:var(--cream)">DESAYUNO TIME</div>
-          <div style="font-family:'Space Grotesk',sans-serif;font-size:.6rem;letter-spacing:.2em;color:rgba(255,254,249,.3);text-transform:uppercase;margin-top:.3rem">Disponible 8:30 – 12:00</div>
-        </div>
+      <div class="lv-timed__inner">
         <div class="menu-grid">
-
-          <!-- CHILL & KILLERS — multi-variant card -->
-          <div class="menu-card menu-card--highlight" data-cat="brunch" style="grid-column:1/-1">
-            <div class="menu-card__inner">
-              <div class="menu-card__header" style="margin-bottom:.5rem">
-                <span class="menu-card__name">CHILL &amp; KILLERS</span>
-              </div>
-              <p class="menu-card__desc" style="margin-bottom:.9rem">Chilaquiles en salsa roja, verde o ambas · Elige tu proteína</p>
-              <div style="display:flex;flex-direction:column;gap:.35rem;border-top:1px solid var(--border);padding-top:.7rem">
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                  <span style="font-family:'Space Grotesk',sans-serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--cream)">Huevo</span>
-                  <span class="menu-card__price">$139</span>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                  <span style="font-family:'Space Grotesk',sans-serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--cream)">Pollo</span>
-                  <span class="menu-card__price">$149</span>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                  <span style="font-family:'Space Grotesk',sans-serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--cream)">Arrachera</span>
-                  <span class="menu-card__price">$164</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- TOASTS -->
           <div class="menu-card" data-cat="brunch">
             <div class="menu-card__inner">
-              <div class="menu-card__header"><span class="menu-card__name">SERRANITO</span><span class="menu-card__price">$152</span></div>
-              <p class="menu-card__desc">Hogaza con especias · Ricotta · Champiñones · Tomate · Balsámico · Jamón serrano</p>
+              <div class="menu-card__header"><span class="menu-card__name">SAINT-DWICH</span><span class="menu-card__price">$55</span></div>
+              <p class="menu-card__desc">Sandwich crujiente y dorado · Queso derretido</p>
+            </div>
+          </div>
+          <div class="menu-card" data-cat="brunch">
+            <div class="menu-card__inner">
+              <div class="menu-card__header"><span class="menu-card__name">THE GOLDEN ONE</span><span class="menu-card__price">$80</span></div>
+              <p class="menu-card__desc">Croissant · Jamón de pavo · Queso fundido · Verduras · Aderezo de la casa</p>
+            </div>
+          </div>
+          <div class="menu-card" data-cat="brunch">
+            <div class="menu-card__inner">
+              <div class="menu-card__header"><span class="menu-card__name">A-B-CIABATTA</span><span class="menu-card__price">$80</span></div>
+              <p class="menu-card__desc">Ciabatta · Jamón de pavo · Queso fundido · Vinagre balsámico</p>
             </div>
           </div>
           <div class="menu-card menu-card--highlight" data-cat="brunch">
             <div class="menu-card__inner">
-              <div class="menu-card__header"><span class="menu-card__name">SALMONITO</span><span class="menu-card__price">$177</span></div>
-              <p class="menu-card__desc">Hogaza de finas hierbas · Pesto · Pera · Champiñón · Queso de cabra · Salmón fresco</p>
-            </div>
-          </div>
-          <div class="menu-card" data-cat="brunch">
-            <div class="menu-card__inner">
-              <div class="menu-card__header"><span class="menu-card__name">AVOCADO</span><span class="menu-card__price">$126</span></div>
-              <p class="menu-card__desc">Hogaza natural · Aguacate · Tomate · Dos huevos estrellados · Salsa macha</p>
-            </div>
-          </div>
-          <div class="menu-card" data-cat="brunch">
-            <div class="menu-card__inner">
-              <div class="menu-card__header"><span class="menu-card__name">MEXA</span><span class="menu-card__price">$126</span></div>
-              <p class="menu-card__desc">Hogaza natural · Frijoles refritos · Chilaquiles rojos o verdes · Dos huevitos ahogados</p>
-            </div>
-          </div>
-          <div class="menu-card" data-cat="brunch">
-            <div class="menu-card__inner">
-              <div class="menu-card__header"><span class="menu-card__name">PAVO Y QUESO</span><span class="menu-card__price">$126</span></div>
-              <p class="menu-card__desc">Hogaza con especias · Queso fundido · Jamón de pavo · Tomate · Aguacate · Hojuelas de chile</p>
+              <div class="menu-card__header"><span class="menu-card__name">SWEET &amp; SAVORY</span><span class="menu-card__price">$98</span></div>
+              <p class="menu-card__desc">Croissant · Jamón serrano · Queso crema · Pesto · Durazno · Miel</p>
             </div>
           </div>
           <div class="menu-card menu-card--highlight" data-cat="brunch">
             <div class="menu-card__inner">
-              <div class="menu-card__header"><span class="menu-card__name">ARRACHERA</span><span class="menu-card__price">$164</span></div>
-              <p class="menu-card__desc">Hogaza con mantequilla · Frijoles refritos · Queso · Arrachera · Aguacate · Salsa macha</p>
+              <div class="menu-card__header"><span class="menu-card__name">CIABATASTY</span><span class="menu-card__price">$98</span></div>
+              <p class="menu-card__desc">Ciabatta · Jamón serrano · Queso crema · Aceitunas · Pesto · Balsámico</p>
             </div>
           </div>
-
         </div>
       </div>
-      <div class="ja-timed__overlay">
-        <div class="ja-timed__overlay-title">NO PODEMOS<br>SERVIRTE AÚN</div>
-        <div class="ja-timed__overlay-sub">Desayuno disponible 8:30 – 12:00</div>
-        <div class="ja-timed__overlay-countdown" id="brunchCountdown">--:--:--</div>
-        <div class="ja-timed__overlay-label">para que abra</div>
+      <div class="lv-timed__overlay">
+        <div class="lv-timed__overlay-title">NO PODEMOS<br>SERVIRTE AÚN</div>
+        <div class="lv-timed__overlay-sub">Brunch disponible 8:30 – 12:00</div>
+        <div class="lv-timed__overlay-countdown" id="brunchCountdown">--:--:--</div>
+        <div class="lv-timed__overlay-label">para que abra</div>
       </div>
     </div>
 
     <!-- ── TIMED: PIZZA ──────────────────────────────────── -->
-    <div class="ja-timed" id="timedPizza" style="display:none">
-      <div class="ja-available-badge">
-        <span class="ja-available-dot"></span>
+    <div class="lv-timed" id="timedPizza" style="display:none">
+      <div class="lv-available-badge">
+        <span class="lv-available-dot"></span>
         DISPONIBLE AHORA
       </div>
-      <div class="ja-timed__inner">
-        <div class="ja-rufus-header">
-          <div class="ja-rufus-name">rufus.</div>
-          <div class="ja-rufus-sub">Pizza artesanal · Noches en Jarrón Azul</div>
-        </div>
+      <div class="lv-timed__inner">
         <div class="menu-grid">
           <div class="menu-card" data-cat="pizza">
             <div class="menu-card__inner">
-              <div class="menu-card__header"><span class="menu-card__name">PEPPERONI</span><span class="menu-card__price">$90</span></div>
-              <p class="menu-card__desc">Pomodoro · Mozzarella · Pepperoni · Napolitana</p>
+              <div class="menu-card__header"><span class="menu-card__name">DI' NAPOLI</span><span class="menu-card__price">$70</span></div>
+              <p class="menu-card__desc">Blend italiano · Mozzarella · Tomate cherry · Albahaca fresca</p>
             </div>
           </div>
           <div class="menu-card" data-cat="pizza">
             <div class="menu-card__inner">
-              <div class="menu-card__header"><span class="menu-card__name">MARGHERITA</span><span class="menu-card__price">$90</span></div>
-              <p class="menu-card__desc">Albahaca · Tomate · Mozzarella · Pomodoro · Clásica</p>
+              <div class="menu-card__header"><span class="menu-card__name">FIAMMA RÚSTICA</span><span class="menu-card__price">$70</span></div>
+              <p class="menu-card__desc">Blend toscano · Mozzarella · Champiñones · Pepperoni</p>
             </div>
           </div>
           <div class="menu-card" data-cat="pizza">
             <div class="menu-card__inner">
-              <div class="menu-card__header"><span class="menu-card__name">DIAVOLA</span><span class="menu-card__price">$100</span></div>
-              <p class="menu-card__desc">Salami calabrés · Mozzarella · Pimiento · Picante</p>
-            </div>
-          </div>
-          <div class="menu-card" data-cat="pizza">
-            <div class="menu-card__inner">
-              <div class="menu-card__header"><span class="menu-card__name">CARBONARA</span><span class="menu-card__price">$100</span></div>
-              <p class="menu-card__desc">Tocino · Salami · Cebolla · Aceitunas · Mozzarella</p>
-            </div>
-          </div>
-          <div class="menu-card" data-cat="pizza">
-            <div class="menu-card__inner">
-              <div class="menu-card__header"><span class="menu-card__name">CUATRO ESTACIONES</span><span class="menu-card__price">$100</span></div>
-              <p class="menu-card__desc">Pepperoni · Tocino · Tomate · Aceituna · Mozzarella</p>
-            </div>
-          </div>
-          <div class="menu-card" data-cat="pizza">
-            <div class="menu-card__inner">
-              <div class="menu-card__header"><span class="menu-card__name">CAPRICCIOSA</span><span class="menu-card__price">$110</span></div>
-              <p class="menu-card__desc">Salami · Tocino · Champiñón · Pimiento · Cebolla · Mozzarella</p>
+              <div class="menu-card__header"><span class="menu-card__name">BOSCO FIORITO</span><span class="menu-card__price">$70</span></div>
+              <p class="menu-card__desc">Mozzarella · Champiñones · Cebolla morada · Tomate cherry · Albahaca</p>
             </div>
           </div>
           <div class="menu-card menu-card--highlight" data-cat="pizza">
             <div class="menu-card__inner">
-              <div class="menu-card__header"><span class="menu-card__name">JAMÓN Y HONGOS</span><span class="menu-card__price">$130</span></div>
-              <p class="menu-card__desc">Jamón serrano · Champiñón · Tomate · Mozzarella</p>
-            </div>
-          </div>
-          <div class="menu-card menu-card--highlight" data-cat="pizza">
-            <div class="menu-card__inner">
-              <div class="menu-card__header"><span class="menu-card__name">MEDITERRÁNEA</span><span class="menu-card__price">$130</span></div>
-              <p class="menu-card__desc">Tomate · Aceituna · Jamón serrano · Mozzarella · Balsámico</p>
+              <div class="menu-card__header"><span class="menu-card__name">SERATA TOSCANA</span><span class="menu-card__price">$80</span></div>
+              <p class="menu-card__desc">Blend toscano · Mozzarella fresco · Jamón serrano · Espinaca</p>
             </div>
           </div>
         </div>
       </div>
-      <div class="ja-timed__overlay">
-        <div class="ja-timed__overlay-title">NO PODEMOS<br>SERVIRTE AÚN</div>
-        <div class="ja-timed__overlay-sub">Pizza disponible 18:00 – 21:30</div>
-        <div class="ja-timed__overlay-countdown" id="pizzaCountdown">--:--:--</div>
-        <div class="ja-timed__overlay-label">para que abra</div>
+      <div class="lv-timed__overlay">
+        <div class="lv-timed__overlay-title">NO PODEMOS<br>SERVIRTE AÚN</div>
+        <div class="lv-timed__overlay-sub">Pizza disponible 18:00 – 21:30</div>
+        <div class="lv-timed__overlay-countdown" id="pizzaCountdown">--:--:--</div>
+        <div class="lv-timed__overlay-label">para que abra</div>
       </div>
     </div>
 
@@ -746,6 +660,7 @@
         <a href="comunidad.html">COMUNIDAD</a>
         <a href="nosotros.html">NOSOTROS</a>
         <a href="jarron-azul.html">JARRÓN AZUL</a>
+        <a href="leandro-valle.html">LEANDRO VALLE</a>
         <a href="pedidos.html">PEDIDOS</a>
       </nav>
       <div class="footer__social">
@@ -779,14 +694,12 @@
       frappe:   'FRAPPÉ',
       smoothie: 'SMOOTHIES',
       tea:      'TEA & INFUSIONS',
-      brunch:   'DESAYUNO TIME — 8:30 A 12:00',
+      brunch:   'BRUNCH — 8:30 A 12:00',
       pizza:    'PIZZA — 18:00 A 21:30',
     }
 
     function showCat(cat) {
-      // Show/hide regular cards
       cards.forEach(c => { c.style.display = c.dataset.cat === cat ? '' : 'none' })
-      // Toggle grid vs timed section
       const timedEl = timedEls[cat]
       if (timedEl) {
         grid.style.display = 'none'
@@ -796,9 +709,7 @@
         grid.style.display = ''
         Object.values(timedEls).forEach(el => { el.style.display = 'none' })
       }
-      // Label
       labelEl.textContent = catNames[cat] || cat.toUpperCase()
-      // Animate visible cards
       const visCards = timedEl
         ? [...timedEl.querySelectorAll('.menu-card')]
         : [...cards].filter(c => c.style.display !== 'none')
@@ -838,7 +749,7 @@
         const nowS  = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()
         const openS = startH * 3600 + startM * 60
         let diff    = openS - nowS
-        if (diff <= 0) diff += 86400  // wraps to next day
+        if (diff <= 0) diff += 86400
         return diff
       }
 
@@ -856,28 +767,18 @@
       }
 
       function scheduleBlink() {
-        if (inWindow()) {
-          el.classList.remove('is-blurred')
-          return
-        }
+        if (inWindow()) { el.classList.remove('is-blurred'); return }
         el.classList.add('is-blurred')
-        // 2.5s blurred → clear
         blurHandle = setTimeout(() => {
           el.classList.remove('is-blurred')
-          // 7.5s clear → blink again (10s total cycle)
           blurHandle = setTimeout(scheduleBlink, 7500)
         }, 2500)
       }
 
-      // Countdown tick
       function tick() {
         applyAvailability()
-        if (!inWindow() && cntEl) {
-          cntEl.textContent = fmt(secsUntilOpen())
-        }
-        if (inWindow() && cntEl) {
-          cntEl.textContent = ''
-        }
+        if (!inWindow() && cntEl) cntEl.textContent = fmt(secsUntilOpen())
+        if (inWindow()  && cntEl) cntEl.textContent = ''
       }
 
       applyAvailability()
