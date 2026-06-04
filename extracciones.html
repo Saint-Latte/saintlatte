@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Saint Latte — Guía completa de métodos de extracción de café de especialidad: espresso, pour over, cold brew, French press, AeroPress y más.">
+  <title>Extracciones — Saint Latte</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.cdnfonts.com/css/funtastic" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ═══════════════════════════════════════════════════
+       EXTRACCIONES — page-specific styles
+    ═══════════════════════════════════════════════════ */
+
+    /* HERO */
+    .ext-hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #0a0a0a;
+      overflow: hidden;
+      position: relative;
+    }
+    .ext-hero__left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 8rem 4rem 5rem;
+      position: relative;
+      z-index: 2;
+    }
+    .ext-hero__eyebrow {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .7rem;
+      letter-spacing: .3em;
+      color: #C49A27;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .ext-hero__eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 32px;
+      height: 1px;
+      background: #C49A27;
+    }
+    .ext-hero__title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 10vw, 9rem);
+      line-height: .92;
+      color: #FFFEF9;
+      letter-spacing: .02em;
+    }
+    .ext-hero__title em {
+      font-family: 'Playfair Display', serif;
+      color: #C49A27;
+      font-style: italic;
+      font-size: .9em;
+    }
+    .ext-hero__sub {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      color: #666;
+      line-height: 1.7;
+      max-width: 380px;
+      margin-top: 2rem;
+    }
+    .ext-hero__right {
+      position: relative;
+      overflow: hidden;
+    }
+    .ext-hero__right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .ext-hero__right::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, #0a0a0a 0%, transparent 30%);
+    }
+    .ext-hero__tag {
+      position: absolute;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 3;
+      background: #C49A27;
+      color: #0a0a0a;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: .2em;
+      padding: .6rem 1.2rem;
+      border-radius: 4px;
+    }
+
+    /* MARQUEE (reutiliza el del style.css global) */
+
+    /* INTRO */
+    .ext-intro {
+      background: #0f0f0f;
+      padding: 6rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .ext-intro__grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .ext-intro__label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .65rem;
+      letter-spacing: .3em;
+      color: #C49A27;
+      margin-bottom: 1rem;
+    }
+    .ext-intro__title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      line-height: 1;
+      color: #FFFEF9;
+    }
+    .ext-intro__title em {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: #C49A27;
+    }
+    .ext-intro__body p {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .95rem;
+      line-height: 1.85;
+      color: #aaa;
+      margin-bottom: 1.2rem;
+    }
+    .ext-intro__body p strong { color: #FFFEF9; }
+    .ext-params {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .ext-param {
+      border-left: 2px solid #C49A27;
+      padding: .5rem 1rem;
+    }
+    .ext-param__label { font-size: .6rem; letter-spacing: .2em; color: #666; font-family: 'Space Grotesk', sans-serif; margin-bottom: .2rem; }
+    .ext-param__val { font-size: 1.1rem; font-weight: 700; color: #FFFEF9; font-family: 'Space Grotesk', sans-serif; }
+
+    /* METHOD SECTIONS */
+    .method-section {
+      background: #0a0a0a;
+      overflow: hidden;
+    }
+    .method-section--alt { background: #0d0d0d; }
+
+    .method-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 80vh;
+    }
+    .method-layout--reverse { direction: rtl; }
+    .method-layout--reverse > * { direction: ltr; }
+
+    .method-img-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+    .method-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 8s ease;
+    }
+    .method-img-wrap:hover img { transform: scale(1.04); }
+    .method-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(10,10,10,.3) 0%, transparent 60%);
+    }
+    .method-num {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 5rem;
+      color: rgba(255,255,255,.08);
+      line-height: 1;
+      pointer-events: none;
+    }
+    .method-badge {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      background: rgba(10,10,10,.8);
+      border: 1px solid #2a2a2a;
+      backdrop-filter: blur(10px);
+      padding: .5rem 1rem;
+      border-radius: 4px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .65rem;
+      letter-spacing: .15em;
+      color: #C49A27;
+    }
+
+    .method-content {
+      padding: 5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    .method-content__eyebrow {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .62rem;
+      letter-spacing: .3em;
+      color: #C49A27;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+    .method-content__eyebrow::before { content: ''; display: inline-block; width: 24px; height: 1px; background: #C49A27; }
+    .method-content__title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 6vw, 5.5rem);
+      line-height: .9;
+      color: #FFFEF9;
+      letter-spacing: .02em;
+    }
+    .method-content__title em {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: #C49A27;
+      font-size: .8em;
+    }
+    .method-content__origin {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .78rem;
+      color: #555;
+      letter-spacing: .1em;
+    }
+    .method-content__desc {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .92rem;
+      line-height: 1.85;
+      color: #888;
+      max-width: 480px;
+    }
+    .method-content__desc strong { color: #FFFEF9; }
+
+    .method-specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .75rem;
+      margin-top: .5rem;
+    }
+    .method-spec {
+      background: #141414;
+      border: 1px solid #1e1e1e;
+      border-radius: 8px;
+      padding: .85rem .9rem;
+    }
+    .method-spec__icon { font-size: 1.1rem; margin-bottom: .3rem; }
+    .method-spec__label { font-size: .55rem; letter-spacing: .15em; color: #555; font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; margin-bottom: .2rem; }
+    .method-spec__val { font-size: .82rem; font-weight: 600; color: #FFFEF9; font-family: 'Space Grotesk', sans-serif; }
+
+    .method-flavor {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin-top: .25rem;
+    }
+    .flavor-tag {
+      padding: .28rem .75rem;
+      border-radius: 20px;
+      border: 1px solid #2a2a2a;
+      font-size: .7rem;
+      font-family: 'Space Grotesk', sans-serif;
+      color: #aaa;
+      background: #141414;
+    }
+    .flavor-tag--gold { border-color: rgba(196,154,39,.4); color: #C49A27; background: rgba(196,154,39,.06); }
+
+    .method-rec {
+      background: #111;
+      border-left: 2px solid #C49A27;
+      padding: .9rem 1.2rem;
+      border-radius: 0 6px 6px 0;
+      margin-top: .25rem;
+    }
+    .method-rec__label { font-size: .6rem; letter-spacing: .2em; color: #C49A27; font-family: 'Space Grotesk', sans-serif; margin-bottom: .4rem; }
+    .method-rec__text { font-size: .8rem; color: #999; font-family: 'Space Grotesk', sans-serif; line-height: 1.6; }
+
+    /* ORIGINS / GRAINS SECTION */
+    .grains-section {
+      background: #0f0f0f;
+      padding: 6rem 4rem;
+    }
+    .grains-section__header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .grains-section__label {
+      font-size: .65rem;
+      letter-spacing: .3em;
+      color: #C49A27;
+      font-family: 'Space Grotesk', sans-serif;
+      margin-bottom: 1rem;
+    }
+    .grains-section__title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 6vw, 5rem);
+      color: #FFFEF9;
+      line-height: 1;
+    }
+    .grains-section__title em {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: #C49A27;
+    }
+    .grains-section__sub {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .9rem;
+      color: #666;
+      margin-top: 1rem;
+      max-width: 540px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+    .grains-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .grain-card {
+      background: #141414;
+      border: 1px solid #1e1e1e;
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform .3s ease, border-color .3s ease;
+    }
+    .grain-card:hover { transform: translateY(-4px); border-color: #C49A27; }
+    .grain-card__img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .grain-card__body { padding: 1.5rem; }
+    .grain-card__origin {
+      font-size: .62rem;
+      letter-spacing: .2em;
+      color: #C49A27;
+      font-family: 'Space Grotesk', sans-serif;
+      margin-bottom: .5rem;
+    }
+    .grain-card__name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      color: #FFFEF9;
+      line-height: 1;
+      margin-bottom: .75rem;
+    }
+    .grain-card__desc {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .8rem;
+      color: #777;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    .grain-card__notes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .35rem;
+    }
+    .note-chip {
+      padding: .22rem .65rem;
+      border-radius: 20px;
+      font-size: .65rem;
+      font-family: 'Space Grotesk', sans-serif;
+      background: #1e1e1e;
+      color: #aaa;
+      border: 1px solid #2a2a2a;
+    }
+    .grain-card__roast {
+      display: inline-block;
+      margin-top: .75rem;
+      font-size: .62rem;
+      letter-spacing: .15em;
+      color: #555;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .grain-card__roast span {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-right: .35rem;
+      background: #C49A27;
+      vertical-align: middle;
+    }
+
+    /* TIPS SECTION */
+    .tips-section {
+      background: #0a0a0a;
+      padding: 6rem 4rem;
+    }
+    .tips-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .tips-header h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      color: #FFFEF9;
+    }
+    .tips-header h2 em { font-family: 'Playfair Display', serif; font-style: italic; color: #C49A27; }
+    .tips-header p {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .9rem;
+      color: #666;
+      max-width: 480px;
+      margin: 1rem auto 0;
+      line-height: 1.7;
+    }
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .tip-card {
+      background: #141414;
+      border: 1px solid #1e1e1e;
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .tip-card__num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: #1e1e1e;
+      line-height: 1;
+      margin-bottom: .5rem;
+    }
+    .tip-card__title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .85rem;
+      font-weight: 700;
+      color: #FFFEF9;
+      margin-bottom: .5rem;
+    }
+    .tip-card__text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .78rem;
+      color: #666;
+      line-height: 1.7;
+    }
+
+    /* CTA FINAL */
+    .ext-cta {
+      background: #C49A27;
+      padding: 5rem 4rem;
+      text-align: center;
+    }
+    .ext-cta h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 6vw, 5rem);
+      color: #0a0a0a;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .ext-cta p {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      color: rgba(10,10,10,.65);
+      max-width: 480px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+    .ext-cta-btn {
+      display: inline-block;
+      background: #0a0a0a;
+      color: #FFFEF9;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: .82rem;
+      letter-spacing: .2em;
+      padding: 1rem 2.5rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .ext-cta-btn:hover { background: #1a1a1a; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .ext-hero { grid-template-columns: 1fr; min-height: auto; }
+      .ext-hero__right { height: 50vh; }
+      .ext-hero__left { padding: 8rem 1.5rem 3rem; }
+      .ext-intro { padding: 4rem 1.5rem; }
+      .ext-intro__grid { grid-template-columns: 1fr; gap: 2rem; }
+      .method-layout { grid-template-columns: 1fr; }
+      .method-layout--reverse { direction: ltr; }
+      .method-img-wrap { height: 55vw; min-height: 280px; }
+      .method-content { padding: 3rem 1.5rem; }
+      .method-specs { grid-template-columns: repeat(2, 1fr); }
+      .grains-section { padding: 4rem 1.5rem; }
+      .grains-grid { grid-template-columns: 1fr; }
+      .tips-section { padding: 4rem 1.5rem; }
+      .ext-cta { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body class="page-extracciones">
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__brand">
+      <img src="assets/images/logo.png" alt="Saint Latte" class="nav__logo-img" onerror="this.style.display='none'">
+      <span class="nav__brand-text">SAINT LATTE</span>
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="comunidad.html"    class="nav__link">COMUNIDAD</a></li>
+      <li><a href="nosotros.html"     class="nav__link">NOSOTROS</a></li>
+      <li><a href="jarron-azul.html"  class="nav__link">JARRÓN AZUL</a></li>
+      <li><a href="leandro-valle.html" class="nav__link">LEANDRO VALLE</a></li>
+      <li><a href="extracciones.html" class="nav__link nav__link--cta nav__link--active">EXTRACCIONES</a></li>
+    </ul>
+    <button class="nav__hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu__inner">
+      <ul class="mobile-menu__list" role="list">
+        <li><a href="comunidad.html"    class="mobile-link">COMUNIDAD</a></li>
+        <li><a href="nosotros.html"     class="mobile-link">NOSOTROS</a></li>
+        <li><a href="jarron-azul.html"  class="mobile-link">JARRÓN AZUL</a></li>
+        <li><a href="leandro-valle.html" class="mobile-link">LEANDRO VALLE</a></li>
+        <li><a href="extracciones.html" class="mobile-link">EXTRACCIONES</a></li>
+      </ul>
+      <div class="mobile-menu__footer">
+        <a href="https://instagram.com" target="_blank" rel="noopener">IG</a>
+        <span>—</span><a href="#">TK</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════
+       HERO
+  ═══════════════════════════════ -->
+  <header class="ext-hero">
+    <div class="ext-hero__left">
+      <div class="ext-hero__eyebrow">EL ARTE DE EXTRAER CAFÉ</div>
+      <h1 class="ext-hero__title">
+        MÉ<br>TO<br>DOS<br><em>de extracción.</em>
+      </h1>
+      <p class="ext-hero__sub">
+        Cada método de extracción es un lenguaje diferente para hablar con el grano.
+        Aquí te contamos cómo funciona cada uno, qué perfiles de sabor despiertan
+        y qué granos recomendamos para cada técnica.
+      </p>
+    </div>
+    <div class="ext-hero__right">
+      <img
+        src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1400&auto=format&fit=crop&q=90"
+        alt="Barista preparando café de especialidad"
+        loading="eager"
+      >
+      <div class="ext-hero__tag">SPECIALTY COFFEE</div>
+    </div>
+  </header>
+
+
+  <!-- MARQUEE -->
+  <div class="marquee-band marquee-band--black" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">ESPRESSO</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">POUR OVER</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">COLD BREW</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">FRENCH PRESS</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">AEROPRESS</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">MOKA EXPRESS</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">ESPRESSO</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">POUR OVER</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">COLD BREW</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">FRENCH PRESS</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">AEROPRESS</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">MOKA EXPRESS</span><span class="marquee-sep">◆</span>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════
+       INTRO
+  ═══════════════════════════════ -->
+  <section class="ext-intro">
+    <div class="ext-intro__grid">
+      <div>
+        <div class="ext-intro__label">POR QUÉ IMPORTA</div>
+        <h2 class="ext-intro__title">La extracción<br>lo <em>cambia</em><br>todo.</h2>
+      </div>
+      <div class="ext-intro__body">
+        <p>
+          Un grano de <strong>especialidad</strong> puede arruinarse completamente con la técnica equivocada —
+          o transformarse en algo extraordinario con la correcta. La extracción no es solo echar agua caliente
+          al café: es controlar temperatura, presión, tiempo, molienda y ratio para liberar exactamente
+          los compuestos que hacen a ese grano único.
+        </p>
+        <p>
+          En Saint Latte usamos varios métodos porque creemos que cada grano merece su propio lenguaje.
+          Un Etíope Yirgacheffe florido y brillante brilla diferente en un V60 que bajo 9 bares de espresso.
+          Un Sumatra terroso y corpulento tiene más sentido en una French press que en un AeroPress exprés.
+        </p>
+        <p>
+          Esta guía es nuestro intento de <strong>democratizar el conocimiento</strong> detrás de cada taza
+          que servimos. Porque entender lo que estás bebiendo hace que lo disfrutes más.
+        </p>
+        <div class="ext-params">
+          <div class="ext-param">
+            <div class="ext-param__label">Temperatura ideal</div>
+            <div class="ext-param__val">88 – 96 °C</div>
+          </div>
+          <div class="ext-param">
+            <div class="ext-param__label">Ratio base</div>
+            <div class="ext-param__val">1:15 – 1:18</div>
+          </div>
+          <div class="ext-param">
+            <div class="ext-param__label">Extracción óptima</div>
+            <div class="ext-param__val">18 – 22 %</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════
+       01 — ESPRESSO
+  ═══════════════════════════════ -->
+  <section class="method-section" id="espresso">
+    <div class="method-layout">
+      <div class="method-img-wrap">
+        <img
+          src="https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=1200&auto=format&fit=crop&q=90"
+          alt="Espresso en extracción"
+          loading="lazy"
+        >
+        <div class="method-img-overlay"></div>
+        <div class="method-num">01</div>
+        <div class="method-badge">ALTA PRESIÓN · 9 BAR</div>
+      </div>
+      <div class="method-content">
+        <div class="method-content__eyebrow">MÉTODO 01</div>
+        <h2 class="method-content__title">ES<br>PRES<br><em>so.</em></h2>
+        <div class="method-content__origin">ITALIA, DÉCADA DE 1900</div>
+        <p class="method-content__desc">
+          El espresso es la base de casi todo lo que servimos. Nació en Italia a principios del siglo XX
+          como solución para servir café rápido en bares concurridos. La palabra <strong>"espresso"</strong>
+          no significa rápido — significa "presionado", por los 9 bares que fuerzan el agua caliente
+          a través de un puck compacto de café molido fino en 25–30 segundos.
+          <br><br>
+          El resultado es una bebida concentrada, densa, con <strong>crema</strong> — esa espuma
+          color avellana que solo aparece bajo presión — y una complejidad que ningún otro método replica.
+          Es la base del latte, cappuccino, americano y prácticamente toda la cultura café moderna.
+        </p>
+        <div class="method-specs">
+          <div class="method-spec">
+            <div class="method-spec__icon">⚡</div>
+            <div class="method-spec__label">Tiempo</div>
+            <div class="method-spec__val">25 – 32 seg</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🌡️</div>
+            <div class="method-spec__label">Temperatura</div>
+            <div class="method-spec__val">90 – 96 °C</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">⚖️</div>
+            <div class="method-spec__label">Ratio</div>
+            <div class="method-spec__val">1:2 (dose:yield)</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🫧</div>
+            <div class="method-spec__label">Presión</div>
+            <div class="method-spec__val">9 BAR</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🔩</div>
+            <div class="method-spec__label">Molienda</div>
+            <div class="method-spec__val">Muy fina</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">☕</div>
+            <div class="method-spec__label">Dosis</div>
+            <div class="method-spec__val">18 – 20 g</div>
+          </div>
+        </div>
+        <div class="method-flavor">
+          <span class="flavor-tag flavor-tag--gold">Caramelo</span>
+          <span class="flavor-tag flavor-tag--gold">Chocolate oscuro</span>
+          <span class="flavor-tag">Nuez</span>
+          <span class="flavor-tag">Cuerpo denso</span>
+          <span class="flavor-tag">Crema persistente</span>
+        </div>
+        <div class="method-rec">
+          <div class="method-rec__label">GRANOS RECOMENDADOS</div>
+          <div class="method-rec__text">
+            Blends brasileños con notas de chocolate y nuez · Guatemala Antigua para equilibrio ·
+            Colombia Huila para espressos más brillantes con acidez controlada.
+            Tueste medio-oscuro. Evita granos muy ligeros que se sobre-extraen fácilmente a 9 bares.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════
+       02 — POUR OVER (V60 / CHEMEX)
+  ═══════════════════════════════ -->
+  <section class="method-section method-section--alt" id="pour-over">
+    <div class="method-layout method-layout--reverse">
+      <div class="method-img-wrap">
+        <img
+          src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1200&auto=format&fit=crop&q=90"
+          alt="Pour over V60"
+          loading="lazy"
+        >
+        <div class="method-img-overlay"></div>
+        <div class="method-num">02</div>
+        <div class="method-badge">FILTRADO · GRAVEDAD</div>
+      </div>
+      <div class="method-content">
+        <div class="method-content__eyebrow">MÉTODO 02</div>
+        <h2 class="method-content__title">POUR<br><em>over.</em></h2>
+        <div class="method-content__origin">JAPÓN / ALEMANIA, 1908 – 2004</div>
+        <p class="method-content__desc">
+          El pour over — o vertido en filtro — es el método favorito de la tercera ola del café.
+          El <strong>Hario V60</strong> fue diseñado en Japón en 2004; la <strong>Chemex</strong>
+          data de 1941 en Alemania. Ambos funcionan igual: agua caliente vertida en espiral sobre
+          café molido medio en un filtro de papel, dejando que la gravedad haga el trabajo.
+          <br><br>
+          El resultado es una taza <strong>limpia, brillante, con acidez definida</strong> y sin
+          ningún sedimento. Cada nota de sabor del grano original — floral, frutal, cítrica —
+          destaca con una claridad imposible en otros métodos. El arte está en el vertido:
+          la velocidad, la espiral, el bloom inicial.
+        </p>
+        <div class="method-specs">
+          <div class="method-spec">
+            <div class="method-spec__icon">⏱️</div>
+            <div class="method-spec__label">Tiempo</div>
+            <div class="method-spec__val">3 – 4 min</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🌡️</div>
+            <div class="method-spec__label">Temperatura</div>
+            <div class="method-spec__val">92 – 96 °C</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">⚖️</div>
+            <div class="method-spec__label">Ratio</div>
+            <div class="method-spec__val">1:15 – 1:17</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🔩</div>
+            <div class="method-spec__label">Molienda</div>
+            <div class="method-spec__val">Media-fina</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">💧</div>
+            <div class="method-spec__label">Bloom</div>
+            <div class="method-spec__val">30 seg</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">☕</div>
+            <div class="method-spec__label">Dosis</div>
+            <div class="method-spec__val">15 – 20 g</div>
+          </div>
+        </div>
+        <div class="method-flavor">
+          <span class="flavor-tag flavor-tag--gold">Floral</span>
+          <span class="flavor-tag flavor-tag--gold">Cítrico</span>
+          <span class="flavor-tag flavor-tag--gold">Frutas rojas</span>
+          <span class="flavor-tag">Claridad de taza</span>
+          <span class="flavor-tag">Acidez brillante</span>
+        </div>
+        <div class="method-rec">
+          <div class="method-rec__label">GRANOS RECOMENDADOS</div>
+          <div class="method-rec__text">
+            Etiopía Yirgacheffe o Sidama para notas florales y de té ·
+            Kenia AA para acidez cítrica jugosa ·
+            Panamá Geisha si quieres una experiencia trascendental.
+            Tueste ligero a medio. Evita tuestes oscuros que apagan la claridad.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════
+       03 — COLD BREW
+  ═══════════════════════════════ -->
+  <section class="method-section" id="cold-brew">
+    <div class="method-layout">
+      <div class="method-img-wrap">
+        <img
+          src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=1200&auto=format&fit=crop&q=90"
+          alt="Cold brew café frío"
+          loading="lazy"
+        >
+        <div class="method-img-overlay"></div>
+        <div class="method-num">03</div>
+        <div class="method-badge">EXTRACCIÓN EN FRÍO · 12 – 24 HRS</div>
+      </div>
+      <div class="method-content">
+        <div class="method-content__eyebrow">MÉTODO 03</div>
+        <h2 class="method-content__title">COLD<br><em>brew.</em></h2>
+        <div class="method-content__origin">JAPÓN / EUA, SIGLO XVII – POPULARIZADO 2010s</div>
+        <p class="method-content__desc">
+          El cold brew es tiempo sin calor. A diferencia del iced coffee — espresso enfriado sobre hielo —
+          el cold brew se hace <strong>sumergiendo café molido grueso en agua fría durante 12 a 24 horas</strong>.
+          La baja temperatura extrae los compuestos de sabor lentamente, omitiendo casi por completo los
+          ácidos que el calor libera.
+          <br><br>
+          El resultado es un café <strong>ultra suave, naturalmente dulce, con un cuerpo casi sedoso</strong>
+          y prácticamente cero acidez. Alta concentración de cafeína. Se puede tomar solo, con hielo,
+          con leche o como base de cocteles de café. Dura hasta 2 semanas refrigerado.
+        </p>
+        <div class="method-specs">
+          <div class="method-spec">
+            <div class="method-spec__icon">🕐</div>
+            <div class="method-spec__label">Tiempo</div>
+            <div class="method-spec__val">12 – 24 hrs</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🌡️</div>
+            <div class="method-spec__label">Temperatura</div>
+            <div class="method-spec__val">4 – 22 °C</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">⚖️</div>
+            <div class="method-spec__label">Ratio</div>
+            <div class="method-spec__val">1:8 (concentrado)</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🔩</div>
+            <div class="method-spec__label">Molienda</div>
+            <div class="method-spec__val">Gruesa</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">❄️</div>
+            <div class="method-spec__label">Proceso</div>
+            <div class="method-spec__val">Inmersión</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🧊</div>
+            <div class="method-spec__label">Vida útil</div>
+            <div class="method-spec__val">Hasta 2 semanas</div>
+          </div>
+        </div>
+        <div class="method-flavor">
+          <span class="flavor-tag flavor-tag--gold">Chocolate</span>
+          <span class="flavor-tag flavor-tag--gold">Caramelo suave</span>
+          <span class="flavor-tag">Cuerpo sedoso</span>
+          <span class="flavor-tag">Sin acidez</span>
+          <span class="flavor-tag">Dulzura natural</span>
+        </div>
+        <div class="method-rec">
+          <div class="method-rec__label">GRANOS RECOMENDADOS</div>
+          <div class="method-rec__text">
+            Brasil Cerrado con notas de chocolate y nuez — perfecto para cold brew clásico ·
+            Colombia Nariño para un fondo más dulce y afrutado ·
+            Honduras Marcala para carácter caramelizado. Tueste medio a oscuro.
+            Los tuestes ligeros producen cold brews más planos y difíciles de balancear.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════
+       04 — FRENCH PRESS
+  ═══════════════════════════════ -->
+  <section class="method-section method-section--alt" id="french-press">
+    <div class="method-layout method-layout--reverse">
+      <div class="method-img-wrap">
+        <img
+          src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=1200&auto=format&fit=crop&q=90"
+          alt="French press café"
+          loading="lazy"
+        >
+        <div class="method-img-overlay"></div>
+        <div class="method-num">04</div>
+        <div class="method-badge">INMERSIÓN · ÉMBOLO</div>
+      </div>
+      <div class="method-content">
+        <div class="method-content__eyebrow">MÉTODO 04</div>
+        <h2 class="method-content__title">FRENCH<br><em>press.</em></h2>
+        <div class="method-content__origin">FRANCIA / ITALIA, PATENTE 1929</div>
+        <p class="method-content__desc">
+          La French press — o <em>cafetière</em> — es el método de inmersión completa por excelencia.
+          El café molido grueso reposa en contacto directo con el agua caliente durante 4 minutos.
+          Luego, un émbolo metálico lo separa. Sin filtro de papel: <strong>los aceites naturales
+          del grano pasan directamente a la taza</strong>.
+          <br><br>
+          Es un café de <strong>cuerpo máximo</strong>: denso, rico, texturizado. Un pequeño sedimento
+          en el fondo es completamente normal. Es ideal para las mañanas cuando quieres algo
+          que se sienta sustancial, y para granos que pierden complejidad al filtrarse.
+        </p>
+        <div class="method-specs">
+          <div class="method-spec">
+            <div class="method-spec__icon">⏱️</div>
+            <div class="method-spec__label">Tiempo</div>
+            <div class="method-spec__val">4 min</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🌡️</div>
+            <div class="method-spec__label">Temperatura</div>
+            <div class="method-spec__val">93 – 96 °C</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">⚖️</div>
+            <div class="method-spec__label">Ratio</div>
+            <div class="method-spec__val">1:15</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🔩</div>
+            <div class="method-spec__label">Molienda</div>
+            <div class="method-spec__val">Gruesa</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">💪</div>
+            <div class="method-spec__label">Cuerpo</div>
+            <div class="method-spec__val">Máximo</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🫙</div>
+            <div class="method-spec__label">Proceso</div>
+            <div class="method-spec__val">Inmersión</div>
+          </div>
+        </div>
+        <div class="method-flavor">
+          <span class="flavor-tag flavor-tag--gold">Terroso</span>
+          <span class="flavor-tag flavor-tag--gold">Cuerpo pleno</span>
+          <span class="flavor-tag">Chocolate amargo</span>
+          <span class="flavor-tag">Aceites naturales</span>
+          <span class="flavor-tag">Robusto</span>
+        </div>
+        <div class="method-rec">
+          <div class="method-rec__label">GRANOS RECOMENDADOS</div>
+          <div class="method-rec__text">
+            Sumatra Mandheling para notas terrosas y herbales únicas ·
+            India Monsoon Malabar para acidez baja y cuerpo excepcional ·
+            Brasil Santos para un clásico infalible con chocolate y nuez.
+            Tueste medio-oscuro a oscuro. El cuerpo de la French press hace brillar granos más robustos.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════
+       05 — AEROPRESS
+  ═══════════════════════════════ -->
+  <section class="method-section" id="aeropress">
+    <div class="method-layout">
+      <div class="method-img-wrap">
+        <img
+          src="https://images.unsplash.com/photo-1504630083234-14187a9df0f5?w=1200&auto=format&fit=crop&q=90"
+          alt="AeroPress extracción"
+          loading="lazy"
+        >
+        <div class="method-img-overlay"></div>
+        <div class="method-num">05</div>
+        <div class="method-badge">PRESIÓN MANUAL · VERSÁTIL</div>
+      </div>
+      <div class="method-content">
+        <div class="method-content__eyebrow">MÉTODO 05</div>
+        <h2 class="method-content__title">AERO<br><em>press.</em></h2>
+        <div class="method-content__origin">EUA, INVENTADO 2005 POR ALAN ADLER</div>
+        <p class="method-content__desc">
+          El AeroPress es el invento más disruptivo en café en décadas. Diseñado por un ingeniero
+          de Stanford, combina inmersión y presión manual en un dispositivo de plástico que cabe
+          en una mochila. Tiene un <strong>campeonato mundial dedicado exclusivamente a él</strong>
+          — la AeroPress Championship — con miles de competidores cada año.
+          <br><br>
+          Su versatilidad es inigualable: puedes prepararlo en 1 minuto o 4, usar agua a 75°C o 96°C,
+          molienda fina o gruesa, invertido o en posición normal. Cada variable produce
+          una taza diferente. <strong>Es el método favorito de los baristas experimentadores</strong>
+          porque no tiene reglas fijas.
+        </p>
+        <div class="method-specs">
+          <div class="method-spec">
+            <div class="method-spec__icon">⚡</div>
+            <div class="method-spec__label">Tiempo</div>
+            <div class="method-spec__val">1 – 3 min</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🌡️</div>
+            <div class="method-spec__label">Temperatura</div>
+            <div class="method-spec__val">75 – 95 °C</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">⚖️</div>
+            <div class="method-spec__label">Ratio</div>
+            <div class="method-spec__val">1:10 – 1:16</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🔩</div>
+            <div class="method-spec__label">Molienda</div>
+            <div class="method-spec__val">Media-fina</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🏆</div>
+            <div class="method-spec__label">Nivel</div>
+            <div class="method-spec__val">Intermedio</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🎛️</div>
+            <div class="method-spec__label">Variables</div>
+            <div class="method-spec__val">Infinitas</div>
+          </div>
+        </div>
+        <div class="method-flavor">
+          <span class="flavor-tag flavor-tag--gold">Limpio</span>
+          <span class="flavor-tag flavor-tag--gold">Concentrado</span>
+          <span class="flavor-tag">Versátil</span>
+          <span class="flavor-tag">Bajo en acidez</span>
+          <span class="flavor-tag">Suave</span>
+        </div>
+        <div class="method-rec">
+          <div class="method-rec__label">GRANOS RECOMENDADOS</div>
+          <div class="method-rec__text">
+            Colombia Geisha para recetas de campeonato con notas florales a temperatura baja ·
+            Rwanda Bourbon para recetas rápidas y brillantes ·
+            Prácticamente cualquier grano funciona — es el método más democrático.
+            Experimenta con temperatura: a menor temperatura, mayor dulzura y menor acidez.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════
+       06 — MOKA EXPRESS
+  ═══════════════════════════════ -->
+  <section class="method-section method-section--alt" id="moka">
+    <div class="method-layout method-layout--reverse">
+      <div class="method-img-wrap">
+        <img
+          src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=1200&auto=format&fit=crop&q=90"
+          alt="Moka express café italiano"
+          loading="lazy"
+        >
+        <div class="method-img-overlay"></div>
+        <div class="method-num">06</div>
+        <div class="method-badge">VAPOR · MOKA BIALETTI</div>
+      </div>
+      <div class="method-content">
+        <div class="method-content__eyebrow">MÉTODO 06</div>
+        <h2 class="method-content__title">MOKA<br><em>express.</em></h2>
+        <div class="method-content__origin">ITALIA, DISEÑADO POR LUIGI DE PONTI, 1933</div>
+        <p class="method-content__desc">
+          La Moka Bialetti es el símbolo del café doméstico italiano. Ese octógono de aluminio
+          que ha estado en millones de cocinas durante 90 años. Funciona con vapor:
+          el agua en la cámara inferior se calienta, la presión sube y empuja el agua caliente
+          a través del café molido hacia la cámara superior.
+          <br><br>
+          No llega a los 9 bares del espresso, pero produce un café <strong>concentrado,
+          intenso y aromático</strong>, con un perfil más oscuro y robusto. Es el puente entre
+          el café de filtro y el espresso. El sonido del borboteo cuando termina la extracción
+          es uno de los rituales más reconocibles del café.
+        </p>
+        <div class="method-specs">
+          <div class="method-spec">
+            <div class="method-spec__icon">⏱️</div>
+            <div class="method-spec__label">Tiempo</div>
+            <div class="method-spec__val">5 – 8 min</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🔥</div>
+            <div class="method-spec__label">Presión</div>
+            <div class="method-spec__val">1 – 2 BAR</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">⚖️</div>
+            <div class="method-spec__label">Ratio</div>
+            <div class="method-spec__val">1:7 – 1:10</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🔩</div>
+            <div class="method-spec__label">Molienda</div>
+            <div class="method-spec__val">Fina-media</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🏠</div>
+            <div class="method-spec__label">Accesibilidad</div>
+            <div class="method-spec__val">Muy alta</div>
+          </div>
+          <div class="method-spec">
+            <div class="method-spec__icon">🌋</div>
+            <div class="method-spec__label">Intensidad</div>
+            <div class="method-spec__val">Alta</div>
+          </div>
+        </div>
+        <div class="method-flavor">
+          <span class="flavor-tag flavor-tag--gold">Intenso</span>
+          <span class="flavor-tag flavor-tag--gold">Achocolatado</span>
+          <span class="flavor-tag">Aromático</span>
+          <span class="flavor-tag">Sin crema</span>
+          <span class="flavor-tag">Concentrado</span>
+        </div>
+        <div class="method-rec">
+          <div class="method-rec__label">GRANOS RECOMENDADOS</div>
+          <div class="method-rec__text">
+            Mezcla italiana clásica de Brasil + Robusta para el perfil tradicional ·
+            Guatemala Antigua solo para una versión de especialidad más limpia ·
+            Mexico Chiapas — ¡apoyo al grano local! — para notas suaves de chocolate y caramelo.
+            Tueste medio-oscuro. Consejo pro: retira del fuego antes del borboteo final.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════
+       PERFILES DE GRANO
+  ═══════════════════════════════ -->
+  <section class="grains-section" id="granos">
+    <div class="grains-section__header">
+      <div class="grains-section__label">ORIGEN Y TERROIR</div>
+      <h2 class="grains-section__title">PERFILES<br>DE <em>grano.</em></h2>
+      <p class="grains-section__sub">
+        El origen del grano determina más sabor que cualquier técnica de extracción.
+        Aquí están los perfiles que rotamos en Saint Latte.
+      </p>
+    </div>
+    <div class="grains-grid">
+
+      <!-- Etiopía -->
+      <div class="grain-card">
+        <img class="grain-card__img"
+          src="https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=800&auto=format&fit=crop&q=85"
+          alt="Granos de café Etiopía" loading="lazy">
+        <div class="grain-card__body">
+          <div class="grain-card__origin">ETIOPÍA · YIRGACHEFFE / SIDAMA</div>
+          <h3 class="grain-card__name">LA CUNA DEL CAFÉ</h3>
+          <p class="grain-card__desc">
+            Etiopía es el origen genético del café arábica. Los granos de Yirgacheffe son
+            los más aromáticos del mundo: jazmín, bergamota, té negro y cítricos brillantes
+            con una acidez como champagne.
+          </p>
+          <div class="grain-card__notes">
+            <span class="note-chip">Jazmín</span>
+            <span class="note-chip">Bergamota</span>
+            <span class="note-chip">Durazno</span>
+            <span class="note-chip">Té negro</span>
+            <span class="note-chip">Limón</span>
+          </div>
+          <div class="grain-card__roast"><span></span>TUESTE LIGERO — IDEAL PARA POUR OVER</div>
+        </div>
+      </div>
+
+      <!-- Colombia -->
+      <div class="grain-card">
+        <img class="grain-card__img"
+          src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=800&auto=format&fit=crop&q=85"
+          alt="Café Colombia" loading="lazy">
+        <div class="grain-card__body">
+          <div class="grain-card__origin">COLOMBIA · HUILA / NARIÑO</div>
+          <h3 class="grain-card__name">EQUILIBRIO PERFECTO</h3>
+          <p class="grain-card__desc">
+            Los cafés colombianos son el punto de entrada al specialty por una razón:
+            equilibrio impecable. Acidez media, cuerpo consistente, dulzura de caramelo y
+            una versatilidad que los hace funcionar en casi cualquier método.
+          </p>
+          <div class="grain-card__notes">
+            <span class="note-chip">Caramelo</span>
+            <span class="note-chip">Manzana verde</span>
+            <span class="note-chip">Chocolate con leche</span>
+            <span class="note-chip">Panela</span>
+          </div>
+          <div class="grain-card__roast"><span></span>TUESTE MEDIO — ESPRESSO / POUR OVER / AEROPRESS</div>
+        </div>
+      </div>
+
+      <!-- Brasil -->
+      <div class="grain-card">
+        <img class="grain-card__img"
+          src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=800&auto=format&fit=crop&q=85"
+          alt="Granos de café Brasil" loading="lazy">
+        <div class="grain-card__body">
+          <div class="grain-card__origin">BRASIL · CERRADO / MINAS GERAIS</div>
+          <h3 class="grain-card__name">LA BASE DE TODO</h3>
+          <p class="grain-card__desc">
+            Brasil es el mayor productor de café del mundo. Sus granos tienen bajo perfil
+            de acidez, cuerpo denso y notas de chocolate, cacao y nuez que los convierten
+            en la base perfecta para espressos y cold brews.
+          </p>
+          <div class="grain-card__notes">
+            <span class="note-chip">Chocolate</span>
+            <span class="note-chip">Avellana</span>
+            <span class="note-chip">Almendra</span>
+            <span class="note-chip">Caramelo</span>
+          </div>
+          <div class="grain-card__roast"><span></span>TUESTE MEDIO-OSCURO — ESPRESSO / COLD BREW / FRENCH PRESS</div>
+        </div>
+      </div>
+
+      <!-- Guatemala -->
+      <div class="grain-card">
+        <img class="grain-card__img"
+          src="https://images.unsplash.com/photo-1485808191679-5f86510bd652?w=800&auto=format&fit=crop&q=85"
+          alt="Café Guatemala" loading="lazy">
+        <div class="grain-card__body">
+          <div class="grain-card__origin">GUATEMALA · ANTIGUA / HUEHUETENANGO</div>
+          <h3 class="grain-card__name">VOLCÁNICO Y COMPLEJO</h3>
+          <p class="grain-card__desc">
+            Los volcanes que rodean Antigua le dan a los granos guatemaltecos un terroir
+            único: acidez brillante, cuerpo medio-alto y notas de chocolate oscuro,
+            vainilla y especias. Uno de los orígenes más subestimados.
+          </p>
+          <div class="grain-card__notes">
+            <span class="note-chip">Chocolate oscuro</span>
+            <span class="note-chip">Vainilla</span>
+            <span class="note-chip">Canela</span>
+            <span class="note-chip">Cítrico sutil</span>
+          </div>
+          <div class="grain-card__roast"><span></span>TUESTE MEDIO — ESPRESSO / POUR OVER / MOKA</div>
+        </div>
+      </div>
+
+      <!-- México -->
+      <div class="grain-card">
+        <img class="grain-card__img"
+          src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop&q=85"
+          alt="Café México Chiapas" loading="lazy">
+        <div class="grain-card__body">
+          <div class="grain-card__origin">MÉXICO · CHIAPAS / OAXACA / VERACRUZ</div>
+          <h3 class="grain-card__name">DE CASA</h3>
+          <p class="grain-card__desc">
+            Los cafés mexicanos de especialidad están ganando reconocimiento mundial.
+            Chiapas produce granos con notas de chocolate con leche, caramelo y acidez
+            suave. Oaxaca aporta complejidad y Veracruz ofrece un perfil más clásico y accesible.
+          </p>
+          <div class="grain-card__notes">
+            <span class="note-chip">Chocolate con leche</span>
+            <span class="note-chip">Caramelo</span>
+            <span class="note-chip">Nuez</span>
+            <span class="note-chip">Fruta seca</span>
+          </div>
+          <div class="grain-card__roast"><span></span>TUESTE LIGERO A MEDIO — POUR OVER / AEROPRESS</div>
+        </div>
+      </div>
+
+      <!-- Kenya -->
+      <div class="grain-card">
+        <img class="grain-card__img"
+          src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=85"
+          alt="Café Kenya" loading="lazy">
+        <div class="grain-card__body">
+          <div class="grain-card__origin">KENIA · NYERI / MT. KENYA</div>
+          <h3 class="grain-card__name">AUDAZ Y FRUTAL</h3>
+          <p class="grain-card__desc">
+            Los cafés kenianos son los más polarizantes del mundo specialty: una acidez
+            casi líquida de grosella negra y tomate, cuerpo denso y un final largo que
+            no se parece a ningún otro origen. Para paladares aventureros.
+          </p>
+          <div class="grain-card__notes">
+            <span class="note-chip">Grosella negra</span>
+            <span class="note-chip">Maracuyá</span>
+            <span class="note-chip">Tomate</span>
+            <span class="note-chip">Cítrico intenso</span>
+          </div>
+          <div class="grain-card__roast"><span></span>TUESTE LIGERO — POUR OVER / AEROPRESS FRÍO</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════
+       TIPS DE BARISTA
+  ═══════════════════════════════ -->
+  <section class="tips-section">
+    <div class="tips-header">
+      <div style="font-size:.65rem;letter-spacing:.3em;color:#C49A27;font-family:'Space Grotesk',sans-serif;margin-bottom:.75rem">CONSEJOS PRO</div>
+      <h2>LO QUE LA MAYORÍA<br>NO <em>sabe.</em></h2>
+      <p>Los detalles que separan una taza correcta de una taza memorable.</p>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-card__num">01</div>
+        <div class="tip-card__title">El agua importa tanto como el café</div>
+        <div class="tip-card__text">
+          El café es 98% agua. Agua dura con muchos minerales produce sobreextracción.
+          Agua completamente destilada produce subextracción. El rango ideal: 75–150 mg/L
+          de minerales totales. Si el agua de tu ciudad sabe rara, el café también lo hará.
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card__num">02</div>
+        <div class="tip-card__title">Muele siempre en el momento</div>
+        <div class="tip-card__text">
+          El café pierde el 60% de sus aromas volátiles en los primeros 15 minutos
+          después de molerse. Un grano entero guardado bien dura meses.
+          Un café ya molido, guardado en el mismo recipiente, dura días a lo mucho.
+          Un buen molinillo es la mejor inversión en café.
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card__num">03</div>
+        <div class="tip-card__title">El bloom no es opcional</div>
+        <div class="tip-card__text">
+          En métodos de filtro, los primeros 30–45 segundos sirven para "despertar"
+          el café: el CO₂ del tostado sale del grano y si no lo dejas salir, bloquea
+          la extracción. Vierte el doble del peso en café y espera. Notarás la diferencia.
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card__num">04</div>
+        <div class="tip-card__title">Ácido ≠ malo</div>
+        <div class="tip-card__text">
+          La acidez en café de especialidad no es desagradable — es complejidad.
+          Un Yirgacheffe bien extraído es como morder una fruta madura.
+          Si el café se siente ácido de manera desagradable, generalmente es subextracción
+          (poco tiempo o molienda muy gruesa), no el grano en sí.
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card__num">05</div>
+        <div class="tip-card__title">Temperatura según tueste</div>
+        <div class="tip-card__text">
+          Tueste oscuro → temperatura más baja (88–91°C) para no quemar los azúcares ya caramelizados.
+          Tueste ligero → temperatura alta (93–96°C) para extraer los compuestos más difíciles.
+          Muchas amargas de café oscuro vienen de agua hirviendo a 100°C, no del grano.
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card__num">06</div>
+        <div class="tip-card__title">Fecha de tueste, no de vencimiento</div>
+        <div class="tip-card__text">
+          Un café de especialidad alcanza su punto óptimo de 7 a 21 días después del tueste.
+          Muy fresco (menos de 5 días) todavía tiene demasiado CO₂. Muy viejo (más de 6 semanas)
+          perdió sus aromas. Busca siempre la fecha de tueste en el empaque, no solo la de vencimiento.
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CTA FINAL -->
+  <section class="ext-cta">
+    <h2>VEN A<br>PROBARLO.</h2>
+    <p>
+      La mejor manera de entender un método de extracción es experimentarlo
+      en taza. En Saint Latte, Leandro Valle, lo preparamos frente a ti.
+    </p>
+    <a href="leandro-valle.html" class="ext-cta-btn">VER LEANDRO VALLE →</a>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <img src="assets/images/logo.png" alt="Saint Latte" class="nav__logo-img" style="width:32px;opacity:.6" onerror="this.style.display='none'">
+        <span class="footer__brand-name">SAINT LATTE</span>
+      </div>
+      <nav class="footer__nav" aria-label="Footer">
+        <a href="menu.html">MENÚ</a>
+        <a href="nosotros.html">NOSOTROS</a>
+        <a href="extracciones.html">EXTRACCIONES</a>
+        <a href="leandro-valle.html">LEANDRO VALLE</a>
+      </nav>
+      <div class="footer__copy">© 2024 Saint Latte. Valle de Santiago, Gto.</div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger)
+
+    // Smooth scroll
+    const lenis = new Lenis({ lerp: 0.08, smooth: true })
+    function raf(t) { lenis.raf(t); requestAnimationFrame(raf) }
+    requestAnimationFrame(raf)
+    lenis.on('scroll', ScrollTrigger.update)
+    gsap.ticker.add(t => lenis.raf(t * 1000))
+    gsap.ticker.lagSmoothing(0)
+
+    // Hero
+    gsap.from('.ext-hero__eyebrow', { y: 30, opacity: 0, duration: .8, delay: .3 })
+    gsap.from('.ext-hero__title', { y: 60, opacity: 0, duration: 1, delay: .5, ease: 'power3.out' })
+    gsap.from('.ext-hero__sub', { y: 30, opacity: 0, duration: .8, delay: .9 })
+    gsap.from('.ext-hero__right img', { scale: 1.08, duration: 1.4, delay: .2, ease: 'power2.out' })
+
+    // Sections scroll reveal
+    gsap.utils.toArray('.method-content').forEach(el => {
+      gsap.from(el.children, {
+        scrollTrigger: { trigger: el, start: 'top 80%' },
+        y: 40, opacity: 0, duration: .8, stagger: .1, ease: 'power2.out'
+      })
+    })
+
+    gsap.utils.toArray('.grain-card').forEach((card, i) => {
+      gsap.from(card, {
+        scrollTrigger: { trigger: card, start: 'top 90%' },
+        y: 50, opacity: 0, duration: .7, delay: (i % 3) * 0.1, ease: 'power2.out'
+      })
+    })
+
+    gsap.utils.toArray('.tip-card').forEach((card, i) => {
+      gsap.from(card, {
+        scrollTrigger: { trigger: card, start: 'top 90%' },
+        y: 40, opacity: 0, duration: .6, delay: (i % 3) * 0.08, ease: 'power2.out'
+      })
+    })
+
+    // Method images parallax
+    gsap.utils.toArray('.method-img-wrap').forEach(wrap => {
+      const img = wrap.querySelector('img')
+      gsap.to(img, {
+        scrollTrigger: { trigger: wrap, scrub: 1 },
+        y: -60, ease: 'none'
+      })
+    })
+  </script>
+</body>
+</html>
