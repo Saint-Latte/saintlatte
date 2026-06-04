@@ -1,0 +1,39 @@
+name: Sync Polotab Menu
+
+on:
+  schedule:
+    # Corre cada día a las 7am hora Ciudad de México (13:00 UTC)
+    - cron: '0 13 * * *'
+  workflow_dispatch:
+    # Permite disparar manualmente desde GitHub → Actions → "Run workflow"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # necesario para hacer commit del lv-menu.json
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Sync menu from Polotab API
+        env:
+          POLOTAB_API_KEY:       ${{ secrets.POLOTAB_API_KEY }}
+          POLOTAB_RESTAURANT_ID: ${{ secrets.POLOTAB_RESTAURANT_ID }}
+        run: node scripts/sync-polotab.js
+
+      - name: Commit lv-menu.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add lv-menu.json
+          git diff --staged --quiet && echo "Sin cambios en el menú" || (
+            git commit -m "chore: sync Polotab menu $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci]"
+            git push
+          )

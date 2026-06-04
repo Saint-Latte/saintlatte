@@ -317,7 +317,7 @@
                   <div class="empty-state">
                     <div class="icon">☕</div>
                     Sin menú cargado.<br>
-                    Ve a <strong>CAJA → Conexión Polotab</strong> para sincronizar.
+                    Ve a <strong>CAJA → Menú</strong> y presiona <strong>Recargar menú</strong>.
                   </div>
                 </div>
                 <!-- Cargando -->
@@ -548,29 +548,24 @@
               </table>
             </div>
 
-            <!-- ══ POLOTAB SYNC ══ -->
+            <!-- ══ MENÚ ══ -->
             <div class="caja-section">
-              <div class="caja-section__title">Conexión Polotab</div>
-              <div class="caja-form">
-                <div class="form-row">
-                  <span class="form-label">API Key</span>
-                  <input class="form-input" v-model="ptConfig.apiKey" type="password" placeholder="krzV4HP…">
-                </div>
-                <div class="form-row">
-                  <span class="form-label">Restaurant ID</span>
-                  <input class="form-input" v-model="ptConfig.restaurantId" placeholder="0a717e1b-…">
-                </div>
-              </div>
+              <div class="caja-section__title">Menú</div>
+              <p style="font-size:.78rem;color:var(--muted);margin-bottom:.9rem;line-height:1.6">
+                El menú se sincroniza automáticamente cada día desde Polotab.<br>
+                Usa el botón para cargar la versión más reciente ahora mismo.
+              </p>
               <div v-if="menuError" class="sync-error">⚠️ {{menuError}}</div>
-              <br>
               <div class="caja-btns">
-                <button class="btn-primary" @click="syncMenu" :disabled="menuLoading || !ptConfig.apiKey || !ptConfig.restaurantId">
+                <button class="btn-primary" @click="loadMenu" :disabled="menuLoading">
                   <span v-if="menuLoading" class="spinner" style="width:14px;height:14px;border-width:2px;margin-right:.4rem"></span>
-                  {{menuLoading ? 'SINCRONIZANDO…' : 'SINCRONIZAR MENÚ'}}
+                  {{menuLoading ? 'CARGANDO…' : 'RECARGAR MENÚ'}}
                 </button>
                 <span v-if="menuCachedAt" class="sync-info">
-                  Último sync: <strong>{{menuCachedAt}}</strong> · {{allItems.length}} productos en {{menus.length}} categorías
+                  Último sync: <strong>{{menuCachedAt}}</strong><br>
+                  {{allItems.length}} productos · {{menus.length}} categorías
                 </span>
+                <span v-else class="sync-info" style="color:var(--red)">Sin menú cargado</span>
               </div>
             </div>
 
@@ -735,8 +730,6 @@
 <script>
 const { createApp, ref, computed, watch, onMounted, reactive } = Vue
 
-const POLOTAB_BASE = 'https://api.polotab.com'
-
 createApp({
   setup() {
 
@@ -777,98 +770,47 @@ createApp({
     /* ══════════════════════════════
        POLOTAB — MENÚ
     ══════════════════════════════ */
-    const menus = ref([])       // [{id, name, items:[{id, name, basePrice, menuName, modifierGroups:[]}]}]
-    const mgMap = ref({})       // {groupId: modifierGroup}
+    const menus = ref([])   // datos de lv-menu.json
+    const mgMap = ref({})
     const menuLoading = ref(false)
     const menuError = ref('')
     const menuCachedAt = ref('')
 
-    const ptConfig = reactive({ apiKey: '', restaurantId: '' })
-
-    // Flatten all items
+    // Todos los items aplanados
     const allItems = computed(() =>
-      menus.value.flatMap(m =>
-        (m.items || []).map(item => ({ ...item, menuName: m.name }))
-      )
+      menus.value.flatMap(m => (m.items || []).map(item => ({ ...item, menuName: item.menuName || m.name })))
     )
 
-    // Category list
+    // Categorías para los botones de filtro
     const categories = computed(() => ['TODO', ...menus.value.map(m => m.name)])
 
-    /* ─── SYNC FROM POLOTAB ─── */
-    async function syncMenu() {
-      if (!ptConfig.apiKey || !ptConfig.restaurantId) {
-        toast('Falta API Key o Restaurant ID', 'error', '⚠️'); return
-      }
+    /* ─── CARGAR lv-menu.json (mismo origen, sin CORS) ─── */
+    async function loadMenu() {
       menuLoading.value = true
       menuError.value = ''
       try {
-        // 1. Obtener token de restaurante
-        const tokenRes = await fetch(`${POLOTAB_BASE}/auth/v1/restaurants/token`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${ptConfig.apiKey}` },
-          body: JSON.stringify({ restaurantId: ptConfig.restaurantId }),
-        })
-        if (!tokenRes.ok) throw new Error(`Auth error ${tokenRes.status}: ${await tokenRes.text()}`)
-        const tokenData = await tokenRes.json()
-        const token = tokenData.token ?? tokenData.restaurantToken ?? tokenData
+        const res = await fetch('./lv-menu.json?t=' + Date.now())
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
+        const data = await res.json()
 
-        const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+        if (!data.menus?.length) throw new Error('El menú está vacío. ¿Ya corriste el GitHub Action?')
 
-        // 2. Channels + modifier groups en paralelo
-        const [channels, allModGroups] = await Promise.all([
-          fetch(`${POLOTAB_BASE}/menus/v1/channels`, { headers }).then(r => r.json()),
-          fetch(`${POLOTAB_BASE}/menus/v1/modifier_groups?expand=modifierItems`, { headers }).then(r => r.json()),
-        ])
+        menus.value = data.menus
+        mgMap.value = data.mgMap ?? {}
 
-        // 3. Canal POS
-        const posChannel = (channels ?? []).find(c => c.type === 'pos') ?? channels?.[0]
+        // Mostrar fecha del último sync de Polotab (la que grabó el Action)
+        const polotabTs = data.syncedAt
+          ? new Date(data.syncedAt).toLocaleString('es-MX')
+          : new Date().toLocaleString('es-MX')
+        menuCachedAt.value = polotabTs
 
-        // 4. Menús con items expandidos
-        let menusData
-        if (posChannel?.id) {
-          const r = await fetch(`${POLOTAB_BASE}/menus/v1/channels/${posChannel.id}/menus?expand=items`, { headers })
-          menusData = await r.json()
-        } else {
-          const r = await fetch(`${POLOTAB_BASE}/menus/v1/menus?expand=items`, { headers })
-          menusData = await r.json()
-        }
+        // Guardar en localStorage para disponibilidad offline
+        localStorage.setItem('lv_menu_cache', JSON.stringify({ menus: data.menus, mgMap: data.mgMap, cachedAt: polotabTs }))
 
-        // 5. Construir mapa de modifier groups
-        const newMgMap = {}
-        for (const mg of (allModGroups ?? [])) {
-          if (mg.id) newMgMap[mg.id] = mg
-        }
-
-        // 6. Normalizar items — asociar modifier groups completos
-        const normalized = (menusData ?? []).map(menu => ({
-          id: menu.id,
-          name: menu.name,
-          items: (menu.items ?? []).map(item => ({
-            id: item.id,
-            name: item.name,
-            menuName: menu.name,
-            basePrice: item.prices?.[0]?.amount ?? null,
-            // Resolver modifier groups: priorizar los del mapa global (tienen modifierItems)
-            modifierGroups: (item.modifierGroups ?? [])
-              .map(mg => newMgMap[mg.id] ?? mg)
-              .filter(mg => (mg.modifierItems?.length ?? 0) > 0),
-          })),
-        }))
-
-        menus.value = normalized
-        mgMap.value = newMgMap
-
-        // 7. Guardar credenciales y cache
-        localStorage.setItem('lv_pt_config', JSON.stringify({ apiKey: ptConfig.apiKey, restaurantId: ptConfig.restaurantId }))
-        const cacheTs = new Date().toLocaleString('es-MX')
-        localStorage.setItem('lv_menu_cache', JSON.stringify({ menus: normalized, mgMap: newMgMap, cachedAt: cacheTs }))
-        menuCachedAt.value = cacheTs
-
-        toast(`Menú sincronizado: ${normalized.length} categorías, ${allItems.value.length} productos`, 'success', '☕')
+        toast(`Menú cargado: ${data.menus.length} categorías · ${allItems.value.length} productos`, 'success', '☕')
       } catch (e) {
         menuError.value = e.message
-        toast('Error al sincronizar: ' + e.message, 'error', '⚠️')
+        toast('Error al cargar menú: ' + e.message, 'error', '⚠️')
       } finally {
         menuLoading.value = false
       }
@@ -1226,11 +1168,6 @@ createApp({
 
     onMounted(() => {
       try {
-        // Credenciales Polotab
-        const cfg = JSON.parse(localStorage.getItem('lv_pt_config') || '{}')
-        if (cfg.apiKey) ptConfig.apiKey = cfg.apiKey
-        if (cfg.restaurantId) ptConfig.restaurantId = cfg.restaurantId
-
         // Menú cacheado
         const cache = JSON.parse(localStorage.getItem('lv_menu_cache') || '{}')
         if (cache.menus?.length) {
@@ -1252,7 +1189,7 @@ createApp({
     return {
       unlocked, pinInput, pinError, pinPress,
       tabs, activeTab,
-      ptConfig, menus, mgMap, allItems, categories, menuLoading, menuError, menuCachedAt, syncMenu,
+      menus, mgMap, allItems, categories, menuLoading, menuError, menuCachedAt, loadMenu,
       activeCat, searchQ, filteredItems, cartQty,
       itemModal, activeModGroups, itemModalTotal, openItemModal, toggleMultiMod, confirmItemModal,
       cart, orderNote, payMethod, cashReceived, cartTotal, change, canCobrar, changeQty, removeFromCart, clearCart, cobrar,
