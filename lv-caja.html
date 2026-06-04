@@ -640,11 +640,11 @@
             <div class="mod-group__label">
               {{mg.name}}
               <span v-if="mg.quantityConstraint?.min > 0" class="mod-required">· REQUERIDO</span>
-              <span v-if="(mg.quantityConstraint?.max ?? 1) > 1" class="mod-hint">(hasta {{mg.quantityConstraint.max}})</span>
+              <span v-if="mg.quantityConstraint?.max > 1" class="mod-hint">(hasta {{mg.quantityConstraint.max}})</span>
             </div>
             <div class="mod-chips">
-              <!-- Radio: max === 1 → solo una opción -->
-              <template v-if="(mg.quantityConstraint?.max ?? 1) === 1">
+              <!-- Radio: max === 1 → solo una opción; null/undefined → sin límite (multi) -->
+              <template v-if="(mg.quantityConstraint?.max ?? Infinity) === 1">
                 <div v-for="mi in mg.modifierItems" :key="mi.id"
                   class="mod-chip"
                   :class="{selected: itemModal.selections[mg.id] === mi.id}"
@@ -851,7 +851,7 @@ createApp({
     const itemModalExtras = computed(() => {
       let extra = 0
       for (const mg of activeModGroups.value) {
-        const isRadio = (mg.quantityConstraint?.max ?? 1) === 1
+        const isRadio = (mg.quantityConstraint?.max ?? Infinity) === 1
         const sel = itemModal.selections[mg.id]
         if (isRadio) {
           if (sel) {
@@ -883,7 +883,7 @@ createApp({
       // Inicializar selecciones con defaults de Polotab
       const sels = {}
       for (const mg of (item.modifierGroups ?? [])) {
-        const isRadio = (mg.quantityConstraint?.max ?? 1) === 1
+        const isRadio = (mg.quantityConstraint?.max ?? Infinity) === 1
         if (isRadio) {
           // Solo preseleccionar si Polotab definió un defaultItemId explícito
           sels[mg.id] = mg.defaultItemId ?? null
@@ -923,7 +923,7 @@ createApp({
       for (const mg of activeModGroups.value) {
         const min = mg.quantityConstraint?.min ?? 0
         if (min > 0) {
-          const isRadio = (mg.quantityConstraint?.max ?? 1) === 1
+          const isRadio = (mg.quantityConstraint?.max ?? Infinity) === 1
           const sel = itemModal.selections[mg.id]
           const hasSelection = isRadio ? !!sel : (sel?.length ?? 0) >= min
           if (!hasSelection) {
@@ -939,7 +939,7 @@ createApp({
       // Construir nota automática con modificadores no-default
       const modNotes = []
       for (const mg of activeModGroups.value) {
-        const isRadio = (mg.quantityConstraint?.max ?? 1) === 1
+        const isRadio = (mg.quantityConstraint?.max ?? Infinity) === 1
         const sel = itemModal.selections[mg.id]
         if (isRadio) {
           // Solo mostrar si no es el default
