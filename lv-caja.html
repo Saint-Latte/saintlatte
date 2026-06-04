@@ -254,6 +254,69 @@
     .toast.error { border-color: var(--red); }
     .toast.info { border-color: var(--amber); }
 
+    /* ── MESA SELECTOR (cart) ── */
+    .cart-mesa-bar { padding: .5rem .75rem; border-bottom: 1px solid var(--border); display: flex; gap: .3rem; flex-wrap: wrap; align-items: center; }
+    .mesa-chip { padding: .28rem .7rem; border-radius: 20px; font-size: .7rem; font-weight: 600; border: 1px solid var(--border); cursor: pointer; transition: all .12s; color: var(--muted); background: var(--surface2); white-space: nowrap; }
+    .mesa-chip.active { background: var(--amber); border-color: var(--amber); color: #0a0a0a; }
+    .cart-llevar-input { background: var(--surface3); border: 1px solid var(--border); color: var(--text); padding: .3rem .6rem; border-radius: 7px; font-size: .78rem; outline: none; max-width: 130px; }
+    .cart-llevar-input::placeholder { color: var(--muted); }
+    .btn-guardar { width: 100%; padding: .6rem; background: var(--surface3); color: var(--amber); border: 1px solid var(--amber); border-radius: 10px; font-size: .82rem; font-weight: 700; letter-spacing: .1em; cursor: pointer; margin-bottom: .4rem; transition: all .15s; }
+    .btn-guardar:hover:not(:disabled) { background: rgba(196,154,39,.15); }
+    .btn-guardar:disabled { opacity: .35; cursor: not-allowed; }
+
+    /* ── MESAS VIEW ── */
+    .mesas-view { flex: 1; overflow-y: auto; padding: 1rem; }
+    .mesas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .75rem; }
+    .mesa-card { background: var(--surface2); border: 2px solid var(--border); border-radius: 12px; padding: 1rem; cursor: pointer; transition: all .15s; }
+    .mesa-card:hover { background: var(--surface3); }
+    .mesa-card.occupied { border-color: var(--amber); }
+    .mesa-card__label { font-size: .85rem; font-weight: 700; letter-spacing: .08em; margin-bottom: .5rem; display: flex; align-items: center; justify-content: space-between; }
+    .mesa-badge-occupied { font-size: .6rem; padding: .15rem .45rem; border-radius: 20px; background: var(--amber); color: #0a0a0a; font-weight: 700; letter-spacing: .06em; }
+    .mesa-card__info { font-size: .72rem; color: var(--muted); line-height: 1.7; }
+    .mesa-card__total { font-size: 1.3rem; font-weight: 700; color: var(--amber); margin-top: .5rem; }
+    .mesa-card__actions { display: flex; gap: .5rem; margin-top: .75rem; }
+    .mesa-card__btn { flex: 1; padding: .45rem; border-radius: 8px; font-size: .72rem; font-weight: 700; cursor: pointer; border: none; letter-spacing: .06em; }
+    .mesa-card__btn.resume { background: var(--green); color: #fff; }
+    .mesa-card__btn.pay { background: var(--amber); color: #0a0a0a; }
+    .mesa-card__btn.del { background: var(--surface3); color: var(--muted); border: 1px solid var(--border); }
+
+    /* ── PAYMENT OVERLAY (fullscreen) ── */
+    .pay-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 600; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem; padding: 2rem; overflow-y: auto; }
+    .pay-overlay__back { position: absolute; top: 1.25rem; left: 1.25rem; background: none; border: none; color: var(--muted); font-size: .85rem; cursor: pointer; display: flex; align-items: center; gap: .4rem; }
+    .pay-overlay__back:hover { color: var(--text); }
+    .pay-overlay__title { font-size: .82rem; letter-spacing: .2em; color: var(--muted); text-transform: uppercase; text-align: center; }
+    .pay-overlay__mesa { font-size: .78rem; color: var(--amber); letter-spacing: .08em; text-align: center; }
+    .pay-overlay__total { font-size: 4rem; font-weight: 700; color: var(--cream); line-height: 1; text-align: center; }
+    .pay-methods { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .pay-method-btn { width: 140px; height: 120px; background: var(--surface2); border: 2px solid var(--border); border-radius: 14px; color: var(--text); font-size: .88rem; font-weight: 700; letter-spacing: .06em; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .6rem; transition: all .15s; }
+    .pay-method-btn:hover { background: var(--surface3); border-color: var(--green); color: var(--green-light); }
+    .pay-method-icon { font-size: 2rem; }
+    .pay-cash-section { display: flex; flex-direction: column; align-items: center; gap: 1rem; width: 100%; max-width: 360px; }
+    .pay-cash-label { font-size: .75rem; letter-spacing: .15em; color: var(--muted); text-transform: uppercase; }
+    .pay-cash-input { width: 100%; text-align: center; font-size: 2.5rem; font-weight: 700; background: var(--surface2); border: 2px solid var(--border); color: var(--text); padding: .75rem; border-radius: 12px; outline: none; }
+    .pay-cash-input:focus { border-color: var(--amber); }
+    .pay-change-block { text-align: center; }
+    .pay-change-label { font-size: .75rem; letter-spacing: .15em; color: var(--muted); text-transform: uppercase; margin-bottom: .3rem; }
+    .pay-change-val { font-size: 4.5rem; font-weight: 700; color: var(--green-light); line-height: 1; }
+    .pay-change-val.short { color: var(--red); }
+    .pay-confirm-btn { width: 100%; max-width: 360px; padding: 1.1rem; background: var(--green); color: #fff; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 700; letter-spacing: .12em; cursor: pointer; transition: background .15s; }
+    .pay-confirm-btn:hover { background: var(--green-light); }
+    .pay-confirm-btn:disabled { background: var(--surface3); color: var(--muted); cursor: not-allowed; }
+
+    /* ── EGRESOS ── */
+    .egresos-list { display: flex; flex-direction: column; gap: .4rem; margin-top: .75rem; max-height: 200px; overflow-y: auto; }
+    .egreso-row { display: flex; align-items: center; gap: .75rem; font-size: .8rem; padding: .45rem .7rem; background: var(--surface3); border-radius: 7px; }
+    .egreso-row__time { color: var(--muted); font-size: .68rem; flex-shrink: 0; }
+    .egreso-row__desc { flex: 1; color: var(--text); }
+    .egreso-row__amt { color: var(--red); font-weight: 700; white-space: nowrap; }
+
+    /* ── EXTRA PRICE (item modal) ── */
+    .extra-price-row { display: flex; align-items: center; gap: .6rem; margin-bottom: .9rem; }
+    .extra-price-row label { font-size: .65rem; letter-spacing: .12em; color: var(--muted); font-weight: 700; text-transform: uppercase; white-space: nowrap; }
+    .extra-price-input { width: 110px; background: var(--surface2); border: 1px solid var(--border); color: var(--amber); padding: .45rem .7rem; border-radius: 8px; font-size: .95rem; font-weight: 700; outline: none; text-align: center; }
+    .extra-price-input:focus { border-color: var(--amber); }
+    .extra-price-input::placeholder { color: var(--muted); font-size: .78rem; font-weight: 400; }
+
     /* ── UTILS ── */
     .text-muted { color: var(--muted); }
     .text-amber { color: var(--amber); }
@@ -351,6 +414,15 @@
                 <span class="pos-cart__title">COMANDA</span>
                 <span class="pos-cart__count">{{cart.length}} productos</span>
               </div>
+              <!-- Mesa selector -->
+              <div class="cart-mesa-bar">
+                <span class="mesa-chip" :class="{active: activeMesa.id===null}" @click="activeMesa.id=null; activeMesa.customerName=''">Sin destino</span>
+                <span v-for="m in MESAS" :key="m.id" class="mesa-chip" :class="{active: activeMesa.id===m.id}" @click="activeMesa.id=m.id; activeMesa.customerName=''">{{m.label}}</span>
+                <span class="mesa-chip" :class="{active: activeMesa.id==='llevar'}" @click="activeMesa.id='llevar'">Para Llevar</span>
+                <template v-if="activeMesa.id==='llevar'">
+                  <input class="cart-llevar-input" v-model="activeMesa.customerName" placeholder="Nombre del cliente…">
+                </template>
+              </div>
               <div class="pos-cart__note">
                 <textarea class="cart-note-input" v-model="orderNote" placeholder="Notas de la orden…" rows="2"></textarea>
               </div>
@@ -375,22 +447,42 @@
                   <div class="cart-sum-row"><span>Subtotal</span><span>${{cartTotal}}</span></div>
                   <div class="cart-sum-row total"><span>TOTAL</span><span>${{cartTotal}}</span></div>
                 </div>
-                <select class="payment-select" v-model="payMethod">
-                  <option value="Efectivo">💵 Efectivo</option>
-                  <option value="Tarjeta">💳 Tarjeta</option>
-                  <option value="Transferencia">📲 Transferencia</option>
-                </select>
-                <template v-if="payMethod === 'Efectivo'">
-                  <div class="cash-row">
-                    <input class="cash-input" v-model.number="cashReceived" type="number" placeholder="Monto recibido…">
-                  </div>
-                  <div class="cash-change" :class="{negative: change < 0}" v-if="cashReceived">
-                    <template v-if="change >= 0">Cambio: <strong>${{change}}</strong></template>
-                    <template v-else>Faltan: <strong>${{Math.abs(change)}}</strong></template>
-                  </div>
-                </template>
-                <button class="btn-cobrar" :disabled="!canCobrar" @click="cobrar">COBRAR ${{cartTotal}}</button>
+                <button class="btn-guardar" :disabled="!cart.length || !session.open" @click="saveComanda">
+                  GUARDAR EN {{activeMesa.id ? (activeMesa.id === 'llevar' ? 'PARA LLEVAR' : MESAS.find(m=>m.id===activeMesa.id)?.label ?? activeMesa.id) : 'MESA'}}
+                </button>
+                <button class="btn-cobrar" :disabled="!cart.length || !session.open" @click="openPayModal">COBRAR ${{cartTotal}}</button>
                 <button class="btn-clear" v-if="cart.length" @click="clearCart">LIMPIAR COMANDA</button>
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <!-- ══ MESAS ══ -->
+        <template v-else-if="activeTab==='mesas'">
+          <div class="mesas-view">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+              <h2 style="font-size:1rem;letter-spacing:.12em;font-weight:700">MESAS Y CUENTAS ABIERTAS</h2>
+              <span style="font-size:.75rem;color:var(--muted)">{{openOrders.length}} cuenta{{openOrders.length!==1?'s':''}} abierta{{openOrders.length!==1?'s':''}}</span>
+            </div>
+            <div v-if="openOrders.length===0" class="empty-state"><div class="icon">🪑</div>Sin cuentas abiertas.<br>Agrega productos y toca "GUARDAR EN MESA".</div>
+            <div v-else class="mesas-grid">
+              <div v-for="oo in openOrders" :key="oo.id" class="mesa-card occupied">
+                <div class="mesa-card__label">
+                  {{oo.mesaLabel}}
+                  <span class="mesa-badge-occupied">ABIERTA</span>
+                </div>
+                <div class="mesa-card__info">
+                  <div v-if="oo.customerName">👤 {{oo.customerName}}</div>
+                  <div>🕐 {{oo.openedAt}}</div>
+                  <div>📦 {{oo.items.length}} producto{{oo.items.length!==1?'s':''}}</div>
+                  <div v-if="oo.note" style="margin-top:.2rem;color:var(--text)">📝 {{oo.note}}</div>
+                </div>
+                <div class="mesa-card__total">${{oo.items.reduce((s,c)=>s+(c.price+(c.extraNotePrice||0))*c.qty,0)}}</div>
+                <div class="mesa-card__actions">
+                  <button class="mesa-card__btn resume" @click="loadOpenOrder(oo)">+ AGREGAR</button>
+                  <button class="mesa-card__btn pay" @click="loadAndPay(oo)">COBRAR</button>
+                  <button class="mesa-card__btn del" @click="deleteOpenOrder(oo.id)">✕</button>
+                </div>
               </div>
             </div>
           </div>
@@ -413,15 +505,16 @@
               <div v-if="dayOrders.length === 0" class="empty-state"><div class="icon">📋</div>No hay órdenes para esta fecha.</div>
               <table v-else class="orders-table">
                 <thead><tr>
-                  <th>#</th><th>HORA</th><th>PRODUCTOS</th><th>PAGO</th><th>TOTAL</th><th>NOTAS</th><th></th>
+                  <th>#</th><th>HORA</th><th>DEST.</th><th>PRODUCTOS</th><th>PAGO</th><th>TOTAL</th><th>NOTAS</th><th></th>
                 </tr></thead>
                 <tbody>
                   <tr v-for="(o,i) in dayOrders" :key="o.id" :class="{cancelled: o.cancelled}">
                     <td class="text-muted">{{String(i+1).padStart(2,'0')}}</td>
                     <td>{{o.timeStr}}</td>
+                    <td class="text-muted" style="font-size:.72rem">{{o.mesa || '—'}}</td>
                     <td>
                       <div class="order-items-detail">
-                        <div v-for="ci in o.items" :key="ci.uid">{{ci.qty}}× {{ci.name}} (${{ci.price * ci.qty}})</div>
+                        <div v-for="ci in o.items" :key="ci.uid">{{ci.qty}}× {{ci.name}} (${{(ci.price + (ci.extraNotePrice||0)) * ci.qty}})</div>
                       </div>
                     </td>
                     <td>
@@ -430,7 +523,10 @@
                     </td>
                     <td><strong class="text-amber">${{o.total}}</strong></td>
                     <td class="text-muted" style="font-size:.72rem">{{o.note || '—'}}</td>
-                    <td><button v-if="!o.cancelled" class="btn-cancel-order" @click="cancelOrder(o.id)">Cancelar</button></td>
+                    <td style="display:flex;gap:.3rem;flex-wrap:wrap">
+                      <button v-if="!o.cancelled" class="btn-cancel-order" @click="changeOrderPayment(o)">💳</button>
+                      <button v-if="!o.cancelled" class="btn-cancel-order" @click="cancelOrder(o.id)">Cancelar</button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -545,7 +641,8 @@
                 <tbody>
                   <tr><td>Fondo inicial</td><td>${{session.opening}}</td></tr>
                   <tr><td>Ventas efectivo (hoy)</td><td>+${{todayEfectivo}}</td></tr>
-                  <tr><td>Esperado en caja</td><td>${{session.opening + todayEfectivo}}</td></tr>
+                  <tr v-if="todayEgresosTotal>0"><td style="color:var(--red)">Egresos (hoy)</td><td style="color:var(--red)">−${{todayEgresosTotal.toFixed(2)}}</td></tr>
+                  <tr><td>Esperado en caja</td><td>${{(session.opening + todayEfectivo - todayEgresosTotal).toFixed(2)}}</td></tr>
                   <tr v-if="arqueoCount !== '' && arqueoCount !== null"><td>Contado</td><td>${{arqueoCount}}</td></tr>
                   <tr v-if="arqueoCount !== '' && arqueoCount !== null">
                     <td>Diferencia</td>
@@ -577,6 +674,35 @@
             </div>
 
             <!-- Cambiar PIN -->
+            <!-- Egresos -->
+            <div class="caja-section">
+              <div class="caja-section__title">Egresos de caja</div>
+              <div class="caja-form" style="margin-bottom:.75rem">
+                <div class="form-row">
+                  <span class="form-label">Monto</span>
+                  <input class="form-input" v-model.number="egresoForm.amount" type="number" placeholder="$0.00" style="max-width:140px" min="0" step="0.5">
+                </div>
+                <div class="form-row">
+                  <span class="form-label">Descripción</span>
+                  <input class="form-input" v-model="egresoForm.desc" placeholder="Ej: basura, limpieza, insumos…">
+                </div>
+              </div>
+              <div class="caja-btns" style="margin-bottom:.75rem">
+                <button class="btn-primary" @click="saveEgreso" :disabled="!egresoForm.amount || !egresoForm.desc.trim()">REGISTRAR EGRESO</button>
+              </div>
+              <div v-if="todayEgresos.length===0" style="font-size:.78rem;color:var(--muted)">Sin egresos hoy.</div>
+              <div v-else class="egresos-list">
+                <div v-for="e in todayEgresos" :key="e.id" class="egreso-row">
+                  <span class="egreso-row__time">{{e.time}}</span>
+                  <span class="egreso-row__desc">{{e.desc}}</span>
+                  <span class="egreso-row__amt">−${{e.amount}}</span>
+                </div>
+                <div style="display:flex;justify-content:flex-end;font-size:.8rem;font-weight:700;color:var(--red);padding:.4rem .6rem">
+                  Total egresos: −${{todayEgresos.reduce((s,e)=>s+e.amount,0).toFixed(2)}}
+                </div>
+              </div>
+            </div>
+
             <div class="caja-section">
               <div class="caja-section__title">Seguridad</div>
               <div class="caja-form">
@@ -675,7 +801,12 @@
         <div class="item-modal__divider"></div>
 
         <div class="item-modal__note-label">NOTAS ADICIONALES</div>
-        <input class="item-modal__note-input" v-model="itemModal.note" placeholder="Ej: sin hielo, extra crema, para llevar…">
+        <input class="item-modal__note-input" v-model="itemModal.note" placeholder="Ej: sin hielo, extra shots, separar en 2 vasos…">
+        <div class="extra-price-row">
+          <label>COSTO EXTRA</label>
+          <input class="extra-price-input" v-model.number="itemModal.extraNotePrice" type="number" min="0" step="0.5" placeholder="+$0">
+          <span style="font-size:.72rem;color:var(--muted)">por modificación manual</span>
+        </div>
 
         <div class="item-modal__qty-row">
           <button class="modal-qty-btn" @click="itemModal.qty = Math.max(1, itemModal.qty-1)">−</button>
@@ -690,6 +821,78 @@
         <div class="modal-btns">
           <button class="modal-btn cancel" @click="itemModal.show=false">Cancelar</button>
           <button class="modal-btn confirm" @click="confirmItemModal">AGREGAR AL CARRITO</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PAYMENT OVERLAY (fullscreen) ══ -->
+    <div class="pay-overlay" v-if="payModal.show">
+      <button class="pay-overlay__back" @click="payModal.show=false">← Volver</button>
+
+      <!-- Step 1: selección de método -->
+      <template v-if="payModal.step==='method'">
+        <div class="pay-overlay__title">¿Cómo va a pagar?</div>
+        <div v-if="payModal.mesaLabel" class="pay-overlay__mesa">{{payModal.mesaLabel}}</div>
+        <div class="pay-overlay__total">${{payModal.total}}</div>
+        <div class="pay-methods">
+          <button class="pay-method-btn" @click="selectPayMethod('Efectivo')">
+            <span class="pay-method-icon">💵</span>EFECTIVO
+          </button>
+          <button class="pay-method-btn" @click="selectPayMethod('Tarjeta')">
+            <span class="pay-method-icon">💳</span>TARJETA
+          </button>
+          <button class="pay-method-btn" @click="selectPayMethod('Transferencia')">
+            <span class="pay-method-icon">📲</span>TRANSFERENCIA
+          </button>
+        </div>
+      </template>
+
+      <!-- Step 2: efectivo → cambio -->
+      <template v-else-if="payModal.step==='cash'">
+        <div class="pay-overlay__title">Efectivo recibido</div>
+        <div class="pay-overlay__total">${{payModal.total}}</div>
+        <div class="pay-cash-section">
+          <div class="pay-cash-label">¿Cuánto te dieron?</div>
+          <input class="pay-cash-input" v-model.number="payModal.cashGiven" type="number" min="0" placeholder="0" autofocus ref="cashInput">
+          <template v-if="payModal.cashGiven > 0">
+            <div class="pay-change-block">
+              <div class="pay-change-label">{{payChangeVal >= 0 ? 'Cambio' : 'Falta'}}</div>
+              <div class="pay-change-val" :class="{short: payChangeVal < 0}">${{Math.abs(payChangeVal)}}</div>
+            </div>
+          </template>
+        </div>
+        <button class="pay-confirm-btn" :disabled="payModal.cashGiven > 0 && payChangeVal < 0" @click="confirmPayment">
+          CONFIRMAR COBRO
+        </button>
+        <button class="pay-overlay__back" style="position:static;margin-top:-.5rem" @click="payModal.step='method'">← Cambiar método</button>
+      </template>
+
+      <!-- Step 2b: tarjeta/transferencia → confirmar -->
+      <template v-else-if="payModal.step==='confirm'">
+        <div class="pay-overlay__title">Confirmar cobro</div>
+        <div class="pay-overlay__total">${{payModal.total}}</div>
+        <div style="font-size:1.1rem;color:var(--muted);text-align:center">
+          {{ payModal.method === 'Tarjeta' ? '💳 Tarjeta' : '📲 Transferencia' }}
+        </div>
+        <button class="pay-confirm-btn" @click="confirmPayment">CONFIRMAR COBRO</button>
+        <button class="pay-overlay__back" style="position:static;margin-top:-.5rem" @click="payModal.step='method'">← Cambiar método</button>
+      </template>
+    </div>
+
+    <!-- ══ MODAL CAMBIAR MÉTODO DE PAGO ══ -->
+    <div class="modal-backdrop" v-if="changePayModal.show" @click.self="changePayModal.show=false">
+      <div class="modal">
+        <h3>CAMBIAR MÉTODO DE PAGO</h3>
+        <p>Orden #{{changePayModal.order?.id}} · <strong style="color:var(--amber)">${{changePayModal.order?.total}}</strong></p>
+        <div style="display:flex;gap:.5rem;margin-bottom:1rem">
+          <button v-for="m in ['Efectivo','Tarjeta','Transferencia']" :key="m"
+            class="btn-secondary" style="flex:1;font-size:.78rem"
+            :style="changePayModal.selected===m ? 'border-color:var(--green);color:var(--green-light)' : ''"
+            @click="changePayModal.selected=m">{{m}}</button>
+        </div>
+        <div class="modal-btns">
+          <button class="modal-btn cancel" @click="changePayModal.show=false">Cancelar</button>
+          <button class="modal-btn confirm" @click="applyChangePayment">APLICAR</button>
         </div>
       </div>
     </div>
@@ -768,6 +971,7 @@ createApp({
     ══════════════════════════════ */
     const tabs = [
       { id: 'pos', label: 'COMANDAR' },
+      { id: 'mesas', label: 'MESAS' },
       { id: 'orders', label: 'ÓRDENES' },
       { id: 'reports', label: 'REPORTES' },
       { id: 'caja', label: 'CAJA' },
@@ -847,7 +1051,7 @@ createApp({
        ITEM MODAL + MODIFICADORES
     ══════════════════════════════ */
     const itemModal = reactive({
-      show: false, item: null, qty: 1, note: '', specialtyPrice: null,
+      show: false, item: null, qty: 1, note: '', extraNotePrice: 0, specialtyPrice: null,
       selections: {}, // groupId → itemId (radio) | itemId[] (multi)
     })
 
@@ -879,13 +1083,14 @@ createApp({
       const base = itemModal.item?.basePrice !== null
         ? (itemModal.item?.basePrice ?? 0)
         : (itemModal.specialtyPrice ?? 0)
-      return (base + itemModalExtras.value) * itemModal.qty
+      return (base + itemModalExtras.value + (itemModal.extraNotePrice || 0)) * itemModal.qty
     })
 
     function openItemModal(item) {
       itemModal.item = item
       itemModal.qty = 1
       itemModal.note = ''
+      itemModal.extraNotePrice = 0
       itemModal.specialtyPrice = null
       // Inicializar selecciones con defaults de Polotab
       const sels = {}
@@ -961,7 +1166,9 @@ createApp({
           }
         }
       }
-      const fullNote = [...modNotes, itemModal.note.trim()].filter(Boolean).join(' · ')
+      const extraNotePrice = itemModal.extraNotePrice || 0
+      const extraNoteText = itemModal.note.trim()
+      const fullNote = [...modNotes, extraNoteText ? (extraNotePrice > 0 ? `${extraNoteText} (+$${extraNotePrice})` : extraNoteText) : ''].filter(Boolean).join(' · ')
       const qty = itemModal.qty
 
       cart.value.push({
@@ -970,6 +1177,7 @@ createApp({
         cat: item.menuName,
         name: item.name,
         price: basePrice,
+        extraNotePrice,
         qty,
         note: fullNote,
       })
@@ -994,7 +1202,7 @@ createApp({
     function removeFromCart(idx) { cart.value.splice(idx, 1) }
     function clearCart() { cart.value = []; orderNote.value = ''; cashReceived.value = null; payMethod.value = 'Efectivo' }
 
-    const cartTotal = computed(() => cart.value.reduce((s, c) => s + c.price * c.qty, 0))
+    const cartTotal = computed(() => cart.value.reduce((s, c) => s + (c.price + (c.extraNotePrice || 0)) * c.qty, 0))
     const change = computed(() => cashReceived.value ? cashReceived.value - cartTotal.value : 0)
     const canCobrar = computed(() => {
       if (!cart.value.length || !session.value.open) return false
@@ -1128,6 +1336,175 @@ createApp({
     }
 
     /* ══════════════════════════════
+       MESAS / OPEN ORDERS
+    ══════════════════════════════ */
+    const MESAS = [
+      { id: 'mesa-1', label: 'Mesa 1' },
+      { id: 'mesa-2', label: 'Mesa 2' },
+      { id: 'mesa-3', label: 'Mesa 3' },
+    ]
+    const activeMesa = reactive({ id: null, customerName: '' })
+    const openOrders = ref([])
+
+    function mesaLabel(id) {
+      if (!id) return 'Sin destino'
+      if (id === 'llevar') return 'Para Llevar'
+      return MESAS.find(m => m.id === id)?.label ?? id
+    }
+
+    function saveComanda() {
+      if (!cart.value.length) return
+      const existing = activeMesa.id
+        ? openOrders.value.find(o => o.mesaId === activeMesa.id)
+        : null
+      if (existing) {
+        // Agregar items a la cuenta existente
+        existing.items = [...existing.items, ...cart.value.map(c => ({ ...c }))]
+        if (orderNote.value.trim()) existing.note = [existing.note, orderNote.value.trim()].filter(Boolean).join(' · ')
+        toast(`Agregado a ${existing.mesaLabel}`, 'success', '📋')
+      } else {
+        const label = activeMesa.id === 'llevar'
+          ? (activeMesa.customerName.trim() ? `Para Llevar — ${activeMesa.customerName.trim()}` : 'Para Llevar')
+          : (activeMesa.id ? mesaLabel(activeMesa.id) : `Comanda ${openOrders.value.length + 1}`)
+        openOrders.value.push({
+          id: Date.now(),
+          mesaId: activeMesa.id,
+          mesaLabel: label,
+          customerName: activeMesa.customerName.trim(),
+          items: cart.value.map(c => ({ ...c })),
+          note: orderNote.value.trim(),
+          openedAt: new Date().toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' }),
+        })
+        toast(`Guardado en ${label}`, 'success', '📋')
+      }
+      clearCart()
+      activeTab.value = 'mesas'
+    }
+
+    function loadOpenOrder(oo) {
+      // Cargar en carrito + seleccionar mesa
+      cart.value = oo.items.map(c => ({ ...c }))
+      orderNote.value = oo.note ?? ''
+      activeMesa.id = oo.mesaId
+      activeMesa.customerName = oo.customerName ?? ''
+      // Eliminar de open orders (se re-guardará o cobrará)
+      openOrders.value = openOrders.value.filter(o => o.id !== oo.id)
+      activeTab.value = 'pos'
+      toast(`${oo.mesaLabel} cargada en carrito`, 'info', '🪑')
+    }
+
+    function loadAndPay(oo) {
+      cart.value = oo.items.map(c => ({ ...c }))
+      orderNote.value = oo.note ?? ''
+      activeMesa.id = oo.mesaId
+      activeMesa.customerName = oo.customerName ?? ''
+      openOrders.value = openOrders.value.filter(o => o.id !== oo.id)
+      openPayModal()
+    }
+
+    function deleteOpenOrder(id) {
+      openOrders.value = openOrders.value.filter(o => o.id !== id)
+      toast('Cuenta eliminada', 'info', '🗑️')
+    }
+
+    watch(openOrders, v => { try { localStorage.setItem('lv_open_orders', JSON.stringify(v)) } catch (e) {} }, { deep: true })
+
+    /* ══════════════════════════════
+       PAYMENT FLOW
+    ══════════════════════════════ */
+    const payModal = reactive({ show: false, step: 'method', method: null, cashGiven: 0, total: 0, mesaLabel: '' })
+    const changePayModal = reactive({ show: false, order: null, selected: '' })
+
+    const payChangeVal = computed(() => (payModal.cashGiven || 0) - payModal.total)
+
+    function openPayModal() {
+      if (!cart.value.length) return
+      payModal.total = cartTotal.value
+      payModal.mesaLabel = activeMesa.id
+        ? (activeMesa.id === 'llevar'
+            ? (activeMesa.customerName ? `Para Llevar — ${activeMesa.customerName}` : 'Para Llevar')
+            : mesaLabel(activeMesa.id))
+        : ''
+      payModal.step = 'method'
+      payModal.method = null
+      payModal.cashGiven = 0
+      payModal.show = true
+    }
+
+    function selectPayMethod(method) {
+      payModal.method = method
+      payModal.step = method === 'Efectivo' ? 'cash' : 'confirm'
+    }
+
+    function confirmPayment() {
+      if (!session.value.open) { toast('Caja cerrada', 'error', '⚠️'); return }
+      const now = new Date()
+      const label = payModal.mesaLabel
+      orders.value.push({
+        id: Date.now(),
+        dateStr: now.toISOString().split('T')[0],
+        timeStr: now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' }),
+        hour: now.getHours(),
+        items: cart.value.map(c => ({ ...c })),
+        total: payModal.total,
+        payment: payModal.method,
+        note: orderNote.value,
+        mesa: label || null,
+        cashReceived: payModal.method === 'Efectivo' ? (payModal.cashGiven || payModal.total) : null,
+        change: payModal.method === 'Efectivo' ? payChangeVal.value : null,
+        cancelled: false,
+      })
+      toast(`Cobrado $${payModal.total} — ${payModal.method}`, 'success', '✅')
+      payModal.show = false
+      clearCart()
+    }
+
+    function changeOrderPayment(order) {
+      changePayModal.order = order
+      changePayModal.selected = order.payment
+      changePayModal.show = true
+    }
+
+    function applyChangePayment() {
+      if (!changePayModal.order || !changePayModal.selected) return
+      changePayModal.order.payment = changePayModal.selected
+      changePayModal.order.cashReceived = changePayModal.selected === 'Efectivo' ? changePayModal.order.total : null
+      changePayModal.order.change = changePayModal.selected === 'Efectivo' ? 0 : null
+      toast(`Pago cambiado a ${changePayModal.selected}`, 'success', '💳')
+      changePayModal.show = false
+    }
+
+    /* ══════════════════════════════
+       EGRESOS
+    ══════════════════════════════ */
+    const egresos = ref([])
+    const egresoForm = reactive({ amount: '', desc: '' })
+
+    const todayEgresos = computed(() =>
+      egresos.value.filter(e => e.dateStr === new Date().toISOString().split('T')[0])
+    )
+    const todayEgresosTotal = computed(() =>
+      todayEgresos.value.reduce((s, e) => s + e.amount, 0)
+    )
+
+    function saveEgreso() {
+      if (!egresoForm.amount || !egresoForm.desc.trim()) return
+      egresos.value.push({
+        id: Date.now(),
+        amount: parseFloat(egresoForm.amount),
+        desc: egresoForm.desc.trim(),
+        time: new Date().toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' }),
+        dateStr: new Date().toISOString().split('T')[0],
+        sessionId: session.value.id,
+      })
+      toast(`Egreso $${egresoForm.amount} registrado`, 'success', '📤')
+      egresoForm.amount = ''
+      egresoForm.desc = ''
+    }
+
+    watch(egresos, v => { try { localStorage.setItem('lv_egresos', JSON.stringify(v)) } catch (e) {} }, { deep: true })
+
+    /* ══════════════════════════════
        CAJA / SESIÓN
     ══════════════════════════════ */
     const session = ref({ open: false, opening: 0, openedAt: '', id: null })
@@ -1139,7 +1516,7 @@ createApp({
 
     const arqueoDiff = computed(() => {
       if (arqueoCount.value === '' || arqueoCount.value === null) return 0
-      return arqueoCount.value - (session.value.opening + todayEfectivo.value)
+      return arqueoCount.value - (session.value.opening + todayEfectivo.value - todayEgresosTotal.value)
     })
 
     function openSession() {
@@ -1225,6 +1602,11 @@ createApp({
         if (savedSession) session.value = JSON.parse(savedSession)
         const savedSessions = localStorage.getItem('lv_sessions')
         if (savedSessions) allSessions.value = JSON.parse(savedSessions)
+        // Cuentas abiertas y egresos
+        const savedOpenOrders = localStorage.getItem('lv_open_orders')
+        if (savedOpenOrders) openOrders.value = JSON.parse(savedOpenOrders)
+        const savedEgresos = localStorage.getItem('lv_egresos')
+        if (savedEgresos) egresos.value = JSON.parse(savedEgresos)
       } catch (e) { console.warn('Storage error', e) }
     })
 
@@ -1234,7 +1616,11 @@ createApp({
       menus, mgMap, allItems, categories, menuLoading, menuError, menuCachedAt, loadMenu,
       activeCat, searchQ, filteredItems, cartQty,
       itemModal, activeModGroups, itemModalTotal, openItemModal, toggleMultiMod, confirmItemModal,
-      cart, orderNote, payMethod, cashReceived, cartTotal, change, canCobrar, changeQty, removeFromCart, clearCart, cobrar,
+      cart, orderNote, cartTotal, changeQty, removeFromCart, clearCart,
+      MESAS, activeMesa, openOrders, saveComanda, loadOpenOrder, loadAndPay, deleteOpenOrder,
+      payModal, payChangeVal, openPayModal, selectPayMethod, confirmPayment,
+      changePayModal, changeOrderPayment, applyChangePayment,
+      egresos, egresoForm, todayEgresos, todayEgresosTotal, saveEgreso,
       orders, filterDate, todayStr, dayOrders, dayTotal, dayAvg, dayCancelled, cancelOrder,
       payMethodsList, payTotals, topProducts, topCats, hourlyData, shareReportWhatsApp,
       todaySales, todayOrderCount, todayEfectivo,
