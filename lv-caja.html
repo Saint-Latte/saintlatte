@@ -885,8 +885,8 @@ createApp({
       for (const mg of (item.modifierGroups ?? [])) {
         const isRadio = (mg.quantityConstraint?.max ?? 1) === 1
         if (isRadio) {
-          // Default: el defaultItemId del grupo o la primera opción
-          sels[mg.id] = mg.defaultItemId ?? mg.modifierItems?.[0]?.id ?? null
+          // Solo preseleccionar si Polotab definió un defaultItemId explícito
+          sels[mg.id] = mg.defaultItemId ?? null
         } else {
           sels[mg.id] = [] // Multi: empieza vacío
         }
