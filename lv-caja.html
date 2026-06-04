@@ -136,6 +136,9 @@
     .reports-view::-webkit-scrollbar { width: 4px; }
     .reports-header { display: flex; gap: .75rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; }
     .reports-header h2 { font-size: 1rem; letter-spacing: .12em; font-weight: 700; flex: 1; }
+    .btn-whatsapp { display: flex; align-items: center; gap: .4rem; background: #25D366; color: #fff; border: none; border-radius: 8px; padding: .45rem .85rem; font-size: .78rem; font-weight: 700; cursor: pointer; letter-spacing: .04em; transition: background .15s; }
+    .btn-whatsapp:hover { background: #1ebe5d; }
+    .btn-whatsapp:disabled { opacity: .4; cursor: not-allowed; }
     .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: .75rem; margin-bottom: 1.25rem; }
     .kpi-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: .9rem 1rem; }
     .kpi-card__label { font-size: .65rem; letter-spacing: .12em; color: var(--muted); margin-bottom: .35rem; text-transform: uppercase; }
@@ -442,6 +445,10 @@
               <h2>REPORTES</h2>
               <input type="date" class="date-input" v-model="filterDate">
               <button class="btn-secondary" @click="filterDate=todayStr">HOY</button>
+              <button class="btn-whatsapp" @click="shareReportWhatsApp" :disabled="dayTotal===0" title="Compartir reporte por WhatsApp">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.852L0 24l6.335-1.654A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.368l-.36-.214-3.724.973.994-3.622-.235-.374A9.818 9.818 0 112 12c0-5.42 4.398-9.818 9.818-9.818 5.421 0 9.819 4.398 9.819 9.818 0 5.421-4.398 9.818-9.819 9.818z"/></svg>
+                WhatsApp
+              </button>
             </div>
             <div class="kpi-grid">
               <div class="kpi-card"><div class="kpi-card__label">Ventas totales</div><div class="kpi-card__val green">${{dayTotal}}</div><div class="kpi-card__sub">{{dayOrders.filter(o=>!o.cancelled).length}} órdenes</div></div>
@@ -1085,6 +1092,41 @@ createApp({
       return arr
     })
 
+    function shareReportWhatsApp() {
+      const fecha = filterDate.value
+      const ordenes = dayOrders.value.filter(o => !o.cancelled).length
+      const canceladas = dayOrders.value.filter(o => o.cancelled).length
+      const pt = payTotals.value
+
+      let txt = `☕ *REPORTE SAINT LATTE — LEANDRO VALLE*\n`
+      txt += `📅 ${fecha}\n\n`
+      txt += `💰 *Ventas totales:* $${dayTotal.value}\n`
+      txt += `🧾 *Órdenes:* ${ordenes}${canceladas ? ` (${canceladas} canceladas)` : ''}\n`
+      txt += `📊 *Ticket promedio:* $${dayAvg.value}\n\n`
+
+      txt += `*— Métodos de pago —*\n`
+      txt += `💵 Efectivo:       $${pt.Efectivo || 0}\n`
+      txt += `💳 Tarjeta:        $${pt.Tarjeta || 0}\n`
+      txt += `📲 Transferencia:  $${pt.Transferencia || 0}\n`
+
+      if (topProducts.value.length) {
+        txt += `\n*— Top productos —*\n`
+        topProducts.value.slice(0, 5).forEach((p, i) => {
+          txt += `${i + 1}. ${p.name} ×${p.qty}\n`
+        })
+      }
+
+      if (topCats.value.length) {
+        txt += `\n*— Por categoría —*\n`
+        topCats.value.forEach(c => {
+          txt += `• ${c.cat}: $${c.total}\n`
+        })
+      }
+
+      const url = `https://wa.me/?text=${encodeURIComponent(txt)}`
+      window.open(url, '_blank')
+    }
+
     /* ══════════════════════════════
        CAJA / SESIÓN
     ══════════════════════════════ */
@@ -1194,7 +1236,7 @@ createApp({
       itemModal, activeModGroups, itemModalTotal, openItemModal, toggleMultiMod, confirmItemModal,
       cart, orderNote, payMethod, cashReceived, cartTotal, change, canCobrar, changeQty, removeFromCart, clearCart, cobrar,
       orders, filterDate, todayStr, dayOrders, dayTotal, dayAvg, dayCancelled, cancelOrder,
-      payMethodsList, payTotals, topProducts, topCats, hourlyData,
+      payMethodsList, payTotals, topProducts, topCats, hourlyData, shareReportWhatsApp,
       todaySales, todayOrderCount, todayEfectivo,
       session, allSessions, openingCash, arqueoCount, arqueoDiff,
       openSession, confirmCloseSession, closeSession, closeModal,
