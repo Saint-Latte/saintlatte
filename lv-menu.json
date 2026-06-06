@@ -84353,6 +84353,15 @@
               }
             }
           ]
+        },
+        {
+          "id": "3ef2e1ac-1c07-476f-b43d-4e234c2c75ad",
+          "name": "Coca",
+          "description": null,
+          "menuName": "Vitrina",
+          "basePrice": 55,
+          "imageUrl": null,
+          "modifierGroups": []
         }
       ]
     },
@@ -90832,6 +90841,6 @@
       }
     }
   },
-  "syncedAt": "2026-06-05T15:50:19.816Z",
+  "syncedAt": "2026-06-06T14:27:33.729Z",
   "restaurantId": "0a717e1b-ffd5-4491-b1df-4d352031967d"
 }
