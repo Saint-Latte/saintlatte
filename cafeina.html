@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Saint Latte — Calculadora de cafeína.">
+  <title>Calculadora de Cafeína — Saint Latte</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.cdnfonts.com/css/funtastic" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .caf-section { max-width: 860px; margin: 0 auto; padding: 60px 24px 100px; }
+    .caf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 14px; margin: 32px 0 48px; }
+    .caf-card {
+      background: var(--cream-dark); color: var(--black);
+      border-radius: 14px; padding: 16px; text-align: left;
+      border: 2px solid transparent; transition: transform .2s, border-color .2s;
+      font-family: var(--ff-body);
+    }
+    .caf-card:hover { transform: translateY(-3px); border-color: var(--rust); }
+    .caf-card__name { display:block; font-weight:600; font-size:.95rem; margin-bottom:4px; }
+    .caf-card__mg { display:block; font-size:.8rem; opacity:.6; }
+    .caf-panel {
+      background: var(--black-mid); border: 1px solid rgba(255,254,249,.12);
+      border-radius: 18px; padding: 28px; margin-bottom: 40px;
+    }
+    .caf-total { font-family: var(--ff-display); font-size: clamp(2.4rem,6vw,4rem); line-height:1; }
+    .caf-total span { color: var(--amber); }
+    .caf-bar-track { height: 14px; border-radius: 8px; background: rgba(255,254,249,.1); overflow:hidden; margin: 16px 0; }
+    .caf-bar-fill { height: 100%; width:0%; background: var(--rust); transition: width .4s var(--ease-expo), background .4s; border-radius: 8px; }
+    .caf-msg { font-family: var(--ff-body); font-size: 1rem; opacity: .85; min-height: 1.4em; }
+    .caf-list { list-style:none; display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+    .caf-list li {
+      background: rgba(255,254,249,.08); border-radius: 999px; padding: 6px 12px;
+      font-size: .82rem; display:flex; align-items:center; gap:8px;
+    }
+    .caf-list button {
+      background:none; border:none; color: var(--rust); font-size: 1rem; line-height:1;
+      cursor: none; padding:0;
+    }
+    .caf-reset { margin-top: 8px; }
+  </style>
+</head>
+<body class="page-testing">
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="testing.html" class="nav__brand">
+      <img src="assets/images/logo.png" alt="Saint Latte" class="nav__logo-img" onerror="this.style.display='none'">
+      <span class="nav__brand-text">SAINT LATTE</span>
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="testing.html" class="nav__link nav__link--cta">← LAB</a></li>
+    </ul>
+    <button class="nav__hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu__inner">
+      <ul class="mobile-menu__list" role="list">
+        <li><a href="testing.html" class="mobile-link">← LAB</a></li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- HERO -->
+  <header class="page-hero page-hero--dark">
+    <div class="page-hero__content">
+      <span class="section-label" style="color:rgba(255,254,249,.6)">LAB — EXPERIMENTO</span>
+      <h1 class="page-hero__title">
+        ¿CUÁNTA<br>CAFEÍNA<br><em>LLEVAS HOY?</em>
+      </h1>
+      <p class="page-hero__sub">Agrega lo que has tomado y te decimos cómo vas.</p>
+    </div>
+    <div class="page-hero__bg-num" aria-hidden="true">MG</div>
+  </header>
+
+
+  <section class="caf-section">
+    <span class="section-label">TU DÍA</span>
+
+    <div class="caf-panel">
+      <div class="caf-total"><span id="cafTotalNum">0</span> mg</div>
+      <div class="caf-bar-track"><div class="caf-bar-fill" id="cafBar"></div></div>
+      <p class="caf-msg" id="cafMsg">Toca una bebida de abajo para empezar a sumar.</p>
+      <ul class="caf-list" id="cafList"></ul>
+      <a href="#" class="btn btn--outline caf-reset" id="cafReset">REINICIAR MI DÍA</a>
+    </div>
+
+    <span class="section-label">TOCA PARA AGREGAR</span>
+    <div class="caf-grid" id="cafGrid"></div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="assets/images/logo.png" alt="" class="footer__logo" onerror="this.style.display='none'">
+        <span class="footer__brand-name">SAINT LATTE</span>
+        <p class="footer__brand-sub">Specialty Coffee Shop · Valle de Santiago, Gto.</p>
+      </div>
+      <div class="footer__social">
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="footer__social-link">INSTAGRAM</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2024 SAINT LATTE.</span>
+      <span>HECHO CON ♥ EN VALLE DE SANTIAGO</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    const DRINKS = [
+      { name: 'Espresso',            mg: 63  },
+      { name: 'Americano',           mg: 95  },
+      { name: 'Flat White',          mg: 77  },
+      { name: 'Cappuccino',          mg: 77  },
+      { name: 'Latte',               mg: 77  },
+      { name: 'Caramel Macchiato',   mg: 77  },
+      { name: 'V60 / Chemex',        mg: 120 },
+      { name: 'Aeropress',           mg: 110 },
+      { name: 'French Press',        mg: 115 },
+      { name: 'Japanese Siphon',     mg: 100 },
+      { name: 'Frappé de café',      mg: 65  },
+      { name: 'Matcha',              mg: 70  },
+      { name: 'Chai',                mg: 50  },
+      { name: 'Chocolate',           mg: 5   },
+      { name: 'Golden Milk',         mg: 0   },
+      { name: 'Té frutal / herbal',  mg: 0   },
+      { name: 'Smoothie',            mg: 0   },
+    ];
+
+    const LIMIT = 400; // mg — límite diario recomendado para un adulto sano (referencia general, no médica)
+
+    const grid   = document.getElementById('cafGrid');
+    const list   = document.getElementById('cafList');
+    const totalEl= document.getElementById('cafTotalNum');
+    const barEl  = document.getElementById('cafBar');
+    const msgEl  = document.getElementById('cafMsg');
+
+    let picked = [];
+
+    DRINKS.forEach((d, i) => {
+      const card = document.createElement('button');
+      card.className = 'caf-card';
+      card.innerHTML = `<span class="caf-card__name">${d.name}</span><span class="caf-card__mg">${d.mg} mg</span>`;
+      card.addEventListener('click', () => { picked.push(i); render(); });
+      grid.appendChild(card);
+    });
+
+    function messageFor(total) {
+      if (total === 0)   return 'Toca una bebida de abajo para empezar a sumar.';
+      if (total < 150)   return 'Vas tranquilo. Todavía te queda día para otra ronda.';
+      if (total < 300)   return 'Buen ritmo — justo donde la mayoría se siente bien.';
+      if (total < 400)   return 'Te estás acercando al límite recomendado. Igual y la siguiente sea descafeinada.';
+      return 'Ya pasaste el límite diario recomendado (400mg). Tal vez le bajes un poco hoy — mañana hay más café.';
+    }
+
+    function render() {
+      const total = picked.reduce((s, i) => s + DRINKS[i].mg, 0);
+      totalEl.textContent = total;
+      barEl.style.width = Math.min(100, (total / LIMIT) * 100) + '%';
+      barEl.style.background = total >= LIMIT ? 'var(--amber-dark)' : 'var(--rust)';
+      msgEl.textContent = messageFor(total);
+
+      list.innerHTML = '';
+      picked.forEach((i, idx) => {
+        const li = document.createElement('li');
+        li.innerHTML = `${DRINKS[i].name} · ${DRINKS[i].mg}mg <button aria-label="Quitar">×</button>`;
+        li.querySelector('button').addEventListener('click', () => {
+          picked.splice(idx, 1); render();
+        });
+        list.appendChild(li);
+      });
+    }
+
+    document.getElementById('cafReset').addEventListener('click', (e) => {
+      e.preventDefault(); picked = []; render();
+    });
+
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Saint Latte — Muro digital.">
+  <title>Muro Digital — Saint Latte</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.cdnfonts.com/css/funtastic" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .muro-section { max-width: 980px; margin: 0 auto; padding: 60px 24px 100px; }
+    .muro-editor {
+      background: var(--black-mid); border: 1px solid rgba(255,254,249,.12);
+      border-radius: 18px; padding: 24px; margin: 32px 0 48px;
+    }
+    .muro-canvas-wrap { border-radius: 14px; overflow: hidden; background: var(--cream); touch-action: none; }
+    #muroCanvas { display:block; width:100%; height: 320px; cursor: none; }
+    .muro-tools { display:flex; gap:10px; margin: 14px 0; flex-wrap: wrap; align-items:center; }
+    .muro-swatch {
+      width:28px; height:28px; border-radius:50%; border:2px solid transparent; cursor:none;
+    }
+    .muro-swatch.is-active { border-color: var(--cream); }
+    .muro-input {
+      width:100%; background: rgba(255,254,249,.06); border:1px solid rgba(255,254,249,.15);
+      border-radius: 10px; padding: 12px 14px; color: var(--cream); font-family: var(--ff-body);
+      margin-bottom: 14px;
+    }
+    .muro-actions { display:flex; gap:10px; flex-wrap:wrap; }
+    .muro-actions .btn { cursor:none; border:none; }
+    .muro-wall { display:grid; grid-template-columns: repeat(auto-fill, minmax(190px,1fr)); gap:16px; }
+    .muro-card {
+      background: var(--cream-dark); border-radius: 14px; overflow:hidden; color: var(--black);
+    }
+    .muro-card img { width:100%; height:150px; object-fit:cover; background:var(--cream); }
+    .muro-card__msg { padding: 10px 12px; font-size: .85rem; font-family: var(--ff-body); }
+    .muro-empty { opacity:.5; font-family: var(--ff-body); }
+  </style>
+</head>
+<body class="page-testing">
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <nav class="nav" id="nav">
+    <a href="testing.html" class="nav__brand">
+      <img src="assets/images/logo.png" alt="Saint Latte" class="nav__logo-img" onerror="this.style.display='none'">
+      <span class="nav__brand-text">SAINT LATTE</span>
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="testing.html" class="nav__link nav__link--cta">← LAB</a></li>
+    </ul>
+    <button class="nav__hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu__inner">
+      <ul class="mobile-menu__list" role="list">
+        <li><a href="testing.html" class="mobile-link">← LAB</a></li>
+      </ul>
+    </div>
+  </div>
+
+
+  <header class="page-hero page-hero--cream">
+    <div class="page-hero__content">
+      <span class="section-label" style="color:rgba(5,5,5,.5)">LAB — EXPERIMENTO</span>
+      <h1 class="page-hero__title">
+        DEJA<br>TU MARCA<br><em>EN EL MURO.</em>
+      </h1>
+      <p class="page-hero__sub">Dibuja algo, escribe un mensaje y publícalo.</p>
+    </div>
+    <div class="page-hero__bg-num" aria-hidden="true">WALL</div>
+  </header>
+
+  <section class="muro-section">
+    <span class="section-label">TU DIBUJO</span>
+
+    <div class="muro-editor">
+      <div class="muro-canvas-wrap">
+        <canvas id="muroCanvas"></canvas>
+      </div>
+      <div class="muro-tools" id="muroSwatches"></div>
+      <input type="text" class="muro-input" id="muroMsg" maxlength="60" placeholder="Tu mensaje o tu nombre (máx. 60 caracteres)">
+      <div class="muro-actions">
+        <a href="#" class="btn btn--outline-dark" id="muroClear">BORRAR</a>
+        <a href="#" class="btn btn--solid" id="muroPost">PUBLICAR EN EL MURO</a>
+      </div>
+    </div>
+
+    <span class="section-label">EL MURO</span>
+    <div class="muro-wall" id="muroWall" style="margin-top:24px"></div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="assets/images/logo.png" alt="" class="footer__logo" onerror="this.style.display='none'">
+        <span class="footer__brand-name">SAINT LATTE</span>
+        <p class="footer__brand-sub">Specialty Coffee Shop · Valle de Santiago, Gto.</p>
+      </div>
+      <div class="footer__social">
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="footer__social-link">INSTAGRAM</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2024 SAINT LATTE.</span>
+      <span>HECHO CON ♥ EN VALLE DE SANTIAGO</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    const canvas = document.getElementById('muroCanvas');
+    const ctx = canvas.getContext('2d');
+    const COLORS = ['#050505', '#337958', '#C49A27', '#EDE9DC'];
+    let color = COLORS[0];
+    let drawing = false;
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      const prev = canvas.toDataURL();
+      canvas.width = rect.width * devicePixelRatio;
+      canvas.height = rect.height * devicePixelRatio;
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+      ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.lineWidth = 4;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function posFromEvent(e) {
+      const rect = canvas.getBoundingClientRect();
+      const p = e.touches ? e.touches[0] : e;
+      return { x: p.clientX - rect.left, y: p.clientY - rect.top };
+    }
+    function start(e) { drawing = true; const p = posFromEvent(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); e.preventDefault(); }
+    function move(e) { if (!drawing) return; const p = posFromEvent(e); ctx.strokeStyle = color; ctx.lineTo(p.x, p.y); ctx.stroke(); e.preventDefault(); }
+    function end() { drawing = false; }
+
+    canvas.addEventListener('mousedown', start);
+    canvas.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', end);
+    canvas.addEventListener('touchstart', start, { passive: false });
+    canvas.addEventListener('touchmove', move, { passive: false });
+    canvas.addEventListener('touchend', end);
+
+    const swatchWrap = document.getElementById('muroSwatches');
+    COLORS.forEach((c, i) => {
+      const sw = document.createElement('button');
+      sw.className = 'muro-swatch' + (i === 0 ? ' is-active' : '');
+      sw.style.background = c;
+      sw.addEventListener('click', () => {
+        color = c;
+        swatchWrap.querySelectorAll('.muro-swatch').forEach(s => s.classList.remove('is-active'));
+        sw.classList.add('is-active');
+      });
+      swatchWrap.appendChild(sw);
+    });
+
+    document.getElementById('muroClear').addEventListener('click', (e) => {
+      e.preventDefault();
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#FFFEF9';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    });
+    // fondo blanco inicial
+    ctx.fillStyle = '#FFFEF9';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // El muro vive en localStorage — solo se ve en este navegador/dispositivo.
+    // Para que se comparta entre clientes/pantallas reales hace falta un backend (Firebase/Supabase).
+    const STORAGE_KEY = 'saintlatte_muro';
+    const wall = document.getElementById('muroWall');
+
+    function loadWall() {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    }
+    function renderWall() {
+      const entries = loadWall();
+      wall.innerHTML = '';
+      if (!entries.length) {
+        wall.innerHTML = '<p class="muro-empty">Todavía no hay nada aquí. Sé el primero.</p>';
+        return;
+      }
+      entries.slice().reverse().forEach(entry => {
+        const card = document.createElement('div');
+        card.className = 'muro-card';
+        card.innerHTML = `<img src="${entry.img}" alt="Dibujo"><div class="muro-card__msg">${entry.msg || '—'}</div>`;
+        wall.appendChild(card);
+      });
+    }
+
+    document.getElementById('muroPost').addEventListener('click', (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('muroMsg').value.trim().slice(0, 60);
+      const entries = loadWall();
+      entries.push({ img: canvas.toDataURL('image/png'), msg, ts: Date.now() });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(entries.slice(-24)));
+      document.getElementById('muroMsg').value = '';
+      document.getElementById('muroClear').click();
+      renderWall();
+    });
+
+    renderWall();
+  </script>
+</body>
+</html>
