@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Saint Latte — Fotobooth de marca.">
+  <title>Fotobooth — Saint Latte</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.cdnfonts.com/css/funtastic" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .fb-section { max-width: 640px; margin: 0 auto; padding: 60px 24px 100px; text-align:center; }
+    .fb-stage {
+      position: relative; width: 100%; aspect-ratio: 3/4; border-radius: 20px;
+      overflow: hidden; background: var(--black-mid); margin: 32px 0 24px;
+      border: 1px solid rgba(255,254,249,.12);
+    }
+    .fb-stage video, .fb-stage canvas { width:100%; height:100%; object-fit:cover; display:block; }
+    .fb-stage canvas { display:none; }
+    .fb-stage.captured video { display:none; }
+    .fb-stage.captured canvas { display:block; }
+    .fb-hint {
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+      font-family: var(--ff-body); opacity:.6; text-align:center; padding: 24px; pointer-events:none;
+    }
+    .fb-actions { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    .fb-actions .btn { cursor:none; border:none; }
+  </style>
+</head>
+<body class="page-testing">
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <nav class="nav" id="nav">
+    <a href="testing.html" class="nav__brand">
+      <img src="assets/images/logo.png" alt="Saint Latte" class="nav__logo-img" onerror="this.style.display='none'">
+      <span class="nav__brand-text">SAINT LATTE</span>
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="testing.html" class="nav__link nav__link--cta">← LAB</a></li>
+    </ul>
+    <button class="nav__hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu__inner">
+      <ul class="mobile-menu__list" role="list">
+        <li><a href="testing.html" class="mobile-link">← LAB</a></li>
+      </ul>
+    </div>
+  </div>
+
+
+  <header class="page-hero page-hero--rust">
+    <div class="page-hero__content">
+      <span class="section-label" style="color:rgba(255,254,249,.6)">LAB — EXPERIMENTO</span>
+      <h1 class="page-hero__title" style="color:var(--cream)">
+        SÁCATE<br>UNA<br><em style="color:var(--black)">FOTO.</em>
+      </h1>
+      <p class="page-hero__sub" style="color:rgba(255,254,249,.7)">Con marco de Saint Latte. Se queda en tu celular, no en ningún servidor.</p>
+    </div>
+    <div class="page-hero__bg-num" style="color:rgba(5,5,5,.06)" aria-hidden="true">PIC</div>
+  </header>
+
+  <section class="fb-section">
+    <div class="fb-stage" id="fbStage">
+      <video id="fbVideo" autoplay playsinline muted></video>
+      <canvas id="fbCanvas"></canvas>
+      <div class="fb-hint" id="fbHint">Toca "ACTIVAR CÁMARA" para empezar</div>
+    </div>
+    <div class="fb-actions">
+      <a href="#" class="btn btn--solid" id="fbStart">ACTIVAR CÁMARA</a>
+      <a href="#" class="btn btn--solid" id="fbShot" style="display:none">📸 TOMAR FOTO</a>
+      <a href="#" class="btn btn--outline" id="fbRetake" style="display:none">REPETIR</a>
+      <a href="#" class="btn btn--outline" id="fbDownload" style="display:none">DESCARGAR</a>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="assets/images/logo.png" alt="" class="footer__logo" onerror="this.style.display='none'">
+        <span class="footer__brand-name">SAINT LATTE</span>
+        <p class="footer__brand-sub">Specialty Coffee Shop · Valle de Santiago, Gto.</p>
+      </div>
+      <div class="footer__social">
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="footer__social-link">INSTAGRAM</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2024 SAINT LATTE.</span>
+      <span>HECHO CON ♥ EN VALLE DE SANTIAGO</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    const stage    = document.getElementById('fbStage');
+    const video    = document.getElementById('fbVideo');
+    const canvas   = document.getElementById('fbCanvas');
+    const hint     = document.getElementById('fbHint');
+    const btnStart = document.getElementById('fbStart');
+    const btnShot  = document.getElementById('fbShot');
+    const btnRetake= document.getElementById('fbRetake');
+    const btnDownload = document.getElementById('fbDownload');
+    let stream = null;
+
+    btnStart.addEventListener('click', async (e) => {
+      e.preventDefault();
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
+        video.srcObject = stream;
+        hint.style.display = 'none';
+        btnStart.style.display = 'none';
+        btnShot.style.display = 'inline-block';
+      } catch (err) {
+        hint.textContent = 'No pudimos acceder a tu cámara. Revisa los permisos del navegador.';
+      }
+    });
+
+    btnShot.addEventListener('click', (e) => {
+      e.preventDefault();
+      const w = video.videoWidth, h = video.videoHeight;
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+
+      // mirror the shot like a selfie
+      ctx.translate(w, 0); ctx.scale(-1, 1);
+      ctx.drawImage(video, 0, 0, w, h);
+      ctx.setTransform(1,0,0,1,0,0);
+
+      // brand frame
+      const border = Math.round(w * 0.045);
+      ctx.strokeStyle = '#337958';
+      ctx.lineWidth = border;
+      ctx.strokeRect(border/2, border/2, w - border, h - border);
+
+      // bottom bar
+      const barH = Math.round(h * 0.11);
+      ctx.fillStyle = '#050505';
+      ctx.fillRect(0, h - barH, w, barH);
+      ctx.fillStyle = '#FFFEF9';
+      ctx.textAlign = 'center';
+      ctx.font = `bold ${Math.round(barH*0.4)}px 'Space Grotesk', sans-serif`;
+      ctx.fillText('SAINT LATTE', w/2, h - barH/2 + Math.round(barH*0.05));
+      ctx.font = `${Math.round(barH*0.22)}px 'Space Grotesk', sans-serif`;
+      ctx.fillStyle = 'rgba(255,254,249,.6)';
+      ctx.fillText('VALLE DE SANTIAGO, GTO.', w/2, h - barH*0.22);
+
+      stage.classList.add('captured');
+      btnShot.style.display = 'none';
+      btnRetake.style.display = 'inline-block';
+      btnDownload.style.display = 'inline-block';
+    });
+
+    btnRetake.addEventListener('click', (e) => {
+      e.preventDefault();
+      stage.classList.remove('captured');
+      btnRetake.style.display = 'none';
+      btnDownload.style.display = 'none';
+      btnShot.style.display = 'inline-block';
+    });
+
+    btnDownload.addEventListener('click', (e) => {
+      e.preventDefault();
+      const link = document.createElement('a');
+      link.download = `saint-latte-${Date.now()}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+
+    window.addEventListener('beforeunload', () => {
+      if (stream) stream.getTracks().forEach(t => t.stop());
+    });
+  </script>
+</body>
+</html>

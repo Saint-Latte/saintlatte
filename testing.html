@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Saint Latte — Laboratorio de experimentos.">
+  <title>Testing — Saint Latte</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.cdnfonts.com/css/funtastic" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-testing">
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__brand">
+      <img src="assets/images/logo.png" alt="Saint Latte" class="nav__logo-img" onerror="this.style.display='none'">
+      <span class="nav__brand-text">SAINT LATTE</span>
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="comunidad.html" class="nav__link">COMUNIDAD</a></li>
+      <li><a href="nosotros.html"  class="nav__link">NOSOTROS</a></li>
+      <li><a href="jarron-azul.html"   class="nav__link">JARRÓN AZUL</a></li>
+      <li><a href="leandro-valle.html" class="nav__link">LEANDRO VALLE</a></li>
+      <li><a href="extracciones.html" class="nav__link nav__link--cta">EXTRACCIONES</a></li>
+    </ul>
+    <button class="nav__hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu__inner">
+      <ul class="mobile-menu__list" role="list">
+        <li><a href="comunidad.html"   class="mobile-link">COMUNIDAD</a></li>
+        <li><a href="nosotros.html"    class="mobile-link">NOSOTROS</a></li>
+        <li><a href="jarron-azul.html"   class="mobile-link">JARRÓN AZUL</a></li>
+        <li><a href="leandro-valle.html" class="mobile-link">LEANDRO VALLE</a></li>
+        <li><a href="extracciones.html" class="mobile-link">EXTRACCIONES</a></li>
+      </ul>
+      <div class="mobile-menu__footer">
+        <a href="https://instagram.com" target="_blank" rel="noopener">IG</a>
+        <span>—</span><a href="#">TK</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       HERO — TESTING
+  ══════════════════════════════════════ -->
+  <header class="page-hero page-hero--dark">
+    <div class="page-hero__content">
+      <span class="section-label" style="color:rgba(255,254,249,.6)">LAB — NO PÚBLICO</span>
+      <h1 class="page-hero__title">
+        AQUÍ<br>PROBAMOS<br><em>COSAS.</em>
+      </h1>
+      <p class="page-hero__sub">Página de experimentos. No enlazada en el nav — solo por link directo.</p>
+    </div>
+    <div class="page-hero__bg-num" aria-hidden="true">LAB</div>
+  </header>
+
+
+  <!-- ══════════════════════════════════════
+       SANDBOX — índice de experimentos
+  ══════════════════════════════════════ -->
+  <section class="page-nav-section">
+    <div class="page-nav-label">
+      <span class="section-label">SANDBOX</span>
+    </div>
+    <div class="page-nav-grid">
+
+      <a href="cafeina.html" class="page-nav-card page-nav-card--dark">
+        <div class="page-nav-card__num">01</div>
+        <div class="page-nav-card__content">
+          <span class="page-nav-card__tag">CAFEÍNA · WELLNESS</span>
+          <h3 class="page-nav-card__title">CALCULADORA<br>DE CAFEÍNA</h3>
+          <p class="page-nav-card__sub">Suma tus bebidas del día y mira cómo vas contra el límite recomendado.</p>
+        </div>
+        <span class="page-nav-card__arrow">→</span>
+      </a>
+
+      <a href="fotobooth.html" class="page-nav-card page-nav-card--rust">
+        <div class="page-nav-card__num">02</div>
+        <div class="page-nav-card__content">
+          <span class="page-nav-card__tag">CÁMARA · MARCA</span>
+          <h3 class="page-nav-card__title">FOTOBOOTH</h3>
+          <p class="page-nav-card__sub">Tómate una foto con marco de Saint Latte y descárgala.</p>
+        </div>
+        <span class="page-nav-card__arrow">→</span>
+      </a>
+
+      <a href="muro-digital.html" class="page-nav-card page-nav-card--cream">
+        <div class="page-nav-card__num">03</div>
+        <div class="page-nav-card__content">
+          <span class="page-nav-card__tag">DIBUJO · COMUNIDAD</span>
+          <h3 class="page-nav-card__title">MURO<br>DIGITAL</h3>
+          <p class="page-nav-card__sub">Deja tu dibujo o mensaje en el muro de la cafetería.</p>
+        </div>
+        <span class="page-nav-card__arrow">→</span>
+      </a>
+
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="assets/images/logo.png" alt="" class="footer__logo" onerror="this.style.display='none'">
+        <span class="footer__brand-name">SAINT LATTE</span>
+        <p class="footer__brand-sub">Specialty Coffee Shop · Valle de Santiago, Gto.</p>
+      </div>
+      <nav class="footer__nav">
+        <a href="menu.html">MENÚ</a>
+        <a href="comunidad.html">COMUNIDAD</a>
+        <a href="nosotros.html">NOSOTROS</a>
+        <a href="extracciones.html">EXTRACCIONES</a>
+      </nav>
+      <div class="footer__social">
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="footer__social-link">INSTAGRAM</a>
+        <a href="#" class="footer__social-link">TIKTOK</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2024 SAINT LATTE.</span>
+      <span>HECHO CON ♥ EN VALLE DE SANTIAGO</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
