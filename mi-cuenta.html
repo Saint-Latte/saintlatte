@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Tu cuenta de Nutrias — Saint Latte.">
+  <title>Mi cuenta · Nutrias — Saint Latte</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.cdnfonts.com/css/funtastic" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .nutrias-section { padding: calc(var(--nav-h) + 5rem) 2.5rem 8rem; max-width: 640px; margin: 0 auto; }
+    .nutrias-state { display: flex; flex-direction: column; gap: 1.5rem; }
+    .nutrias-state[hidden] { display: none; }
+    .nutrias-lede { font-size: .95rem; line-height: 1.8; color: rgba(255,254,249,.6); max-width: 46ch; }
+    .nutrias-balance-row { display: flex; gap: 1px; flex-wrap: wrap; }
+    .nutrias-balance-row .order-num-card { flex: 1; min-width: 220px; }
+    .nutrias-code {
+      font-family: var(--ff-display); font-size: 1.6rem; letter-spacing: .1em;
+      color: var(--rust); background: var(--black-mid); border: 1px solid rgba(255,254,249,.1);
+      padding: 1rem 1.2rem; display: inline-block; margin-top: .4rem;
+    }
+    .nutrias-account-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  </style>
+</head>
+<body class="page-lealtad">
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__brand">
+      <img src="assets/images/logo.png" alt="Saint Latte" class="nav__logo-img" onerror="this.style.display='none'">
+      <span class="nav__brand-text">SAINT LATTE</span>
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="comunidad.html" class="nav__link">COMUNIDAD</a></li>
+      <li><a href="nosotros.html"  class="nav__link">NOSOTROS</a></li>
+      <li><a href="jarron-azul.html"   class="nav__link">JARRÓN AZUL</a></li>
+      <li><a href="leandro-valle.html" class="nav__link">LEANDRO VALLE</a></li>
+      <li><a href="saint-rewards.html" class="nav__link nav__link--active">SAINT REWARDS</a></li>
+      <li><a href="extracciones.html" class="nav__link nav__link--cta">EXTRACCIONES</a></li>
+    </ul>
+    <button class="nav__hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu__inner">
+      <ul class="mobile-menu__list" role="list">
+        <li><a href="comunidad.html"   class="mobile-link">COMUNIDAD</a></li>
+        <li><a href="nosotros.html"    class="mobile-link">NOSOTROS</a></li>
+        <li><a href="jarron-azul.html"   class="mobile-link">JARRÓN AZUL</a></li>
+        <li><a href="leandro-valle.html" class="mobile-link">LEANDRO VALLE</a></li>
+        <li><a href="saint-rewards.html" class="mobile-link">SAINT REWARDS</a></li>
+        <li><a href="extracciones.html" class="mobile-link">EXTRACCIONES</a></li>
+      </ul>
+      <div class="mobile-menu__footer">
+        <a href="https://instagram.com" target="_blank" rel="noopener">IG</a>
+        <span>—</span><a href="#">TK</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="page-hero page-hero--dark">
+    <div class="page-hero__content">
+      <span class="section-label" style="color:rgba(255,254,249,.6)">MI CUENTA</span>
+      <h1 class="page-hero__title">
+        TUS<br><em>NUTRIAS.</em>
+      </h1>
+      <p class="page-hero__sub">Tu progreso en el programa de lealtad.</p>
+    </div>
+    <div class="page-hero__bg-num" aria-hidden="true">SL</div>
+  </header>
+
+  <section class="nutrias-section">
+    <div class="nutrias-state" id="stateLoading">
+      <p class="nutrias-lede">Cargando tu cuenta…</p>
+    </div>
+
+    <div class="nutrias-state" id="stateAccount" hidden>
+      <div class="nutrias-account-top">
+        <p class="nutrias-lede" id="accountGreeting" style="margin:0"></p>
+        <button class="btn btn--outline-dark" id="logoutBtn" style="font-size:.68rem;padding:.5rem 1rem">CERRAR SESIÓN</button>
+      </div>
+      <div class="nutrias-balance-row">
+        <div class="order-num-card">
+          <span class="order-num-card__label">NUTRIAS ACUMULADAS</span>
+          <span class="order-num-card__num" id="accountBalance">0</span>
+          <span class="order-num-card__hint">Sigue viniendo para juntar más</span>
+        </div>
+        <div class="order-num-card">
+          <span class="order-num-card__label">ÚLTIMA VISITA</span>
+          <span class="order-num-card__num" id="accountLastVisit" style="font-size:1.1rem">—</span>
+        </div>
+      </div>
+      <div id="accountNoTag">
+        <p class="nutrias-lede">Aún no tienes una tarjeta física vinculada. Muéstrale este código al personal la próxima vez que vengas:</p>
+        <span class="nutrias-code" id="accountLinkCode">——————</span>
+      </div>
+      <p class="nutrias-lede" id="accountHasTag" hidden>Tu tarjeta física ya está vinculada a esta cuenta.</p>
+    </div>
+
+    <div class="nutrias-state" id="stateError" hidden>
+      <p class="nutrias-lede">No encontramos un perfil de cliente para esta cuenta.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="assets/images/logo.png" alt="" class="footer__logo" onerror="this.style.display='none'">
+        <span class="footer__brand-name">SAINT LATTE</span>
+        <p class="footer__brand-sub">Specialty Coffee Shop · Valle de Santiago, Gto.</p>
+      </div>
+      <nav class="footer__nav">
+        <a href="menu.html">MENÚ</a>
+        <a href="comunidad.html">COMUNIDAD</a>
+        <a href="nosotros.html">NOSOTROS</a>
+        <a href="extracciones.html">EXTRACCIONES</a>
+      </nav>
+      <div class="footer__social">
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="footer__social-link">INSTAGRAM</a>
+        <a href="#" class="footer__social-link">TIKTOK</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2024 SAINT LATTE.</span>
+      <span>HECHO CON ♥ EN VALLE DE SANTIAGO</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script type="module">
+    import { db, auth } from './firebase-config.js';
+    import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
+    import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js';
+
+    const states = {
+      loading: document.getElementById('stateLoading'),
+      account: document.getElementById('stateAccount'),
+      error: document.getElementById('stateError'),
+    };
+    function showState(name) {
+      Object.entries(states).forEach(([key, el]) => { el.hidden = key !== name; });
+    }
+
+    function formatDate(ts) {
+      if (!ts) return '—';
+      return ts.toDate().toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await signOut(auth);
+      window.location.href = 'saint-rewards.html';
+    });
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = 'saint-rewards.html';
+        return;
+      }
+      showState('loading');
+      const snap = await getDoc(doc(db, 'customers', user.uid));
+      if (!snap.exists()) { showState('error'); return; }
+
+      const data = snap.data();
+      document.getElementById('accountGreeting').textContent = `Hola, ${data.name}.`;
+      document.getElementById('accountBalance').textContent = data.nutrias;
+      document.getElementById('accountLastVisit').textContent = formatDate(data.lastVisitAt);
+      const noTag = document.getElementById('accountNoTag');
+      const hasTag = document.getElementById('accountHasTag');
+      if (data.tagLinkedAt) {
+        noTag.hidden = true; hasTag.hidden = false;
+      } else {
+        noTag.hidden = false; hasTag.hidden = true;
+        document.getElementById('accountLinkCode').textContent = data.linkCode || '——————';
+      }
+      showState('account');
+    });
+  </script>
+</body>
+</html>

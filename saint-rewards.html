@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Nutrias — el programa de lealtad de Saint Latte. Junta nutrias en cada visita.">
-  <title>Nutrias — Saint Latte</title>
+  <meta name="description" content="Saint Rewards — el programa de lealtad de Saint Latte. Junta nutrias en cada visita.">
+  <title>Saint Rewards — Saint Latte</title>
   <link rel="icon" type="image/png" href="assets/images/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,13 +17,20 @@
   <style>
     .nutrias-section { padding: calc(var(--nav-h) + 5rem) 2.5rem 8rem; max-width: 640px; margin: 0 auto; }
     .nutrias-state { display: flex; flex-direction: column; gap: 1.5rem; }
+    .nutrias-state[hidden] { display: none; }
     .nutrias-lede { font-size: .95rem; line-height: 1.8; color: rgba(255,254,249,.6); max-width: 46ch; }
     .nutrias-balance-row { display: flex; gap: 1px; flex-wrap: wrap; }
     .nutrias-balance-row .order-num-card { flex: 1; min-width: 220px; }
-    .nutrias-hint { font-size: .78rem; color: rgba(255,254,249,.4); }
     .nutrias-add-btn { margin-top: .5rem; align-self: flex-start; }
     .nutrias-add-btn:disabled { opacity: .5; cursor: default; }
     .nutrias-msg { font-size: .85rem; color: var(--rust); }
+    .nutrias-tabs { display: flex; gap: 1px; margin-bottom: 1.5rem; }
+    .nutrias-tab {
+      flex: 1; text-align: center; padding: .8rem 1rem; background: var(--black-mid);
+      border: 1px solid rgba(255,254,249,.1); font-size: .72rem; letter-spacing: .15em;
+      font-weight: 700; color: rgba(255,254,249,.45); cursor: none; transition: color .2s, border-color .2s;
+    }
+    .nutrias-tab.on { color: var(--cream); border-color: var(--rust); }
   </style>
 </head>
 <body class="page-lealtad">
@@ -43,7 +50,7 @@
       <li><a href="nosotros.html"  class="nav__link">NOSOTROS</a></li>
       <li><a href="jarron-azul.html"   class="nav__link">JARRÓN AZUL</a></li>
       <li><a href="leandro-valle.html" class="nav__link">LEANDRO VALLE</a></li>
-      <li><a href="lealtad.html" class="nav__link nav__link--active">NUTRIAS</a></li>
+      <li><a href="saint-rewards.html" class="nav__link nav__link--active">SAINT REWARDS</a></li>
       <li><a href="extracciones.html" class="nav__link nav__link--cta">EXTRACCIONES</a></li>
     </ul>
     <button class="nav__hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
@@ -60,7 +67,7 @@
         <li><a href="nosotros.html"    class="mobile-link">NOSOTROS</a></li>
         <li><a href="jarron-azul.html"   class="mobile-link">JARRÓN AZUL</a></li>
         <li><a href="leandro-valle.html" class="mobile-link">LEANDRO VALLE</a></li>
-        <li><a href="lealtad.html" class="mobile-link">NUTRIAS</a></li>
+        <li><a href="saint-rewards.html" class="mobile-link">SAINT REWARDS</a></li>
         <li><a href="extracciones.html" class="mobile-link">EXTRACCIONES</a></li>
       </ul>
       <div class="mobile-menu__footer">
@@ -75,22 +82,16 @@
     <div class="page-hero__content">
       <span class="section-label" style="color:rgba(255,254,249,.6)">LEALTAD</span>
       <h1 class="page-hero__title">
-        TUS<br><em>NUTRIAS.</em>
+        SAINT<br><em>REWARDS.</em>
       </h1>
-      <p class="page-hero__sub">Junta una nutria en cada visita con tu tarjeta.</p>
+      <p class="page-hero__sub">Inicia sesión o regístrate para juntar nutrias en cada visita.</p>
     </div>
     <div class="page-hero__bg-num" aria-hidden="true">SL</div>
   </header>
 
   <section class="nutrias-section">
-    <div class="nutrias-state" id="stateLanding" hidden>
-      <p class="nutrias-lede">
-        Nutrias es nuestro programa de lealtad: cada vez que visitas Saint Latte,
-        te sumamos una nutria con tu tarjeta NFC. Pregunta al personal en el
-        mostrador para conseguir la tuya.
-      </p>
-    </div>
 
+    <!-- ═══ MODO TAP: ?id=xxxx (tarjeta física) ═══ -->
     <div class="nutrias-state" id="stateLoading" hidden>
       <p class="nutrias-lede">Buscando tu tarjeta…</p>
     </div>
@@ -115,6 +116,53 @@
       <button class="btn btn--solid nutrias-add-btn" id="addBtn" hidden>SUMAR NUTRIA</button>
       <p class="nutrias-msg" id="addMsg" hidden></p>
     </div>
+
+    <!-- ═══ MODO LOGIN: sin ?id — un solo login para personal y clientes ═══ -->
+    <div class="nutrias-state" id="stateAuth" hidden>
+      <div class="nutrias-tabs">
+        <button class="nutrias-tab on" id="tabLogin">INICIAR SESIÓN</button>
+        <button class="nutrias-tab" id="tabRegister">REGISTRARME</button>
+      </div>
+
+      <div id="loginForm">
+        <div class="order-field">
+          <label class="order-field__label">EMAIL</label>
+          <input class="order-field__input" type="email" id="loginEmail" autocomplete="username">
+        </div>
+        <div class="order-field">
+          <label class="order-field__label">CONTRASEÑA</label>
+          <input class="order-field__input" type="password" id="loginPassword" autocomplete="current-password">
+        </div>
+        <button class="btn btn--solid" id="loginBtn">ENTRAR</button>
+        <p class="nutrias-msg" id="loginMsg" hidden></p>
+      </div>
+
+      <div id="registerForm" hidden>
+        <div class="order-field">
+          <label class="order-field__label">NOMBRE</label>
+          <input class="order-field__input" type="text" id="regName">
+        </div>
+        <div class="order-field">
+          <label class="order-field__label">EMAIL</label>
+          <input class="order-field__input" type="email" id="regEmail" autocomplete="username">
+        </div>
+        <div class="order-field">
+          <label class="order-field__label">TELÉFONO <span style="opacity:.4">(opcional)</span></label>
+          <input class="order-field__input" type="tel" id="regPhone" autocomplete="tel">
+        </div>
+        <div class="order-field">
+          <label class="order-field__label">CONTRASEÑA</label>
+          <input class="order-field__input" type="password" id="regPassword" autocomplete="new-password">
+        </div>
+        <button class="btn btn--solid" id="registerBtn">CREAR CUENTA</button>
+        <p class="nutrias-msg" id="registerMsg" hidden></p>
+      </div>
+    </div>
+
+    <div class="nutrias-state" id="stateRedirecting" hidden>
+      <p class="nutrias-lede">Entrando…</p>
+    </div>
+
   </section>
 
   <!-- FOOTER -->
@@ -145,68 +193,64 @@
   <script src="main.js"></script>
   <script type="module">
     import { db, auth } from './firebase-config.js';
-    import { doc, getDoc, collection, runTransaction, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
-    import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js';
+    import { doc, getDoc, setDoc, collection, runTransaction, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
+    import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js';
 
     const params = new URLSearchParams(window.location.search);
-    const customerId = params.get('id');
+    const customerId = params.get('id'); // presente solo en el flujo de "tap" de la tarjeta física
 
     const states = {
-      landing: document.getElementById('stateLanding'),
       loading: document.getElementById('stateLoading'),
       notFound: document.getElementById('stateNotFound'),
       found: document.getElementById('stateFound'),
+      auth: document.getElementById('stateAuth'),
+      redirecting: document.getElementById('stateRedirecting'),
     };
     function showState(name) {
       Object.entries(states).forEach(([key, el]) => { el.hidden = key !== name; });
     }
-
-    const foundGreeting  = document.getElementById('foundGreeting');
-    const foundBalance   = document.getElementById('foundBalance');
-    const foundLastVisit = document.getElementById('foundLastVisit');
-    const addBtn = document.getElementById('addBtn');
-    const addMsg = document.getElementById('addMsg');
 
     function formatDate(ts) {
       if (!ts) return '—';
       return ts.toDate().toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
     }
 
-    let currentStaffUser = null;
-    let currentCustomer = null;
+    function genLinkCode() {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let code = '';
+      for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+      return code;
+    }
+
+    // ═══ MODO TAP (?id=xxxx) ═══
+    const foundGreeting  = document.getElementById('foundGreeting');
+    const foundBalance   = document.getElementById('foundBalance');
+    const foundLastVisit = document.getElementById('foundLastVisit');
+    const addBtn = document.getElementById('addBtn');
+    const addMsg = document.getElementById('addMsg');
+
+    let currentUser = null;
+    let currentTapCustomer = null;
 
     function renderFound(data) {
-      currentCustomer = data;
+      currentTapCustomer = data;
       foundGreeting.textContent = `Hola, ${data.name}.`;
       foundBalance.textContent = data.nutrias;
       foundLastVisit.textContent = formatDate(data.lastVisitAt);
-      addBtn.hidden = !currentStaffUser;
+      addBtn.hidden = !currentUser;
       addMsg.hidden = true;
       showState('found');
     }
 
-    async function loadCustomer() {
+    async function loadTapCustomer() {
       showState('loading');
       const snap = await getDoc(doc(db, 'customers', customerId));
       if (!snap.exists()) { showState('notFound'); return; }
       renderFound(snap.data());
     }
 
-    if (!customerId) {
-      showState('landing');
-    } else {
-      loadCustomer().catch(() => showState('notFound'));
-    }
-
-    onAuthStateChanged(auth, (user) => {
-      currentStaffUser = user;
-      if (customerId && currentCustomer) {
-        addBtn.hidden = !currentStaffUser;
-      }
-    });
-
     addBtn.addEventListener('click', async () => {
-      if (!currentStaffUser || !customerId) return;
+      if (!currentUser || !customerId) return;
       addBtn.disabled = true;
       try {
         const customerRef = doc(db, 'customers', customerId);
@@ -218,12 +262,12 @@
           tx.update(customerRef, {
             nutrias: next,
             lastVisitAt: serverTimestamp(),
-            lastScanBy: currentStaffUser.email,
+            lastScanBy: currentUser.email,
           });
           tx.set(scanRef, {
             ts: serverTimestamp(),
-            staffUid: currentStaffUser.uid,
-            staffEmail: currentStaffUser.email,
+            staffUid: currentUser.uid,
+            staffEmail: currentUser.email,
             pointsAdded: 1,
             balanceAfter: next,
           });
@@ -237,6 +281,89 @@
         addMsg.textContent = 'No se pudo sumar la nutria. Intenta de nuevo.';
         addMsg.hidden = false;
         addBtn.disabled = false;
+      }
+    });
+
+    // ═══ MODO LOGIN (sin ?id) — un solo formulario para personal y clientes ═══
+    const tabLogin = document.getElementById('tabLogin');
+    const tabRegister = document.getElementById('tabRegister');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+
+    tabLogin.addEventListener('click', () => {
+      tabLogin.classList.add('on'); tabRegister.classList.remove('on');
+      loginForm.hidden = false; registerForm.hidden = true;
+    });
+    tabRegister.addEventListener('click', () => {
+      tabRegister.classList.add('on'); tabLogin.classList.remove('on');
+      registerForm.hidden = false; loginForm.hidden = true;
+    });
+
+    document.getElementById('loginBtn').addEventListener('click', async () => {
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const msg = document.getElementById('loginMsg');
+      msg.hidden = true;
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        // el chequeo de rol + redirect lo dispara el listener de onAuthStateChanged
+      } catch (err) {
+        msg.textContent = 'No se pudo iniciar sesión. Revisa tu email y contraseña.';
+        msg.hidden = false;
+      }
+    });
+
+    document.getElementById('registerBtn').addEventListener('click', async () => {
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const phone = document.getElementById('regPhone').value.trim();
+      const password = document.getElementById('regPassword').value;
+      const msg = document.getElementById('registerMsg');
+      msg.hidden = true;
+      if (!name || !email || password.length < 6) {
+        msg.textContent = 'Completa nombre, email y una contraseña de al menos 6 caracteres.';
+        msg.hidden = false;
+        return;
+      }
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        const uid = cred.user.uid;
+        await setDoc(doc(db, 'customers', uid), {
+          id: uid, name, phone, email,
+          nutrias: 0,
+          createdAt: serverTimestamp(),
+          lastVisitAt: serverTimestamp(),
+          lastScanBy: '',
+          linkCode: genLinkCode(),
+        });
+        // el chequeo de rol + redirect lo dispara el listener de onAuthStateChanged
+      } catch (err) {
+        msg.textContent = 'No se pudo crear la cuenta (¿ese email ya está registrado?).';
+        msg.hidden = false;
+      }
+    });
+
+    // ═══ Arranque ═══
+    if (customerId) {
+      loadTapCustomer().catch(() => showState('notFound'));
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      currentUser = user;
+      if (customerId) {
+        if (currentTapCustomer) addBtn.hidden = !currentUser;
+        return;
+      }
+      if (user) {
+        showState('redirecting');
+        try {
+          const staffSnap = await getDoc(doc(db, 'staff', user.uid));
+          window.location.href = staffSnap.exists() ? 'staff-panel.html' : 'mi-cuenta.html';
+        } catch (err) {
+          window.location.href = 'mi-cuenta.html';
+        }
+      } else {
+        showState('auth');
       }
     });
   </script>
