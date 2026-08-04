@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Saint Latte — Alta de tarjetas de lealtad (uso interno).">
+  <title>Staff · Nutrias — Saint Latte</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.cdnfonts.com/css/funtastic" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .staff-section { max-width: 560px; margin: 0 auto; padding: 60px 24px 100px; }
+    .staff-panel {
+      background: var(--black-mid); border: 1px solid rgba(255,254,249,.12);
+      padding: 2rem; margin-bottom: 2rem;
+    }
+    .staff-note { font-size: .8rem; color: rgba(255,254,249,.45); line-height: 1.7; margin-top: 1rem; }
+    .staff-warn { font-size: .85rem; color: var(--amber); line-height: 1.7; }
+    .staff-msg { font-size: .85rem; color: var(--rust); margin-top: 1rem; min-height: 1.2em; }
+    .staff-session { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+    .staff-session span { font-size: .78rem; color: rgba(255,254,249,.5); }
+    .staff-card-id { font-family: var(--ff-body); font-size: .8rem; color: var(--rust); word-break: break-all; margin-top: .5rem; }
+  </style>
+</head>
+<body class="page-testing">
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__brand">
+      <img src="assets/images/logo.png" alt="Saint Latte" class="nav__logo-img" onerror="this.style.display='none'">
+      <span class="nav__brand-text">SAINT LATTE</span>
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="index.html" class="nav__link nav__link--cta">← INICIO</a></li>
+    </ul>
+    <button class="nav__hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu__inner">
+      <ul class="mobile-menu__list" role="list">
+        <li><a href="index.html" class="mobile-link">← INICIO</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="page-hero page-hero--dark">
+    <div class="page-hero__content">
+      <span class="section-label" style="color:rgba(255,254,249,.6)">USO INTERNO</span>
+      <h1 class="page-hero__title">
+        ALTA DE<br><em>TARJETAS.</em>
+      </h1>
+      <p class="page-hero__sub">Solo personal. Registra tarjetas NFC nuevas de Nutrias.</p>
+    </div>
+    <div class="page-hero__bg-num" aria-hidden="true">SL</div>
+  </header>
+
+  <section class="staff-section">
+
+    <!-- LOGIN -->
+    <div class="staff-panel" id="loginPanel" hidden>
+      <div class="order-fieldset" style="padding:0;border:none">
+        <div class="order-legend" style="margin-bottom:1.5rem">INICIA SESIÓN</div>
+        <div class="order-field">
+          <label class="order-field__label">EMAIL</label>
+          <input class="order-field__input" type="email" id="loginEmail" autocomplete="username">
+        </div>
+        <div class="order-field">
+          <label class="order-field__label">CONTRASEÑA</label>
+          <input class="order-field__input" type="password" id="loginPassword" autocomplete="current-password">
+        </div>
+        <button class="btn btn--solid" id="loginBtn" style="margin-top:.5rem">ENTRAR</button>
+        <p class="staff-msg" id="loginMsg" hidden></p>
+      </div>
+    </div>
+
+    <!-- REGISTRATION (staff logged in) -->
+    <div id="registerPanel" hidden>
+      <div class="staff-session">
+        <span id="sessionLabel"></span>
+        <button class="btn btn--outline-dark" id="logoutBtn" style="font-size:.68rem;padding:.5rem 1rem">CERRAR SESIÓN</button>
+      </div>
+
+      <div class="staff-panel" id="nfcUnsupported" hidden>
+        <p class="staff-warn">
+          Este navegador/dispositivo no soporta lectura/escritura NFC (Web NFC).
+          Usa Chrome en un teléfono Android para dar de alta tarjetas nuevas —
+          el uso diario de sumar nutrias sí funciona en cualquier celular.
+        </p>
+      </div>
+
+      <div class="staff-panel" id="registerForm">
+        <div class="order-fieldset" style="padding:0;border:none">
+          <div class="order-legend" style="margin-bottom:1.5rem">TARJETA NUEVA</div>
+          <div class="order-field">
+            <label class="order-field__label">NOMBRE</label>
+            <input class="order-field__input" type="text" id="regName" placeholder="¿Cómo se llama?">
+          </div>
+          <div class="order-field">
+            <label class="order-field__label">TELÉFONO <span style="opacity:.4">(opcional)</span></label>
+            <input class="order-field__input" type="tel" id="regPhone" placeholder="WhatsApp">
+          </div>
+          <button class="btn btn--solid" id="createBtn" style="margin-top:.5rem">CREAR CLIENTE</button>
+          <p class="staff-note">Esto crea al cliente en la base de datos con 1 nutria. El siguiente paso graba la tarjeta física.</p>
+        </div>
+      </div>
+
+      <div class="staff-panel" id="writePanel" hidden>
+        <div class="order-legend" style="margin-bottom:1rem">GRABAR TARJETA</div>
+        <p class="staff-note" style="margin-top:0">
+          Cliente: <strong id="writeName"></strong><br>
+          ID: <span class="staff-card-id" id="writeId"></span>
+        </p>
+        <button class="btn btn--solid" id="writeBtn" style="margin-top:1rem">GRABAR TARJETA NFC</button>
+        <p class="staff-msg" id="writeMsg" hidden></p>
+        <button class="btn btn--outline-dark" id="newCardBtn" style="margin-top:1.5rem;font-size:.68rem;padding:.5rem 1rem" hidden>DAR DE ALTA OTRA TARJETA</button>
+      </div>
+    </div>
+
+  </section>
+
+  <script src="main.js"></script>
+  <script type="module">
+    import { db, auth } from './firebase-config.js';
+    import { doc, setDoc, collection, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
+    import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js';
+
+    const loginPanel    = document.getElementById('loginPanel');
+    const registerPanel = document.getElementById('registerPanel');
+    const sessionLabel  = document.getElementById('sessionLabel');
+    const loginMsg      = document.getElementById('loginMsg');
+
+    onAuthStateChanged(auth, (user) => {
+      loginPanel.hidden = !!user;
+      registerPanel.hidden = !user;
+      if (user) sessionLabel.textContent = `Sesión: ${user.email}`;
+    });
+
+    document.getElementById('loginBtn').addEventListener('click', async () => {
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      loginMsg.hidden = true;
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+      } catch (err) {
+        loginMsg.textContent = 'No se pudo iniciar sesión. Revisa el email y la contraseña.';
+        loginMsg.hidden = false;
+      }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
+
+    // Web NFC feature-detect — write only works in Chrome on Android.
+    const nfcSupported = 'NDEFReader' in window;
+    document.getElementById('nfcUnsupported').hidden = nfcSupported;
+    document.getElementById('registerForm').hidden = !nfcSupported;
+
+    function genId() {
+      return crypto.randomUUID().replace(/-/g, '').slice(0, 10);
+    }
+
+    const registerForm = document.getElementById('registerForm');
+    const writePanel   = document.getElementById('writePanel');
+    const writeName    = document.getElementById('writeName');
+    const writeId      = document.getElementById('writeId');
+    const writeMsg      = document.getElementById('writeMsg');
+    const writeBtn      = document.getElementById('writeBtn');
+    const newCardBtn    = document.getElementById('newCardBtn');
+
+    let pendingId = null;
+
+    document.getElementById('createBtn').addEventListener('click', async () => {
+      const name = document.getElementById('regName').value.trim();
+      const phone = document.getElementById('regPhone').value.trim();
+      if (!name) return;
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const id = genId();
+      const customerRef = doc(db, 'customers', id);
+      await setDoc(customerRef, {
+        id, name, phone,
+        nutrias: 1,
+        createdAt: serverTimestamp(),
+        lastVisitAt: serverTimestamp(),
+        lastScanBy: user.email,
+      });
+      const scanRef = doc(collection(db, 'customers', id, 'scans'));
+      await setDoc(scanRef, {
+        ts: serverTimestamp(),
+        staffUid: user.uid,
+        staffEmail: user.email,
+        pointsAdded: 1,
+        balanceAfter: 1,
+      });
+
+      pendingId = id;
+      writeName.textContent = name;
+      writeId.textContent = id;
+      writeMsg.hidden = true;
+      newCardBtn.hidden = true;
+      writeBtn.hidden = false;
+      registerForm.hidden = true;
+      writePanel.hidden = false;
+    });
+
+    writeBtn.addEventListener('click', async () => {
+      if (!pendingId) return;
+      writeMsg.hidden = true;
+      try {
+        const reader = new NDEFReader();
+        const url = `https://www.saintlatte.com/lealtad.html?id=${pendingId}`;
+        await reader.write({ records: [{ recordType: 'url', data: url }] });
+        writeMsg.textContent = '¡Tarjeta grabada! Entrégala al cliente.';
+        writeMsg.style.color = 'var(--green)';
+        writeMsg.hidden = false;
+        writeBtn.hidden = true;
+        newCardBtn.hidden = false;
+      } catch (err) {
+        writeMsg.textContent = 'No se pudo grabar la tarjeta. Acerca el tag y vuelve a intentar.';
+        writeMsg.style.color = 'var(--rust)';
+        writeMsg.hidden = false;
+      }
+    });
+
+    newCardBtn.addEventListener('click', () => {
+      pendingId = null;
+      document.getElementById('regName').value = '';
+      document.getElementById('regPhone').value = '';
+      writePanel.hidden = true;
+      registerForm.hidden = false;
+    });
+  </script>
+</body>
+</html>
