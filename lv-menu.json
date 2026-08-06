@@ -400,7 +400,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -2206,7 +2206,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -4772,7 +4772,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -6578,7 +6578,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -8764,7 +8764,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -10950,7 +10950,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -13136,7 +13136,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -15702,7 +15702,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -19748,7 +19748,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -21934,7 +21934,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -25926,7 +25926,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -28112,7 +28112,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -30292,6 +30292,386 @@
           "imageUrl": null,
           "modifierGroups": [
             {
+              "id": "9ac1763f-a041-4be0-ab0b-755e35b0e4c4",
+              "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+              "name": "Tipo de Leche",
+              "description": null,
+              "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
+              "createdAt": "2025-02-06T00:39:50.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
+              "deletedAt": null,
+              "modifierItems": [
+                {
+                  "id": "1c49e55a-9d3d-435b-bcef-9a4333ff14cd",
+                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Deslactosada",
+                  "image": null,
+                  "featured": false,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2025-02-06T00:39:51.000Z",
+                  "updatedAt": "2025-02-06T00:39:51.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2025-02-06T00:39:51.000Z",
+                    "updatedAt": "2025-02-06T00:39:51.000Z",
+                    "modifierGroupId": "9ac1763f-a041-4be0-ab0b-755e35b0e4c4",
+                    "itemId": "1c49e55a-9d3d-435b-bcef-9a4333ff14cd"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "9ba8004e-65fc-11f0-babb-4201ac1a510a",
+                      "entityId": "1c49e55a-9d3d-435b-bcef-9a4333ff14cd",
+                      "entityType": "item",
+                      "contextId": "9ac1763f-a041-4be0-ab0b-755e35b0e4c4",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2025-02-11T23:42:05.000Z",
+                      "updatedAt": "2025-07-21T06:33:26.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "7092200a-18f1-4dba-9136-f8395f9cdde0",
+                      "entityId": "1c49e55a-9d3d-435b-bcef-9a4333ff14cd",
+                      "entityType": "item",
+                      "ownerId": "9ac1763f-a041-4be0-ab0b-755e35b0e4c4",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000f:",
+                      "createdAt": "2025-02-06T00:39:51.000Z",
+                      "updatedAt": "2025-02-06T00:39:51.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "e7f56d1d-2285-41a3-9f81-81cafb2cf5b5",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "1c49e55a-9d3d-435b-bcef-9a4333ff14cd",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 6,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2025-02-11T01:55:41.000Z",
+                      "updatedAt": "2025-02-11T01:55:41.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
+                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Entera",
+                  "image": null,
+                  "featured": false,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2025-02-06T00:39:50.000Z",
+                  "updatedAt": "2025-02-06T00:39:50.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2025-02-06T00:39:50.000Z",
+                    "updatedAt": "2025-02-06T00:39:50.000Z",
+                    "modifierGroupId": "9ac1763f-a041-4be0-ab0b-755e35b0e4c4",
+                    "itemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "9ba8055f-65fc-11f0-babb-4201ac1a510a",
+                      "entityId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
+                      "entityType": "item",
+                      "contextId": "9ac1763f-a041-4be0-ab0b-755e35b0e4c4",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2025-02-11T23:42:05.000Z",
+                      "updatedAt": "2025-07-21T06:33:26.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "d0a61fdf-d2f6-4e09-ba8d-e8252bb1bd16",
+                      "entityId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
+                      "entityType": "item",
+                      "ownerId": "9ac1763f-a041-4be0-ab0b-755e35b0e4c4",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i00007:",
+                      "createdAt": "2025-02-06T00:39:50.000Z",
+                      "updatedAt": "2025-02-06T00:39:50.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "9d2f1d38-0ffd-446e-8bf9-3c97e3846362",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2025-02-06T00:39:50.000Z",
+                      "updatedAt": "2025-02-06T00:39:50.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "8e7c6578-0f35-4edf-8f02-9b94f36a1e39",
+                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Leche de avena",
+                  "image": null,
+                  "featured": false,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2025-10-22T23:40:21.000Z",
+                  "updatedAt": "2025-10-22T23:40:21.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2025-10-22T23:52:34.000Z",
+                    "updatedAt": "2025-10-22T23:52:34.000Z",
+                    "modifierGroupId": "9ac1763f-a041-4be0-ab0b-755e35b0e4c4",
+                    "itemId": "8e7c6578-0f35-4edf-8f02-9b94f36a1e39"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "d5bbc14d-abf0-4c99-938e-5699657d5f45",
+                      "entityId": "8e7c6578-0f35-4edf-8f02-9b94f36a1e39",
+                      "entityType": "item",
+                      "contextId": "9ac1763f-a041-4be0-ab0b-755e35b0e4c4",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2025-10-22T23:52:34.000Z",
+                      "updatedAt": "2025-10-22T23:52:34.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "b4824eed-5e89-4c31-9ec0-e5ef2349696d",
+                      "entityId": "8e7c6578-0f35-4edf-8f02-9b94f36a1e39",
+                      "entityType": "item",
+                      "ownerId": "9ac1763f-a041-4be0-ab0b-755e35b0e4c4",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i00013:",
+                      "createdAt": "2025-10-22T23:52:34.000Z",
+                      "updatedAt": "2025-10-22T23:52:34.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "1599910c-7009-4b4e-87b8-6dfd140d5ef8",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "8e7c6578-0f35-4edf-8f02-9b94f36a1e39",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 15,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2025-10-22T23:52:34.000Z",
+                      "updatedAt": "2025-10-22T23:52:34.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "8e9c7bf7-41e3-4c55-828a-0f754fd6ea82",
+                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Coco",
+                  "image": null,
+                  "featured": false,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2025-02-06T00:39:51.000Z",
+                  "updatedAt": "2025-02-06T00:39:51.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2025-02-06T00:39:51.000Z",
+                    "updatedAt": "2025-02-06T00:39:51.000Z",
+                    "modifierGroupId": "9ac1763f-a041-4be0-ab0b-755e35b0e4c4",
+                    "itemId": "8e9c7bf7-41e3-4c55-828a-0f754fd6ea82"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "9ba8064f-65fc-11f0-babb-4201ac1a510a",
+                      "entityId": "8e9c7bf7-41e3-4c55-828a-0f754fd6ea82",
+                      "entityType": "item",
+                      "contextId": "9ac1763f-a041-4be0-ab0b-755e35b0e4c4",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2025-02-11T23:42:05.000Z",
+                      "updatedAt": "2025-07-21T06:33:26.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "a759a2b5-c29c-494c-925f-70f075821156",
+                      "entityId": "8e9c7bf7-41e3-4c55-828a-0f754fd6ea82",
+                      "entityType": "item",
+                      "ownerId": "9ac1763f-a041-4be0-ab0b-755e35b0e4c4",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000n:",
+                      "createdAt": "2025-02-06T00:39:51.000Z",
+                      "updatedAt": "2025-02-06T00:39:51.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "4c99fba4-5e59-4006-a0cd-a687045ffc1f",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "8e9c7bf7-41e3-4c55-828a-0f754fd6ea82",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 10,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2025-02-06T00:39:51.000Z",
+                      "updatedAt": "2025-02-06T00:39:51.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "c9c30d2d-beea-4ced-81fb-15deeab8ff18",
+                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Almendra",
+                  "image": null,
+                  "featured": false,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2025-02-06T00:39:51.000Z",
+                  "updatedAt": "2025-02-06T00:39:51.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2025-02-06T00:39:51.000Z",
+                    "updatedAt": "2025-02-06T00:39:51.000Z",
+                    "modifierGroupId": "9ac1763f-a041-4be0-ab0b-755e35b0e4c4",
+                    "itemId": "c9c30d2d-beea-4ced-81fb-15deeab8ff18"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "9ba80744-65fc-11f0-babb-4201ac1a510a",
+                      "entityId": "c9c30d2d-beea-4ced-81fb-15deeab8ff18",
+                      "entityType": "item",
+                      "contextId": "9ac1763f-a041-4be0-ab0b-755e35b0e4c4",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2025-02-11T23:42:05.000Z",
+                      "updatedAt": "2025-07-21T06:33:26.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "a32673bf-84de-4708-b7f3-0a0015de5129",
+                      "entityId": "c9c30d2d-beea-4ced-81fb-15deeab8ff18",
+                      "entityType": "item",
+                      "ownerId": "9ac1763f-a041-4be0-ab0b-755e35b0e4c4",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2025-02-06T00:39:51.000Z",
+                      "updatedAt": "2025-02-06T00:39:51.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "7ec4e29a-ce38-4491-aec7-f592960ed661",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "c9c30d2d-beea-4ced-81fb-15deeab8ff18",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 10,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2025-02-06T00:39:51.000Z",
+                      "updatedAt": "2025-02-06T00:39:51.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                }
+              ],
+              "quantityConstraint": {
+                "id": "cda67f5b-e8d1-11ef-a93c-4201ac1a51cf",
+                "entityId": "9ac1763f-a041-4be0-ab0b-755e35b0e4c4",
+                "entityType": "modifierGroup",
+                "contextId": null,
+                "contextType": null,
+                "min": 0,
+                "max": 1,
+                "chargeAbove": 0,
+                "createdAt": "2025-02-11T23:42:06.000Z",
+                "updatedAt": "2025-02-11T23:42:06.000Z",
+                "deletedAt": null
+              },
+              "modifierGroupSortingOrder": {
+                "id": "e0bff36c-1f87-11f0-9978-4201ac1a51e0",
+                "entityId": "9ac1763f-a041-4be0-ab0b-755e35b0e4c4",
+                "entityType": "modifierGroup",
+                "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                "ownerType": "chain",
+                "lexorank": "0|i00004:",
+                "createdAt": "2025-04-22T14:41:29.000Z",
+                "updatedAt": "2025-04-22T14:41:29.000Z"
+              }
+            },
+            {
               "id": "ad49b70b-a2e3-4b9c-bf62-e76b350852c7",
               "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
               "name": "Extras",
@@ -32111,7 +32491,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -34124,7 +34504,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -36137,7 +36517,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -38150,7 +38530,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -40163,7 +40543,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -45449,7 +45829,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -49095,7 +49475,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -56007,7 +56387,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -58020,7 +58400,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -66424,7 +66804,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -67505,7 +67885,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -69518,7 +69898,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -71531,7 +71911,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -73544,7 +73924,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -75730,7 +76110,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -77743,7 +78123,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -79756,7 +80136,7 @@
               "description": null,
               "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
               "createdAt": "2025-02-06T00:39:50.000Z",
-              "updatedAt": "2025-10-23T19:53:42.000Z",
+              "updatedAt": "2026-08-05T16:56:32.000Z",
               "deletedAt": null,
               "modifierItems": [
                 {
@@ -86172,34 +86552,364 @@
       ]
     },
     {
-      "id": "8e262dfc-a8b8-4722-bdb1-9f9dd19e83d5",
-      "name": "Comida",
+      "id": "11be8ab6-b2b7-4474-bfff-38920ed01854",
+      "name": "RUFUS",
       "sortOrder": 0,
       "items": [
         {
-          "id": "3c4a74ce-9d91-4135-82a3-db95f92eac5e",
-          "name": "Rufus - Diavola",
+          "id": "f21c6a39-93f6-4b90-99b5-792bba6b4a95",
+          "name": "TOAST",
           "description": null,
-          "menuName": "Comida",
-          "basePrice": 100,
+          "menuName": "RUFUS",
+          "basePrice": 120,
+          "imageUrl": null,
+          "modifierGroups": [
+            {
+              "id": "b283813f-ea38-44bc-a67b-616931d6c887",
+              "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+              "name": "TOAST TYPE",
+              "description": null,
+              "defaultItemId": null,
+              "createdAt": "2026-05-31T16:01:24.000Z",
+              "updatedAt": "2026-05-31T16:01:33.000Z",
+              "deletedAt": null,
+              "modifierItems": [
+                {
+                  "id": "0194dbb8-0885-4ff6-9550-4d0f12f5f41e",
+                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "AVOCADO",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-05-31T16:01:31.000Z",
+                  "updatedAt": "2026-05-31T16:01:31.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-05-31T16:01:31.000Z",
+                    "updatedAt": "2026-05-31T16:01:31.000Z",
+                    "modifierGroupId": "b283813f-ea38-44bc-a67b-616931d6c887",
+                    "itemId": "0194dbb8-0885-4ff6-9550-4d0f12f5f41e"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "4c73c94b-2889-4e17-b28e-f57a2d346cbd",
+                      "entityId": "0194dbb8-0885-4ff6-9550-4d0f12f5f41e",
+                      "entityType": "item",
+                      "contextId": "b283813f-ea38-44bc-a67b-616931d6c887",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-05-31T16:01:31.000Z",
+                      "updatedAt": "2026-05-31T16:01:31.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "f3c3792f-9301-49b2-941a-cb653e6f8e8d",
+                      "entityId": "0194dbb8-0885-4ff6-9550-4d0f12f5f41e",
+                      "entityType": "item",
+                      "ownerId": "b283813f-ea38-44bc-a67b-616931d6c887",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0001b:",
+                      "createdAt": "2026-05-31T16:01:31.000Z",
+                      "updatedAt": "2026-05-31T16:01:31.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "28d186cc-0357-4099-9999-c534ac2ae7f7",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "0194dbb8-0885-4ff6-9550-4d0f12f5f41e",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-05-31T16:01:31.000Z",
+                      "updatedAt": "2026-05-31T16:01:31.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "2c3b9e9b-42f9-4320-9559-0ec61edbd589",
+                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "PAVO Y QUESO",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-05-31T16:01:25.000Z",
+                  "updatedAt": "2026-05-31T16:01:25.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-05-31T16:01:31.000Z",
+                    "updatedAt": "2026-05-31T16:01:31.000Z",
+                    "modifierGroupId": "b283813f-ea38-44bc-a67b-616931d6c887",
+                    "itemId": "2c3b9e9b-42f9-4320-9559-0ec61edbd589"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "149f8db3-4dba-450f-9fef-5202a08fa255",
+                      "entityId": "2c3b9e9b-42f9-4320-9559-0ec61edbd589",
+                      "entityType": "item",
+                      "contextId": "b283813f-ea38-44bc-a67b-616931d6c887",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-05-31T16:01:27.000Z",
+                      "updatedAt": "2026-05-31T16:01:27.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "4ef8c126-6265-48eb-95c1-3db1f2d58635",
+                      "entityId": "2c3b9e9b-42f9-4320-9559-0ec61edbd589",
+                      "entityType": "item",
+                      "ownerId": "b283813f-ea38-44bc-a67b-616931d6c887",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i00007:",
+                      "createdAt": "2026-05-31T16:01:27.000Z",
+                      "updatedAt": "2026-05-31T16:01:27.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "680e6ebb-87f7-4869-ab4b-286a6576d6f0",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "2c3b9e9b-42f9-4320-9559-0ec61edbd589",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-05-31T16:01:27.000Z",
+                      "updatedAt": "2026-05-31T16:01:27.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "384b9fdf-55ae-4e6c-8cea-5cab3e84092e",
+                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "SERRANITO",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-05-31T16:01:29.000Z",
+                  "updatedAt": "2026-05-31T16:01:29.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-05-31T16:01:31.000Z",
+                    "updatedAt": "2026-05-31T16:01:31.000Z",
+                    "modifierGroupId": "b283813f-ea38-44bc-a67b-616931d6c887",
+                    "itemId": "384b9fdf-55ae-4e6c-8cea-5cab3e84092e"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "55736d6a-75be-45f7-ba10-ec6da3934a61",
+                      "entityId": "384b9fdf-55ae-4e6c-8cea-5cab3e84092e",
+                      "entityType": "item",
+                      "contextId": "b283813f-ea38-44bc-a67b-616931d6c887",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-05-31T16:01:30.000Z",
+                      "updatedAt": "2026-05-31T16:01:30.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "579ac011-fdc5-4935-a17d-1777c761685b",
+                      "entityId": "384b9fdf-55ae-4e6c-8cea-5cab3e84092e",
+                      "entityType": "item",
+                      "ownerId": "b283813f-ea38-44bc-a67b-616931d6c887",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2026-05-31T16:01:30.000Z",
+                      "updatedAt": "2026-05-31T16:01:30.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "51493d31-3aa1-477c-80ae-62cf549a7de1",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "384b9fdf-55ae-4e6c-8cea-5cab3e84092e",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 40,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-05-31T16:01:30.000Z",
+                      "updatedAt": "2026-05-31T16:01:30.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "6063e0bd-56ef-4f13-9900-94015854639e",
+                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "SALMONITO",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-05-31T16:01:30.000Z",
+                  "updatedAt": "2026-05-31T16:01:30.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-05-31T16:01:31.000Z",
+                    "updatedAt": "2026-05-31T16:01:31.000Z",
+                    "modifierGroupId": "b283813f-ea38-44bc-a67b-616931d6c887",
+                    "itemId": "6063e0bd-56ef-4f13-9900-94015854639e"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "04cca063-b185-462f-b299-04cbc36af6f2",
+                      "entityId": "6063e0bd-56ef-4f13-9900-94015854639e",
+                      "entityType": "item",
+                      "contextId": "b283813f-ea38-44bc-a67b-616931d6c887",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-05-31T16:01:30.000Z",
+                      "updatedAt": "2026-05-31T16:01:30.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "dcbfb6f9-5320-4af0-8c04-cc4966074a12",
+                      "entityId": "6063e0bd-56ef-4f13-9900-94015854639e",
+                      "entityType": "item",
+                      "ownerId": "b283813f-ea38-44bc-a67b-616931d6c887",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i00013:",
+                      "createdAt": "2026-05-31T16:01:31.000Z",
+                      "updatedAt": "2026-05-31T16:01:31.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "4ecc6bdb-668d-41b1-8eef-921cc297de2b",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "6063e0bd-56ef-4f13-9900-94015854639e",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 55,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-05-31T16:01:30.000Z",
+                      "updatedAt": "2026-05-31T16:01:30.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                }
+              ],
+              "quantityConstraint": {
+                "id": "c6b4b022-0aec-41f8-a73e-9da318e08054",
+                "entityId": "b283813f-ea38-44bc-a67b-616931d6c887",
+                "entityType": "modifierGroup",
+                "contextId": "b283813f-ea38-44bc-a67b-616931d6c887",
+                "contextType": "modifier_group",
+                "min": 1,
+                "max": 1,
+                "chargeAbove": 0,
+                "createdAt": "2026-05-31T16:01:24.000Z",
+                "updatedAt": "2026-05-31T16:05:53.000Z",
+                "deletedAt": null
+              },
+              "modifierGroupSortingOrder": {
+                "id": "99775916-2249-43a5-8319-403631e02009",
+                "entityId": "b283813f-ea38-44bc-a67b-616931d6c887",
+                "entityType": "modifierGroup",
+                "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                "ownerType": "chain",
+                "lexorank": "0|i0002l:",
+                "createdAt": "2026-05-31T16:01:24.000Z",
+                "updatedAt": "2026-05-31T16:01:24.000Z"
+              }
+            }
+          ]
+        },
+        {
+          "id": "2183fdbd-d251-4fb3-920f-a6dbe5c40065",
+          "name": "Rufus - Calabresa",
+          "description": null,
+          "menuName": "RUFUS",
+          "basePrice": 115,
           "imageUrl": null,
           "modifierGroups": []
         },
         {
-          "id": "cc058018-1746-408b-bfb1-d538d8be277c",
-          "name": "Rufus - Margherita",
+          "id": "8a11d684-bcb7-474a-bc7a-6183d7b6e16d",
+          "name": "Rufus - Genovesa",
           "description": null,
-          "menuName": "Comida",
-          "basePrice": 90,
+          "menuName": "RUFUS",
+          "basePrice": 125,
           "imageUrl": null,
           "modifierGroups": []
         },
         {
-          "id": "eedf1e0e-a759-49f3-9ef4-2aae1ab51945",
-          "name": "Rufus - Pepperoni",
+          "id": "cf45f6e0-9131-408b-a721-2975221b94a3",
+          "name": "Rufus - Capriense",
           "description": null,
-          "menuName": "Comida",
-          "basePrice": 90,
+          "menuName": "RUFUS",
+          "basePrice": 175,
+          "imageUrl": null,
+          "modifierGroups": []
+        },
+        {
+          "id": "d0f0f710-78eb-404a-b6d9-204106606769",
+          "name": "Rufus - Florentina",
+          "description": null,
+          "menuName": "RUFUS",
+          "basePrice": 135,
           "imageUrl": null,
           "modifierGroups": []
         },
@@ -86207,82 +86917,1027 @@
           "id": "1ef32c48-30c8-44f3-b29b-62f065fc1363",
           "name": "Rufus - Jamos y Hongos",
           "description": null,
-          "menuName": "Comida",
+          "menuName": "RUFUS",
           "basePrice": 130,
           "imageUrl": null,
-          "modifierGroups": []
+          "modifierGroups": [
+            {
+              "id": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+              "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+              "name": "Orilla Rellena",
+              "description": null,
+              "defaultItemId": null,
+              "createdAt": "2026-08-05T17:12:29.000Z",
+              "updatedAt": "2026-08-05T17:12:32.000Z",
+              "deletedAt": null,
+              "modifierItems": [
+                {
+                  "id": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Rellena de queso ",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-08-05T17:12:30.000Z",
+                  "updatedAt": "2026-08-05T17:12:30.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-08-05T17:12:31.000Z",
+                    "updatedAt": "2026-08-05T17:12:31.000Z",
+                    "modifierGroupId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                    "itemId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "655ab5ba-c67b-4b99-b836-5ae80d8d3a11",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "66b2a859-77b5-484e-a1e3-791b1518aca6",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "ownerId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i00007:",
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "32ed616e-b9fb-4713-aae3-f435db8c0fa5",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 35,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                }
+              ],
+              "quantityConstraint": {
+                "id": "e14ea3f9-c56c-40fa-932e-dd12e83fb412",
+                "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "entityType": "modifierGroup",
+                "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "contextType": "modifier_group",
+                "min": 0,
+                "max": null,
+                "chargeAbove": 0,
+                "createdAt": "2026-08-05T17:12:30.000Z",
+                "updatedAt": "2026-08-05T17:22:21.000Z",
+                "deletedAt": null
+              },
+              "modifierGroupSortingOrder": {
+                "id": "b0eedf73-2d62-40cb-ab2d-fb4a66840bed",
+                "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "entityType": "modifierGroup",
+                "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                "ownerType": "chain",
+                "lexorank": "0|i0002t:",
+                "createdAt": "2026-08-05T17:12:30.000Z",
+                "updatedAt": "2026-08-05T17:12:30.000Z"
+              }
+            }
+          ]
+        },
+        {
+          "id": "240c839d-71ea-48da-a15d-ec21aaa59c2c",
+          "name": "Rufus - Pera y Nuez",
+          "description": null,
+          "menuName": "RUFUS",
+          "basePrice": 120,
+          "imageUrl": null,
+          "modifierGroups": [
+            {
+              "id": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+              "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+              "name": "Orilla Rellena",
+              "description": null,
+              "defaultItemId": null,
+              "createdAt": "2026-08-05T17:12:29.000Z",
+              "updatedAt": "2026-08-05T17:12:32.000Z",
+              "deletedAt": null,
+              "modifierItems": [
+                {
+                  "id": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Rellena de queso ",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-08-05T17:12:30.000Z",
+                  "updatedAt": "2026-08-05T17:12:30.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-08-05T17:12:31.000Z",
+                    "updatedAt": "2026-08-05T17:12:31.000Z",
+                    "modifierGroupId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                    "itemId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "655ab5ba-c67b-4b99-b836-5ae80d8d3a11",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "66b2a859-77b5-484e-a1e3-791b1518aca6",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "ownerId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i00007:",
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "32ed616e-b9fb-4713-aae3-f435db8c0fa5",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 35,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                }
+              ],
+              "quantityConstraint": {
+                "id": "e14ea3f9-c56c-40fa-932e-dd12e83fb412",
+                "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "entityType": "modifierGroup",
+                "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "contextType": "modifier_group",
+                "min": 0,
+                "max": null,
+                "chargeAbove": 0,
+                "createdAt": "2026-08-05T17:12:30.000Z",
+                "updatedAt": "2026-08-05T17:22:21.000Z",
+                "deletedAt": null
+              },
+              "modifierGroupSortingOrder": {
+                "id": "b0eedf73-2d62-40cb-ab2d-fb4a66840bed",
+                "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "entityType": "modifierGroup",
+                "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                "ownerType": "chain",
+                "lexorank": "0|i0002t:",
+                "createdAt": "2026-08-05T17:12:30.000Z",
+                "updatedAt": "2026-08-05T17:12:30.000Z"
+              }
+            }
+          ]
         },
         {
           "id": "295e1548-53e8-4be2-8ab1-4ba6d8ec5e36",
           "name": "Rufus - Cuatro Estaciones",
           "description": null,
-          "menuName": "Comida",
+          "menuName": "RUFUS",
           "basePrice": 100,
           "imageUrl": null,
-          "modifierGroups": []
+          "modifierGroups": [
+            {
+              "id": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+              "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+              "name": "Orilla Rellena",
+              "description": null,
+              "defaultItemId": null,
+              "createdAt": "2026-08-05T17:12:29.000Z",
+              "updatedAt": "2026-08-05T17:12:32.000Z",
+              "deletedAt": null,
+              "modifierItems": [
+                {
+                  "id": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Rellena de queso ",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-08-05T17:12:30.000Z",
+                  "updatedAt": "2026-08-05T17:12:30.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-08-05T17:12:31.000Z",
+                    "updatedAt": "2026-08-05T17:12:31.000Z",
+                    "modifierGroupId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                    "itemId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "655ab5ba-c67b-4b99-b836-5ae80d8d3a11",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "66b2a859-77b5-484e-a1e3-791b1518aca6",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "ownerId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i00007:",
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "32ed616e-b9fb-4713-aae3-f435db8c0fa5",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 35,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                }
+              ],
+              "quantityConstraint": {
+                "id": "e14ea3f9-c56c-40fa-932e-dd12e83fb412",
+                "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "entityType": "modifierGroup",
+                "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "contextType": "modifier_group",
+                "min": 0,
+                "max": null,
+                "chargeAbove": 0,
+                "createdAt": "2026-08-05T17:12:30.000Z",
+                "updatedAt": "2026-08-05T17:22:21.000Z",
+                "deletedAt": null
+              },
+              "modifierGroupSortingOrder": {
+                "id": "b0eedf73-2d62-40cb-ab2d-fb4a66840bed",
+                "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "entityType": "modifierGroup",
+                "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                "ownerType": "chain",
+                "lexorank": "0|i0002t:",
+                "createdAt": "2026-08-05T17:12:30.000Z",
+                "updatedAt": "2026-08-05T17:12:30.000Z"
+              }
+            }
+          ]
+        },
+        {
+          "id": "3c4a74ce-9d91-4135-82a3-db95f92eac5e",
+          "name": "Rufus - Diavola",
+          "description": null,
+          "menuName": "RUFUS",
+          "basePrice": 100,
+          "imageUrl": null,
+          "modifierGroups": [
+            {
+              "id": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+              "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+              "name": "Orilla Rellena",
+              "description": null,
+              "defaultItemId": null,
+              "createdAt": "2026-08-05T17:12:29.000Z",
+              "updatedAt": "2026-08-05T17:12:32.000Z",
+              "deletedAt": null,
+              "modifierItems": [
+                {
+                  "id": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Rellena de queso ",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-08-05T17:12:30.000Z",
+                  "updatedAt": "2026-08-05T17:12:30.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-08-05T17:12:31.000Z",
+                    "updatedAt": "2026-08-05T17:12:31.000Z",
+                    "modifierGroupId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                    "itemId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "655ab5ba-c67b-4b99-b836-5ae80d8d3a11",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "66b2a859-77b5-484e-a1e3-791b1518aca6",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "ownerId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i00007:",
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "32ed616e-b9fb-4713-aae3-f435db8c0fa5",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 35,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                }
+              ],
+              "quantityConstraint": {
+                "id": "e14ea3f9-c56c-40fa-932e-dd12e83fb412",
+                "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "entityType": "modifierGroup",
+                "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "contextType": "modifier_group",
+                "min": 0,
+                "max": null,
+                "chargeAbove": 0,
+                "createdAt": "2026-08-05T17:12:30.000Z",
+                "updatedAt": "2026-08-05T17:22:21.000Z",
+                "deletedAt": null
+              },
+              "modifierGroupSortingOrder": {
+                "id": "b0eedf73-2d62-40cb-ab2d-fb4a66840bed",
+                "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "entityType": "modifierGroup",
+                "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                "ownerType": "chain",
+                "lexorank": "0|i0002t:",
+                "createdAt": "2026-08-05T17:12:30.000Z",
+                "updatedAt": "2026-08-05T17:12:30.000Z"
+              }
+            }
+          ]
         },
         {
           "id": "81bf2ee0-0c44-4402-817f-7dbc2b194391",
           "name": "Rufus - Carbonara",
           "description": null,
-          "menuName": "Comida",
+          "menuName": "RUFUS",
           "basePrice": 100,
           "imageUrl": null,
-          "modifierGroups": []
+          "modifierGroups": [
+            {
+              "id": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+              "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+              "name": "Orilla Rellena",
+              "description": null,
+              "defaultItemId": null,
+              "createdAt": "2026-08-05T17:12:29.000Z",
+              "updatedAt": "2026-08-05T17:12:32.000Z",
+              "deletedAt": null,
+              "modifierItems": [
+                {
+                  "id": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Rellena de queso ",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-08-05T17:12:30.000Z",
+                  "updatedAt": "2026-08-05T17:12:30.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-08-05T17:12:31.000Z",
+                    "updatedAt": "2026-08-05T17:12:31.000Z",
+                    "modifierGroupId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                    "itemId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "655ab5ba-c67b-4b99-b836-5ae80d8d3a11",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "66b2a859-77b5-484e-a1e3-791b1518aca6",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "ownerId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i00007:",
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "32ed616e-b9fb-4713-aae3-f435db8c0fa5",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 35,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                }
+              ],
+              "quantityConstraint": {
+                "id": "e14ea3f9-c56c-40fa-932e-dd12e83fb412",
+                "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "entityType": "modifierGroup",
+                "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "contextType": "modifier_group",
+                "min": 0,
+                "max": null,
+                "chargeAbove": 0,
+                "createdAt": "2026-08-05T17:12:30.000Z",
+                "updatedAt": "2026-08-05T17:22:21.000Z",
+                "deletedAt": null
+              },
+              "modifierGroupSortingOrder": {
+                "id": "b0eedf73-2d62-40cb-ab2d-fb4a66840bed",
+                "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "entityType": "modifierGroup",
+                "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                "ownerType": "chain",
+                "lexorank": "0|i0002t:",
+                "createdAt": "2026-08-05T17:12:30.000Z",
+                "updatedAt": "2026-08-05T17:12:30.000Z"
+              }
+            }
+          ]
         },
         {
           "id": "beaeba4f-0ab0-4bf9-a305-f12e05c21110",
           "name": "Rufus - Capricciosa",
           "description": null,
-          "menuName": "Comida",
+          "menuName": "RUFUS",
           "basePrice": 110,
           "imageUrl": null,
-          "modifierGroups": []
+          "modifierGroups": [
+            {
+              "id": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+              "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+              "name": "Orilla Rellena",
+              "description": null,
+              "defaultItemId": null,
+              "createdAt": "2026-08-05T17:12:29.000Z",
+              "updatedAt": "2026-08-05T17:12:32.000Z",
+              "deletedAt": null,
+              "modifierItems": [
+                {
+                  "id": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Rellena de queso ",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-08-05T17:12:30.000Z",
+                  "updatedAt": "2026-08-05T17:12:30.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-08-05T17:12:31.000Z",
+                    "updatedAt": "2026-08-05T17:12:31.000Z",
+                    "modifierGroupId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                    "itemId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "655ab5ba-c67b-4b99-b836-5ae80d8d3a11",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "66b2a859-77b5-484e-a1e3-791b1518aca6",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "ownerId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i00007:",
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "32ed616e-b9fb-4713-aae3-f435db8c0fa5",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 35,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                }
+              ],
+              "quantityConstraint": {
+                "id": "e14ea3f9-c56c-40fa-932e-dd12e83fb412",
+                "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "entityType": "modifierGroup",
+                "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "contextType": "modifier_group",
+                "min": 0,
+                "max": null,
+                "chargeAbove": 0,
+                "createdAt": "2026-08-05T17:12:30.000Z",
+                "updatedAt": "2026-08-05T17:22:21.000Z",
+                "deletedAt": null
+              },
+              "modifierGroupSortingOrder": {
+                "id": "b0eedf73-2d62-40cb-ab2d-fb4a66840bed",
+                "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "entityType": "modifierGroup",
+                "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                "ownerType": "chain",
+                "lexorank": "0|i0002t:",
+                "createdAt": "2026-08-05T17:12:30.000Z",
+                "updatedAt": "2026-08-05T17:12:30.000Z"
+              }
+            }
+          ]
+        },
+        {
+          "id": "cc058018-1746-408b-bfb1-d538d8be277c",
+          "name": "Rufus - Margherita",
+          "description": null,
+          "menuName": "RUFUS",
+          "basePrice": 90,
+          "imageUrl": null,
+          "modifierGroups": [
+            {
+              "id": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+              "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+              "name": "Orilla Rellena",
+              "description": null,
+              "defaultItemId": null,
+              "createdAt": "2026-08-05T17:12:29.000Z",
+              "updatedAt": "2026-08-05T17:12:32.000Z",
+              "deletedAt": null,
+              "modifierItems": [
+                {
+                  "id": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Rellena de queso ",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-08-05T17:12:30.000Z",
+                  "updatedAt": "2026-08-05T17:12:30.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-08-05T17:12:31.000Z",
+                    "updatedAt": "2026-08-05T17:12:31.000Z",
+                    "modifierGroupId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                    "itemId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "655ab5ba-c67b-4b99-b836-5ae80d8d3a11",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "66b2a859-77b5-484e-a1e3-791b1518aca6",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "ownerId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i00007:",
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "32ed616e-b9fb-4713-aae3-f435db8c0fa5",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 35,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                }
+              ],
+              "quantityConstraint": {
+                "id": "e14ea3f9-c56c-40fa-932e-dd12e83fb412",
+                "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "entityType": "modifierGroup",
+                "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "contextType": "modifier_group",
+                "min": 0,
+                "max": null,
+                "chargeAbove": 0,
+                "createdAt": "2026-08-05T17:12:30.000Z",
+                "updatedAt": "2026-08-05T17:22:21.000Z",
+                "deletedAt": null
+              },
+              "modifierGroupSortingOrder": {
+                "id": "b0eedf73-2d62-40cb-ab2d-fb4a66840bed",
+                "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "entityType": "modifierGroup",
+                "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                "ownerType": "chain",
+                "lexorank": "0|i0002t:",
+                "createdAt": "2026-08-05T17:12:30.000Z",
+                "updatedAt": "2026-08-05T17:12:30.000Z"
+              }
+            }
+          ]
+        },
+        {
+          "id": "eedf1e0e-a759-49f3-9ef4-2aae1ab51945",
+          "name": "Rufus - Pepperoni",
+          "description": null,
+          "menuName": "RUFUS",
+          "basePrice": 90,
+          "imageUrl": null,
+          "modifierGroups": [
+            {
+              "id": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+              "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+              "name": "Orilla Rellena",
+              "description": null,
+              "defaultItemId": null,
+              "createdAt": "2026-08-05T17:12:29.000Z",
+              "updatedAt": "2026-08-05T17:12:32.000Z",
+              "deletedAt": null,
+              "modifierItems": [
+                {
+                  "id": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Rellena de queso ",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-08-05T17:12:30.000Z",
+                  "updatedAt": "2026-08-05T17:12:30.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-08-05T17:12:31.000Z",
+                    "updatedAt": "2026-08-05T17:12:31.000Z",
+                    "modifierGroupId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                    "itemId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "655ab5ba-c67b-4b99-b836-5ae80d8d3a11",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "66b2a859-77b5-484e-a1e3-791b1518aca6",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "ownerId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i00007:",
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "32ed616e-b9fb-4713-aae3-f435db8c0fa5",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 35,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                }
+              ],
+              "quantityConstraint": {
+                "id": "e14ea3f9-c56c-40fa-932e-dd12e83fb412",
+                "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "entityType": "modifierGroup",
+                "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "contextType": "modifier_group",
+                "min": 0,
+                "max": null,
+                "chargeAbove": 0,
+                "createdAt": "2026-08-05T17:12:30.000Z",
+                "updatedAt": "2026-08-05T17:22:21.000Z",
+                "deletedAt": null
+              },
+              "modifierGroupSortingOrder": {
+                "id": "b0eedf73-2d62-40cb-ab2d-fb4a66840bed",
+                "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "entityType": "modifierGroup",
+                "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                "ownerType": "chain",
+                "lexorank": "0|i0002t:",
+                "createdAt": "2026-08-05T17:12:30.000Z",
+                "updatedAt": "2026-08-05T17:12:30.000Z"
+              }
+            }
+          ]
         },
         {
           "id": "f6b7d6dc-d3d1-4f30-8d8b-adcedf42ca9a",
           "name": "Rufus - Mediterranea",
           "description": null,
-          "menuName": "Comida",
+          "menuName": "RUFUS",
           "basePrice": 130,
           "imageUrl": null,
-          "modifierGroups": []
-        },
-        {
-          "id": "1b54be0c-84af-41b9-958e-0e152034ab80",
-          "name": "Turkey Toast",
-          "description": null,
-          "menuName": "Comida",
-          "basePrice": 97,
-          "imageUrl": null,
-          "modifierGroups": []
-        },
-        {
-          "id": "39708b04-239e-4da4-88dd-bdeafd3ecb87",
-          "name": "Del Huerto",
-          "description": null,
-          "menuName": "Comida",
-          "basePrice": 90,
-          "imageUrl": null,
-          "modifierGroups": []
-        },
-        {
-          "id": "9554f1d3-e0e0-4853-93f1-e28fcaaa1f13",
-          "name": "Chicken Toast",
-          "description": null,
-          "menuName": "Comida",
-          "basePrice": 97,
-          "imageUrl": null,
-          "modifierGroups": []
-        },
-        {
-          "id": "99cdd6de-984f-44d7-8bb2-a2a9b9758b21",
-          "name": "Ceasar Salad",
-          "description": null,
-          "menuName": "Comida",
-          "basePrice": 90,
-          "imageUrl": null,
-          "modifierGroups": []
+          "modifierGroups": [
+            {
+              "id": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+              "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+              "name": "Orilla Rellena",
+              "description": null,
+              "defaultItemId": null,
+              "createdAt": "2026-08-05T17:12:29.000Z",
+              "updatedAt": "2026-08-05T17:12:32.000Z",
+              "deletedAt": null,
+              "modifierItems": [
+                {
+                  "id": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Rellena de queso ",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-08-05T17:12:30.000Z",
+                  "updatedAt": "2026-08-05T17:12:30.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-08-05T17:12:31.000Z",
+                    "updatedAt": "2026-08-05T17:12:31.000Z",
+                    "modifierGroupId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                    "itemId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "655ab5ba-c67b-4b99-b836-5ae80d8d3a11",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "66b2a859-77b5-484e-a1e3-791b1518aca6",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "ownerId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i00007:",
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "32ed616e-b9fb-4713-aae3-f435db8c0fa5",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 35,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-08-05T17:12:31.000Z",
+                      "updatedAt": "2026-08-05T17:12:31.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                }
+              ],
+              "quantityConstraint": {
+                "id": "e14ea3f9-c56c-40fa-932e-dd12e83fb412",
+                "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "entityType": "modifierGroup",
+                "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "contextType": "modifier_group",
+                "min": 0,
+                "max": null,
+                "chargeAbove": 0,
+                "createdAt": "2026-08-05T17:12:30.000Z",
+                "updatedAt": "2026-08-05T17:22:21.000Z",
+                "deletedAt": null
+              },
+              "modifierGroupSortingOrder": {
+                "id": "b0eedf73-2d62-40cb-ab2d-fb4a66840bed",
+                "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+                "entityType": "modifierGroup",
+                "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                "ownerType": "chain",
+                "lexorank": "0|i0002t:",
+                "createdAt": "2026-08-05T17:12:30.000Z",
+                "updatedAt": "2026-08-05T17:12:30.000Z"
+              }
+            }
+          ]
         }
       ]
     },
@@ -86746,897 +88401,6 @@
                 "lexorank": "0|i00005:",
                 "createdAt": "2025-04-22T14:41:29.000Z",
                 "updatedAt": "2025-04-22T14:41:29.000Z"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "11be8ab6-b2b7-4474-bfff-38920ed01854",
-      "name": "DESAYUNITOS",
-      "sortOrder": 0,
-      "items": [
-        {
-          "id": "549c0533-9f5e-4443-bbed-0adb0e6f4695",
-          "name": "CHILL & KILLERS",
-          "description": null,
-          "menuName": "DESAYUNITOS",
-          "basePrice": 139,
-          "imageUrl": null,
-          "modifierGroups": [
-            {
-              "id": "9f87459d-8866-41ad-aa8e-c9a3489b693b",
-              "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-              "name": "SALSA CHILL",
-              "description": null,
-              "defaultItemId": null,
-              "createdAt": "2026-05-31T15:56:53.000Z",
-              "updatedAt": "2026-05-31T15:56:57.000Z",
-              "deletedAt": null,
-              "modifierItems": [
-                {
-                  "id": "28e30c1e-048d-481e-901c-16fa42a6ab42",
-                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "ROJA",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-31T15:56:54.000Z",
-                  "updatedAt": "2026-05-31T15:56:54.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-31T15:56:56.000Z",
-                    "updatedAt": "2026-05-31T15:56:56.000Z",
-                    "modifierGroupId": "9f87459d-8866-41ad-aa8e-c9a3489b693b",
-                    "itemId": "28e30c1e-048d-481e-901c-16fa42a6ab42"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "d32b8071-4489-4102-a7b6-cc40506d5dc3",
-                      "entityId": "28e30c1e-048d-481e-901c-16fa42a6ab42",
-                      "entityType": "item",
-                      "contextId": "9f87459d-8866-41ad-aa8e-c9a3489b693b",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-31T15:56:54.000Z",
-                      "updatedAt": "2026-05-31T15:56:54.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "c2617527-b632-419d-b09d-9c50810ddb73",
-                      "entityId": "28e30c1e-048d-481e-901c-16fa42a6ab42",
-                      "entityType": "item",
-                      "ownerId": "9f87459d-8866-41ad-aa8e-c9a3489b693b",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-31T15:56:55.000Z",
-                      "updatedAt": "2026-05-31T15:56:55.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "4b974b4c-86e5-45e9-a93b-db7062f42f1f",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "28e30c1e-048d-481e-901c-16fa42a6ab42",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-31T15:56:54.000Z",
-                      "updatedAt": "2026-05-31T15:56:54.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
-                {
-                  "id": "a8850eff-2f8c-424e-8184-0a10005f1f58",
-                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "VERDE",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-31T15:56:55.000Z",
-                  "updatedAt": "2026-05-31T15:56:55.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-31T15:56:56.000Z",
-                    "updatedAt": "2026-05-31T15:56:56.000Z",
-                    "modifierGroupId": "9f87459d-8866-41ad-aa8e-c9a3489b693b",
-                    "itemId": "a8850eff-2f8c-424e-8184-0a10005f1f58"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "2a0366e8-48d1-400a-b4d9-5b53bffef3bc",
-                      "entityId": "a8850eff-2f8c-424e-8184-0a10005f1f58",
-                      "entityType": "item",
-                      "contextId": "9f87459d-8866-41ad-aa8e-c9a3489b693b",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-31T15:56:55.000Z",
-                      "updatedAt": "2026-05-31T15:56:55.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "d7f1c693-5480-4f24-9246-5ca368e27ed6",
-                      "entityId": "a8850eff-2f8c-424e-8184-0a10005f1f58",
-                      "entityType": "item",
-                      "ownerId": "9f87459d-8866-41ad-aa8e-c9a3489b693b",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i0000f:",
-                      "createdAt": "2026-05-31T15:56:55.000Z",
-                      "updatedAt": "2026-05-31T15:56:55.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "6cfed257-4ce5-48f9-906a-f7f9319dbfcc",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "a8850eff-2f8c-424e-8184-0a10005f1f58",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-31T15:56:55.000Z",
-                      "updatedAt": "2026-05-31T15:56:55.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                }
-              ],
-              "quantityConstraint": {
-                "id": "bd32be04-ac3b-4223-bd0f-26718b0de914",
-                "entityId": "9f87459d-8866-41ad-aa8e-c9a3489b693b",
-                "entityType": "modifierGroup",
-                "contextId": null,
-                "contextType": null,
-                "min": 1,
-                "max": 2,
-                "chargeAbove": 0,
-                "createdAt": "2026-05-31T15:56:54.000Z",
-                "updatedAt": "2026-05-31T15:56:54.000Z",
-                "deletedAt": null
-              },
-              "modifierGroupSortingOrder": {
-                "id": "fd6ccf23-2b5f-499c-bcc2-f8f55243ab57",
-                "entityId": "9f87459d-8866-41ad-aa8e-c9a3489b693b",
-                "entityType": "modifierGroup",
-                "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                "ownerType": "chain",
-                "lexorank": "0|i00025:",
-                "createdAt": "2026-05-31T15:56:54.000Z",
-                "updatedAt": "2026-05-31T15:56:54.000Z"
-              }
-            },
-            {
-              "id": "dd9417bc-8944-4387-8b72-a6a450a0235f",
-              "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-              "name": "PROTEINA CHILL",
-              "description": null,
-              "defaultItemId": null,
-              "createdAt": "2026-05-31T15:58:20.000Z",
-              "updatedAt": "2026-05-31T15:58:24.000Z",
-              "deletedAt": null,
-              "modifierItems": [
-                {
-                  "id": "55520ce0-854b-4a12-bc78-44c563be51c0",
-                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "ARRACHERA",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-31T15:58:22.000Z",
-                  "updatedAt": "2026-05-31T15:58:22.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-31T15:58:23.000Z",
-                    "updatedAt": "2026-05-31T15:58:23.000Z",
-                    "modifierGroupId": "dd9417bc-8944-4387-8b72-a6a450a0235f",
-                    "itemId": "55520ce0-854b-4a12-bc78-44c563be51c0"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "2de463a4-b993-47a5-aca5-762741950443",
-                      "entityId": "55520ce0-854b-4a12-bc78-44c563be51c0",
-                      "entityType": "item",
-                      "contextId": "dd9417bc-8944-4387-8b72-a6a450a0235f",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-31T15:58:23.000Z",
-                      "updatedAt": "2026-05-31T15:58:23.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "262de090-c884-41e0-993c-d20d31744e7a",
-                      "entityId": "55520ce0-854b-4a12-bc78-44c563be51c0",
-                      "entityType": "item",
-                      "ownerId": "dd9417bc-8944-4387-8b72-a6a450a0235f",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i0000n:",
-                      "createdAt": "2026-05-31T15:58:23.000Z",
-                      "updatedAt": "2026-05-31T15:58:23.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "d4d9f415-484f-497c-b4f4-12728f9cd451",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "55520ce0-854b-4a12-bc78-44c563be51c0",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 25,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-31T15:58:23.000Z",
-                      "updatedAt": "2026-05-31T15:58:23.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
-                {
-                  "id": "7cebfef4-963d-43ce-89f2-54cfe74b42bc",
-                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "HUEVO",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-31T15:58:20.000Z",
-                  "updatedAt": "2026-05-31T15:58:20.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-31T15:58:23.000Z",
-                    "updatedAt": "2026-05-31T15:58:23.000Z",
-                    "modifierGroupId": "dd9417bc-8944-4387-8b72-a6a450a0235f",
-                    "itemId": "7cebfef4-963d-43ce-89f2-54cfe74b42bc"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "a6189c61-0bb6-442c-bb97-78f023296f1e",
-                      "entityId": "7cebfef4-963d-43ce-89f2-54cfe74b42bc",
-                      "entityType": "item",
-                      "contextId": "dd9417bc-8944-4387-8b72-a6a450a0235f",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-31T15:58:21.000Z",
-                      "updatedAt": "2026-05-31T15:58:21.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "efe06583-1f3b-4473-8ab9-5a930b012372",
-                      "entityId": "7cebfef4-963d-43ce-89f2-54cfe74b42bc",
-                      "entityType": "item",
-                      "ownerId": "dd9417bc-8944-4387-8b72-a6a450a0235f",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-31T15:58:21.000Z",
-                      "updatedAt": "2026-05-31T15:58:21.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "f781101d-dee5-4252-b330-660be5b29ba6",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "7cebfef4-963d-43ce-89f2-54cfe74b42bc",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-31T15:58:21.000Z",
-                      "updatedAt": "2026-05-31T15:58:21.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
-                {
-                  "id": "d52f0d1d-0b03-45a3-9671-941680b4a3da",
-                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "POLLO",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-31T15:58:21.000Z",
-                  "updatedAt": "2026-05-31T15:58:21.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-31T15:58:23.000Z",
-                    "updatedAt": "2026-05-31T15:58:23.000Z",
-                    "modifierGroupId": "dd9417bc-8944-4387-8b72-a6a450a0235f",
-                    "itemId": "d52f0d1d-0b03-45a3-9671-941680b4a3da"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "dfa1fb54-3b05-4e32-9ef4-7f793c7077fe",
-                      "entityId": "d52f0d1d-0b03-45a3-9671-941680b4a3da",
-                      "entityType": "item",
-                      "contextId": "dd9417bc-8944-4387-8b72-a6a450a0235f",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-31T15:58:22.000Z",
-                      "updatedAt": "2026-05-31T15:58:22.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "59ef7bfe-e1db-4313-8090-1f576c94e6a8",
-                      "entityId": "d52f0d1d-0b03-45a3-9671-941680b4a3da",
-                      "entityType": "item",
-                      "ownerId": "dd9417bc-8944-4387-8b72-a6a450a0235f",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i0000f:",
-                      "createdAt": "2026-05-31T15:58:22.000Z",
-                      "updatedAt": "2026-05-31T15:58:22.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "1c8039e6-defb-4f96-b35b-0c325091824c",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "d52f0d1d-0b03-45a3-9671-941680b4a3da",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 10,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-31T15:58:22.000Z",
-                      "updatedAt": "2026-05-31T15:58:22.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                }
-              ],
-              "quantityConstraint": {
-                "id": "b53850fb-352c-4186-b64e-a1fad758b5fc",
-                "entityId": "dd9417bc-8944-4387-8b72-a6a450a0235f",
-                "entityType": "modifierGroup",
-                "contextId": null,
-                "contextType": null,
-                "min": 1,
-                "max": 3,
-                "chargeAbove": 0,
-                "createdAt": "2026-05-31T15:58:20.000Z",
-                "updatedAt": "2026-05-31T15:58:20.000Z",
-                "deletedAt": null
-              },
-              "modifierGroupSortingOrder": {
-                "id": "cc7ba826-0ce3-43c2-b277-fe45c2b31a6d",
-                "entityId": "dd9417bc-8944-4387-8b72-a6a450a0235f",
-                "entityType": "modifierGroup",
-                "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                "ownerType": "chain",
-                "lexorank": "0|i0002d:",
-                "createdAt": "2026-05-31T15:58:20.000Z",
-                "updatedAt": "2026-05-31T15:58:20.000Z"
-              }
-            }
-          ]
-        },
-        {
-          "id": "f21c6a39-93f6-4b90-99b5-792bba6b4a95",
-          "name": "TOAST",
-          "description": null,
-          "menuName": "DESAYUNITOS",
-          "basePrice": 120,
-          "imageUrl": null,
-          "modifierGroups": [
-            {
-              "id": "b283813f-ea38-44bc-a67b-616931d6c887",
-              "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-              "name": "TOAST TYPE",
-              "description": null,
-              "defaultItemId": null,
-              "createdAt": "2026-05-31T16:01:24.000Z",
-              "updatedAt": "2026-05-31T16:01:33.000Z",
-              "deletedAt": null,
-              "modifierItems": [
-                {
-                  "id": "0194dbb8-0885-4ff6-9550-4d0f12f5f41e",
-                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "AVOCADO",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-31T16:01:31.000Z",
-                  "updatedAt": "2026-05-31T16:01:31.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-31T16:01:31.000Z",
-                    "updatedAt": "2026-05-31T16:01:31.000Z",
-                    "modifierGroupId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                    "itemId": "0194dbb8-0885-4ff6-9550-4d0f12f5f41e"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "4c73c94b-2889-4e17-b28e-f57a2d346cbd",
-                      "entityId": "0194dbb8-0885-4ff6-9550-4d0f12f5f41e",
-                      "entityType": "item",
-                      "contextId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-31T16:01:31.000Z",
-                      "updatedAt": "2026-05-31T16:01:31.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "f3c3792f-9301-49b2-941a-cb653e6f8e8d",
-                      "entityId": "0194dbb8-0885-4ff6-9550-4d0f12f5f41e",
-                      "entityType": "item",
-                      "ownerId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i0001b:",
-                      "createdAt": "2026-05-31T16:01:31.000Z",
-                      "updatedAt": "2026-05-31T16:01:31.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "28d186cc-0357-4099-9999-c534ac2ae7f7",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "0194dbb8-0885-4ff6-9550-4d0f12f5f41e",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-31T16:01:31.000Z",
-                      "updatedAt": "2026-05-31T16:01:31.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
-                {
-                  "id": "2c3b9e9b-42f9-4320-9559-0ec61edbd589",
-                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "PAVO Y QUESO",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-31T16:01:25.000Z",
-                  "updatedAt": "2026-05-31T16:01:25.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-31T16:01:31.000Z",
-                    "updatedAt": "2026-05-31T16:01:31.000Z",
-                    "modifierGroupId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                    "itemId": "2c3b9e9b-42f9-4320-9559-0ec61edbd589"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "149f8db3-4dba-450f-9fef-5202a08fa255",
-                      "entityId": "2c3b9e9b-42f9-4320-9559-0ec61edbd589",
-                      "entityType": "item",
-                      "contextId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-31T16:01:27.000Z",
-                      "updatedAt": "2026-05-31T16:01:27.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "4ef8c126-6265-48eb-95c1-3db1f2d58635",
-                      "entityId": "2c3b9e9b-42f9-4320-9559-0ec61edbd589",
-                      "entityType": "item",
-                      "ownerId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-31T16:01:27.000Z",
-                      "updatedAt": "2026-05-31T16:01:27.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "680e6ebb-87f7-4869-ab4b-286a6576d6f0",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "2c3b9e9b-42f9-4320-9559-0ec61edbd589",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-31T16:01:27.000Z",
-                      "updatedAt": "2026-05-31T16:01:27.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
-                {
-                  "id": "384b9fdf-55ae-4e6c-8cea-5cab3e84092e",
-                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "SERRANITO",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-31T16:01:29.000Z",
-                  "updatedAt": "2026-05-31T16:01:29.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-31T16:01:31.000Z",
-                    "updatedAt": "2026-05-31T16:01:31.000Z",
-                    "modifierGroupId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                    "itemId": "384b9fdf-55ae-4e6c-8cea-5cab3e84092e"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "55736d6a-75be-45f7-ba10-ec6da3934a61",
-                      "entityId": "384b9fdf-55ae-4e6c-8cea-5cab3e84092e",
-                      "entityType": "item",
-                      "contextId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-31T16:01:30.000Z",
-                      "updatedAt": "2026-05-31T16:01:30.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "579ac011-fdc5-4935-a17d-1777c761685b",
-                      "entityId": "384b9fdf-55ae-4e6c-8cea-5cab3e84092e",
-                      "entityType": "item",
-                      "ownerId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i0000v:",
-                      "createdAt": "2026-05-31T16:01:30.000Z",
-                      "updatedAt": "2026-05-31T16:01:30.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "51493d31-3aa1-477c-80ae-62cf549a7de1",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "384b9fdf-55ae-4e6c-8cea-5cab3e84092e",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 40,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-31T16:01:30.000Z",
-                      "updatedAt": "2026-05-31T16:01:30.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
-                {
-                  "id": "6063e0bd-56ef-4f13-9900-94015854639e",
-                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "SALMONITO",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-31T16:01:30.000Z",
-                  "updatedAt": "2026-05-31T16:01:30.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-31T16:01:31.000Z",
-                    "updatedAt": "2026-05-31T16:01:31.000Z",
-                    "modifierGroupId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                    "itemId": "6063e0bd-56ef-4f13-9900-94015854639e"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "04cca063-b185-462f-b299-04cbc36af6f2",
-                      "entityId": "6063e0bd-56ef-4f13-9900-94015854639e",
-                      "entityType": "item",
-                      "contextId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-31T16:01:30.000Z",
-                      "updatedAt": "2026-05-31T16:01:30.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "dcbfb6f9-5320-4af0-8c04-cc4966074a12",
-                      "entityId": "6063e0bd-56ef-4f13-9900-94015854639e",
-                      "entityType": "item",
-                      "ownerId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00013:",
-                      "createdAt": "2026-05-31T16:01:31.000Z",
-                      "updatedAt": "2026-05-31T16:01:31.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "4ecc6bdb-668d-41b1-8eef-921cc297de2b",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "6063e0bd-56ef-4f13-9900-94015854639e",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 55,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-31T16:01:30.000Z",
-                      "updatedAt": "2026-05-31T16:01:30.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
-                {
-                  "id": "640b6f47-f3d3-46e3-b727-93feb1d5aa7a",
-                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "MEXA",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-31T16:01:27.000Z",
-                  "updatedAt": "2026-05-31T16:01:27.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-31T16:01:31.000Z",
-                    "updatedAt": "2026-05-31T16:01:31.000Z",
-                    "modifierGroupId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                    "itemId": "640b6f47-f3d3-46e3-b727-93feb1d5aa7a"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "86fa6b91-2dfb-447c-b71e-f54c8407019f",
-                      "entityId": "640b6f47-f3d3-46e3-b727-93feb1d5aa7a",
-                      "entityType": "item",
-                      "contextId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-31T16:01:28.000Z",
-                      "updatedAt": "2026-05-31T16:01:28.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "168b0a61-d6db-40ce-8943-24e5d4901e92",
-                      "entityId": "640b6f47-f3d3-46e3-b727-93feb1d5aa7a",
-                      "entityType": "item",
-                      "ownerId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i0000f:",
-                      "createdAt": "2026-05-31T16:01:28.000Z",
-                      "updatedAt": "2026-05-31T16:01:28.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "4c33736d-5bb6-4918-9eaf-127d6a56bccc",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "640b6f47-f3d3-46e3-b727-93feb1d5aa7a",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-31T16:01:28.000Z",
-                      "updatedAt": "2026-05-31T16:01:28.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
-                {
-                  "id": "e79d44a9-f037-43a3-ac0c-8de1ea1e9b7f",
-                  "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "ARRACHERA",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-31T16:01:28.000Z",
-                  "updatedAt": "2026-05-31T16:01:28.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-31T16:01:31.000Z",
-                    "updatedAt": "2026-05-31T16:01:31.000Z",
-                    "modifierGroupId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                    "itemId": "e79d44a9-f037-43a3-ac0c-8de1ea1e9b7f"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "d4bff78e-7902-472f-9fe9-ffd75153d0d2",
-                      "entityId": "e79d44a9-f037-43a3-ac0c-8de1ea1e9b7f",
-                      "entityType": "item",
-                      "contextId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-31T16:01:29.000Z",
-                      "updatedAt": "2026-05-31T16:01:29.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "7ddb4bff-05d4-49f5-88b6-195acacb2da4",
-                      "entityId": "e79d44a9-f037-43a3-ac0c-8de1ea1e9b7f",
-                      "entityType": "item",
-                      "ownerId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i0000n:",
-                      "createdAt": "2026-05-31T16:01:29.000Z",
-                      "updatedAt": "2026-05-31T16:01:29.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "8f017a46-0552-4325-908d-2e4b40b51fc5",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "e79d44a9-f037-43a3-ac0c-8de1ea1e9b7f",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 30,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-31T16:01:29.000Z",
-                      "updatedAt": "2026-05-31T16:01:29.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                }
-              ],
-              "quantityConstraint": {
-                "id": "c6b4b022-0aec-41f8-a73e-9da318e08054",
-                "entityId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                "entityType": "modifierGroup",
-                "contextId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                "contextType": "modifier_group",
-                "min": 1,
-                "max": 1,
-                "chargeAbove": 0,
-                "createdAt": "2026-05-31T16:01:24.000Z",
-                "updatedAt": "2026-05-31T16:05:53.000Z",
-                "deletedAt": null
-              },
-              "modifierGroupSortingOrder": {
-                "id": "99775916-2249-43a5-8319-403631e02009",
-                "entityId": "b283813f-ea38-44bc-a67b-616931d6c887",
-                "entityType": "modifierGroup",
-                "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                "ownerType": "chain",
-                "lexorank": "0|i0002l:",
-                "createdAt": "2026-05-31T16:01:24.000Z",
-                "updatedAt": "2026-05-31T16:01:24.000Z"
               }
             }
           ]
@@ -89275,7 +90039,7 @@
       "description": null,
       "defaultItemId": "37d99de8-802c-45d1-b212-9ed3a6ea1448",
       "createdAt": "2025-02-06T00:39:50.000Z",
-      "updatedAt": "2025-10-23T19:53:42.000Z",
+      "updatedAt": "2026-08-05T16:56:32.000Z",
       "deletedAt": null,
       "modifierItems": [
         {
@@ -92482,144 +93246,6 @@
               "channel": null
             }
           ]
-        },
-        {
-          "id": "640b6f47-f3d3-46e3-b727-93feb1d5aa7a",
-          "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-          "sizeGroupId": null,
-          "name": "MEXA",
-          "image": null,
-          "featured": true,
-          "description": null,
-          "sku": null,
-          "alergies": null,
-          "preparationTime": null,
-          "tags": null,
-          "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-          "createdAt": "2026-05-31T16:01:27.000Z",
-          "updatedAt": "2026-05-31T16:01:27.000Z",
-          "deletedAt": null,
-          "modifierGroupItem": {
-            "createdAt": "2026-05-31T16:01:31.000Z",
-            "updatedAt": "2026-05-31T16:01:31.000Z",
-            "modifierGroupId": "b283813f-ea38-44bc-a67b-616931d6c887",
-            "itemId": "640b6f47-f3d3-46e3-b727-93feb1d5aa7a"
-          },
-          "quantityConstraints": [
-            {
-              "id": "86fa6b91-2dfb-447c-b71e-f54c8407019f",
-              "entityId": "640b6f47-f3d3-46e3-b727-93feb1d5aa7a",
-              "entityType": "item",
-              "contextId": "b283813f-ea38-44bc-a67b-616931d6c887",
-              "contextType": "modifier_group",
-              "min": 0,
-              "max": 1,
-              "chargeAbove": 0,
-              "createdAt": "2026-05-31T16:01:28.000Z",
-              "updatedAt": "2026-05-31T16:01:28.000Z",
-              "deletedAt": null
-            }
-          ],
-          "itemSortingOrder": [
-            {
-              "id": "168b0a61-d6db-40ce-8943-24e5d4901e92",
-              "entityId": "640b6f47-f3d3-46e3-b727-93feb1d5aa7a",
-              "entityType": "item",
-              "ownerId": "b283813f-ea38-44bc-a67b-616931d6c887",
-              "ownerType": "modifierGroup",
-              "lexorank": "0|i0000f:",
-              "createdAt": "2026-05-31T16:01:28.000Z",
-              "updatedAt": "2026-05-31T16:01:28.000Z"
-            }
-          ],
-          "prices": [
-            {
-              "id": "4c33736d-5bb6-4918-9eaf-127d6a56bccc",
-              "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-              "ownerType": "chain",
-              "entityId": "640b6f47-f3d3-46e3-b727-93feb1d5aa7a",
-              "entityType": "item",
-              "channelId": null,
-              "contextType": null,
-              "contextId": null,
-              "amount": 0,
-              "currency": null,
-              "info": null,
-              "createdAt": "2026-05-31T16:01:28.000Z",
-              "updatedAt": "2026-05-31T16:01:28.000Z",
-              "deletedAt": null,
-              "channel": null
-            }
-          ]
-        },
-        {
-          "id": "e79d44a9-f037-43a3-ac0c-8de1ea1e9b7f",
-          "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-          "sizeGroupId": null,
-          "name": "ARRACHERA",
-          "image": null,
-          "featured": true,
-          "description": null,
-          "sku": null,
-          "alergies": null,
-          "preparationTime": null,
-          "tags": null,
-          "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-          "createdAt": "2026-05-31T16:01:28.000Z",
-          "updatedAt": "2026-05-31T16:01:28.000Z",
-          "deletedAt": null,
-          "modifierGroupItem": {
-            "createdAt": "2026-05-31T16:01:31.000Z",
-            "updatedAt": "2026-05-31T16:01:31.000Z",
-            "modifierGroupId": "b283813f-ea38-44bc-a67b-616931d6c887",
-            "itemId": "e79d44a9-f037-43a3-ac0c-8de1ea1e9b7f"
-          },
-          "quantityConstraints": [
-            {
-              "id": "d4bff78e-7902-472f-9fe9-ffd75153d0d2",
-              "entityId": "e79d44a9-f037-43a3-ac0c-8de1ea1e9b7f",
-              "entityType": "item",
-              "contextId": "b283813f-ea38-44bc-a67b-616931d6c887",
-              "contextType": "modifier_group",
-              "min": 0,
-              "max": 1,
-              "chargeAbove": 0,
-              "createdAt": "2026-05-31T16:01:29.000Z",
-              "updatedAt": "2026-05-31T16:01:29.000Z",
-              "deletedAt": null
-            }
-          ],
-          "itemSortingOrder": [
-            {
-              "id": "7ddb4bff-05d4-49f5-88b6-195acacb2da4",
-              "entityId": "e79d44a9-f037-43a3-ac0c-8de1ea1e9b7f",
-              "entityType": "item",
-              "ownerId": "b283813f-ea38-44bc-a67b-616931d6c887",
-              "ownerType": "modifierGroup",
-              "lexorank": "0|i0000n:",
-              "createdAt": "2026-05-31T16:01:29.000Z",
-              "updatedAt": "2026-05-31T16:01:29.000Z"
-            }
-          ],
-          "prices": [
-            {
-              "id": "8f017a46-0552-4325-908d-2e4b40b51fc5",
-              "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-              "ownerType": "chain",
-              "entityId": "e79d44a9-f037-43a3-ac0c-8de1ea1e9b7f",
-              "entityType": "item",
-              "channelId": null,
-              "contextType": null,
-              "contextId": null,
-              "amount": 30,
-              "currency": null,
-              "info": null,
-              "createdAt": "2026-05-31T16:01:29.000Z",
-              "updatedAt": "2026-05-31T16:01:29.000Z",
-              "deletedAt": null,
-              "channel": null
-            }
-          ]
         }
       ],
       "quantityConstraint": {
@@ -92645,8 +93271,112 @@
         "createdAt": "2026-05-31T16:01:24.000Z",
         "updatedAt": "2026-05-31T16:01:24.000Z"
       }
+    },
+    "58f597d7-5c08-4035-acc8-f1d3fecf5bae": {
+      "id": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+      "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+      "name": "Orilla Rellena",
+      "description": null,
+      "defaultItemId": null,
+      "createdAt": "2026-08-05T17:12:29.000Z",
+      "updatedAt": "2026-08-05T17:12:32.000Z",
+      "deletedAt": null,
+      "modifierItems": [
+        {
+          "id": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+          "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+          "sizeGroupId": null,
+          "name": "Rellena de queso ",
+          "image": null,
+          "featured": true,
+          "description": null,
+          "sku": null,
+          "alergies": null,
+          "preparationTime": null,
+          "tags": null,
+          "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+          "createdAt": "2026-08-05T17:12:30.000Z",
+          "updatedAt": "2026-08-05T17:12:30.000Z",
+          "deletedAt": null,
+          "modifierGroupItem": {
+            "createdAt": "2026-08-05T17:12:31.000Z",
+            "updatedAt": "2026-08-05T17:12:31.000Z",
+            "modifierGroupId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+            "itemId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff"
+          },
+          "quantityConstraints": [
+            {
+              "id": "655ab5ba-c67b-4b99-b836-5ae80d8d3a11",
+              "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+              "entityType": "item",
+              "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+              "contextType": "modifier_group",
+              "min": 0,
+              "max": 1,
+              "chargeAbove": 0,
+              "createdAt": "2026-08-05T17:12:31.000Z",
+              "updatedAt": "2026-08-05T17:12:31.000Z",
+              "deletedAt": null
+            }
+          ],
+          "itemSortingOrder": [
+            {
+              "id": "66b2a859-77b5-484e-a1e3-791b1518aca6",
+              "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+              "entityType": "item",
+              "ownerId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+              "ownerType": "modifierGroup",
+              "lexorank": "0|i00007:",
+              "createdAt": "2026-08-05T17:12:31.000Z",
+              "updatedAt": "2026-08-05T17:12:31.000Z"
+            }
+          ],
+          "prices": [
+            {
+              "id": "32ed616e-b9fb-4713-aae3-f435db8c0fa5",
+              "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+              "ownerType": "chain",
+              "entityId": "b39cff44-d3a4-459c-9aa6-8d37c1da3bff",
+              "entityType": "item",
+              "channelId": null,
+              "contextType": null,
+              "contextId": null,
+              "amount": 35,
+              "currency": null,
+              "info": null,
+              "createdAt": "2026-08-05T17:12:31.000Z",
+              "updatedAt": "2026-08-05T17:12:31.000Z",
+              "deletedAt": null,
+              "channel": null
+            }
+          ]
+        }
+      ],
+      "quantityConstraint": {
+        "id": "e14ea3f9-c56c-40fa-932e-dd12e83fb412",
+        "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+        "entityType": "modifierGroup",
+        "contextId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+        "contextType": "modifier_group",
+        "min": 0,
+        "max": null,
+        "chargeAbove": 0,
+        "createdAt": "2026-08-05T17:12:30.000Z",
+        "updatedAt": "2026-08-05T17:22:21.000Z",
+        "deletedAt": null
+      },
+      "modifierGroupSortingOrder": {
+        "id": "b0eedf73-2d62-40cb-ab2d-fb4a66840bed",
+        "entityId": "58f597d7-5c08-4035-acc8-f1d3fecf5bae",
+        "entityType": "modifierGroup",
+        "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+        "ownerType": "chain",
+        "lexorank": "0|i0002t:",
+        "createdAt": "2026-08-05T17:12:30.000Z",
+        "updatedAt": "2026-08-05T17:12:30.000Z"
+      }
     }
   },
-  "syncedAt": "2026-08-05T15:10:39.135Z",
+  "syncedAt": "2026-08-06T15:09:59.772Z",
   "restaurantId": "0a717e1b-ffd5-4491-b1df-4d352031967d"
 }
