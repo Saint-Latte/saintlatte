@@ -365,6 +365,9 @@
             pointsAdded: nutriasToAdd,
             balanceAfter: next,
             type: 'earn',
+            customerId: customerId,
+            customerName: currentTapCustomer.name,
+            amount: amount,
           });
           return next;
         });
@@ -418,6 +421,8 @@
             pointsAdded: -100,
             balanceAfter: next,
             type: 'redeem',
+            customerId: customerId,
+            customerName: currentTapCustomer.name,
           });
           return next;
         });
