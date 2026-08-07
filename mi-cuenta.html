@@ -97,6 +97,23 @@
 
     .rc-caption { font-size: .72rem; color: rgba(255,254,249,.35); letter-spacing: .04em; text-align: center; }
     .rc-lastvisit { font-size: .8rem; color: rgba(255,254,249,.5); }
+
+    /* ═══ Barra de progreso hacia la próxima bebida gratis ═══ */
+    .nutrias-progress { width: 100%; max-width: 340px; margin-top: .5rem; }
+    .nutrias-progress__top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: .5rem; }
+    .nutrias-progress__label { font-size: .58rem; letter-spacing: .18em; font-weight: 700; color: var(--rust); }
+    .nutrias-progress__count { font-family: var(--ff-display); font-size: .95rem; letter-spacing: .04em; color: var(--cream); }
+    .nutrias-progress__track {
+      width: 100%; height: 10px; border-radius: 6px; overflow: hidden;
+      background: var(--black-mid); border: 1px solid rgba(255,254,249,.1);
+    }
+    .nutrias-progress__fill {
+      height: 100%; border-radius: 6px;
+      background: linear-gradient(90deg, var(--rust-dark, #1E4D35), var(--rust));
+      transition: width .7s cubic-bezier(.22,1,.36,1);
+    }
+    .nutrias-progress__hint { font-size: .74rem; color: rgba(255,254,249,.45); margin-top: .5rem; }
+    .nutrias-progress__hint.is-ready { color: var(--rust); font-weight: 600; }
   </style>
 </head>
 <body class="page-lealtad">
@@ -193,7 +210,7 @@
             <div class="rc-face rc-back">
               <div class="rc-face__sheen"></div>
               <span class="rc-back-title">TU CÓDIGO</span>
-              <canvas id="accountQR"></canvas>
+              <div id="accountQR"></div>
               <span class="rc-back-code" id="accountLinkCode">——————</span>
               <p class="rc-back-hint">Muéstraselo al personal para sumar tu nutria en cada visita.</p>
             </div>
@@ -202,6 +219,17 @@
         </div>
         <p class="rc-caption">Toca la tarjeta para voltearla · arrástrala para inclinarla</p>
         <p class="rc-lastvisit">Última visita: <span id="accountLastVisit">—</span></p>
+
+        <div class="nutrias-progress">
+          <div class="nutrias-progress__top">
+            <span class="nutrias-progress__label">PRÓXIMA BEBIDA GRATIS</span>
+            <span class="nutrias-progress__count" id="progressCount">0/100</span>
+          </div>
+          <div class="nutrias-progress__track">
+            <div class="nutrias-progress__fill" id="progressFill" style="width:0%"></div>
+          </div>
+          <p class="nutrias-progress__hint" id="progressHint"></p>
+        </div>
       </div>
     </div>
 
@@ -255,6 +283,21 @@
       return ts.toDate().toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
     }
 
+    function renderProgress(nutrias) {
+      const inCycle = nutrias % 100;
+      const readyCount = Math.floor(nutrias / 100);
+      document.getElementById('progressFill').style.width = inCycle + '%';
+      document.getElementById('progressCount').textContent = `${inCycle}/100`;
+      const hint = document.getElementById('progressHint');
+      if (readyCount > 0) {
+        hint.textContent = `¡Ya tienes ${readyCount} bebida${readyCount > 1 ? 's' : ''} gratis disponible${readyCount > 1 ? 's' : ''}! Pídesela al personal.`;
+        hint.classList.add('is-ready');
+      } else {
+        hint.textContent = `Te faltan ${100 - inCycle} nutrias para tu próxima bebida gratis.`;
+        hint.classList.remove('is-ready');
+      }
+    }
+
     document.getElementById('logoutBtn').addEventListener('click', async () => {
       await signOut(auth);
       window.location.href = 'saint-rewards.html';
@@ -277,12 +320,12 @@
       document.getElementById('accountLinkCode').textContent = data.linkCode || '——————';
 
       const qrUrl = `https://www.saintlatte.com/saint-rewards.html?id=${user.uid}`;
-      QRCode.toCanvas(document.getElementById('accountQR'), qrUrl, {
-        width: 150,
-        margin: 1,
-        color: { dark: '#050505', light: '#FFFEF9' },
-      });
+      const qr = qrcode(0, 'M');
+      qr.addData(qrUrl);
+      qr.make();
+      document.getElementById('accountQR').innerHTML = qr.createSvgTag({ cellSize: 4, margin: 2, scalable: true });
 
+      renderProgress(data.nutrias || 0);
       showState('account');
     });
 

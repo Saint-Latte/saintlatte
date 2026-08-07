@@ -38,6 +38,24 @@
     }
     .nutrias-consent input { margin-top: .2rem; cursor: none; }
     .nutrias-consent a { color: var(--rust); text-decoration: underline; }
+
+    /* ═══ Barra de progreso hacia la próxima bebida gratis ═══ */
+    .nutrias-progress { width: 100%; max-width: 340px; }
+    .nutrias-progress__top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: .5rem; }
+    .nutrias-progress__label { font-size: .58rem; letter-spacing: .18em; font-weight: 700; color: var(--rust); }
+    .nutrias-progress__count { font-family: var(--ff-display); font-size: .95rem; letter-spacing: .04em; color: var(--cream); }
+    .nutrias-progress__track {
+      width: 100%; height: 10px; border-radius: 6px; overflow: hidden;
+      background: var(--black-mid); border: 1px solid rgba(255,254,249,.1);
+    }
+    .nutrias-progress__fill {
+      height: 100%; border-radius: 6px;
+      background: linear-gradient(90deg, var(--rust-dark, #1E4D35), var(--rust));
+      transition: width .7s cubic-bezier(.22,1,.36,1);
+    }
+    .nutrias-progress__hint { font-size: .74rem; color: rgba(255,254,249,.45); margin-top: .5rem; }
+    .nutrias-progress__hint.is-ready { color: var(--rust); font-weight: 600; }
+    .staff-actions-row { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: .8rem; }
   </style>
 </head>
 <body class="page-lealtad">
@@ -120,8 +138,28 @@
           <span class="order-num-card__num" id="foundLastVisit" style="font-size:1.1rem">—</span>
         </div>
       </div>
-      <button class="btn btn--solid nutrias-add-btn" id="addBtn" hidden>SUMAR NUTRIA</button>
-      <p class="nutrias-msg" id="addMsg" hidden></p>
+      <div class="nutrias-progress">
+        <div class="nutrias-progress__top">
+          <span class="nutrias-progress__label">PRÓXIMA BEBIDA GRATIS</span>
+          <span class="nutrias-progress__count" id="foundProgressCount">0/100</span>
+        </div>
+        <div class="nutrias-progress__track">
+          <div class="nutrias-progress__fill" id="foundProgressFill" style="width:0%"></div>
+        </div>
+        <p class="nutrias-progress__hint" id="foundProgressHint"></p>
+      </div>
+
+      <div id="staffActions" hidden>
+        <div class="order-field" style="margin-top:1rem">
+          <label class="order-field__label">MONTO DE COMPRA ($)</label>
+          <input class="order-field__input" type="number" min="0" step="1" id="purchaseAmount" placeholder="Ej. 85">
+        </div>
+        <div class="staff-actions-row">
+          <button class="btn btn--solid nutrias-add-btn" id="addBtn">REGISTRAR COMPRA</button>
+          <button class="btn btn--outline-dark nutrias-add-btn" id="redeemBtn" hidden>CANJEAR BEBIDA GRATIS (-100)</button>
+        </div>
+        <p class="nutrias-msg" id="addMsg" hidden></p>
+      </div>
     </div>
 
     <!-- ═══ MODO LOGIN: sin ?id — un solo login para personal y clientes ═══ -->
@@ -238,18 +276,40 @@
     const foundGreeting  = document.getElementById('foundGreeting');
     const foundBalance   = document.getElementById('foundBalance');
     const foundLastVisit = document.getElementById('foundLastVisit');
+    const staffActions   = document.getElementById('staffActions');
+    const purchaseAmount = document.getElementById('purchaseAmount');
     const addBtn = document.getElementById('addBtn');
+    const redeemBtn = document.getElementById('redeemBtn');
     const addMsg = document.getElementById('addMsg');
+    const foundProgressFill  = document.getElementById('foundProgressFill');
+    const foundProgressCount = document.getElementById('foundProgressCount');
+    const foundProgressHint  = document.getElementById('foundProgressHint');
 
     let currentUser = null;
     let currentTapCustomer = null;
+
+    function renderFoundProgress(nutrias) {
+      const inCycle = nutrias % 100;
+      const readyCount = Math.floor(nutrias / 100);
+      foundProgressFill.style.width = inCycle + '%';
+      foundProgressCount.textContent = `${inCycle}/100`;
+      if (readyCount > 0) {
+        foundProgressHint.textContent = `Tiene ${readyCount} bebida${readyCount > 1 ? 's' : ''} gratis disponible${readyCount > 1 ? 's' : ''}.`;
+        foundProgressHint.classList.add('is-ready');
+      } else {
+        foundProgressHint.textContent = `Faltan ${100 - inCycle} nutrias para su próxima bebida gratis.`;
+        foundProgressHint.classList.remove('is-ready');
+      }
+      redeemBtn.hidden = !(currentUser && nutrias >= 100);
+    }
 
     function renderFound(data) {
       currentTapCustomer = data;
       foundGreeting.textContent = `Hola, ${data.name}.`;
       foundBalance.textContent = data.nutrias;
       foundLastVisit.textContent = formatDate(data.lastVisitAt);
-      addBtn.hidden = !currentUser;
+      staffActions.hidden = !currentUser;
+      renderFoundProgress(data.nutrias || 0);
       addMsg.hidden = true;
       showState('found');
     }
@@ -261,8 +321,17 @@
       renderFound(snap.data());
     }
 
+    // $10 de compra = 1 nutria (redondeado hacia abajo)
     addBtn.addEventListener('click', async () => {
       if (!currentUser || !customerId) return;
+      const amount = parseFloat(purchaseAmount.value);
+      addMsg.hidden = true;
+      if (!amount || amount < 10) {
+        addMsg.textContent = 'Ingresa un monto de compra de al menos $10.';
+        addMsg.hidden = false;
+        return;
+      }
+      const nutriasToAdd = Math.floor(amount / 10);
       addBtn.disabled = true;
       try {
         const customerRef = doc(db, 'customers', customerId);
@@ -270,7 +339,7 @@
         const newBalance = await runTransaction(db, async (tx) => {
           const snap = await tx.get(customerRef);
           if (!snap.exists()) throw new Error('not-found');
-          const next = (snap.data().nutrias || 0) + 1;
+          const next = (snap.data().nutrias || 0) + nutriasToAdd;
           tx.update(customerRef, {
             nutrias: next,
             lastVisitAt: serverTimestamp(),
@@ -280,19 +349,64 @@
             ts: serverTimestamp(),
             staffUid: currentUser.uid,
             staffEmail: currentUser.email,
-            pointsAdded: 1,
+            pointsAdded: nutriasToAdd,
             balanceAfter: next,
+            type: 'earn',
           });
           return next;
         });
         foundBalance.textContent = newBalance;
         foundLastVisit.textContent = 'hoy';
-        addMsg.textContent = `¡Nutria sumada! Ahora tiene ${newBalance}.`;
+        renderFoundProgress(newBalance);
+        purchaseAmount.value = '';
+        addMsg.textContent = `¡${nutriasToAdd} nutria${nutriasToAdd > 1 ? 's' : ''} sumada${nutriasToAdd > 1 ? 's' : ''}! Ahora tiene ${newBalance}.`;
         addMsg.hidden = false;
       } catch (err) {
-        addMsg.textContent = 'No se pudo sumar la nutria. Intenta de nuevo.';
+        addMsg.textContent = 'No se pudo registrar la compra. Intenta de nuevo.';
         addMsg.hidden = false;
+      } finally {
         addBtn.disabled = false;
+      }
+    });
+
+    // Canje: -100 nutrias = 1 bebida gratis (cualquiera)
+    redeemBtn.addEventListener('click', async () => {
+      if (!currentUser || !customerId) return;
+      addMsg.hidden = true;
+      redeemBtn.disabled = true;
+      try {
+        const customerRef = doc(db, 'customers', customerId);
+        const scanRef = doc(collection(db, 'customers', customerId, 'scans'));
+        const newBalance = await runTransaction(db, async (tx) => {
+          const snap = await tx.get(customerRef);
+          if (!snap.exists()) throw new Error('not-found');
+          const current = snap.data().nutrias || 0;
+          if (current < 100) throw new Error('insufficient');
+          const next = current - 100;
+          tx.update(customerRef, {
+            nutrias: next,
+            lastVisitAt: serverTimestamp(),
+            lastScanBy: currentUser.email,
+          });
+          tx.set(scanRef, {
+            ts: serverTimestamp(),
+            staffUid: currentUser.uid,
+            staffEmail: currentUser.email,
+            pointsAdded: -100,
+            balanceAfter: next,
+            type: 'redeem',
+          });
+          return next;
+        });
+        foundBalance.textContent = newBalance;
+        renderFoundProgress(newBalance);
+        addMsg.textContent = `¡Bebida gratis canjeada! Saldo restante: ${newBalance} nutrias.`;
+        addMsg.hidden = false;
+      } catch (err) {
+        addMsg.textContent = 'No se pudo canjear. Verifica que tenga al menos 100 nutrias.';
+        addMsg.hidden = false;
+      } finally {
+        redeemBtn.disabled = false;
       }
     });
 
@@ -353,7 +467,13 @@
           lastScanBy: '',
           linkCode: genLinkCode(),
         });
-        // el chequeo de rol + redirect lo dispara el listener de onAuthStateChanged
+        // Redirigimos aquí mismo (no dejamos que sea el listener de
+        // onAuthStateChanged quien lo haga) para garantizar que el doc de
+        // customers ya existe antes de navegar a mi-cuenta.html — si no,
+        // hay una condición de carrera donde el listener redirige antes de
+        // que este setDoc termine y mi-cuenta.html se queda cargando.
+        window.location.href = 'mi-cuenta.html';
+        return;
       } catch (err) {
         msg.textContent = 'No se pudo crear la cuenta (¿ese email ya está registrado?).';
         msg.hidden = false;
@@ -368,7 +488,10 @@
     onAuthStateChanged(auth, async (user) => {
       currentUser = user;
       if (customerId) {
-        if (currentTapCustomer) addBtn.hidden = !currentUser;
+        if (currentTapCustomer) {
+          staffActions.hidden = !currentUser;
+          renderFoundProgress(currentTapCustomer.nutrias || 0);
+        }
         return;
       }
       if (user) {
