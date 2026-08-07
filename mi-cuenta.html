@@ -283,14 +283,24 @@
       return ts.toDate().toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
     }
 
-    function renderProgress(nutrias) {
+    // Solo se permite canjear una bebida gratis cada 24 horas.
+    function canRedeemToday(lastRedeemedAt) {
+      if (!lastRedeemedAt) return true;
+      const last = lastRedeemedAt.toDate ? lastRedeemedAt.toDate() : new Date(lastRedeemedAt);
+      return (Date.now() - last.getTime()) >= 24 * 60 * 60 * 1000;
+    }
+
+    function renderProgress(nutrias, lastRedeemedAt) {
       const inCycle = nutrias % 100;
       const readyCount = Math.floor(nutrias / 100);
       document.getElementById('progressFill').style.width = inCycle + '%';
       document.getElementById('progressCount').textContent = `${inCycle}/100`;
       const hint = document.getElementById('progressHint');
-      if (readyCount > 0) {
-        hint.textContent = `¡Ya tienes ${readyCount} bebida${readyCount > 1 ? 's' : ''} gratis disponible${readyCount > 1 ? 's' : ''}! Pídesela al personal.`;
+      if (readyCount > 0 && !canRedeemToday(lastRedeemedAt)) {
+        hint.textContent = `Ya canjeaste una bebida gratis hoy — solo se permite una por día. Te quedan ${readyCount} disponibles para otro día.`;
+        hint.classList.remove('is-ready');
+      } else if (readyCount > 0) {
+        hint.textContent = `¡Ya tienes ${readyCount} bebida${readyCount > 1 ? 's' : ''} gratis disponible${readyCount > 1 ? 's' : ''}! Pídesela al personal (máximo una por día).`;
         hint.classList.add('is-ready');
       } else {
         hint.textContent = `Te faltan ${100 - inCycle} nutrias para tu próxima bebida gratis.`;
@@ -325,7 +335,7 @@
       qr.make();
       document.getElementById('accountQR').innerHTML = qr.createSvgTag({ cellSize: 4, margin: 2, scalable: true });
 
-      renderProgress(data.nutrias || 0);
+      renderProgress(data.nutrias || 0, data.lastRedeemedAt);
       showState('account');
     });
 

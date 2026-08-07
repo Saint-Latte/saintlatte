@@ -158,6 +158,7 @@
           <button class="btn btn--solid nutrias-add-btn" id="addBtn">REGISTRAR COMPRA</button>
           <button class="btn btn--outline-dark nutrias-add-btn" id="redeemBtn" hidden>CANJEAR BEBIDA GRATIS (-100)</button>
         </div>
+        <p class="nutrias-hint" id="redeemLimitHint" hidden>Solo se puede canjear una bebida gratis por día — este cliente ya canjeó hoy.</p>
         <p class="nutrias-msg" id="addMsg" hidden></p>
       </div>
     </div>
@@ -284,11 +285,19 @@
     const foundProgressFill  = document.getElementById('foundProgressFill');
     const foundProgressCount = document.getElementById('foundProgressCount');
     const foundProgressHint  = document.getElementById('foundProgressHint');
+    const redeemLimitHint    = document.getElementById('redeemLimitHint');
 
     let currentUser = null;
     let currentTapCustomer = null;
 
-    function renderFoundProgress(nutrias) {
+    // Solo se permite canjear una bebida gratis cada 24 horas.
+    function canRedeemToday(lastRedeemedAt) {
+      if (!lastRedeemedAt) return true;
+      const last = lastRedeemedAt.toDate ? lastRedeemedAt.toDate() : new Date(lastRedeemedAt);
+      return (Date.now() - last.getTime()) >= 24 * 60 * 60 * 1000;
+    }
+
+    function renderFoundProgress(nutrias, lastRedeemedAt) {
       const inCycle = nutrias % 100;
       const readyCount = Math.floor(nutrias / 100);
       foundProgressFill.style.width = inCycle + '%';
@@ -300,7 +309,11 @@
         foundProgressHint.textContent = `Faltan ${100 - inCycle} nutrias para su próxima bebida gratis.`;
         foundProgressHint.classList.remove('is-ready');
       }
-      redeemBtn.hidden = !(currentUser && nutrias >= 100);
+      const hasEnough = currentUser && readyCount > 0;
+      const eligibleToday = canRedeemToday(lastRedeemedAt);
+      redeemBtn.hidden = !hasEnough;
+      redeemBtn.disabled = !eligibleToday;
+      redeemLimitHint.hidden = !(hasEnough && !eligibleToday);
     }
 
     function renderFound(data) {
@@ -309,7 +322,7 @@
       foundBalance.textContent = data.nutrias;
       foundLastVisit.textContent = formatDate(data.lastVisitAt);
       staffActions.hidden = !currentUser;
-      renderFoundProgress(data.nutrias || 0);
+      renderFoundProgress(data.nutrias || 0, data.lastRedeemedAt);
       addMsg.hidden = true;
       showState('found');
     }
@@ -357,7 +370,8 @@
         });
         foundBalance.textContent = newBalance;
         foundLastVisit.textContent = 'hoy';
-        renderFoundProgress(newBalance);
+        currentTapCustomer.nutrias = newBalance;
+        renderFoundProgress(newBalance, currentTapCustomer.lastRedeemedAt);
         purchaseAmount.value = '';
         addMsg.textContent = `¡${nutriasToAdd} nutria${nutriasToAdd > 1 ? 's' : ''} sumada${nutriasToAdd > 1 ? 's' : ''}! Ahora tiene ${newBalance}.`;
         addMsg.hidden = false;
@@ -369,24 +383,33 @@
       }
     });
 
-    // Canje: -100 nutrias = 1 bebida gratis (cualquiera)
+    // Canje: -100 nutrias = 1 bebida gratis (cualquiera), máximo 1 vez cada 24h
     redeemBtn.addEventListener('click', async () => {
       if (!currentUser || !customerId) return;
       addMsg.hidden = true;
+      if (!canRedeemToday(currentTapCustomer && currentTapCustomer.lastRedeemedAt)) {
+        addMsg.textContent = 'Este cliente ya canjeó una bebida gratis hoy. Solo se permite una por día.';
+        addMsg.hidden = false;
+        return;
+      }
       redeemBtn.disabled = true;
+      const redeemedAtLocal = new Date();
       try {
         const customerRef = doc(db, 'customers', customerId);
         const scanRef = doc(collection(db, 'customers', customerId, 'scans'));
         const newBalance = await runTransaction(db, async (tx) => {
           const snap = await tx.get(customerRef);
           if (!snap.exists()) throw new Error('not-found');
-          const current = snap.data().nutrias || 0;
+          const freshData = snap.data();
+          const current = freshData.nutrias || 0;
           if (current < 100) throw new Error('insufficient');
+          if (!canRedeemToday(freshData.lastRedeemedAt)) throw new Error('already-today');
           const next = current - 100;
           tx.update(customerRef, {
             nutrias: next,
             lastVisitAt: serverTimestamp(),
             lastScanBy: currentUser.email,
+            lastRedeemedAt: serverTimestamp(),
           });
           tx.set(scanRef, {
             ts: serverTimestamp(),
@@ -399,14 +422,20 @@
           return next;
         });
         foundBalance.textContent = newBalance;
-        renderFoundProgress(newBalance);
+        currentTapCustomer.nutrias = newBalance;
+        currentTapCustomer.lastRedeemedAt = redeemedAtLocal;
+        renderFoundProgress(newBalance, redeemedAtLocal);
         addMsg.textContent = `¡Bebida gratis canjeada! Saldo restante: ${newBalance} nutrias.`;
         addMsg.hidden = false;
       } catch (err) {
-        addMsg.textContent = 'No se pudo canjear. Verifica que tenga al menos 100 nutrias.';
+        if (err && err.message === 'already-today') {
+          addMsg.textContent = 'Este cliente ya canjeó una bebida gratis hoy. Solo se permite una por día.';
+        } else {
+          addMsg.textContent = 'No se pudo canjear. Verifica que tenga al menos 100 nutrias.';
+        }
         addMsg.hidden = false;
       } finally {
-        redeemBtn.disabled = false;
+        redeemBtn.disabled = !canRedeemToday(currentTapCustomer && currentTapCustomer.lastRedeemedAt);
       }
     });
 
