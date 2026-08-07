@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Aviso de privacidad — Saint Rewards, Saint Latte.">
+  <title>Aviso de privacidad — Saint Latte</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.cdnfonts.com/css/funtastic" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .privacy-section { padding: calc(var(--nav-h) + 5rem) 2.5rem 8rem; max-width: 720px; margin: 0 auto; }
+    .privacy-section h2 {
+      font-family: var(--ff-display); font-size: 1.5rem; letter-spacing: .04em;
+      color: var(--cream); margin: 2.5rem 0 1rem;
+    }
+    .privacy-section h2:first-of-type { margin-top: 0; }
+    .privacy-section p, .privacy-section li {
+      font-size: .9rem; line-height: 1.8; color: rgba(255,254,249,.65);
+    }
+    .privacy-section ul { padding-left: 1.2rem; margin: .5rem 0; }
+    .privacy-note {
+      font-size: .78rem; color: rgba(255,254,249,.4); border-top: 1px solid rgba(255,254,249,.1);
+      margin-top: 3rem; padding-top: 1.5rem; line-height: 1.7;
+    }
+  </style>
+</head>
+<body class="page-lealtad">
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__brand">
+      <img src="assets/images/logo.png" alt="Saint Latte" class="nav__logo-img" onerror="this.style.display='none'">
+      <span class="nav__brand-text">SAINT LATTE</span>
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="saint-rewards.html" class="nav__link nav__link--cta">← SAINT REWARDS</a></li>
+    </ul>
+    <button class="nav__hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu__inner">
+      <ul class="mobile-menu__list" role="list">
+        <li><a href="saint-rewards.html" class="mobile-link">← SAINT REWARDS</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="page-hero page-hero--dark">
+    <div class="page-hero__content">
+      <span class="section-label" style="color:rgba(255,254,249,.6)">SAINT REWARDS</span>
+      <h1 class="page-hero__title">
+        AVISO DE<br><em>PRIVACIDAD.</em>
+      </h1>
+      <p class="page-hero__sub">Cómo usamos tus datos en el programa de lealtad.</p>
+    </div>
+    <div class="page-hero__bg-num" aria-hidden="true">SL</div>
+  </header>
+
+  <section class="privacy-section">
+    <h2>Responsable</h2>
+    <p>
+      Saint Latte (Leandro Valle 43, Centro y Clavel #2, Jarrón Azul — Valle de
+      Santiago, Guanajuato) es responsable del tratamiento de tus datos
+      personales dentro del programa de lealtad <strong>Saint Rewards</strong>.
+    </p>
+
+    <h2>Qué datos recabamos</h2>
+    <ul>
+      <li>Nombre</li>
+      <li>Correo electrónico</li>
+      <li>Teléfono (opcional)</li>
+      <li>Tu historial de visitas y nutrias acumuladas dentro del programa</li>
+    </ul>
+
+    <h2>Para qué los usamos</h2>
+    <ul>
+      <li>Identificarte y llevar el conteo de tus nutrias acumuladas</li>
+      <li>Mostrarte tu progreso cuando inicias sesión en tu cuenta</li>
+      <li>Contactarte por temas relacionados a tu cuenta o el programa, si nos diste tu teléfono</li>
+    </ul>
+    <p>No usamos tus datos para fines distintos a estos, y no los vendemos ni los compartimos con terceros ajenos a la operación del programa.</p>
+
+    <h2>Dónde se almacenan</h2>
+    <p>
+      Tus datos se guardan en Firebase (Google Cloud), con acceso restringido
+      solo al personal autorizado de Saint Latte.
+    </p>
+
+    <h2>Tus derechos (ARCO)</h2>
+    <p>
+      Puedes pedir acceder, corregir, cancelar tu cuenta u oponerte al uso de
+      tus datos en cualquier momento, escribiéndonos por WhatsApp a alguna de
+      nuestras sucursales (Leandro Valle: 456 156 0813 · Jarrón Azul: 456 186
+      2343).
+    </p>
+
+    <p class="privacy-note">
+      Este es un aviso de privacidad simplificado, pensado para explicarte de
+      forma clara qué hacemos con tu información dentro de Saint Rewards. No
+      sustituye asesoría legal formal.
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="assets/images/logo.png" alt="" class="footer__logo" onerror="this.style.display='none'">
+        <span class="footer__brand-name">SAINT LATTE</span>
+        <p class="footer__brand-sub">Specialty Coffee Shop · Valle de Santiago, Gto.</p>
+      </div>
+      <nav class="footer__nav">
+        <a href="menu.html">MENÚ</a>
+        <a href="comunidad.html">COMUNIDAD</a>
+        <a href="nosotros.html">NOSOTROS</a>
+        <a href="extracciones.html">EXTRACCIONES</a>
+      </nav>
+      <div class="footer__social">
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="footer__social-link">INSTAGRAM</a>
+        <a href="#" class="footer__social-link">TIKTOK</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2024 SAINT LATTE.</span>
+      <span>HECHO CON ♥ EN VALLE DE SANTIAGO</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

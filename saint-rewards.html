@@ -31,6 +31,13 @@
       font-weight: 700; color: rgba(255,254,249,.45); cursor: none; transition: color .2s, border-color .2s;
     }
     .nutrias-tab.on { color: var(--cream); border-color: var(--rust); }
+    .nutrias-hint { font-size: .78rem; color: rgba(255,254,249,.4); line-height: 1.6; }
+    .nutrias-consent {
+      display: flex; align-items: flex-start; gap: .6rem; cursor: none;
+      font-size: .78rem; color: rgba(255,254,249,.5); line-height: 1.6; margin: .3rem 0 1rem;
+    }
+    .nutrias-consent input { margin-top: .2rem; cursor: none; }
+    .nutrias-consent a { color: var(--rust); text-decoration: underline; }
   </style>
 </head>
 <body class="page-lealtad">
@@ -154,6 +161,11 @@
           <label class="order-field__label">CONTRASEÑA</label>
           <input class="order-field__input" type="password" id="regPassword" autocomplete="new-password">
         </div>
+        <p class="nutrias-hint">Recomendamos usar un correo y una contraseña nuevos, que no uses en otras cuentas.</p>
+        <label class="nutrias-consent">
+          <input type="checkbox" id="regConsent">
+          <span>He leído y acepto el <a href="aviso-privacidad.html" target="_blank" rel="noopener">aviso de privacidad</a>.</span>
+        </label>
         <button class="btn btn--solid" id="registerBtn">CREAR CUENTA</button>
         <p class="nutrias-msg" id="registerMsg" hidden></p>
       </div>
@@ -322,6 +334,11 @@
       msg.hidden = true;
       if (!name || !email || password.length < 6) {
         msg.textContent = 'Completa nombre, email y una contraseña de al menos 6 caracteres.';
+        msg.hidden = false;
+        return;
+      }
+      if (!document.getElementById('regConsent').checked) {
+        msg.textContent = 'Acepta el aviso de privacidad para crear tu cuenta.';
         msg.hidden = false;
         return;
       }
