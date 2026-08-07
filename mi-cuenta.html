@@ -56,9 +56,9 @@
 
     .rc-front {
       background:
-        radial-gradient(circle at 85% -10%, rgba(51,121,88,.35), transparent 55%),
-        linear-gradient(135deg, var(--black-mid) 0%, var(--black) 75%);
-      border: 1px solid rgba(255,254,249,.1);
+        radial-gradient(circle at 85% -10%, rgba(51,121,88,.14), transparent 55%),
+        var(--cream);
+      border: 1px solid rgba(5,5,5,.08);
       justify-content: space-between;
     }
     .rc-back {
@@ -69,13 +69,13 @@
     .rc-brand {
       display: flex; align-items: center; justify-content: space-between;
       font-family: var(--ff-display); font-size: .8rem; letter-spacing: .1em;
-      color: rgba(255,254,249,.55);
+      color: rgba(5,5,5,.55);
     }
     .rc-brand em { color: var(--rust); font-style: normal; }
     .rc-otter { flex: 1; position: relative; overflow: hidden; margin: .3rem 0; border-radius: 4px; }
     .rc-otter img {
       position: absolute; width: 133%; max-width: none; top: -25%; left: -6%;
-      filter: drop-shadow(0 10px 18px rgba(0,0,0,.45));
+      filter: brightness(0) opacity(.88) drop-shadow(0 6px 10px rgba(5,5,5,.15));
       animation: rcBob 3.6s ease-in-out infinite;
     }
     @keyframes rcBob {
@@ -83,10 +83,10 @@
       50%      { transform: translateY(-5px) rotate(.6deg) scale(1.01); }
     }
     .rc-bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; }
-    .rc-name { font-family: var(--ff-body); font-size: .82rem; font-weight: 600; color: var(--cream); letter-spacing: .02em; max-width: 60%; }
+    .rc-name { font-family: var(--ff-body); font-size: .82rem; font-weight: 600; color: var(--black); letter-spacing: .02em; max-width: 60%; }
     .rc-nutrias { text-align: right; }
     .rc-nutrias__label { display: block; font-size: .52rem; letter-spacing: .18em; color: var(--rust); font-weight: 700; }
-    .rc-nutrias__num { display: block; font-family: var(--ff-display); font-size: 1.9rem; color: var(--cream); letter-spacing: .04em; line-height: 1.1; }
+    .rc-nutrias__num { display: block; font-family: var(--ff-display); font-size: 1.9rem; color: var(--black); letter-spacing: .04em; line-height: 1.1; }
 
     #accountQR svg { display: block; width: 118px; height: 118px; border-radius: 8px; }
     .rc-back-hint { font-size: .62rem; letter-spacing: .01em; text-align: center; color: rgba(5,5,5,.5); max-width: 90%; line-height: 1.4; }
