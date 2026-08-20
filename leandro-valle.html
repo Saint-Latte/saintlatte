@@ -193,16 +193,16 @@
       <span class="marquee-item">SPECIALTY</span><span class="marquee-sep">◆</span>
       <span class="marquee-item">FRAPPÉ</span><span class="marquee-sep">◆</span>
       <span class="marquee-item">SMOOTHIES</span><span class="marquee-sep">◆</span>
-      <span class="marquee-item">BRUNCH 8:30–12:00</span><span class="marquee-sep">◆</span>
-      <span class="marquee-item">PIZZA 18:00–21:30</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">DESAYUNO</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">PIZZA ARTESANAL</span><span class="marquee-sep">◆</span>
       <span class="marquee-item">CAFÉ HOT</span><span class="marquee-sep">◆</span>
       <span class="marquee-item">ICED COFFEE</span><span class="marquee-sep">◆</span>
       <span class="marquee-item">SIN CAFÉ</span><span class="marquee-sep">◆</span>
       <span class="marquee-item">SPECIALTY</span><span class="marquee-sep">◆</span>
       <span class="marquee-item">FRAPPÉ</span><span class="marquee-sep">◆</span>
       <span class="marquee-item">SMOOTHIES</span><span class="marquee-sep">◆</span>
-      <span class="marquee-item">BRUNCH 8:30–12:00</span><span class="marquee-sep">◆</span>
-      <span class="marquee-item">PIZZA 18:00–21:30</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">DESAYUNO</span><span class="marquee-sep">◆</span>
+      <span class="marquee-item">PIZZA ARTESANAL</span><span class="marquee-sep">◆</span>
     </div>
   </div>
 
@@ -283,7 +283,7 @@
       </div>
       <div class="menu-card" data-cat="frio">
         <div class="menu-card__inner">
-          <div class="menu-card__header"><span class="menu-card__name">ICED LATTE</span><span class="menu-card__price">$67</span></div>
+          <div class="menu-card__header"><span class="menu-card__name">ICED LATTE</span><span class="menu-card__price">$80</span></div>
           <p class="menu-card__desc">Espresso + leche fría + hielo</p>
         </div>
       </div>
@@ -295,25 +295,25 @@
       </div>
       <div class="menu-card" data-cat="frio">
         <div class="menu-card__inner">
-          <div class="menu-card__header"><span class="menu-card__name">ICED MOCHA</span><span class="menu-card__price">$76</span></div>
+          <div class="menu-card__header"><span class="menu-card__name">ICED MOCHA</span><span class="menu-card__price">$95</span></div>
           <p class="menu-card__desc">Espresso + chocolate + leche fría</p>
         </div>
       </div>
       <div class="menu-card menu-card--highlight" data-cat="frio">
         <div class="menu-card__inner">
-          <div class="menu-card__header"><span class="menu-card__name">ESPRESSO TONIC</span><span class="menu-card__price">$75</span></div>
+          <div class="menu-card__header"><span class="menu-card__name">ESPRESSO TONIC</span><span class="menu-card__price">$90</span></div>
           <p class="menu-card__desc">Espresso sobre agua tónica · Cítrico y burbujante</p>
         </div>
       </div>
       <div class="menu-card" data-cat="frio">
         <div class="menu-card__inner">
-          <div class="menu-card__header"><span class="menu-card__name">MAZAPÁN LATTE</span><span class="menu-card__price">$77</span></div>
+          <div class="menu-card__header"><span class="menu-card__name">MAZAPÁN LATTE</span><span class="menu-card__price">$95</span></div>
           <p class="menu-card__desc">Espresso + mazapán + leche fría</p>
         </div>
       </div>
       <div class="menu-card" data-cat="frio">
         <div class="menu-card__inner">
-          <div class="menu-card__header"><span class="menu-card__name">ICED CARAMEL MACCHIATO</span><span class="menu-card__price">$79</span></div>
+          <div class="menu-card__header"><span class="menu-card__name">ICED CARAMEL MACCHIATO</span><span class="menu-card__price">$95</span></div>
           <p class="menu-card__desc">Vainilla + leche + espresso + caramelo + hielo</p>
         </div>
       </div>
@@ -710,8 +710,8 @@
       frappe:   'FRAPPÉ',
       smoothie: 'SMOOTHIES',
       tea:      'TEA & INFUSIONS',
-      brunch:   'BRUNCH — 8:30 A 12:00',
-      pizza:    'PIZZA — 18:00 A 21:30',
+      brunch:   'DESAYUNO',
+      pizza:    'PIZZA ARTESANAL',
     }
 
     function showCat(cat) {
@@ -803,8 +803,9 @@
       tick()
     }
 
-    setupTimed('timedBrunch', 8,  30, 12,  0,  'brunchCountdown')
-    setupTimed('timedPizza',  18,  0, 21, 30, 'pizzaCountdown')
+    // Sin restricción horaria — siempre disponible
+    document.getElementById('timedBrunch').classList.add('is-available')
+    document.getElementById('timedPizza').classList.add('is-available')
   </script>
 </body>
 </html>
