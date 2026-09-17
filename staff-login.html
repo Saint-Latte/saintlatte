@@ -22,6 +22,19 @@
       padding: 2rem;
     }
     .staff-msg { font-size: .85rem; color: var(--rust); margin-top: 1rem; min-height: 1.2em; }
+    .staff-password-row { position: relative; }
+    .staff-password-row .order-field__input { padding-right: 4.4rem; }
+    .staff-password-toggle {
+      position: absolute; right: .7rem; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: none; padding: 0;
+      font-size: .6rem; letter-spacing: .08em; font-weight: 700; color: rgba(255,254,249,.4);
+    }
+    .staff-password-toggle:hover { color: var(--cream); }
+    .staff-forgot-link {
+      display: block; background: none; border: none; cursor: none; padding: 0; margin-top: .9rem;
+      font-size: .72rem; color: rgba(255,254,249,.45); text-decoration: underline;
+    }
+    .staff-forgot-link:hover { color: var(--cream); }
   </style>
 </head>
 <body class="page-testing">
@@ -68,17 +81,36 @@
 
   <section class="staff-section">
     <div class="staff-panel">
-      <div class="order-fieldset" style="padding:0;border:none">
-        <div class="order-field">
-          <label class="order-field__label">EMAIL</label>
-          <input class="order-field__input" type="email" id="loginEmail" autocomplete="username">
+      <div id="loginFormWrap">
+        <div class="order-fieldset" style="padding:0;border:none">
+          <div class="order-field">
+            <label class="order-field__label">EMAIL</label>
+            <input class="order-field__input" type="email" id="loginEmail" autocomplete="username">
+          </div>
+          <div class="order-field">
+            <label class="order-field__label">CONTRASEÑA</label>
+            <div class="staff-password-row">
+              <input class="order-field__input" type="password" id="loginPassword" autocomplete="current-password">
+              <button type="button" class="staff-password-toggle" id="togglePasswordBtn">VER</button>
+            </div>
+          </div>
+          <button class="btn btn--solid" id="loginBtn" style="margin-top:.5rem">ENTRAR</button>
+          <button type="button" class="staff-forgot-link" id="forgotLinkBtn">¿Olvidaste tu contraseña?</button>
+          <p class="staff-msg" id="loginMsg" hidden></p>
         </div>
-        <div class="order-field">
-          <label class="order-field__label">CONTRASEÑA</label>
-          <input class="order-field__input" type="password" id="loginPassword" autocomplete="current-password">
+      </div>
+
+      <div id="forgotFormWrap" hidden>
+        <div class="order-fieldset" style="padding:0;border:none">
+          <div class="order-legend" style="margin-bottom:1.5rem">RECUPERAR CONTRASEÑA</div>
+          <div class="order-field">
+            <label class="order-field__label">EMAIL</label>
+            <input class="order-field__input" type="email" id="forgotEmail" autocomplete="username">
+          </div>
+          <button class="btn btn--solid" id="forgotBtn" style="margin-top:.5rem">ENVIAR ENLACE</button>
+          <button type="button" class="staff-forgot-link" id="backToLoginBtn">← Volver a iniciar sesión</button>
+          <p class="staff-msg" id="forgotMsg" hidden></p>
         </div>
-        <button class="btn btn--solid" id="loginBtn" style="margin-top:.5rem">ENTRAR</button>
-        <p class="staff-msg" id="loginMsg" hidden></p>
       </div>
     </div>
   </section>
@@ -87,7 +119,7 @@
   <script type="module">
     import { db, auth } from './firebase-config.js';
     import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
-    import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js';
+    import { onAuthStateChanged, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js';
 
     const params = new URLSearchParams(window.location.search);
     const nextPage = params.get('next');
@@ -130,6 +162,51 @@
 
     document.getElementById('loginBtn').addEventListener('click', trySubmit);
     document.getElementById('loginPassword').addEventListener('keydown', (e) => { if (e.key === 'Enter') trySubmit(); });
+
+    // ═══ Mostrar/ocultar contraseña ═══
+    document.getElementById('togglePasswordBtn').addEventListener('click', () => {
+      const input = document.getElementById('loginPassword');
+      const btn = document.getElementById('togglePasswordBtn');
+      const showing = input.type === 'text';
+      input.type = showing ? 'password' : 'text';
+      btn.textContent = showing ? 'VER' : 'OCULTAR';
+    });
+
+    // ═══ Recuperar contraseña ═══
+    const loginFormWrap = document.getElementById('loginFormWrap');
+    const forgotFormWrap = document.getElementById('forgotFormWrap');
+    const forgotMsg = document.getElementById('forgotMsg');
+
+    document.getElementById('forgotLinkBtn').addEventListener('click', () => {
+      document.getElementById('forgotEmail').value = document.getElementById('loginEmail').value;
+      forgotMsg.hidden = true;
+      loginFormWrap.hidden = true;
+      forgotFormWrap.hidden = false;
+    });
+    document.getElementById('backToLoginBtn').addEventListener('click', () => {
+      forgotFormWrap.hidden = true;
+      loginFormWrap.hidden = false;
+    });
+
+    async function trySendReset() {
+      const email = document.getElementById('forgotEmail').value.trim();
+      forgotMsg.hidden = true;
+      if (!email) {
+        forgotMsg.style.color = 'var(--rust)';
+        forgotMsg.textContent = 'Escribe tu email.';
+        forgotMsg.hidden = false;
+        return;
+      }
+      // Se muestra el mismo mensaje exista o no la cuenta, para no revelar
+      // qué emails están registrados.
+      try { await sendPasswordResetEmail(auth, email); } catch (err) { /* silencioso a propósito */ }
+      forgotMsg.style.color = 'var(--green)';
+      forgotMsg.textContent = `Si ${email} tiene una cuenta de personal, le llegará un correo con instrucciones para restablecer la contraseña. Revisa también spam.`;
+      forgotMsg.hidden = false;
+    }
+
+    document.getElementById('forgotBtn').addEventListener('click', trySendReset);
+    document.getElementById('forgotEmail').addEventListener('keydown', (e) => { if (e.key === 'Enter') trySendReset(); });
   </script>
 </body>
 </html>
