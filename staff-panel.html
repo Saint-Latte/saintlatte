@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="Saint Latte — Panel de personal (Saint Rewards).">
-  <title>Panel de staff · Saint Rewards — Saint Latte</title>
+  <meta name="description" content="Saint Latte — Panel de personal.">
+  <title>Panel de staff — Saint Latte</title>
   <link rel="icon" type="image/png" href="assets/images/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +14,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <link rel="stylesheet" href="style.css">
   <style>
     .staff-section { max-width: 560px; margin: 0 auto; padding: 60px 24px 100px; }
@@ -26,30 +25,8 @@
     .staff-msg { font-size: .85rem; color: var(--rust); margin-top: 1rem; min-height: 1.2em; }
     .staff-session { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
     .staff-session span { font-size: .78rem; color: rgba(255,254,249,.5); }
-    .staff-mode-tabs { display: flex; gap: 1px; margin-bottom: 1.5rem; flex-wrap: wrap; }
-    .staff-mode-tab {
-      flex: 1; min-width: 140px; text-align: center; padding: .8rem 1rem; background: var(--black-mid);
-      border: 1px solid rgba(255,254,249,.1); font-size: .65rem; letter-spacing: .08em;
-      font-weight: 700; color: rgba(255,254,249,.45); cursor: none; transition: color .2s, border-color .2s;
-    }
-    .staff-mode-tab.on { color: var(--cream); border-color: var(--rust); }
     .staff-roster { list-style: none; display: flex; flex-direction: column; gap: .4rem; margin-top: 1rem; }
     .staff-roster li { font-size: .8rem; color: rgba(255,254,249,.5); }
-
-    .log-list { display: flex; flex-direction: column; gap: 1px; }
-    .log-row {
-      display: grid; grid-template-columns: 1fr auto; gap: .2rem .8rem;
-      padding: .9rem 1rem; background: var(--black); border: 1px solid rgba(255,254,249,.06);
-    }
-    .log-row__name { font-size: .85rem; font-weight: 600; color: var(--cream); }
-    .log-row__meta { font-size: .68rem; color: rgba(255,254,249,.4); grid-column: 1; }
-    .log-row__amount { font-size: .68rem; color: rgba(255,254,249,.45); grid-column: 1; }
-    .log-row__points { font-family: var(--ff-display); font-size: 1.1rem; letter-spacing: .04em; text-align: right; align-self: center; grid-row: 1 / span 2; }
-    .log-row__points.is-earn { color: var(--rust); }
-    .log-row__points.is-redeem { color: #C49A27; }
-    .log-empty, .log-loading { font-size: .82rem; color: rgba(255,254,249,.4); padding: .5rem 0; }
-    #qrReader { border-radius: 4px; overflow: hidden; }
-    #qrReader img { display: none; } /* oculta el ícono/link "powered by" que agrega la librería */
   </style>
 </head>
 <body class="page-testing">
@@ -91,7 +68,7 @@
       <h1 class="page-hero__title">
         PANEL DE<br><em>PERSONAL.</em>
       </h1>
-      <p class="page-hero__sub">Saint Rewards — escanea, busca y da de alta personal.</p>
+      <p class="page-hero__sub">Da de alta cuentas de personal nuevas.</p>
     </div>
     <div class="page-hero__bg-num" aria-hidden="true">SL</div>
   </header>
@@ -102,73 +79,22 @@
       <button class="btn btn--solid" id="logoutBtn">CERRAR SESIÓN</button>
     </div>
 
-    <div class="staff-mode-tabs">
-      <button class="staff-mode-tab on" id="modeScanTab">ESCANEAR QR</button>
-      <button class="staff-mode-tab" id="modeCodeTab">BUSCAR POR CÓDIGO</button>
-      <button class="staff-mode-tab" id="modeLogTab">REGISTROS</button>
-      <button class="staff-mode-tab" id="modeStaffTab">AGREGAR PERSONAL</button>
-    </div>
-
-    <!-- MODO 1: escanear el QR del cliente con la cámara -->
-    <div id="modeScan">
-      <div class="staff-panel">
-        <div class="order-legend" style="margin-bottom:1rem">ESCANEAR TARJETA</div>
-        <p class="staff-note" style="margin-top:0">Pide al cliente que muestre su QR de Saint Rewards (lo ve en su cuenta) y apunta la cámara.</p>
-        <button class="btn btn--solid" id="startScanBtn" style="margin-top:1rem">INICIAR CÁMARA</button>
-        <button class="btn btn--outline-dark" id="stopScanBtn" style="margin-top:1rem;font-size:.68rem;padding:.5rem 1rem" hidden>DETENER</button>
-        <div id="qrReader" style="margin-top:1.2rem"></div>
-        <p class="staff-msg" id="scanMsg" hidden></p>
-      </div>
-    </div>
-
-    <!-- MODO 2: buscar por código (respaldo si la cámara falla) -->
-    <div id="modeCode" hidden>
-      <div class="staff-panel">
-        <div class="order-fieldset" style="padding:0;border:none">
-          <div class="order-legend" style="margin-bottom:1.5rem">BUSCAR POR CÓDIGO</div>
-          <div class="order-field">
-            <label class="order-field__label">CÓDIGO DEL CLIENTE</label>
-            <input class="order-field__input" type="text" id="codeInput" placeholder="Ej. AB12CD" style="text-transform:uppercase">
-          </div>
-          <button class="btn btn--solid" id="codeSearchBtn" style="margin-top:.5rem">BUSCAR Y ABRIR</button>
-          <p class="staff-msg" id="codeMsg" hidden></p>
+    <div class="staff-panel">
+      <div class="order-fieldset" style="padding:0;border:none">
+        <div class="order-legend" style="margin-bottom:1.5rem">NUEVA CUENTA DE PERSONAL</div>
+        <div class="order-field">
+          <label class="order-field__label">EMAIL</label>
+          <input class="order-field__input" type="email" id="staffEmail" placeholder="ej. jarron-azul@saintlatte.com">
         </div>
-      </div>
-    </div>
-
-    <!-- MODO 3: últimos registros (auditoría de compras/canjes) -->
-    <div id="modeLog" hidden>
-      <div class="staff-panel">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
-          <div class="order-legend" style="margin:0">ÚLTIMOS REGISTROS</div>
-          <button class="btn btn--outline-dark" id="refreshLogBtn" style="font-size:.65rem;padding:.5rem 1rem">REFRESCAR</button>
+        <div class="order-field">
+          <label class="order-field__label">CONTRASEÑA</label>
+          <input class="order-field__input" type="password" id="staffPassword" placeholder="Mínimo 6 caracteres">
         </div>
-        <p class="staff-note" style="margin-top:0">Las últimas compras y canjes registrados, más recientes primero — para revisar que todo lo que se sumó tenga una compra real detrás.</p>
-        <div class="log-list" id="logList" style="margin-top:1rem">
-          <p class="log-loading">Cargando…</p>
-        </div>
+        <button class="btn btn--solid" id="addStaffBtn" style="margin-top:.5rem">CREAR CUENTA DE PERSONAL</button>
+        <p class="staff-msg" id="addStaffMsg" hidden></p>
+        <p class="staff-note">La cuenta queda lista para iniciar sesión de inmediato en esta misma página.</p>
       </div>
-    </div>
-
-    <!-- MODO 4: agregar personal nuevo -->
-    <div id="modeStaff" hidden>
-      <div class="staff-panel">
-        <div class="order-fieldset" style="padding:0;border:none">
-          <div class="order-legend" style="margin-bottom:1.5rem">NUEVA CUENTA DE PERSONAL</div>
-          <div class="order-field">
-            <label class="order-field__label">EMAIL</label>
-            <input class="order-field__input" type="email" id="staffEmail" placeholder="ej. jarron-azul@saintlatte.com">
-          </div>
-          <div class="order-field">
-            <label class="order-field__label">CONTRASEÑA</label>
-            <input class="order-field__input" type="password" id="staffPassword" placeholder="Mínimo 6 caracteres">
-          </div>
-          <button class="btn btn--solid" id="addStaffBtn" style="margin-top:.5rem">CREAR CUENTA DE PERSONAL</button>
-          <p class="staff-msg" id="addStaffMsg" hidden></p>
-          <p class="staff-note">La cuenta queda lista para iniciar sesión de inmediato en esta misma página.</p>
-        </div>
-        <ul class="staff-roster" id="staffRoster"></ul>
-      </div>
+      <ul class="staff-roster" id="staffRoster"></ul>
     </div>
   </section>
 
@@ -176,133 +102,28 @@
   <script type="module">
     import { db, auth, firebaseConfig } from './firebase-config.js';
     import { initializeApp, deleteApp } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js';
-    import { doc, setDoc, getDoc, collection, collectionGroup, query, where, orderBy, limit, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
+    import { doc, setDoc, getDoc, collection, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
     import { onAuthStateChanged, signOut, getAuth, createUserWithEmailAndPassword, signOut as secondarySignOut } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js';
 
     // ═══ Guard de acceso: debe haber sesión Y estar en la colección staff ═══
     onAuthStateChanged(auth, async (user) => {
-      if (!user) { window.location.href = 'saint-rewards.html'; return; }
+      if (!user) { window.location.href = 'staff-login.html'; return; }
       const staffSnap = await getDoc(doc(db, 'staff', user.uid));
       if (!staffSnap.exists()) {
         await signOut(auth);
-        window.location.href = 'saint-rewards.html';
+        window.location.href = 'staff-login.html';
         return;
       }
       document.getElementById('sessionLabel').textContent = `Sesión: ${user.email}`;
       loadRoster();
-      loadRecentScans();
     });
 
     document.getElementById('logoutBtn').addEventListener('click', async () => {
       await signOut(auth);
-      window.location.href = 'saint-rewards.html';
+      window.location.href = 'staff-login.html';
     });
 
-    // ═══ Mode tabs ═══
-    const tabs = {
-      scan: document.getElementById('modeScanTab'),
-      code: document.getElementById('modeCodeTab'),
-      log: document.getElementById('modeLogTab'),
-      staff: document.getElementById('modeStaffTab'),
-    };
-    const panels = {
-      scan: document.getElementById('modeScan'),
-      code: document.getElementById('modeCode'),
-      log: document.getElementById('modeLog'),
-      staff: document.getElementById('modeStaff'),
-    };
-    function setMode(name) {
-      Object.keys(tabs).forEach((key) => {
-        tabs[key].classList.toggle('on', key === name);
-        panels[key].hidden = key !== name;
-      });
-      if (name !== 'scan') stopScanner();
-    }
-    tabs.scan.addEventListener('click', () => setMode('scan'));
-    tabs.code.addEventListener('click', () => setMode('code'));
-    tabs.log.addEventListener('click', () => { setMode('log'); loadRecentScans(); });
-    tabs.staff.addEventListener('click', () => setMode('staff'));
-
-    // ═══ MODO 1: escanear QR con cámara ═══
-    const startScanBtn = document.getElementById('startScanBtn');
-    const stopScanBtn = document.getElementById('stopScanBtn');
-    const scanMsg = document.getElementById('scanMsg');
-    let html5QrCode = null;
-
-    function goToCustomer(id) {
-      window.location.href = `saint-rewards.html?id=${encodeURIComponent(id)}`;
-    }
-
-    function extractCustomerId(decodedText) {
-      try {
-        const url = new URL(decodedText);
-        return url.searchParams.get('id');
-      } catch (err) {
-        return null; // no era una URL válida
-      }
-    }
-
-    async function stopScanner() {
-      if (html5QrCode) {
-        try { await html5QrCode.stop(); } catch (err) { /* ya estaba detenida */ }
-        html5QrCode.clear();
-        html5QrCode = null;
-      }
-      startScanBtn.hidden = false;
-      stopScanBtn.hidden = true;
-    }
-
-    startScanBtn.addEventListener('click', async () => {
-      scanMsg.hidden = true;
-      html5QrCode = new Html5Qrcode('qrReader');
-      try {
-        await html5QrCode.start(
-          { facingMode: 'environment' },
-          { fps: 10, qrbox: 220 },
-          (decodedText) => {
-            const id = extractCustomerId(decodedText);
-            if (!id) {
-              scanMsg.textContent = 'Ese código no es una tarjeta de Saint Rewards.';
-              scanMsg.hidden = false;
-              return;
-            }
-            stopScanner();
-            goToCustomer(id);
-          },
-          () => { /* frames sin QR detectado — normal, se ignora */ }
-        );
-        startScanBtn.hidden = true;
-        stopScanBtn.hidden = false;
-      } catch (err) {
-        scanMsg.textContent = 'No se pudo abrir la cámara. Revisa los permisos del navegador.';
-        scanMsg.hidden = false;
-      }
-    });
-
-    stopScanBtn.addEventListener('click', stopScanner);
-
-    // ═══ MODO 2: buscar por código (respaldo) ═══
-    document.getElementById('codeSearchBtn').addEventListener('click', async () => {
-      const code = document.getElementById('codeInput').value.trim().toUpperCase();
-      const msg = document.getElementById('codeMsg');
-      msg.hidden = true;
-      if (!code) return;
-      try {
-        const q = query(collection(db, 'customers'), where('linkCode', '==', code));
-        const snap = await getDocs(q);
-        if (snap.empty) {
-          msg.textContent = 'No encontramos ningún cliente con ese código.';
-          msg.hidden = false;
-          return;
-        }
-        goToCustomer(snap.docs[0].id);
-      } catch (err) {
-        msg.textContent = 'Error buscando el código. Intenta de nuevo.';
-        msg.hidden = false;
-      }
-    });
-
-    // ═══ MODO 3: agregar personal nuevo ═══
+    // ═══ Agregar personal nuevo ═══
     // Se crea la cuenta en una app secundaria de Firebase para no cerrar
     // la sesión de quien está dando de alta al nuevo personal.
     const addStaffMsg = document.getElementById('addStaffMsg');
@@ -345,46 +166,6 @@
         addStaffMsg.hidden = false;
       }
     });
-
-    // ═══ Últimos registros (auditoría, todos los clientes) ═══
-    function formatLogDate(ts) {
-      if (!ts) return '—';
-      return ts.toDate().toLocaleString('es-MX', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' });
-    }
-
-    document.getElementById('refreshLogBtn').addEventListener('click', loadRecentScans);
-
-    async function loadRecentScans() {
-      const list = document.getElementById('logList');
-      list.innerHTML = '<p class="log-loading">Cargando…</p>';
-      try {
-        const q = query(collectionGroup(db, 'scans'), orderBy('ts', 'desc'), limit(50));
-        const snap = await getDocs(q);
-        if (snap.empty) {
-          list.innerHTML = '<p class="log-empty">Todavía no hay compras ni canjes registrados.</p>';
-          return;
-        }
-        list.innerHTML = '';
-        snap.forEach((docSnap) => {
-          const d = docSnap.data();
-          const isEarn = d.type === 'earn';
-          const row = document.createElement('div');
-          row.className = 'log-row';
-          const amountLine = isEarn && d.amount != null
-            ? `Compra de $${d.amount} · saldo: ${d.balanceAfter}`
-            : `Canje de bebida gratis · saldo: ${d.balanceAfter}`;
-          row.innerHTML = `
-            <span class="log-row__name">${d.customerName || d.customerId || 'Cliente'}</span>
-            <span class="log-row__points ${isEarn ? 'is-earn' : 'is-redeem'}">${isEarn ? '+' : ''}${d.pointsAdded}</span>
-            <span class="log-row__meta">${formatLogDate(d.ts)} · ${d.staffEmail || '—'}</span>
-            <span class="log-row__amount">${amountLine}</span>
-          `;
-          list.appendChild(row);
-        });
-      } catch (err) {
-        list.innerHTML = '<p class="log-empty">No se pudieron cargar los registros. Intenta de nuevo.</p>';
-      }
-    }
 
     async function loadRoster() {
       const roster = document.getElementById('staffRoster');
