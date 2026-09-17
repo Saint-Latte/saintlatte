@@ -96,6 +96,7 @@
           </div>
           <button class="btn btn--solid" id="loginBtn" style="margin-top:.5rem">ENTRAR</button>
           <button type="button" class="staff-forgot-link" id="forgotLinkBtn">¿Olvidaste tu contraseña?</button>
+          <button type="button" class="staff-forgot-link" id="registerLinkBtn">¿Eres nuevo? Crea tu cuenta</button>
           <p class="staff-msg" id="loginMsg" hidden></p>
         </div>
       </div>
@@ -112,18 +113,48 @@
           <p class="staff-msg" id="forgotMsg" hidden></p>
         </div>
       </div>
+
+      <div id="registerFormWrap" hidden>
+        <div class="order-fieldset" style="padding:0;border:none">
+          <div class="order-legend" style="margin-bottom:1.5rem">CREAR CUENTA</div>
+          <div class="order-field">
+            <label class="order-field__label">EMAIL</label>
+            <input class="order-field__input" type="email" id="regEmail" autocomplete="username">
+          </div>
+          <div class="order-field">
+            <label class="order-field__label">CONTRASEÑA</label>
+            <input class="order-field__input" type="password" id="regPassword" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+          </div>
+          <div class="order-field">
+            <label class="order-field__label">CONFIRMAR CONTRASEÑA</label>
+            <input class="order-field__input" type="password" id="regPasswordConfirm" autocomplete="new-password">
+          </div>
+          <p class="staff-note" style="margin:0 0 1rem;font-size:.78rem;color:rgba(255,254,249,.45);line-height:1.6">
+            Tu cuenta queda pendiente de aprobación — un miembro del staff tiene que confirmarla antes de que puedas entrar.
+          </p>
+          <button class="btn btn--solid" id="registerBtn">CREAR CUENTA</button>
+          <button type="button" class="staff-forgot-link" id="backToLoginFromRegisterBtn">← Volver a iniciar sesión</button>
+          <p class="staff-msg" id="registerMsg" hidden></p>
+        </div>
+      </div>
     </div>
   </section>
 
   <script src="main.js"></script>
   <script type="module">
     import { db, auth } from './firebase-config.js';
-    import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
-    import { onAuthStateChanged, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js';
+    import { doc, getDoc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
+    import { onAuthStateChanged, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js';
 
     const params = new URLSearchParams(window.location.search);
     const nextPage = params.get('next');
     const loginMsg = document.getElementById('loginMsg');
+
+    function showOnlyLogin() {
+      document.getElementById('forgotFormWrap').hidden = true;
+      document.getElementById('registerFormWrap').hidden = true;
+      loginFormWrap.hidden = false;
+    }
 
     onAuthStateChanged(auth, async (user) => {
       if (!user) return; // se queda mostrando el formulario de login
@@ -131,12 +162,22 @@
         const staffSnap = await getDoc(doc(db, 'staff', user.uid));
         if (staffSnap.exists()) {
           window.location.href = nextPage || 'staff-panel.html';
-        } else {
-          await signOut(auth);
-          loginMsg.textContent = 'Esta cuenta no tiene permisos de personal.';
-          loginMsg.hidden = false;
+          return;
         }
+        const pendingSnap = await getDoc(doc(db, 'pendingStaff', user.uid));
+        await signOut(auth);
+        showOnlyLogin();
+        if (pendingSnap.exists()) {
+          loginMsg.style.color = 'var(--green)';
+          loginMsg.textContent = 'Tu cuenta ya está creada y pendiente de aprobación por otro miembro del staff.';
+        } else {
+          loginMsg.style.color = 'var(--rust)';
+          loginMsg.textContent = 'Esta cuenta no tiene permisos de personal.';
+        }
+        loginMsg.hidden = false;
       } catch (err) {
+        await signOut(auth).catch(() => {});
+        loginMsg.style.color = 'var(--rust)';
         loginMsg.textContent = 'No se pudo verificar la cuenta. Intenta de nuevo.';
         loginMsg.hidden = false;
       }
@@ -155,6 +196,7 @@
         await signInWithEmailAndPassword(auth, email, password);
         // el chequeo de rol + redirect lo dispara el listener de onAuthStateChanged
       } catch (err) {
+        loginMsg.style.color = 'var(--rust)';
         loginMsg.textContent = 'No se pudo iniciar sesión. Revisa tu email y contraseña.';
         loginMsg.hidden = false;
       }
@@ -207,6 +249,56 @@
 
     document.getElementById('forgotBtn').addEventListener('click', trySendReset);
     document.getElementById('forgotEmail').addEventListener('keydown', (e) => { if (e.key === 'Enter') trySendReset(); });
+
+    // ═══ Crear cuenta (queda pendiente de aprobación) ═══
+    const registerFormWrap = document.getElementById('registerFormWrap');
+    const registerMsg = document.getElementById('registerMsg');
+
+    document.getElementById('registerLinkBtn').addEventListener('click', () => {
+      document.getElementById('regEmail').value = document.getElementById('loginEmail').value;
+      registerMsg.hidden = true;
+      loginFormWrap.hidden = true;
+      registerFormWrap.hidden = false;
+    });
+    document.getElementById('backToLoginFromRegisterBtn').addEventListener('click', () => {
+      registerFormWrap.hidden = true;
+      loginFormWrap.hidden = false;
+    });
+
+    async function tryRegister() {
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value;
+      const confirmPassword = document.getElementById('regPasswordConfirm').value;
+      registerMsg.hidden = true;
+      if (!email || password.length < 6) {
+        registerMsg.style.color = 'var(--rust)';
+        registerMsg.textContent = 'Escribe un email y una contraseña de al menos 6 caracteres.';
+        registerMsg.hidden = false;
+        return;
+      }
+      if (password !== confirmPassword) {
+        registerMsg.style.color = 'var(--rust)';
+        registerMsg.textContent = 'Las contraseñas no coinciden.';
+        registerMsg.hidden = false;
+        return;
+      }
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        await setDoc(doc(db, 'pendingStaff', cred.user.uid), { email, requestedAt: serverTimestamp() });
+        // el listener de onAuthStateChanged detecta la sesión nueva, ve que
+        // no es staff pero sí está pendiente, cierra la sesión y muestra el
+        // mensaje de "pendiente de aprobación" en el panel de login.
+      } catch (err) {
+        registerMsg.style.color = 'var(--rust)';
+        registerMsg.textContent = err.code === 'auth/email-already-in-use'
+          ? 'Ese email ya tiene una cuenta. Inicia sesión o recupera tu contraseña.'
+          : 'No se pudo crear la cuenta. Intenta de nuevo.';
+        registerMsg.hidden = false;
+      }
+    }
+
+    document.getElementById('registerBtn').addEventListener('click', tryRegister);
+    document.getElementById('regPasswordConfirm').addEventListener('keydown', (e) => { if (e.key === 'Enter') tryRegister(); });
   </script>
 </body>
 </html>

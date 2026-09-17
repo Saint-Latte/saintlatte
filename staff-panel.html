@@ -27,6 +27,14 @@
     .staff-session span { font-size: .78rem; color: rgba(255,254,249,.5); }
     .staff-roster { list-style: none; display: flex; flex-direction: column; gap: .4rem; margin-top: 1rem; }
     .staff-roster li { font-size: .8rem; color: rgba(255,254,249,.5); }
+    .pending-list { display: flex; flex-direction: column; gap: 1px; margin-top: 1rem; }
+    .pending-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+      padding: .9rem 1rem; background: var(--black); border: 1px solid rgba(255,254,249,.06);
+    }
+    .pending-row__email { font-size: .82rem; color: var(--cream); }
+    .pending-row__actions { display: flex; gap: .5rem; flex-shrink: 0; }
+    .pending-empty, .pending-loading { font-size: .82rem; color: rgba(255,254,249,.4); padding: .5rem 0; }
   </style>
 </head>
 <body class="page-testing">
@@ -80,6 +88,14 @@
     </div>
 
     <div class="staff-panel">
+      <div class="order-legend" style="margin-bottom:1rem">SOLICITUDES PENDIENTES</div>
+      <p class="staff-note" style="margin-top:0">Cuentas que se crearon solas desde la página de login — no tienen acceso hasta que las apruebes.</p>
+      <div class="pending-list" id="pendingList">
+        <p class="pending-loading">Cargando…</p>
+      </div>
+    </div>
+
+    <div class="staff-panel">
       <div class="order-fieldset" style="padding:0;border:none">
         <div class="order-legend" style="margin-bottom:1.5rem">NUEVA CUENTA DE PERSONAL</div>
         <div class="order-field">
@@ -102,7 +118,7 @@
   <script type="module">
     import { db, auth, firebaseConfig } from './firebase-config.js';
     import { initializeApp, deleteApp } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js';
-    import { doc, setDoc, getDoc, collection, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
+    import { doc, setDoc, getDoc, deleteDoc, collection, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
     import { onAuthStateChanged, signOut, getAuth, createUserWithEmailAndPassword, signOut as secondarySignOut } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js';
 
     // ═══ Guard de acceso: debe haber sesión Y estar en la colección staff ═══
@@ -116,6 +132,7 @@
       }
       document.getElementById('sessionLabel').textContent = `Sesión: ${user.email}`;
       loadRoster();
+      loadPending();
     });
 
     document.getElementById('logoutBtn').addEventListener('click', async () => {
@@ -164,6 +181,59 @@
         addStaffMsg.textContent = 'No se pudo crear la cuenta (¿ese email ya está en uso?).';
         addStaffMsg.style.color = 'var(--rust)';
         addStaffMsg.hidden = false;
+      }
+    });
+
+    // ═══ Solicitudes pendientes (autorregistradas desde staff-login.html) ═══
+    async function loadPending() {
+      const list = document.getElementById('pendingList');
+      list.innerHTML = '<p class="pending-loading">Cargando…</p>';
+      try {
+        const snap = await getDocs(collection(db, 'pendingStaff'));
+        if (snap.empty) {
+          list.innerHTML = '<p class="pending-empty">No hay solicitudes pendientes.</p>';
+          return;
+        }
+        list.innerHTML = '';
+        snap.forEach((d) => {
+          const email = d.data().email || d.id;
+          const row = document.createElement('div');
+          row.className = 'pending-row';
+          row.innerHTML = `
+            <span class="pending-row__email">${email}</span>
+            <div class="pending-row__actions">
+              <button class="btn btn--solid" data-action="approve" data-uid="${d.id}" data-email="${email}" style="font-size:.62rem;padding:.5rem .8rem">APROBAR</button>
+              <button class="btn btn--outline-dark" data-action="reject" data-uid="${d.id}" style="font-size:.62rem;padding:.5rem .8rem">RECHAZAR</button>
+            </div>
+          `;
+          list.appendChild(row);
+        });
+      } catch (err) {
+        list.innerHTML = '<p class="pending-empty">No se pudieron cargar las solicitudes.</p>';
+      }
+    }
+
+    document.getElementById('pendingList').addEventListener('click', async (e) => {
+      const btn = e.target.closest('button[data-action]');
+      if (!btn) return;
+      const uid = btn.dataset.uid;
+      btn.disabled = true;
+      try {
+        if (btn.dataset.action === 'approve') {
+          await setDoc(doc(db, 'staff', uid), {
+            role: 'staff',
+            email: btn.dataset.email,
+            addedBy: auth.currentUser.email,
+            addedAt: serverTimestamp(),
+          });
+          await deleteDoc(doc(db, 'pendingStaff', uid));
+          loadRoster();
+        } else {
+          await deleteDoc(doc(db, 'pendingStaff', uid));
+        }
+        loadPending();
+      } catch (err) {
+        btn.disabled = false;
       }
     });
 
