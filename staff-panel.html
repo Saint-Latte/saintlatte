@@ -26,7 +26,14 @@
     .staff-session { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
     .staff-session span { font-size: .78rem; color: rgba(255,254,249,.5); }
     .staff-roster { list-style: none; display: flex; flex-direction: column; gap: .4rem; margin-top: 1rem; }
-    .staff-roster li { font-size: .8rem; color: rgba(255,254,249,.5); }
+    .staff-roster li {
+      font-size: .8rem; color: rgba(255,254,249,.5);
+      display: flex; align-items: center; justify-content: space-between; gap: .6rem; flex-wrap: wrap;
+    }
+    .staff-roster__branch {
+      background: var(--black-mid); border: 1px solid rgba(255,254,249,.15); color: var(--cream);
+      font-size: .68rem; padding: .4rem .3rem;
+    }
     .pending-list, .shop-list { display: flex; flex-direction: column; gap: 1px; margin-top: 1rem; }
     .pending-row {
       display: flex; align-items: center; justify-content: space-between; gap: .8rem; flex-wrap: wrap;
@@ -144,7 +151,7 @@
   <script type="module">
     import { db, auth, firebaseConfig } from './firebase-config.js';
     import { initializeApp, deleteApp } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js';
-    import { doc, setDoc, getDoc, deleteDoc, collection, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
+    import { doc, setDoc, updateDoc, getDoc, deleteDoc, collection, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
     import { onAuthStateChanged, signOut, getAuth, createUserWithEmailAndPassword, signOut as secondarySignOut } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js';
 
     const OWNER_EMAIL = 'aldo.leon.h@hotmail.com';
@@ -332,12 +339,33 @@
         snap.forEach((d) => {
           const data = d.data();
           const li = document.createElement('li');
-          const branchLabel = data.branch ? ` — ${BRANCH_NAMES[data.branch] || data.branch}` : '';
-          li.textContent = `${data.email || d.id}${branchLabel}`;
+          if (data.email === OWNER_EMAIL) {
+            li.textContent = `${data.email || d.id} — dueño`;
+          } else {
+            li.innerHTML = `
+              <span>${data.email || d.id}</span>
+              <select class="staff-roster__branch" data-uid="${d.id}">
+                <option value="jarron-azul"${data.branch === 'jarron-azul' ? ' selected' : ''}>Jarrón Azul</option>
+                <option value="leandro-valle"${data.branch === 'leandro-valle' ? ' selected' : ''}>Leandro Valle</option>
+              </select>
+            `;
+          }
           roster.appendChild(li);
         });
       } catch (err) { /* silencioso — el roster es solo informativo */ }
     }
+
+    document.getElementById('staffRoster').addEventListener('change', async (e) => {
+      const select = e.target.closest('select[data-uid]');
+      if (!select) return;
+      select.disabled = true;
+      try {
+        await updateDoc(doc(db, 'staff', select.dataset.uid), { branch: select.value });
+      } catch (err) {
+        loadRoster(); // revierte el <select> a lo que en realidad quedó guardado
+      }
+      select.disabled = false;
+    });
   </script>
 </body>
 </html>
