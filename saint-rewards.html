@@ -530,9 +530,10 @@
       }
       if (user) {
         showState('redirecting');
+        const nextPage = params.get('next');
         try {
           const staffSnap = await getDoc(doc(db, 'staff', user.uid));
-          window.location.href = staffSnap.exists() ? 'staff-panel.html' : 'mi-cuenta.html';
+          window.location.href = staffSnap.exists() ? (nextPage || 'staff-panel.html') : 'mi-cuenta.html';
         } catch (err) {
           window.location.href = 'mi-cuenta.html';
         }
