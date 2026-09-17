@@ -237,10 +237,25 @@
             <p class="log-loading">Cargando…</p>
           </div>
         </div>
+
+        <div class="staff-panel" id="unassignedShopPanel" hidden>
+          <div class="order-legend" style="margin-bottom:1rem">PENDIENTES SIN SUCURSAL (de antes)</div>
+          <p class="staff-note" style="margin-top:0">Se crearon antes de separar por sucursal — asígnalas para que vuelvan a aparecer.</p>
+          <div class="shop-list" id="unassignedShopList" style="margin-top:1rem">
+            <p class="log-loading">Buscando…</p>
+          </div>
+        </div>
       </div>
 
       <!-- MODO 6: agregar artículo -->
       <div id="modeItems" hidden>
+        <div class="staff-panel" id="unassignedItemsPanel" hidden>
+          <div class="order-legend" style="margin-bottom:1rem">ARTÍCULOS SIN SUCURSAL (de antes)</div>
+          <p class="staff-note" style="margin-top:0">Se crearon antes de separar por sucursal — asígnalos para que vuelvan a aparecer en Stock Actual.</p>
+          <div class="shop-list" id="unassignedItemsList" style="margin-top:1rem">
+            <p class="log-loading">Buscando…</p>
+          </div>
+        </div>
         <div class="staff-panel">
           <div class="order-fieldset" style="padding:0;border:none">
             <div class="order-legend" style="margin-bottom:1.5rem">NUEVO ARTÍCULO</div>
@@ -274,7 +289,7 @@
   <script type="module">
     import { db, auth } from './firebase-config.js';
     import {
-      doc, getDoc, addDoc, deleteDoc, collection, query, where, orderBy, limit, getDocs,
+      doc, getDoc, addDoc, updateDoc, deleteDoc, collection, query, where, orderBy, limit, getDocs,
       runTransaction, serverTimestamp,
     } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
     import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js';
@@ -302,6 +317,10 @@
 
       if (isOwner) {
         document.getElementById('branchSwitch').hidden = false;
+        document.getElementById('unassignedItemsPanel').hidden = false;
+        document.getElementById('unassignedShopPanel').hidden = false;
+        loadUnassignedItems();
+        loadUnassignedShopping();
         setBranch('jarron-azul');
       } else if (myBranch) {
         setBranch(myBranch);
@@ -700,6 +719,107 @@
         msg.textContent = 'No se pudo agregar el artículo.';
         msg.style.color = 'var(--rust)';
         msg.hidden = false;
+      }
+    });
+
+    // ═══ Migrar artículos y pendientes creados antes de separar por sucursal (solo dueño) ═══
+    function branchPickerHtml(dataAttr, id) {
+      return `
+        <select class="pending-row__branch" data-${dataAttr}="${id}">
+          <option value="jarron-azul">Jarrón Azul</option>
+          <option value="leandro-valle">Leandro Valle</option>
+        </select>
+        <button class="btn btn--solid" data-${dataAttr}-btn="${id}" style="font-size:.62rem;padding:.5rem .8rem">ASIGNAR</button>
+      `;
+    }
+
+    async function loadUnassignedItems() {
+      if (!isOwner) return;
+      const listEl = document.getElementById('unassignedItemsList');
+      listEl.innerHTML = '<p class="log-loading">Buscando…</p>';
+      try {
+        const snap = await getDocs(collection(db, 'inventory_items')); // sin where — el dueño ve todas las sucursales
+        const orphans = snap.docs.filter((d) => !d.data().branch);
+        if (!orphans.length) {
+          listEl.innerHTML = '<p class="log-empty">No hay artículos sin sucursal.</p>';
+          return;
+        }
+        listEl.innerHTML = '';
+        orphans.forEach((d) => {
+          const data = d.data();
+          const row = document.createElement('div');
+          row.className = 'shop-row';
+          row.innerHTML = `
+            <span class="shop-row__info">${data.name || 'Artículo'} — stock: ${data.stock ?? 0}${data.unit ? ' ' + data.unit : ''}</span>
+            <span style="display:flex;gap:.5rem;align-items:center">${branchPickerHtml('migrate-item', d.id)}</span>
+          `;
+          listEl.appendChild(row);
+        });
+      } catch (err) {
+        listEl.innerHTML = '<p class="log-empty">No se pudo revisar. Intenta de nuevo.</p>';
+      }
+    }
+
+    document.getElementById('unassignedItemsList').addEventListener('click', async (e) => {
+      const btn = e.target.closest('button[data-migrate-item-btn]');
+      if (!btn) return;
+      const itemId = btn.dataset.migrateItemBtn;
+      const select = document.querySelector(`select[data-migrate-item="${itemId}"]`);
+      btn.disabled = true;
+      try {
+        await updateDoc(doc(db, 'inventory_items', itemId), { branch: select.value, updatedAt: serverTimestamp() });
+        loadUnassignedItems();
+        if (select.value === currentBranch) loadItems();
+      } catch (err) {
+        btn.disabled = false;
+      }
+    });
+
+    async function loadUnassignedShopping() {
+      if (!isOwner) return;
+      const listEl = document.getElementById('unassignedShopList');
+      listEl.innerHTML = '<p class="log-loading">Buscando…</p>';
+      try {
+        const snap = await getDocs(collection(db, 'shopping_list')); // sin where — el dueño ve todas las sucursales
+        const orphans = snap.docs.filter((d) => !d.data().branch);
+        if (!orphans.length) {
+          listEl.innerHTML = '<p class="log-empty">No hay pendientes sin sucursal.</p>';
+          return;
+        }
+        listEl.innerHTML = '';
+        orphans.forEach((d) => {
+          const data = d.data();
+          const row = document.createElement('div');
+          row.className = 'shop-row';
+          row.innerHTML = `
+            <span class="shop-row__info">${data.name}${data.note ? ` — ${data.note}` : ''}</span>
+            <span style="display:flex;gap:.5rem;align-items:center">${branchPickerHtml('migrate-shop', d.id)}</span>
+          `;
+          listEl.appendChild(row);
+        });
+      } catch (err) {
+        listEl.innerHTML = '<p class="log-empty">No se pudo revisar. Intenta de nuevo.</p>';
+      }
+    }
+
+    document.getElementById('unassignedShopList').addEventListener('click', async (e) => {
+      const btn = e.target.closest('button[data-migrate-shop-btn]');
+      if (!btn) return;
+      const oldId = btn.dataset.migrateShopBtn;
+      const select = document.querySelector(`select[data-migrate-shop="${oldId}"]`);
+      btn.disabled = true;
+      try {
+        // shopping_list no permite update — se recrea con la sucursal y se borra el viejo.
+        const oldRef = doc(db, 'shopping_list', oldId);
+        const oldSnap = await getDoc(oldRef);
+        if (oldSnap.exists()) {
+          await addDoc(collection(db, 'shopping_list'), { ...oldSnap.data(), branch: select.value });
+          await deleteDoc(oldRef);
+        }
+        loadUnassignedShopping();
+        if (select.value === currentBranch) loadShoppingList();
+      } catch (err) {
+        btn.disabled = false;
       }
     });
   </script>
