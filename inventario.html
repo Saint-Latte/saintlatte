@@ -295,7 +295,7 @@
         window.location.href = 'staff-login.html?next=inventario.html';
         return;
       }
-      isOwner = user.email === OWNER_EMAIL;
+      isOwner = (user.email || '').toLowerCase() === OWNER_EMAIL;
       myBranch = staffSnap.data().branch || null;
       document.getElementById('sessionLabel').textContent =
         `Sesión: ${user.email}${!isOwner && myBranch ? ' · ' + (BRANCH_NAMES[myBranch] || myBranch) : ''}`;

@@ -344,10 +344,13 @@
           } else {
             li.innerHTML = `
               <span>${data.email || d.id}</span>
-              <select class="staff-roster__branch" data-uid="${d.id}">
-                <option value="jarron-azul"${data.branch === 'jarron-azul' ? ' selected' : ''}>Jarrón Azul</option>
-                <option value="leandro-valle"${data.branch === 'leandro-valle' ? ' selected' : ''}>Leandro Valle</option>
-              </select>
+              <span style="display:flex;align-items:center;gap:.5rem">
+                <span class="staff-roster__status" data-status-for="${d.id}" hidden></span>
+                <select class="staff-roster__branch" data-uid="${d.id}">
+                  <option value="jarron-azul"${data.branch === 'jarron-azul' ? ' selected' : ''}>Jarrón Azul</option>
+                  <option value="leandro-valle"${data.branch === 'leandro-valle' ? ' selected' : ''}>Leandro Valle</option>
+                </select>
+              </span>
             `;
           }
           roster.appendChild(li);
@@ -358,11 +361,19 @@
     document.getElementById('staffRoster').addEventListener('change', async (e) => {
       const select = e.target.closest('select[data-uid]');
       if (!select) return;
+      const status = document.querySelector(`[data-status-for="${select.dataset.uid}"]`);
       select.disabled = true;
+      status.hidden = true;
       try {
         await updateDoc(doc(db, 'staff', select.dataset.uid), { branch: select.value });
+        status.textContent = 'Guardado ✓';
+        status.style.color = 'var(--green)';
+        status.hidden = false;
+        setTimeout(() => { status.hidden = true; }, 3000);
       } catch (err) {
-        loadRoster(); // revierte el <select> a lo que en realidad quedó guardado
+        status.textContent = 'No se pudo guardar.';
+        status.style.color = 'var(--rust)';
+        status.hidden = false;
       }
       select.disabled = false;
     });
