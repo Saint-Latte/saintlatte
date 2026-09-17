@@ -14,6 +14,31 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .footer__staff-link {
+      background: none; border: none; cursor: none; padding: 0; margin-left: 1.2rem;
+      font-size: .6rem; letter-spacing: .12em; font-weight: 600; color: rgba(255,254,249,.22);
+      transition: color .2s;
+    }
+    .footer__staff-link:hover { color: rgba(255,254,249,.55); }
+    .staff-gate {
+      position: fixed; inset: 0; background: rgba(10,10,10,.88); z-index: 999;
+      display: flex; align-items: center; justify-content: center; padding: 24px;
+    }
+    .staff-gate__box { background: var(--black-mid); border: 1px solid rgba(255,254,249,.15); padding: 2rem; max-width: 300px; width: 100%; text-align: center; }
+    .staff-gate__label { font-size: .65rem; letter-spacing: .12em; font-weight: 700; color: rgba(255,254,249,.5); margin-bottom: 1.2rem; }
+    .staff-gate__input {
+      width: 100%; background: var(--black); border: 1px solid rgba(255,254,249,.15); color: var(--cream);
+      padding: .8rem 1rem; font-size: .9rem; text-align: center; margin-bottom: 1rem;
+    }
+    .staff-gate__actions { display: flex; gap: .6rem; }
+    .staff-gate__btn {
+      flex: 1; padding: .7rem 1rem; font-size: .62rem; letter-spacing: .08em; font-weight: 700;
+      background: var(--rust); color: var(--cream); border: none; cursor: none;
+    }
+    .staff-gate__btn--ghost { background: transparent; border: 1px solid rgba(255,254,249,.2); color: rgba(255,254,249,.6); }
+    .staff-gate__msg { font-size: .7rem; color: var(--rust); margin-top: .9rem; }
+  </style>
 </head>
 <body>
 
@@ -344,9 +369,54 @@
     <div class="footer__bottom">
       <span>© 2024 SAINT LATTE. TODOS LOS DERECHOS RESERVADOS.</span>
       <span>HECHO CON ♥ EN VALLE DE SANTIAGO</span>
+      <button type="button" class="footer__staff-link" id="staffGateBtn">STAFF</button>
     </div>
   </footer>
 
+  <div class="staff-gate" id="staffGate" hidden>
+    <div class="staff-gate__box">
+      <p class="staff-gate__label">ACCESO STAFF</p>
+      <input type="password" id="staffGateInput" class="staff-gate__input" placeholder="Contraseña" autocomplete="off">
+      <div class="staff-gate__actions">
+        <button type="button" class="staff-gate__btn staff-gate__btn--ghost" id="staffGateCancel">CANCELAR</button>
+        <button type="button" class="staff-gate__btn" id="staffGateSubmit">ENTRAR</button>
+      </div>
+      <p class="staff-gate__msg" id="staffGateMsg" hidden>Contraseña incorrecta.</p>
+    </div>
+  </div>
+
   <script src="main.js"></script>
+  <script>
+    (function () {
+      var PASSWORD = 'cafecitos';
+      var gateBtn = document.getElementById('staffGateBtn');
+      var gate = document.getElementById('staffGate');
+      var input = document.getElementById('staffGateInput');
+      var msg = document.getElementById('staffGateMsg');
+
+      function openGate() {
+        gate.hidden = false;
+        msg.hidden = true;
+        input.value = '';
+        input.focus();
+      }
+      function closeGate() { gate.hidden = true; }
+      function trySubmit() {
+        if (input.value.trim().toLowerCase() === PASSWORD) {
+          window.location.href = 'staff-panel.html';
+        } else {
+          msg.hidden = false;
+          input.value = '';
+          input.focus();
+        }
+      }
+
+      gateBtn.addEventListener('click', openGate);
+      document.getElementById('staffGateCancel').addEventListener('click', closeGate);
+      document.getElementById('staffGateSubmit').addEventListener('click', trySubmit);
+      gate.addEventListener('click', function (e) { if (e.target === gate) closeGate(); });
+      input.addEventListener('keydown', function (e) { if (e.key === 'Enter') trySubmit(); });
+    })();
+  </script>
 </body>
 </html>
