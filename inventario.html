@@ -22,7 +22,7 @@
       padding: 2rem; margin-bottom: 2rem;
     }
     .staff-note { font-size: .8rem; color: rgba(255,254,249,.45); line-height: 1.7; margin-top: 1rem; }
-    .staff-msg { font-size: .85rem; color: var(--rust); margin-top: 1rem; min-height: 1.2em; }
+    .staff-msg { font-size: .85rem; color: #D4521A; margin-top: 1rem; min-height: 1.2em; }
     .staff-session { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
     .staff-session span { font-size: .78rem; color: rgba(255,254,249,.5); }
     .branch-switch { display: flex; gap: 1px; margin-bottom: 1.5rem; }
@@ -49,12 +49,16 @@
     .log-row__meta { font-size: .68rem; color: rgba(255,254,249,.4); grid-column: 1; }
     .log-row__amount { font-size: .68rem; color: rgba(255,254,249,.45); grid-column: 1; }
     .log-row__points { font-family: var(--ff-display); font-size: 1.1rem; letter-spacing: .04em; text-align: right; align-self: center; grid-row: 1 / span 2; }
-    .log-row__points.is-earn { color: var(--rust); }
+    .log-row__points.is-earn { color: #D4521A; }
     .log-row__points.is-redeem { color: var(--green); }
     .log-empty, .log-loading { font-size: .82rem; color: rgba(255,254,249,.4); padding: .5rem 0; }
 
-    .inv-item-row.is-low .log-row__points { color: var(--rust); }
+    .inv-item-row.is-low .log-row__points { color: #D4521A; }
     .inv-refresh-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; }
+    .inv-edit-link {
+      background: none; border: none; cursor: none; padding: 0; margin-left: .6rem;
+      font-size: .68rem; color: var(--green); text-decoration: underline;
+    }
 
     .shop-row {
       display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
@@ -214,6 +218,11 @@
       <!-- MODO 5: lista de compras -->
       <div id="modeShop" hidden>
         <div class="staff-panel">
+          <div class="order-legend" style="margin-bottom:1rem">POR DEBAJO DEL MÍNIMO</div>
+          <p class="staff-note" style="margin-top:0">Se arma solo a partir del umbral mínimo de cada artículo — no hay que agregarlo a mano.</p>
+          <div class="shop-list" id="lowStockList" style="margin-top:1rem"></div>
+        </div>
+        <div class="staff-panel">
           <div class="order-fieldset" style="padding:0;border:none">
             <div class="order-legend" style="margin-bottom:1.5rem">AGREGAR A LA LISTA</div>
             <div class="order-field">
@@ -258,7 +267,7 @@
         </div>
         <div class="staff-panel">
           <div class="order-fieldset" style="padding:0;border:none">
-            <div class="order-legend" style="margin-bottom:1.5rem">NUEVO ARTÍCULO</div>
+            <div class="order-legend" style="margin-bottom:1.5rem" id="itemFormLegend">NUEVO ARTÍCULO</div>
             <p class="staff-note" style="margin-top:0">El nombre y la unidad se comparten entre las dos sucursales — si ya existe, escribe igual y se usa el mismo. La cantidad es solo de esta sucursal.</p>
             <div class="order-field">
               <label class="order-field__label">NOMBRE</label>
@@ -266,10 +275,10 @@
               <datalist id="productNames"></datalist>
             </div>
             <div class="order-field">
-              <label class="order-field__label">UNIDAD</label>
-              <input class="order-field__input" type="text" id="newItemUnit" placeholder="Ej. kg, litros, piezas...">
+              <label class="order-field__label">UNIDAD / PRESENTACIÓN</label>
+              <input class="order-field__input" type="text" id="newItemUnit" placeholder="Ej. kg, litros, piezas, bolsa 1kg...">
             </div>
-            <div class="order-field">
+            <div class="order-field" id="newItemStockField">
               <label class="order-field__label">STOCK INICIAL</label>
               <input class="order-field__input" type="number" id="newItemStock" placeholder="0" min="0" step="any">
             </div>
@@ -278,6 +287,7 @@
               <input class="order-field__input" type="number" id="newItemThreshold" placeholder="Avisar cuando baje de..." min="0" step="any">
             </div>
             <button class="btn btn--solid" id="addItemBtn" style="margin-top:.5rem">AGREGAR ARTÍCULO</button>
+            <button type="button" class="inv-edit-link" id="cancelEditItemBtn" hidden>CANCELAR EDICIÓN</button>
             <p class="staff-msg" id="addItemMsg" hidden></p>
           </div>
         </div>
@@ -403,7 +413,7 @@
     tabs.out.addEventListener('click', () => setMode('out'));
     tabs.in.addEventListener('click', () => setMode('in'));
     tabs.hist.addEventListener('click', () => { setMode('hist'); loadMovements(); });
-    tabs.shop.addEventListener('click', () => { setMode('shop'); loadShoppingList(); });
+    tabs.shop.addEventListener('click', () => { setMode('shop'); renderLowStockList(); loadShoppingList(); });
     tabs.items.addEventListener('click', () => setMode('items'));
 
     // ═══ Stock actual ═══
@@ -426,6 +436,7 @@
           .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
         renderItemList();
         fillItemSelects();
+        renderLowStockList();
       } catch (err) {
         listEl.innerHTML = '<p class="log-empty">No se pudo cargar el inventario.</p>';
       }
@@ -447,10 +458,37 @@
         row.innerHTML = `
           <span class="log-row__name">${item.name || 'Artículo'}</span>
           <span class="log-row__points ${isLow ? 'is-earn' : 'is-redeem'}">${stock}${item.unit ? ' ' + item.unit : ''}</span>
-          <span class="log-row__meta">Actualizado: ${formatLogDate(item.updatedAt)}</span>
+          <span class="log-row__meta">Actualizado: ${formatLogDate(item.updatedAt)}
+            ${isOwner ? `<button type="button" class="inv-edit-link" data-edit-item="${item.id}">EDITAR</button>` : ''}
+          </span>
         `;
         listEl.appendChild(row);
       });
+    }
+
+    document.getElementById('itemList').addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-edit-item]');
+      if (!btn) return;
+      startEditItem(btn.dataset.editItem);
+    });
+
+    function renderLowStockList() {
+      const listEl = document.getElementById('lowStockList');
+      if (!listEl) return;
+      const low = itemsCache.filter((i) => (i.lowStockThreshold || 0) > 0 && (i.stock ?? 0) <= i.lowStockThreshold);
+      if (!low.length) {
+        listEl.innerHTML = '<p class="log-empty">Todo está por encima de su mínimo.</p>';
+        return;
+      }
+      listEl.innerHTML = low
+        .map((i) => `
+          <div class="shop-row">
+            <span class="shop-row__info">${i.name}
+              <span class="shop-row__meta">Hay ${i.stock ?? 0}${i.unit ? ' ' + i.unit : ''} · mínimo ${i.lowStockThreshold} · faltan ${Math.max(0, i.lowStockThreshold - (i.stock ?? 0))}</span>
+            </span>
+          </div>
+        `)
+        .join('');
     }
 
     function fillItemSelects() {
@@ -499,14 +537,14 @@
       msg.hidden = true;
       if (!itemId || !qty || qty <= 0) {
         msg.textContent = 'Selecciona un artículo y una cantidad válida.';
-        msg.style.color = 'var(--rust)';
+        msg.style.color = '#D4521A';
         msg.hidden = false;
         return;
       }
       try {
         const stockAfter = await registerMovement({ itemId, qty, note, type: 'salida', sign: -1 });
         msg.textContent = `Salida registrada. Stock restante: ${stockAfter}.`;
-        msg.style.color = 'var(--rust)';
+        msg.style.color = '#D4521A';
         msg.hidden = false;
         document.getElementById('outQtyInput').value = '';
         document.getElementById('outNoteInput').value = '';
@@ -515,7 +553,7 @@
         loadMovements();
       } catch (err) {
         msg.textContent = 'No se pudo registrar la salida. Intenta de nuevo.';
-        msg.style.color = 'var(--rust)';
+        msg.style.color = '#D4521A';
         msg.hidden = false;
       }
     });
@@ -528,7 +566,7 @@
       msg.hidden = true;
       if (!itemId || !qty || qty <= 0) {
         msg.textContent = 'Selecciona un artículo y una cantidad válida.';
-        msg.style.color = 'var(--rust)';
+        msg.style.color = '#D4521A';
         msg.hidden = false;
         return;
       }
@@ -544,7 +582,7 @@
         loadMovements();
       } catch (err) {
         msg.textContent = 'No se pudo registrar la entrada. Intenta de nuevo.';
-        msg.style.color = 'var(--rust)';
+        msg.style.color = '#D4521A';
         msg.hidden = false;
       }
     });
@@ -640,7 +678,7 @@
       msg.hidden = true;
       if (!name) {
         msg.textContent = 'Escribe qué hay que comprar.';
-        msg.style.color = 'var(--rust)';
+        msg.style.color = '#D4521A';
         msg.hidden = false;
         return;
       }
@@ -660,12 +698,43 @@
         loadShoppingList();
       } catch (err) {
         msg.textContent = 'No se pudo agregar. Intenta de nuevo.';
-        msg.style.color = 'var(--rust)';
+        msg.style.color = '#D4521A';
         msg.hidden = false;
       }
     });
 
-    // ═══ Agregar artículo nuevo ═══
+    // ═══ Agregar o editar artículo ═══
+    let editingItemId = null;
+
+    function startEditItem(itemId) {
+      const item = itemsCache.find((i) => i.id === itemId);
+      if (!item) return;
+      editingItemId = itemId;
+      document.getElementById('newItemName').value = item.name || '';
+      document.getElementById('newItemUnit').value = item.unit || '';
+      document.getElementById('newItemThreshold').value = item.lowStockThreshold || '';
+      document.getElementById('newItemStockField').hidden = true;
+      document.getElementById('itemFormLegend').textContent = `EDITAR "${item.name || 'ARTÍCULO'}"`;
+      document.getElementById('addItemBtn').textContent = 'GUARDAR CAMBIOS';
+      document.getElementById('cancelEditItemBtn').hidden = false;
+      document.getElementById('addItemMsg').hidden = true;
+      tabs.items.click();
+    }
+
+    function cancelEditItem() {
+      editingItemId = null;
+      document.getElementById('newItemName').value = '';
+      document.getElementById('newItemUnit').value = '';
+      document.getElementById('newItemThreshold').value = '';
+      document.getElementById('newItemStock').value = '';
+      document.getElementById('newItemStockField').hidden = false;
+      document.getElementById('itemFormLegend').textContent = 'NUEVO ARTÍCULO';
+      document.getElementById('addItemBtn').textContent = 'AGREGAR ARTÍCULO';
+      document.getElementById('cancelEditItemBtn').hidden = true;
+    }
+
+    document.getElementById('cancelEditItemBtn').addEventListener('click', cancelEditItem);
+
     document.getElementById('addItemBtn').addEventListener('click', async () => {
       const name = document.getElementById('newItemName').value.trim();
       const unit = document.getElementById('newItemUnit').value.trim();
@@ -675,10 +744,32 @@
       msg.hidden = true;
       if (!name) {
         msg.textContent = 'Escribe un nombre para el artículo.';
-        msg.style.color = 'var(--rust)';
+        msg.style.color = '#D4521A';
         msg.hidden = false;
         return;
       }
+
+      if (editingItemId) {
+        try {
+          await updateDoc(doc(db, 'inventory_items', editingItemId), {
+            name,
+            unit,
+            lowStockThreshold: threshold,
+            updatedAt: serverTimestamp(),
+          });
+          msg.textContent = `Artículo "${name}" actualizado.`;
+          msg.style.color = 'var(--green)';
+          msg.hidden = false;
+          cancelEditItem();
+          loadItems();
+        } catch (err) {
+          msg.textContent = 'No se pudo guardar el cambio.';
+          msg.style.color = '#D4521A';
+          msg.hidden = false;
+        }
+        return;
+      }
+
       try {
         const product = await resolveProduct(name, unit);
         const newItemRef = await addDoc(collection(db, 'inventory_items'), {
@@ -717,7 +808,7 @@
         loadMovements();
       } catch (err) {
         msg.textContent = 'No se pudo agregar el artículo.';
-        msg.style.color = 'var(--rust)';
+        msg.style.color = '#D4521A';
         msg.hidden = false;
       }
     });

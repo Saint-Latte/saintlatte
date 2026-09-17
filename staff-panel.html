@@ -22,7 +22,7 @@
       padding: 2rem; margin-bottom: 2rem;
     }
     .staff-note { font-size: .8rem; color: rgba(255,254,249,.45); line-height: 1.7; margin-top: 1rem; }
-    .staff-msg { font-size: .85rem; color: var(--rust); margin-top: 1rem; min-height: 1.2em; }
+    .staff-msg { font-size: .85rem; color: #D4521A; margin-top: 1rem; min-height: 1.2em; }
     .staff-session { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
     .staff-session span { font-size: .78rem; color: rgba(255,254,249,.5); }
     .staff-roster { list-style: none; display: flex; flex-direction: column; gap: .4rem; margin-top: 1rem; }
@@ -326,7 +326,7 @@
       } catch (err) {
         await deleteApp(secondaryApp).catch(() => {});
         addStaffMsg.textContent = 'No se pudo crear la cuenta (¿ese email ya está en uso?).';
-        addStaffMsg.style.color = 'var(--rust)';
+        addStaffMsg.style.color = '#D4521A';
         addStaffMsg.hidden = false;
       }
     });
@@ -372,7 +372,7 @@
         setTimeout(() => { status.hidden = true; }, 3000);
       } catch (err) {
         status.textContent = 'No se pudo guardar.';
-        status.style.color = 'var(--rust)';
+        status.style.color = '#D4521A';
         status.hidden = false;
       }
       select.disabled = false;

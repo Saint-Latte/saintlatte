@@ -21,7 +21,7 @@
       background: var(--black-mid); border: 1px solid rgba(255,254,249,.12);
       padding: 2rem;
     }
-    .staff-msg { font-size: .85rem; color: var(--rust); margin-top: 1rem; min-height: 1.2em; }
+    .staff-msg { font-size: .85rem; color: #D4521A; margin-top: 1rem; min-height: 1.2em; }
     .staff-password-row { position: relative; }
     .staff-password-row .order-field__input { padding-right: 4.4rem; }
     .staff-password-toggle {
@@ -171,13 +171,13 @@
           loginMsg.style.color = 'var(--green)';
           loginMsg.textContent = 'Tu cuenta ya está creada y pendiente de aprobación por otro miembro del staff.';
         } else {
-          loginMsg.style.color = 'var(--rust)';
+          loginMsg.style.color = '#D4521A';
           loginMsg.textContent = 'Esta cuenta no tiene permisos de personal.';
         }
         loginMsg.hidden = false;
       } catch (err) {
         await signOut(auth).catch(() => {});
-        loginMsg.style.color = 'var(--rust)';
+        loginMsg.style.color = '#D4521A';
         loginMsg.textContent = 'No se pudo verificar la cuenta. Intenta de nuevo.';
         loginMsg.hidden = false;
       }
@@ -196,7 +196,7 @@
         await signInWithEmailAndPassword(auth, email, password);
         // el chequeo de rol + redirect lo dispara el listener de onAuthStateChanged
       } catch (err) {
-        loginMsg.style.color = 'var(--rust)';
+        loginMsg.style.color = '#D4521A';
         loginMsg.textContent = 'No se pudo iniciar sesión. Revisa tu email y contraseña.';
         loginMsg.hidden = false;
       }
@@ -234,7 +234,7 @@
       const email = document.getElementById('forgotEmail').value.trim();
       forgotMsg.hidden = true;
       if (!email) {
-        forgotMsg.style.color = 'var(--rust)';
+        forgotMsg.style.color = '#D4521A';
         forgotMsg.textContent = 'Escribe tu email.';
         forgotMsg.hidden = false;
         return;
@@ -271,13 +271,13 @@
       const confirmPassword = document.getElementById('regPasswordConfirm').value;
       registerMsg.hidden = true;
       if (!email || password.length < 6) {
-        registerMsg.style.color = 'var(--rust)';
+        registerMsg.style.color = '#D4521A';
         registerMsg.textContent = 'Escribe un email y una contraseña de al menos 6 caracteres.';
         registerMsg.hidden = false;
         return;
       }
       if (password !== confirmPassword) {
-        registerMsg.style.color = 'var(--rust)';
+        registerMsg.style.color = '#D4521A';
         registerMsg.textContent = 'Las contraseñas no coinciden.';
         registerMsg.hidden = false;
         return;
@@ -289,7 +289,7 @@
         // no es staff pero sí está pendiente, cierra la sesión y muestra el
         // mensaje de "pendiente de aprobación" en el panel de login.
       } catch (err) {
-        registerMsg.style.color = 'var(--rust)';
+        registerMsg.style.color = '#D4521A';
         registerMsg.textContent = err.code === 'auth/email-already-in-use'
           ? 'Ese email ya tiene una cuenta. Inicia sesión o recupera tu contraseña.'
           : 'No se pudo crear la cuenta. Intenta de nuevo.';
