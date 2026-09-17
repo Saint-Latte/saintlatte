@@ -23,8 +23,15 @@
     }
     .staff-note { font-size: .8rem; color: rgba(255,254,249,.45); line-height: 1.7; margin-top: 1rem; }
     .staff-msg { font-size: .85rem; color: var(--rust); margin-top: 1rem; min-height: 1.2em; }
-    .staff-session { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+    .staff-session { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
     .staff-session span { font-size: .78rem; color: rgba(255,254,249,.5); }
+    .branch-switch { display: flex; gap: 1px; margin-bottom: 1.5rem; }
+    .branch-switch__btn {
+      flex: 1; text-align: center; padding: .7rem 1rem; background: var(--black-mid);
+      border: 1px solid rgba(255,254,249,.1); font-size: .65rem; letter-spacing: .08em;
+      font-weight: 700; color: rgba(255,254,249,.45); cursor: none; transition: color .2s, border-color .2s;
+    }
+    .branch-switch__btn.on { color: var(--cream); border-color: var(--green); }
     .staff-mode-tabs { display: flex; gap: 1px; margin-bottom: 1.5rem; flex-wrap: wrap; }
     .staff-mode-tab {
       flex: 1; min-width: 140px; text-align: center; padding: .8rem 1rem; background: var(--black-mid);
@@ -48,6 +55,14 @@
 
     .inv-item-row.is-low .log-row__points { color: var(--rust); }
     .inv-refresh-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; }
+
+    .shop-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+      padding: .9rem 1rem; background: var(--black); border: 1px solid rgba(255,254,249,.06);
+    }
+    .shop-row__info { font-size: .82rem; color: var(--cream); }
+    .shop-row__meta { font-size: .68rem; color: rgba(255,254,249,.4); display: block; margin-top: .2rem; }
+    .shop-list { display: flex; flex-direction: column; gap: 1px; margin-top: 1rem; }
   </style>
 </head>
 <body class="page-testing">
@@ -100,116 +115,156 @@
       <button class="btn btn--solid" id="logoutBtn">CERRAR SESIÓN</button>
     </div>
 
-    <div class="staff-mode-tabs">
-      <button class="staff-mode-tab on" id="modeStockTab">STOCK ACTUAL</button>
-      <button class="staff-mode-tab" id="modeOutTab">REGISTRAR SALIDA</button>
-      <button class="staff-mode-tab" id="modeInTab">REGISTRAR ENTRADA</button>
-      <button class="staff-mode-tab" id="modeHistTab">HISTORIAL</button>
-      <button class="staff-mode-tab" id="modeItemsTab">ARTÍCULOS</button>
+    <div class="branch-switch" id="branchSwitch" hidden>
+      <button class="branch-switch__btn on" id="branchJarronBtn" data-branch="jarron-azul">JARRÓN AZUL</button>
+      <button class="branch-switch__btn" id="branchLeandroBtn" data-branch="leandro-valle">LEANDRO VALLE</button>
     </div>
 
-    <!-- MODO 1: stock actual -->
-    <div id="modeStock">
-      <div class="staff-panel">
-        <div class="inv-refresh-row">
-          <div class="order-legend" style="margin:0">STOCK ACTUAL</div>
-          <button class="btn btn--outline-dark" id="refreshItemsBtn" style="font-size:.65rem;padding:.5rem 1rem">REFRESCAR</button>
-        </div>
-        <p class="staff-note" style="margin-top:0">En rojo, los artículos en o por debajo de su umbral mínimo.</p>
-        <div class="log-list" id="itemList" style="margin-top:1rem">
-          <p class="log-loading">Cargando…</p>
+    <p class="staff-msg" id="noBranchMsg" hidden>Tu cuenta todavía no tiene una sucursal asignada — pide a un administrador que te la asigne.</p>
+
+    <div id="inventoryUi" hidden>
+      <div class="staff-mode-tabs">
+        <button class="staff-mode-tab on" id="modeStockTab">STOCK ACTUAL</button>
+        <button class="staff-mode-tab" id="modeOutTab">REGISTRAR SALIDA</button>
+        <button class="staff-mode-tab" id="modeInTab">REGISTRAR ENTRADA</button>
+        <button class="staff-mode-tab" id="modeHistTab">HISTORIAL</button>
+        <button class="staff-mode-tab" id="modeShopTab">LISTA DE COMPRAS</button>
+        <button class="staff-mode-tab" id="modeItemsTab">ARTÍCULOS</button>
+      </div>
+
+      <!-- MODO 1: stock actual -->
+      <div id="modeStock">
+        <div class="staff-panel">
+          <div class="inv-refresh-row">
+            <div class="order-legend" style="margin:0">STOCK ACTUAL</div>
+            <button class="btn btn--outline-dark" id="refreshItemsBtn" style="font-size:.65rem;padding:.5rem 1rem">REFRESCAR</button>
+          </div>
+          <p class="staff-note" style="margin-top:0">En rojo, los artículos en o por debajo de su umbral mínimo.</p>
+          <div class="log-list" id="itemList" style="margin-top:1rem">
+            <p class="log-loading">Cargando…</p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- MODO 2: registrar salida -->
-    <div id="modeOut" hidden>
-      <div class="staff-panel">
-        <div class="order-fieldset" style="padding:0;border:none">
-          <div class="order-legend" style="margin-bottom:1.5rem">REGISTRAR SALIDA</div>
-          <div class="order-field">
-            <label class="order-field__label">ARTÍCULO</label>
-            <select class="order-field__input" id="outItemSelect">
-              <option value="" disabled selected>Selecciona un artículo</option>
-            </select>
+      <!-- MODO 2: registrar salida -->
+      <div id="modeOut" hidden>
+        <div class="staff-panel">
+          <div class="order-fieldset" style="padding:0;border:none">
+            <div class="order-legend" style="margin-bottom:1.5rem">REGISTRAR SALIDA</div>
+            <div class="order-field">
+              <label class="order-field__label">ARTÍCULO</label>
+              <select class="order-field__input" id="outItemSelect">
+                <option value="" disabled selected>Selecciona un artículo</option>
+              </select>
+            </div>
+            <div class="order-field">
+              <label class="order-field__label">CANTIDAD QUE SALE</label>
+              <input class="order-field__input" type="number" id="outQtyInput" placeholder="Ej. 2" min="0" step="any">
+            </div>
+            <div class="order-field">
+              <label class="order-field__label">MOTIVO (OPCIONAL)</label>
+              <input class="order-field__input" type="text" id="outNoteInput" placeholder="Ej. se rompió, para receta, se lo llevó...">
+            </div>
+            <button class="btn btn--solid" id="outSubmitBtn" style="margin-top:.5rem">REGISTRAR SALIDA</button>
+            <p class="staff-msg" id="outMsg" hidden></p>
+            <p class="staff-note">Queda registrado con tu cuenta y la hora exacta.</p>
           </div>
-          <div class="order-field">
-            <label class="order-field__label">CANTIDAD QUE SALE</label>
-            <input class="order-field__input" type="number" id="outQtyInput" placeholder="Ej. 2" min="0" step="any">
-          </div>
-          <div class="order-field">
-            <label class="order-field__label">MOTIVO (OPCIONAL)</label>
-            <input class="order-field__input" type="text" id="outNoteInput" placeholder="Ej. se rompió, para receta, se lo llevó...">
-          </div>
-          <button class="btn btn--solid" id="outSubmitBtn" style="margin-top:.5rem">REGISTRAR SALIDA</button>
-          <p class="staff-msg" id="outMsg" hidden></p>
-          <p class="staff-note">Queda registrado con tu cuenta y la hora exacta.</p>
         </div>
       </div>
-    </div>
 
-    <!-- MODO 3: registrar entrada -->
-    <div id="modeIn" hidden>
-      <div class="staff-panel">
-        <div class="order-fieldset" style="padding:0;border:none">
-          <div class="order-legend" style="margin-bottom:1.5rem">REGISTRAR ENTRADA</div>
-          <div class="order-field">
-            <label class="order-field__label">ARTÍCULO</label>
-            <select class="order-field__input" id="inItemSelect">
-              <option value="" disabled selected>Selecciona un artículo</option>
-            </select>
+      <!-- MODO 3: registrar entrada -->
+      <div id="modeIn" hidden>
+        <div class="staff-panel">
+          <div class="order-fieldset" style="padding:0;border:none">
+            <div class="order-legend" style="margin-bottom:1.5rem">REGISTRAR ENTRADA</div>
+            <div class="order-field">
+              <label class="order-field__label">ARTÍCULO</label>
+              <select class="order-field__input" id="inItemSelect">
+                <option value="" disabled selected>Selecciona un artículo</option>
+              </select>
+            </div>
+            <div class="order-field">
+              <label class="order-field__label">CANTIDAD QUE ENTRA</label>
+              <input class="order-field__input" type="number" id="inQtyInput" placeholder="Ej. 10" min="0" step="any">
+            </div>
+            <div class="order-field">
+              <label class="order-field__label">MOTIVO (OPCIONAL)</label>
+              <input class="order-field__input" type="text" id="inNoteInput" placeholder="Ej. compra a proveedor, conteo corregido...">
+            </div>
+            <button class="btn btn--solid" id="inSubmitBtn" style="margin-top:.5rem">REGISTRAR ENTRADA</button>
+            <p class="staff-msg" id="inMsg" hidden></p>
           </div>
-          <div class="order-field">
-            <label class="order-field__label">CANTIDAD QUE ENTRA</label>
-            <input class="order-field__input" type="number" id="inQtyInput" placeholder="Ej. 10" min="0" step="any">
-          </div>
-          <div class="order-field">
-            <label class="order-field__label">MOTIVO (OPCIONAL)</label>
-            <input class="order-field__input" type="text" id="inNoteInput" placeholder="Ej. compra a proveedor, conteo corregido...">
-          </div>
-          <button class="btn btn--solid" id="inSubmitBtn" style="margin-top:.5rem">REGISTRAR ENTRADA</button>
-          <p class="staff-msg" id="inMsg" hidden></p>
         </div>
       </div>
-    </div>
 
-    <!-- MODO 4: historial -->
-    <div id="modeHist" hidden>
-      <div class="staff-panel">
-        <div class="inv-refresh-row">
-          <div class="order-legend" style="margin:0">HISTORIAL DE MOVIMIENTOS</div>
-          <button class="btn btn--outline-dark" id="refreshHistBtn" style="font-size:.65rem;padding:.5rem 1rem">REFRESCAR</button>
-        </div>
-        <p class="staff-note" style="margin-top:0">Quién sacó o metió qué, más reciente primero.</p>
-        <div class="log-list" id="movList" style="margin-top:1rem">
-          <p class="log-loading">Cargando…</p>
+      <!-- MODO 4: historial -->
+      <div id="modeHist" hidden>
+        <div class="staff-panel">
+          <div class="inv-refresh-row">
+            <div class="order-legend" style="margin:0">HISTORIAL DE MOVIMIENTOS</div>
+            <button class="btn btn--outline-dark" id="refreshHistBtn" style="font-size:.65rem;padding:.5rem 1rem">REFRESCAR</button>
+          </div>
+          <p class="staff-note" style="margin-top:0">Quién sacó o metió qué, más reciente primero.</p>
+          <div class="log-list" id="movList" style="margin-top:1rem">
+            <p class="log-loading">Cargando…</p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- MODO 5: agregar artículo -->
-    <div id="modeItems" hidden>
-      <div class="staff-panel">
-        <div class="order-fieldset" style="padding:0;border:none">
-          <div class="order-legend" style="margin-bottom:1.5rem">NUEVO ARTÍCULO</div>
-          <div class="order-field">
-            <label class="order-field__label">NOMBRE</label>
-            <input class="order-field__input" type="text" id="newItemName" placeholder="Ej. Café en grano, Vasos 16oz...">
+      <!-- MODO 5: lista de compras -->
+      <div id="modeShop" hidden>
+        <div class="staff-panel">
+          <div class="order-fieldset" style="padding:0;border:none">
+            <div class="order-legend" style="margin-bottom:1.5rem">AGREGAR A LA LISTA</div>
+            <div class="order-field">
+              <label class="order-field__label">QUÉ HAY QUE COMPRAR</label>
+              <input class="order-field__input" type="text" id="shopName" placeholder="Ej. Vasos 16oz, café en grano...">
+            </div>
+            <div class="order-field">
+              <label class="order-field__label">NOTA (OPCIONAL)</label>
+              <input class="order-field__input" type="text" id="shopNote" placeholder="Ej. cantidad, proveedor...">
+            </div>
+            <button class="btn btn--solid" id="shopAddBtn">AGREGAR A LA LISTA</button>
+            <p class="staff-msg" id="shopAddMsg" hidden></p>
           </div>
-          <div class="order-field">
-            <label class="order-field__label">UNIDAD</label>
-            <input class="order-field__input" type="text" id="newItemUnit" placeholder="Ej. kg, litros, piezas...">
+        </div>
+        <div class="staff-panel">
+          <div class="inv-refresh-row">
+            <div class="order-legend" style="margin:0">PENDIENTES DE COMPRAR</div>
+            <button class="btn btn--outline-dark" id="refreshShopBtn" style="font-size:.65rem;padding:.5rem 1rem">REFRESCAR</button>
           </div>
-          <div class="order-field">
-            <label class="order-field__label">STOCK INICIAL</label>
-            <input class="order-field__input" type="number" id="newItemStock" placeholder="0" min="0" step="any">
+          <div class="shop-list" id="shopList">
+            <p class="log-loading">Cargando…</p>
           </div>
-          <div class="order-field">
-            <label class="order-field__label">UMBRAL MÍNIMO (OPCIONAL)</label>
-            <input class="order-field__input" type="number" id="newItemThreshold" placeholder="Avisar cuando baje de..." min="0" step="any">
+        </div>
+      </div>
+
+      <!-- MODO 6: agregar artículo -->
+      <div id="modeItems" hidden>
+        <div class="staff-panel">
+          <div class="order-fieldset" style="padding:0;border:none">
+            <div class="order-legend" style="margin-bottom:1.5rem">NUEVO ARTÍCULO</div>
+            <p class="staff-note" style="margin-top:0">El nombre y la unidad se comparten entre las dos sucursales — si ya existe, escribe igual y se usa el mismo. La cantidad es solo de esta sucursal.</p>
+            <div class="order-field">
+              <label class="order-field__label">NOMBRE</label>
+              <input class="order-field__input" type="text" id="newItemName" list="productNames" placeholder="Ej. Café en grano, Vasos 16oz...">
+              <datalist id="productNames"></datalist>
+            </div>
+            <div class="order-field">
+              <label class="order-field__label">UNIDAD</label>
+              <input class="order-field__input" type="text" id="newItemUnit" placeholder="Ej. kg, litros, piezas...">
+            </div>
+            <div class="order-field">
+              <label class="order-field__label">STOCK INICIAL</label>
+              <input class="order-field__input" type="number" id="newItemStock" placeholder="0" min="0" step="any">
+            </div>
+            <div class="order-field">
+              <label class="order-field__label">UMBRAL MÍNIMO (OPCIONAL)</label>
+              <input class="order-field__input" type="number" id="newItemThreshold" placeholder="Avisar cuando baje de..." min="0" step="any">
+            </div>
+            <button class="btn btn--solid" id="addItemBtn" style="margin-top:.5rem">AGREGAR ARTÍCULO</button>
+            <p class="staff-msg" id="addItemMsg" hidden></p>
           </div>
-          <button class="btn btn--solid" id="addItemBtn" style="margin-top:.5rem">AGREGAR ARTÍCULO</button>
-          <p class="staff-msg" id="addItemMsg" hidden></p>
         </div>
       </div>
     </div>
@@ -219,10 +274,17 @@
   <script type="module">
     import { db, auth } from './firebase-config.js';
     import {
-      doc, getDoc, addDoc, collection, query, orderBy, limit, getDocs,
+      doc, getDoc, addDoc, deleteDoc, collection, query, where, orderBy, limit, getDocs,
       runTransaction, serverTimestamp,
     } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
     import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js';
+
+    const OWNER_EMAIL = 'aldo.leon.h@hotmail.com';
+    const BRANCH_NAMES = { 'jarron-azul': 'Jarrón Azul', 'leandro-valle': 'Leandro Valle' };
+
+    let isOwner = false;
+    let myBranch = null;
+    let currentBranch = null;
 
     // ═══ Guard de acceso: debe haber sesión Y estar en la colección staff ═══
     onAuthStateChanged(auth, async (user) => {
@@ -233,15 +295,67 @@
         window.location.href = 'staff-login.html?next=inventario.html';
         return;
       }
-      document.getElementById('sessionLabel').textContent = `Sesión: ${user.email}`;
-      loadItems();
-      loadMovements();
+      isOwner = user.email === OWNER_EMAIL;
+      myBranch = staffSnap.data().branch || null;
+      document.getElementById('sessionLabel').textContent =
+        `Sesión: ${user.email}${!isOwner && myBranch ? ' · ' + (BRANCH_NAMES[myBranch] || myBranch) : ''}`;
+
+      if (isOwner) {
+        document.getElementById('branchSwitch').hidden = false;
+        setBranch('jarron-azul');
+      } else if (myBranch) {
+        setBranch(myBranch);
+      } else {
+        document.getElementById('noBranchMsg').hidden = false;
+      }
+      loadProducts();
     });
+
+    // ═══ Catálogo de productos compartido entre sucursales (solo nombre/unidad) ═══
+    let productsCache = [];
+
+    async function loadProducts() {
+      try {
+        const snap = await getDocs(collection(db, 'products'));
+        productsCache = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+        const datalist = document.getElementById('productNames');
+        datalist.innerHTML = productsCache
+          .map((p) => `<option value="${p.name}">`)
+          .join('');
+      } catch (err) { /* silencioso — el catálogo es solo una ayuda de autocompletado */ }
+    }
+
+    async function resolveProduct(typedName, typedUnit) {
+      const existing = productsCache.find((p) => p.name.toLowerCase() === typedName.toLowerCase());
+      if (existing) return existing;
+      const newProductRef = await addDoc(collection(db, 'products'), {
+        name: typedName,
+        unit: typedUnit,
+        createdBy: auth.currentUser.email,
+        createdAt: serverTimestamp(),
+      });
+      const created = { id: newProductRef.id, name: typedName, unit: typedUnit };
+      productsCache.push(created);
+      return created;
+    }
 
     document.getElementById('logoutBtn').addEventListener('click', async () => {
       await signOut(auth);
       window.location.href = 'staff-login.html';
     });
+
+    // ═══ Selector de sucursal (solo dueño) ═══
+    function setBranch(branch) {
+      currentBranch = branch;
+      document.getElementById('branchJarronBtn').classList.toggle('on', branch === 'jarron-azul');
+      document.getElementById('branchLeandroBtn').classList.toggle('on', branch === 'leandro-valle');
+      document.getElementById('inventoryUi').hidden = false;
+      loadItems();
+      loadMovements();
+      loadShoppingList();
+    }
+    document.getElementById('branchJarronBtn').addEventListener('click', () => setBranch('jarron-azul'));
+    document.getElementById('branchLeandroBtn').addEventListener('click', () => setBranch('leandro-valle'));
 
     // ═══ Mode tabs ═══
     const tabs = {
@@ -249,6 +363,7 @@
       out: document.getElementById('modeOutTab'),
       in: document.getElementById('modeInTab'),
       hist: document.getElementById('modeHistTab'),
+      shop: document.getElementById('modeShopTab'),
       items: document.getElementById('modeItemsTab'),
     };
     const panels = {
@@ -256,6 +371,7 @@
       out: document.getElementById('modeOut'),
       in: document.getElementById('modeIn'),
       hist: document.getElementById('modeHist'),
+      shop: document.getElementById('modeShop'),
       items: document.getElementById('modeItems'),
     };
     function setMode(name) {
@@ -268,6 +384,7 @@
     tabs.out.addEventListener('click', () => setMode('out'));
     tabs.in.addEventListener('click', () => setMode('in'));
     tabs.hist.addEventListener('click', () => { setMode('hist'); loadMovements(); });
+    tabs.shop.addEventListener('click', () => { setMode('shop'); loadShoppingList(); });
     tabs.items.addEventListener('click', () => setMode('items'));
 
     // ═══ Stock actual ═══
@@ -279,10 +396,12 @@
     }
 
     async function loadItems() {
+      if (!currentBranch) return;
       const listEl = document.getElementById('itemList');
       listEl.innerHTML = '<p class="log-loading">Cargando…</p>';
       try {
-        const snap = await getDocs(collection(db, 'inventory_items'));
+        const q = query(collection(db, 'inventory_items'), where('branch', '==', currentBranch));
+        const snap = await getDocs(q);
         itemsCache = snap.docs
           .map((d) => ({ id: d.id, ...d.data() }))
           .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
@@ -341,6 +460,7 @@
       await addDoc(collection(db, 'inventory_movements'), {
         itemId,
         itemName: itemsCache.find((i) => i.id === itemId)?.name || '',
+        branch: currentBranch,
         type,
         qty,
         note: note || '',
@@ -414,18 +534,24 @@
     document.getElementById('refreshHistBtn').addEventListener('click', loadMovements);
 
     async function loadMovements() {
+      if (!currentBranch) return;
       const list = document.getElementById('movList');
       list.innerHTML = '<p class="log-loading">Cargando…</p>';
       try {
-        const q = query(collection(db, 'inventory_movements'), orderBy('ts', 'desc'), limit(50));
+        // Sin orderBy en la query para no depender de un índice compuesto —
+        // se pide un lote y se ordena/recorta del lado del cliente.
+        const q = query(collection(db, 'inventory_movements'), where('branch', '==', currentBranch), limit(200));
         const snap = await getDocs(q);
         if (snap.empty) {
           list.innerHTML = '<p class="log-empty">Todavía no hay movimientos registrados.</p>';
           return;
         }
+        const rows = snap.docs
+          .map((d) => d.data())
+          .sort((a, b) => (b.ts?.toMillis?.() || 0) - (a.ts?.toMillis?.() || 0))
+          .slice(0, 50);
         list.innerHTML = '';
-        snap.forEach((docSnap) => {
-          const d = docSnap.data();
+        rows.forEach((d) => {
           const isOut = d.type === 'salida';
           const row = document.createElement('div');
           row.className = 'log-row';
@@ -442,6 +568,84 @@
       }
     }
 
+    // ═══ Lista de compras ═══
+    document.getElementById('refreshShopBtn').addEventListener('click', loadShoppingList);
+
+    async function loadShoppingList() {
+      if (!currentBranch) return;
+      const list = document.getElementById('shopList');
+      list.innerHTML = '<p class="log-loading">Cargando…</p>';
+      try {
+        const q = query(collection(db, 'shopping_list'), where('branch', '==', currentBranch));
+        const snap = await getDocs(q);
+        if (snap.empty) {
+          list.innerHTML = '<p class="log-empty">No hay nada pendiente de comprar.</p>';
+          return;
+        }
+        const rows = snap.docs
+          .map((d) => ({ id: d.id, ...d.data() }))
+          .sort((a, b) => (a.addedAt?.toMillis?.() || 0) - (b.addedAt?.toMillis?.() || 0));
+        list.innerHTML = '';
+        rows.forEach((d) => {
+          const row = document.createElement('div');
+          row.className = 'shop-row';
+          row.innerHTML = `
+            <span class="shop-row__info">${d.name}${d.note ? ` — ${d.note}` : ''}
+              <span class="shop-row__meta">Agregado por ${d.addedBy || '—'}</span>
+            </span>
+            <button class="btn btn--outline-dark" data-id="${d.id}" style="font-size:.62rem;padding:.5rem .8rem">COMPRADO</button>
+          `;
+          list.appendChild(row);
+        });
+      } catch (err) {
+        list.innerHTML = '<p class="log-empty">No se pudo cargar la lista.</p>';
+      }
+    }
+
+    document.getElementById('shopList').addEventListener('click', async (e) => {
+      const btn = e.target.closest('button[data-id]');
+      if (!btn) return;
+      btn.disabled = true;
+      try {
+        await deleteDoc(doc(db, 'shopping_list', btn.dataset.id));
+        loadShoppingList();
+      } catch (err) {
+        btn.disabled = false;
+      }
+    });
+
+    document.getElementById('shopAddBtn').addEventListener('click', async () => {
+      const name = document.getElementById('shopName').value.trim();
+      const note = document.getElementById('shopNote').value.trim();
+      const msg = document.getElementById('shopAddMsg');
+      msg.hidden = true;
+      if (!name) {
+        msg.textContent = 'Escribe qué hay que comprar.';
+        msg.style.color = 'var(--rust)';
+        msg.hidden = false;
+        return;
+      }
+      try {
+        await addDoc(collection(db, 'shopping_list'), {
+          branch: currentBranch,
+          name,
+          note,
+          addedBy: auth.currentUser.email,
+          addedAt: serverTimestamp(),
+        });
+        document.getElementById('shopName').value = '';
+        document.getElementById('shopNote').value = '';
+        msg.textContent = 'Agregado a la lista.';
+        msg.style.color = 'var(--green)';
+        msg.hidden = false;
+        loadShoppingList();
+      } catch (err) {
+        msg.textContent = 'No se pudo agregar. Intenta de nuevo.';
+        msg.style.color = 'var(--rust)';
+        msg.hidden = false;
+      }
+    });
+
     // ═══ Agregar artículo nuevo ═══
     document.getElementById('addItemBtn').addEventListener('click', async () => {
       const name = document.getElementById('newItemName').value.trim();
@@ -457,15 +661,32 @@
         return;
       }
       try {
-        await addDoc(collection(db, 'inventory_items'), {
-          name,
-          unit,
+        const product = await resolveProduct(name, unit);
+        const newItemRef = await addDoc(collection(db, 'inventory_items'), {
+          productId: product.id,
+          name: product.name,
+          unit: product.unit,
           stock,
           lowStockThreshold: threshold,
+          branch: currentBranch,
           createdBy: auth.currentUser.email,
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
         });
+        if (stock > 0) {
+          await addDoc(collection(db, 'inventory_movements'), {
+            itemId: newItemRef.id,
+            itemName: product.name,
+            branch: currentBranch,
+            type: 'entrada',
+            qty: stock,
+            note: 'Alta inicial del artículo',
+            staffEmail: auth.currentUser.email,
+            staffUid: auth.currentUser.uid,
+            stockAfter: stock,
+            ts: serverTimestamp(),
+          });
+        }
         msg.textContent = `Artículo "${name}" agregado.`;
         msg.style.color = 'var(--green)';
         msg.hidden = false;
@@ -474,6 +695,7 @@
         document.getElementById('newItemStock').value = '';
         document.getElementById('newItemThreshold').value = '';
         loadItems();
+        loadMovements();
       } catch (err) {
         msg.textContent = 'No se pudo agregar el artículo.';
         msg.style.color = 'var(--rust)';

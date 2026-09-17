@@ -27,13 +27,24 @@
     .staff-session span { font-size: .78rem; color: rgba(255,254,249,.5); }
     .staff-roster { list-style: none; display: flex; flex-direction: column; gap: .4rem; margin-top: 1rem; }
     .staff-roster li { font-size: .8rem; color: rgba(255,254,249,.5); }
-    .pending-list { display: flex; flex-direction: column; gap: 1px; margin-top: 1rem; }
+    .pending-list, .shop-list { display: flex; flex-direction: column; gap: 1px; margin-top: 1rem; }
     .pending-row {
-      display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+      display: flex; align-items: center; justify-content: space-between; gap: .8rem; flex-wrap: wrap;
       padding: .9rem 1rem; background: var(--black); border: 1px solid rgba(255,254,249,.06);
     }
     .pending-row__email { font-size: .82rem; color: var(--cream); }
-    .pending-row__actions { display: flex; gap: .5rem; flex-shrink: 0; }
+    .pending-row__actions { display: flex; gap: .5rem; align-items: center; flex-shrink: 0; }
+    .pending-row__branch {
+      background: var(--black-mid); border: 1px solid rgba(255,254,249,.15); color: var(--cream);
+      font-size: .68rem; padding: .5rem .4rem;
+    }
+    .shop-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+      padding: .9rem 1rem; background: var(--black); border: 1px solid rgba(255,254,249,.06);
+    }
+    .shop-row__info { font-size: .82rem; color: var(--cream); }
+    .shop-row__meta { font-size: .68rem; color: rgba(255,254,249,.4); display: block; margin-top: .2rem; }
+    .shop-row__branch { font-size: .6rem; letter-spacing: .08em; font-weight: 700; color: var(--green); }
     .pending-empty, .pending-loading { font-size: .82rem; color: rgba(255,254,249,.4); padding: .5rem 0; }
   </style>
 </head>
@@ -88,8 +99,16 @@
     </div>
 
     <div class="staff-panel">
+      <div class="order-legend" style="margin-bottom:1rem">LISTA DE COMPRAS — GENERAL</div>
+      <p class="staff-note" style="margin-top:0">Lo pendiente de comprar en ambas sucursales.</p>
+      <div class="shop-list" id="allShopList">
+        <p class="pending-loading">Cargando…</p>
+      </div>
+    </div>
+
+    <div class="staff-panel">
       <div class="order-legend" style="margin-bottom:1rem">SOLICITUDES PENDIENTES</div>
-      <p class="staff-note" style="margin-top:0">Cuentas que se crearon solas desde la página de login — no tienen acceso hasta que las apruebes.</p>
+      <p class="staff-note" style="margin-top:0">Cuentas que se crearon solas desde la página de login — no tienen acceso hasta que las apruebes. Elige a qué sucursal pertenece antes de aprobar.</p>
       <div class="pending-list" id="pendingList">
         <p class="pending-loading">Cargando…</p>
       </div>
@@ -106,6 +125,13 @@
           <label class="order-field__label">CONTRASEÑA</label>
           <input class="order-field__input" type="password" id="staffPassword" placeholder="Mínimo 6 caracteres">
         </div>
+        <div class="order-field">
+          <label class="order-field__label">SUCURSAL</label>
+          <select class="order-field__input" id="staffBranch">
+            <option value="jarron-azul">Jarrón Azul</option>
+            <option value="leandro-valle">Leandro Valle</option>
+          </select>
+        </div>
         <button class="btn btn--solid" id="addStaffBtn" style="margin-top:.5rem">CREAR CUENTA DE PERSONAL</button>
         <p class="staff-msg" id="addStaffMsg" hidden></p>
         <p class="staff-note">La cuenta queda lista para iniciar sesión de inmediato en esta misma página.</p>
@@ -121,7 +147,10 @@
     import { doc, setDoc, getDoc, deleteDoc, collection, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
     import { onAuthStateChanged, signOut, getAuth, createUserWithEmailAndPassword, signOut as secondarySignOut } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js';
 
-    // ═══ Guard de acceso: debe haber sesión Y estar en la colección staff ═══
+    const OWNER_EMAIL = 'aldo.leon.h@hotmail.com';
+    const BRANCH_NAMES = { 'jarron-azul': 'Jarrón Azul', 'leandro-valle': 'Leandro Valle' };
+
+    // ═══ Guard de acceso: sesión + staff + solo el dueño llega a este panel ═══
     onAuthStateChanged(auth, async (user) => {
       if (!user) { window.location.href = 'staff-login.html'; return; }
       const staffSnap = await getDoc(doc(db, 'staff', user.uid));
@@ -130,9 +159,15 @@
         window.location.href = 'staff-login.html';
         return;
       }
+      if (user.email !== OWNER_EMAIL) {
+        // El personal normal no administra nada aquí — directo a su inventario.
+        window.location.href = 'inventario.html';
+        return;
+      }
       document.getElementById('sessionLabel').textContent = `Sesión: ${user.email}`;
       loadRoster();
       loadPending();
+      loadAllShoppingLists();
     });
 
     document.getElementById('logoutBtn').addEventListener('click', async () => {
@@ -140,47 +175,47 @@
       window.location.href = 'staff-login.html';
     });
 
-    // ═══ Agregar personal nuevo ═══
-    // Se crea la cuenta en una app secundaria de Firebase para no cerrar
-    // la sesión de quien está dando de alta al nuevo personal.
-    const addStaffMsg = document.getElementById('addStaffMsg');
-
-    document.getElementById('addStaffBtn').addEventListener('click', async () => {
-      const email = document.getElementById('staffEmail').value.trim();
-      const password = document.getElementById('staffPassword').value;
-      addStaffMsg.hidden = true;
-      if (!email || password.length < 6) {
-        addStaffMsg.textContent = 'Escribe un email y una contraseña de al menos 6 caracteres.';
-        addStaffMsg.hidden = false;
-        return;
-      }
-
-      const secondaryApp = initializeApp(firebaseConfig, 'staffCreation-' + Date.now());
-      const secondaryAuth = getAuth(secondaryApp);
+    // ═══ Lista de compras — general (ambas sucursales) ═══
+    async function loadAllShoppingLists() {
+      const list = document.getElementById('allShopList');
+      list.innerHTML = '<p class="pending-loading">Cargando…</p>';
       try {
-        const cred = await createUserWithEmailAndPassword(secondaryAuth, email, password);
-        const newUid = cred.user.uid;
-        await secondarySignOut(secondaryAuth);
-        await deleteApp(secondaryApp);
-
-        await setDoc(doc(db, 'staff', newUid), {
-          role: 'staff',
-          email,
-          addedBy: auth.currentUser.email,
-          addedAt: serverTimestamp(),
+        const snap = await getDocs(collection(db, 'shopping_list'));
+        if (snap.empty) {
+          list.innerHTML = '<p class="pending-empty">No hay nada pendiente de comprar.</p>';
+          return;
+        }
+        const rows = snap.docs
+          .map((d) => ({ id: d.id, ...d.data() }))
+          .sort((a, b) => (a.addedAt?.toMillis?.() || 0) - (b.addedAt?.toMillis?.() || 0));
+        list.innerHTML = '';
+        rows.forEach((d) => {
+          const row = document.createElement('div');
+          row.className = 'shop-row';
+          row.innerHTML = `
+            <span class="shop-row__info">
+              <span class="shop-row__branch">${BRANCH_NAMES[d.branch] || d.branch}</span><br>
+              ${d.name}${d.note ? ` — ${d.note}` : ''}
+              <span class="shop-row__meta">Agregado por ${d.addedBy || '—'}</span>
+            </span>
+            <button class="btn btn--outline-dark" data-id="${d.id}" style="font-size:.62rem;padding:.5rem .8rem">COMPRADO</button>
+          `;
+          list.appendChild(row);
         });
-
-        addStaffMsg.textContent = `Cuenta de personal creada para ${email}.`;
-        addStaffMsg.style.color = 'var(--green)';
-        addStaffMsg.hidden = false;
-        document.getElementById('staffEmail').value = '';
-        document.getElementById('staffPassword').value = '';
-        loadRoster();
       } catch (err) {
-        await deleteApp(secondaryApp).catch(() => {});
-        addStaffMsg.textContent = 'No se pudo crear la cuenta (¿ese email ya está en uso?).';
-        addStaffMsg.style.color = 'var(--rust)';
-        addStaffMsg.hidden = false;
+        list.innerHTML = '<p class="pending-empty">No se pudo cargar la lista.</p>';
+      }
+    }
+
+    document.getElementById('allShopList').addEventListener('click', async (e) => {
+      const btn = e.target.closest('button[data-id]');
+      if (!btn) return;
+      btn.disabled = true;
+      try {
+        await deleteDoc(doc(db, 'shopping_list', btn.dataset.id));
+        loadAllShoppingLists();
+      } catch (err) {
+        btn.disabled = false;
       }
     });
 
@@ -202,6 +237,10 @@
           row.innerHTML = `
             <span class="pending-row__email">${email}</span>
             <div class="pending-row__actions">
+              <select class="pending-row__branch" data-branch-for="${d.id}">
+                <option value="jarron-azul">Jarrón Azul</option>
+                <option value="leandro-valle">Leandro Valle</option>
+              </select>
               <button class="btn btn--solid" data-action="approve" data-uid="${d.id}" data-email="${email}" style="font-size:.62rem;padding:.5rem .8rem">APROBAR</button>
               <button class="btn btn--outline-dark" data-action="reject" data-uid="${d.id}" style="font-size:.62rem;padding:.5rem .8rem">RECHAZAR</button>
             </div>
@@ -220,9 +259,11 @@
       btn.disabled = true;
       try {
         if (btn.dataset.action === 'approve') {
+          const branchSelect = document.querySelector(`select[data-branch-for="${uid}"]`);
           await setDoc(doc(db, 'staff', uid), {
             role: 'staff',
             email: btn.dataset.email,
+            branch: branchSelect.value,
             addedBy: auth.currentUser.email,
             addedAt: serverTimestamp(),
           });
@@ -237,14 +278,62 @@
       }
     });
 
+    // ═══ Agregar personal nuevo ═══
+    // Se crea la cuenta en una app secundaria de Firebase para no cerrar
+    // la sesión de quien está dando de alta al nuevo personal.
+    const addStaffMsg = document.getElementById('addStaffMsg');
+
+    document.getElementById('addStaffBtn').addEventListener('click', async () => {
+      const email = document.getElementById('staffEmail').value.trim();
+      const password = document.getElementById('staffPassword').value;
+      const branch = document.getElementById('staffBranch').value;
+      addStaffMsg.hidden = true;
+      if (!email || password.length < 6) {
+        addStaffMsg.textContent = 'Escribe un email y una contraseña de al menos 6 caracteres.';
+        addStaffMsg.hidden = false;
+        return;
+      }
+
+      const secondaryApp = initializeApp(firebaseConfig, 'staffCreation-' + Date.now());
+      const secondaryAuth = getAuth(secondaryApp);
+      try {
+        const cred = await createUserWithEmailAndPassword(secondaryAuth, email, password);
+        const newUid = cred.user.uid;
+        await secondarySignOut(secondaryAuth);
+        await deleteApp(secondaryApp);
+
+        await setDoc(doc(db, 'staff', newUid), {
+          role: 'staff',
+          email,
+          branch,
+          addedBy: auth.currentUser.email,
+          addedAt: serverTimestamp(),
+        });
+
+        addStaffMsg.textContent = `Cuenta de personal creada para ${email} (${BRANCH_NAMES[branch]}).`;
+        addStaffMsg.style.color = 'var(--green)';
+        addStaffMsg.hidden = false;
+        document.getElementById('staffEmail').value = '';
+        document.getElementById('staffPassword').value = '';
+        loadRoster();
+      } catch (err) {
+        await deleteApp(secondaryApp).catch(() => {});
+        addStaffMsg.textContent = 'No se pudo crear la cuenta (¿ese email ya está en uso?).';
+        addStaffMsg.style.color = 'var(--rust)';
+        addStaffMsg.hidden = false;
+      }
+    });
+
     async function loadRoster() {
       const roster = document.getElementById('staffRoster');
       roster.innerHTML = '';
       try {
         const snap = await getDocs(collection(db, 'staff'));
         snap.forEach((d) => {
+          const data = d.data();
           const li = document.createElement('li');
-          li.textContent = d.data().email || d.id;
+          const branchLabel = data.branch ? ` — ${BRANCH_NAMES[data.branch] || data.branch}` : '';
+          li.textContent = `${data.email || d.id}${branchLabel}`;
           roster.appendChild(li);
         });
       } catch (err) { /* silencioso — el roster es solo informativo */ }
