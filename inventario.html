@@ -459,17 +459,33 @@
           <span class="log-row__name">${item.name || 'Artículo'}</span>
           <span class="log-row__points ${isLow ? 'is-earn' : 'is-redeem'}">${stock}${item.unit ? ' ' + item.unit : ''}</span>
           <span class="log-row__meta">Actualizado: ${formatLogDate(item.updatedAt)}
-            ${isOwner ? `<button type="button" class="inv-edit-link" data-edit-item="${item.id}">EDITAR</button>` : ''}
+            ${isOwner ? `
+              <button type="button" class="inv-edit-link" data-edit-item="${item.id}">EDITAR</button>
+              <button type="button" class="inv-edit-link" data-delete-item="${item.id}" data-delete-name="${item.name || 'Artículo'}" style="color:#D4521A">ELIMINAR</button>
+            ` : ''}
           </span>
         `;
         listEl.appendChild(row);
       });
     }
 
-    document.getElementById('itemList').addEventListener('click', (e) => {
-      const btn = e.target.closest('button[data-edit-item]');
-      if (!btn) return;
-      startEditItem(btn.dataset.editItem);
+    document.getElementById('itemList').addEventListener('click', async (e) => {
+      const editBtn = e.target.closest('button[data-edit-item]');
+      if (editBtn) { startEditItem(editBtn.dataset.editItem); return; }
+
+      const delBtn = e.target.closest('button[data-delete-item]');
+      if (delBtn) {
+        const ok = confirm(`¿Eliminar "${delBtn.dataset.deleteName}"? Esto no se puede deshacer.`);
+        if (!ok) return;
+        delBtn.disabled = true;
+        try {
+          await deleteDoc(doc(db, 'inventory_items', delBtn.dataset.deleteItem));
+          loadItems();
+        } catch (err) {
+          delBtn.disabled = false;
+        }
+        return;
+      }
     });
 
     function renderLowStockList() {
