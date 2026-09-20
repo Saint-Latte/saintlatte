@@ -740,6 +740,50 @@ button { cursor: none; }
 }
 .bakery-note__icon { font-size: 1.2rem; }
 
+.seasonal-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 2rem 2.5rem;
+  background: var(--amber);
+  color: var(--black);
+  overflow: hidden;
+}
+.seasonal-banner__eyebrow {
+  font-family: var(--ff-body);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  opacity: .6;
+}
+.seasonal-banner__title {
+  font-family: var(--ff-display);
+  font-size: clamp(2rem, 5.5vw, 3.4rem);
+  letter-spacing: .05em;
+  line-height: .95;
+  margin: .3rem 0 .5rem;
+}
+.seasonal-banner__desc {
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-size: .92rem;
+  max-width: 440px;
+  line-height: 1.4;
+}
+.seasonal-banner__art {
+  width: 110px;
+  height: auto;
+  flex-shrink: 0;
+  color: var(--black);
+  opacity: .85;
+}
+@media (max-width: 640px) {
+  .seasonal-banner { flex-direction: column; align-items: flex-start; text-align: left; padding: 1.6rem 1.5rem; }
+  .seasonal-banner__art { width: 84px; align-self: flex-end; margin-top: -2.2rem; }
+}
+
 .menu-section { padding: 3rem 2.5rem 6rem; }
 
 .menu-tabs {
