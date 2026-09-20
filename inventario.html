@@ -40,6 +40,31 @@
     }
     .staff-mode-tab.on { color: var(--cream); border-color: var(--rust); }
 
+    .item-picker { position: relative; }
+    .item-picker__results {
+      position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 30;
+      background: var(--black-mid); border: 1px solid rgba(255,254,249,.15);
+      max-height: 240px; overflow-y: auto;
+    }
+    .item-picker__row {
+      display: flex; align-items: center; justify-content: space-between; gap: .8rem;
+      padding: .8rem 1rem; cursor: none; border-bottom: 1px solid rgba(255,254,249,.06);
+      font-size: .85rem; color: var(--cream); transition: background .12s;
+    }
+    .item-picker__row:last-child { border-bottom: none; }
+    .item-picker__row:hover, .item-picker__row.is-active { background: rgba(255,254,249,.08); }
+    .item-picker__row-stock { font-size: .68rem; color: rgba(255,254,249,.4); flex-shrink: 0; }
+    .item-picker__empty { padding: .8rem 1rem; font-size: .8rem; color: rgba(255,254,249,.4); }
+    .item-picker__selected {
+      display: flex; align-items: center; justify-content: space-between; gap: .8rem;
+      margin-top: .5rem; padding: .6rem .9rem; background: rgba(51,121,88,.12);
+      border: 1px solid rgba(51,121,88,.35); font-size: .8rem; color: var(--cream);
+    }
+    .item-picker__selected button {
+      background: none; border: none; cursor: none; color: rgba(255,254,249,.5);
+      font-size: .68rem; text-decoration: underline;
+    }
+
     .log-list { display: flex; flex-direction: column; gap: 1px; }
     .log-row {
       display: grid; grid-template-columns: 1fr auto; gap: .2rem .8rem;
@@ -149,6 +174,9 @@
             <button class="btn btn--outline-dark" id="refreshItemsBtn" style="font-size:.65rem;padding:.5rem 1rem">REFRESCAR</button>
           </div>
           <p class="staff-note" style="margin-top:0">En rojo, los artículos en o por debajo de su umbral mínimo.</p>
+          <div class="order-field" style="margin-top:1rem">
+            <input class="order-field__input" type="text" id="stockSearchInput" placeholder="🔍 Buscar artículo por nombre..." autocomplete="off">
+          </div>
           <div class="log-list" id="itemList" style="margin-top:1rem">
             <p class="log-loading">Cargando…</p>
           </div>
@@ -162,9 +190,10 @@
             <div class="order-legend" style="margin-bottom:1.5rem">REGISTRAR SALIDA</div>
             <div class="order-field">
               <label class="order-field__label">ARTÍCULO</label>
-              <select class="order-field__input" id="outItemSelect">
-                <option value="" disabled selected>Selecciona un artículo</option>
-              </select>
+              <div class="item-picker">
+                <input class="order-field__input" type="text" id="outItemSearch" placeholder="🔍 Busca por nombre..." autocomplete="off">
+                <div class="item-picker__results" id="outItemResults" hidden></div>
+              </div>
             </div>
             <div class="order-field">
               <label class="order-field__label">CANTIDAD QUE SALE</label>
@@ -188,9 +217,10 @@
             <div class="order-legend" style="margin-bottom:1.5rem">REGISTRAR ENTRADA</div>
             <div class="order-field">
               <label class="order-field__label">ARTÍCULO</label>
-              <select class="order-field__input" id="inItemSelect">
-                <option value="" disabled selected>Selecciona un artículo</option>
-              </select>
+              <div class="item-picker">
+                <input class="order-field__input" type="text" id="inItemSearch" placeholder="🔍 Busca por nombre..." autocomplete="off">
+                <div class="item-picker__results" id="inItemResults" hidden></div>
+              </div>
             </div>
             <div class="order-field">
               <label class="order-field__label">CANTIDAD QUE ENTRA</label>
@@ -458,8 +488,14 @@
         listEl.innerHTML = '<p class="log-empty">Todavía no hay artículos. Agrega uno en la pestaña "Artículos".</p>';
         return;
       }
+      const query = document.getElementById('stockSearchInput').value.trim().toLowerCase();
+      const visible = query ? itemsCache.filter((i) => (i.name || '').toLowerCase().includes(query)) : itemsCache;
+      if (!visible.length) {
+        listEl.innerHTML = '<p class="log-empty">Ningún artículo coincide con esa búsqueda.</p>';
+        return;
+      }
       listEl.innerHTML = '';
-      itemsCache.forEach((item) => {
+      visible.forEach((item) => {
         const stock = item.stock ?? 0;
         const threshold = item.lowStockThreshold ?? 0;
         const isLow = threshold > 0 && stock <= threshold;
@@ -478,6 +514,8 @@
         listEl.appendChild(row);
       });
     }
+
+    document.getElementById('stockSearchInput').addEventListener('input', renderItemList);
 
     document.getElementById('itemList').addEventListener('click', async (e) => {
       const editBtn = e.target.closest('button[data-edit-item]');
@@ -534,18 +572,57 @@
     }
 
     function fillItemSelects() {
-      ['outItemSelect', 'inItemSelect'].forEach((id) => {
-        const sel = document.getElementById(id);
-        const options = itemsCache
-          .map((i) => `<option value="${i.id}">${i.name} (stock: ${i.stock ?? 0}${i.unit ? ' ' + i.unit : ''})</option>`)
-          .join('');
-        sel.innerHTML = '<option value="" disabled selected>Selecciona un artículo</option>' + options;
-      });
       const supplierNames = [...new Set(itemsCache.map((i) => (i.supplier || '').trim()).filter(Boolean))];
       document.getElementById('supplierNames').innerHTML = supplierNames.map((s) => `<option value="${s}">`).join('');
     }
 
     document.getElementById('refreshItemsBtn').addEventListener('click', loadItems);
+
+    // ═══ Buscador de artículo para Salida/Entrada ═══
+    function setupItemPicker(searchId, resultsId) {
+      const input = document.getElementById(searchId);
+      const results = document.getElementById(resultsId);
+      let selectedId = null;
+
+      function render(query) {
+        const q = query.trim().toLowerCase();
+        const matches = (q ? itemsCache.filter((i) => (i.name || '').toLowerCase().includes(q)) : itemsCache).slice(0, 30);
+        if (!matches.length) {
+          results.innerHTML = '<div class="item-picker__empty">Ningún artículo coincide.</div>';
+        } else {
+          results.innerHTML = matches.map((i) => `
+            <div class="item-picker__row" data-pick="${i.id}">
+              <span>${i.name}</span>
+              <span class="item-picker__row-stock">${i.stock ?? 0}${i.unit ? ' ' + i.unit : ''}</span>
+            </div>
+          `).join('');
+        }
+        results.hidden = false;
+      }
+
+      input.addEventListener('focus', () => { selectedId = null; render(input.value); });
+      input.addEventListener('input', () => { selectedId = null; render(input.value); });
+      input.addEventListener('blur', () => { setTimeout(() => { results.hidden = true; }, 150); });
+
+      results.addEventListener('mousedown', (e) => {
+        const row = e.target.closest('.item-picker__row[data-pick]');
+        if (!row) return;
+        e.preventDefault();
+        const item = itemsCache.find((i) => i.id === row.dataset.pick);
+        if (!item) return;
+        selectedId = item.id;
+        input.value = item.name;
+        results.hidden = true;
+      });
+
+      return {
+        getSelectedId: () => selectedId,
+        reset: () => { selectedId = null; input.value = ''; results.hidden = true; },
+      };
+    }
+
+    const outPicker = setupItemPicker('outItemSearch', 'outItemResults');
+    const inPicker = setupItemPicker('inItemSearch', 'inItemResults');
 
     // ═══ Registrar movimiento (salida/entrada) ═══
     async function registerMovement({ itemId, qty, note, type, sign }) {
@@ -574,13 +651,13 @@
     }
 
     document.getElementById('outSubmitBtn').addEventListener('click', async () => {
-      const itemId = document.getElementById('outItemSelect').value;
+      const itemId = outPicker.getSelectedId();
       const qty = parseFloat(document.getElementById('outQtyInput').value);
       const note = document.getElementById('outNoteInput').value.trim();
       const msg = document.getElementById('outMsg');
       msg.hidden = true;
       if (!itemId || !qty || qty <= 0) {
-        msg.textContent = 'Selecciona un artículo y una cantidad válida.';
+        msg.textContent = 'Busca y selecciona un artículo de la lista, y escribe una cantidad válida.';
         msg.style.color = '#D4521A';
         msg.hidden = false;
         return;
@@ -592,7 +669,7 @@
         msg.hidden = false;
         document.getElementById('outQtyInput').value = '';
         document.getElementById('outNoteInput').value = '';
-        document.getElementById('outItemSelect').selectedIndex = 0;
+        outPicker.reset();
         loadItems();
         loadMovements();
       } catch (err) {
@@ -603,13 +680,13 @@
     });
 
     document.getElementById('inSubmitBtn').addEventListener('click', async () => {
-      const itemId = document.getElementById('inItemSelect').value;
+      const itemId = inPicker.getSelectedId();
       const qty = parseFloat(document.getElementById('inQtyInput').value);
       const note = document.getElementById('inNoteInput').value.trim();
       const msg = document.getElementById('inMsg');
       msg.hidden = true;
       if (!itemId || !qty || qty <= 0) {
-        msg.textContent = 'Selecciona un artículo y una cantidad válida.';
+        msg.textContent = 'Busca y selecciona un artículo de la lista, y escribe una cantidad válida.';
         msg.style.color = '#D4521A';
         msg.hidden = false;
         return;
@@ -621,7 +698,7 @@
         msg.hidden = false;
         document.getElementById('inQtyInput').value = '';
         document.getElementById('inNoteInput').value = '';
-        document.getElementById('inItemSelect').selectedIndex = 0;
+        inPicker.reset();
         loadItems();
         loadMovements();
       } catch (err) {
