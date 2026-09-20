@@ -53,6 +53,11 @@
     .shop-row__meta { font-size: .68rem; color: rgba(255,254,249,.4); display: block; margin-top: .2rem; }
     .shop-row__branch { font-size: .6rem; letter-spacing: .08em; font-weight: 700; color: var(--green); }
     .pending-empty, .pending-loading { font-size: .82rem; color: rgba(255,254,249,.4); padding: .5rem 0; }
+    .shop-group__label {
+      font-size: .62rem; letter-spacing: .1em; font-weight: 700; color: var(--green);
+      margin: 1rem 0 .3rem; text-transform: uppercase;
+    }
+    .shop-group__label:first-child { margin-top: 0; }
   </style>
 </head>
 <body class="page-testing">
@@ -106,8 +111,16 @@
     </div>
 
     <div class="staff-panel">
+      <div class="order-legend" style="margin-bottom:1rem">POR DEBAJO DEL MÍNIMO — GENERAL</div>
+      <p class="staff-note" style="margin-top:0">Ambas sucursales, agrupado por proveedor.</p>
+      <div class="shop-list" id="allLowStockList">
+        <p class="pending-loading">Cargando…</p>
+      </div>
+    </div>
+
+    <div class="staff-panel">
       <div class="order-legend" style="margin-bottom:1rem">LISTA DE COMPRAS — GENERAL</div>
-      <p class="staff-note" style="margin-top:0">Lo pendiente de comprar en ambas sucursales.</p>
+      <p class="staff-note" style="margin-top:0">Lo agregado a mano en ambas sucursales.</p>
       <div class="shop-list" id="allShopList">
         <p class="pending-loading">Cargando…</p>
       </div>
@@ -166,7 +179,7 @@
         window.location.href = 'staff-login.html';
         return;
       }
-      if (user.email !== OWNER_EMAIL) {
+      if ((user.email || '').toLowerCase() !== OWNER_EMAIL) {
         // El personal normal no administra nada aquí — directo a su inventario.
         window.location.href = 'inventario.html';
         return;
@@ -174,6 +187,7 @@
       document.getElementById('sessionLabel').textContent = `Sesión: ${user.email}`;
       loadRoster();
       loadPending();
+      loadAllLowStock();
       loadAllShoppingLists();
     });
 
@@ -181,6 +195,46 @@
       await signOut(auth);
       window.location.href = 'staff-login.html';
     });
+
+    // ═══ Por debajo del mínimo — general (ambas sucursales, agrupado por proveedor) ═══
+    async function loadAllLowStock() {
+      const list = document.getElementById('allLowStockList');
+      list.innerHTML = '<p class="pending-loading">Cargando…</p>';
+      try {
+        const snap = await getDocs(collection(db, 'inventory_items')); // sin where — el dueño ve ambas sucursales
+        const low = snap.docs
+          .map((d) => ({ id: d.id, ...d.data() }))
+          .filter((i) => (i.lowStockThreshold || 0) > 0 && (i.stock ?? 0) <= i.lowStockThreshold);
+        if (!low.length) {
+          list.innerHTML = '<p class="pending-empty">Todo está por encima de su mínimo en ambas sucursales.</p>';
+          return;
+        }
+        const groups = {};
+        low.forEach((i) => {
+          const key = (i.supplier || '').trim() || 'Sin proveedor';
+          (groups[key] = groups[key] || []).push(i);
+        });
+        const groupNames = Object.keys(groups).sort((a, b) => {
+          if (a === 'Sin proveedor') return 1;
+          if (b === 'Sin proveedor') return -1;
+          return a.localeCompare(b);
+        });
+        list.innerHTML = groupNames.map((supplier) => `
+          <div class="shop-group__label">${supplier}</div>
+          ${groups[supplier].map((i) => `
+            <div class="shop-row">
+              <span class="shop-row__info">
+                <span class="shop-row__branch">${BRANCH_NAMES[i.branch] || i.branch || '—'}</span><br>
+                ${i.name}
+                <span class="shop-row__meta">Hay ${i.stock ?? 0}${i.unit ? ' ' + i.unit : ''} · mínimo ${i.lowStockThreshold} · faltan ${Math.max(0, i.lowStockThreshold - (i.stock ?? 0))}</span>
+              </span>
+            </div>
+          `).join('')}
+        `).join('');
+      } catch (err) {
+        list.innerHTML = '<p class="pending-empty">No se pudo cargar. Intenta de nuevo.</p>';
+      }
+    }
 
     // ═══ Lista de compras — general (ambas sucursales) ═══
     async function loadAllShoppingLists() {

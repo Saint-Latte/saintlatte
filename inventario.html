@@ -66,6 +66,11 @@
     }
     .shop-row__info { font-size: .82rem; color: var(--cream); }
     .shop-row__meta { font-size: .68rem; color: rgba(255,254,249,.4); display: block; margin-top: .2rem; }
+    .shop-group__label {
+      font-size: .62rem; letter-spacing: .1em; font-weight: 700; color: var(--green);
+      margin: 1rem 0 .3rem; text-transform: uppercase;
+    }
+    .shop-group__label:first-child { margin-top: 0; }
     .shop-list { display: flex; flex-direction: column; gap: 1px; margin-top: 1rem; }
   </style>
 </head>
@@ -286,6 +291,11 @@
               <label class="order-field__label">UMBRAL MÍNIMO (OPCIONAL)</label>
               <input class="order-field__input" type="number" id="newItemThreshold" placeholder="Avisar cuando baje de..." min="0" step="any">
             </div>
+            <div class="order-field">
+              <label class="order-field__label">PROVEEDOR (OPCIONAL)</label>
+              <input class="order-field__input" type="text" id="newItemSupplier" list="supplierNames" placeholder="Ej. Etrusca, Costco...">
+              <datalist id="supplierNames"></datalist>
+            </div>
             <button class="btn btn--solid" id="addItemBtn" style="margin-top:.5rem">AGREGAR ARTÍCULO</button>
             <button type="button" class="inv-edit-link" id="cancelEditItemBtn" hidden>CANCELAR EDICIÓN</button>
             <p class="staff-msg" id="addItemMsg" hidden></p>
@@ -488,6 +498,19 @@
       }
     });
 
+    function groupBySupplier(items) {
+      const groups = {};
+      items.forEach((i) => {
+        const key = (i.supplier || '').trim() || 'Sin proveedor';
+        (groups[key] = groups[key] || []).push(i);
+      });
+      return Object.keys(groups).sort((a, b) => {
+        if (a === 'Sin proveedor') return 1;
+        if (b === 'Sin proveedor') return -1;
+        return a.localeCompare(b);
+      }).map((key) => ({ supplier: key, items: groups[key] }));
+    }
+
     function renderLowStockList() {
       const listEl = document.getElementById('lowStockList');
       if (!listEl) return;
@@ -496,13 +519,16 @@
         listEl.innerHTML = '<p class="log-empty">Todo está por encima de su mínimo.</p>';
         return;
       }
-      listEl.innerHTML = low
-        .map((i) => `
-          <div class="shop-row">
-            <span class="shop-row__info">${i.name}
-              <span class="shop-row__meta">Hay ${i.stock ?? 0}${i.unit ? ' ' + i.unit : ''} · mínimo ${i.lowStockThreshold} · faltan ${Math.max(0, i.lowStockThreshold - (i.stock ?? 0))}</span>
-            </span>
-          </div>
+      listEl.innerHTML = groupBySupplier(low)
+        .map((group) => `
+          <div class="shop-group__label">${group.supplier}</div>
+          ${group.items.map((i) => `
+            <div class="shop-row">
+              <span class="shop-row__info">${i.name}
+                <span class="shop-row__meta">Hay ${i.stock ?? 0}${i.unit ? ' ' + i.unit : ''} · mínimo ${i.lowStockThreshold} · faltan ${Math.max(0, i.lowStockThreshold - (i.stock ?? 0))}</span>
+              </span>
+            </div>
+          `).join('')}
         `)
         .join('');
     }
@@ -515,6 +541,8 @@
           .join('');
         sel.innerHTML = '<option value="" disabled selected>Selecciona un artículo</option>' + options;
       });
+      const supplierNames = [...new Set(itemsCache.map((i) => (i.supplier || '').trim()).filter(Boolean))];
+      document.getElementById('supplierNames').innerHTML = supplierNames.map((s) => `<option value="${s}">`).join('');
     }
 
     document.getElementById('refreshItemsBtn').addEventListener('click', loadItems);
@@ -729,6 +757,7 @@
       document.getElementById('newItemName').value = item.name || '';
       document.getElementById('newItemUnit').value = item.unit || '';
       document.getElementById('newItemThreshold').value = item.lowStockThreshold || '';
+      document.getElementById('newItemSupplier').value = item.supplier || '';
       document.getElementById('newItemStockField').hidden = true;
       document.getElementById('itemFormLegend').textContent = `EDITAR "${item.name || 'ARTÍCULO'}"`;
       document.getElementById('addItemBtn').textContent = 'GUARDAR CAMBIOS';
@@ -742,6 +771,7 @@
       document.getElementById('newItemName').value = '';
       document.getElementById('newItemUnit').value = '';
       document.getElementById('newItemThreshold').value = '';
+      document.getElementById('newItemSupplier').value = '';
       document.getElementById('newItemStock').value = '';
       document.getElementById('newItemStockField').hidden = false;
       document.getElementById('itemFormLegend').textContent = 'NUEVO ARTÍCULO';
@@ -756,6 +786,7 @@
       const unit = document.getElementById('newItemUnit').value.trim();
       const stock = parseFloat(document.getElementById('newItemStock').value) || 0;
       const threshold = parseFloat(document.getElementById('newItemThreshold').value) || 0;
+      const supplier = document.getElementById('newItemSupplier').value.trim();
       const msg = document.getElementById('addItemMsg');
       msg.hidden = true;
       if (!name) {
@@ -771,6 +802,7 @@
             name,
             unit,
             lowStockThreshold: threshold,
+            supplier,
             updatedAt: serverTimestamp(),
           });
           msg.textContent = `Artículo "${name}" actualizado.`;
@@ -794,6 +826,7 @@
           unit: product.unit,
           stock,
           lowStockThreshold: threshold,
+          supplier,
           branch: currentBranch,
           createdBy: auth.currentUser.email,
           createdAt: serverTimestamp(),
@@ -820,6 +853,7 @@
         document.getElementById('newItemUnit').value = '';
         document.getElementById('newItemStock').value = '';
         document.getElementById('newItemThreshold').value = '';
+        document.getElementById('newItemSupplier').value = '';
         loadItems();
         loadMovements();
       } catch (err) {
