@@ -159,8 +159,7 @@
     <div id="inventoryUi" hidden>
       <div class="staff-mode-tabs">
         <button class="staff-mode-tab on" id="modeStockTab">STOCK ACTUAL</button>
-        <button class="staff-mode-tab" id="modeOutTab">REGISTRAR SALIDA</button>
-        <button class="staff-mode-tab" id="modeInTab">REGISTRAR ENTRADA</button>
+        <button class="staff-mode-tab" id="modeMoveTab">MOVER STOCK</button>
         <button class="staff-mode-tab" id="modeHistTab">HISTORIAL</button>
         <button class="staff-mode-tab" id="modeShopTab">LISTA DE COMPRAS</button>
         <button class="staff-mode-tab" id="modeItemsTab">ARTÍCULOS</button>
@@ -183,55 +182,33 @@
         </div>
       </div>
 
-      <!-- MODO 2: registrar salida -->
-      <div id="modeOut" hidden>
+      <!-- MODO 2: mover stock (salida o entrada) -->
+      <div id="modeMove" hidden>
         <div class="staff-panel">
           <div class="order-fieldset" style="padding:0;border:none">
-            <div class="order-legend" style="margin-bottom:1.5rem">REGISTRAR SALIDA</div>
+            <div class="order-legend" style="margin-bottom:1rem" id="moveLegend">MOVER STOCK</div>
+            <div class="branch-switch">
+              <button type="button" class="branch-switch__btn on" id="moveDirOutBtn" style="border-color:#D4521A" data-dir="salida">− SALIDA</button>
+              <button type="button" class="branch-switch__btn" id="moveDirInBtn" data-dir="entrada">+ ENTRADA</button>
+            </div>
             <div class="order-field">
               <label class="order-field__label">ARTÍCULO</label>
               <div class="item-picker">
-                <input class="order-field__input" type="text" id="outItemSearch" placeholder="🔍 Busca por nombre..." autocomplete="off">
-                <div class="item-picker__results" id="outItemResults" hidden></div>
+                <input class="order-field__input" type="text" id="moveItemSearch" placeholder="🔍 Busca por nombre..." autocomplete="off">
+                <div class="item-picker__results" id="moveItemResults" hidden></div>
               </div>
             </div>
             <div class="order-field">
-              <label class="order-field__label">CANTIDAD QUE SALE</label>
-              <input class="order-field__input" type="number" id="outQtyInput" placeholder="Ej. 2" min="0" step="any">
+              <label class="order-field__label" id="moveQtyLabel">CANTIDAD QUE SALE</label>
+              <input class="order-field__input" type="number" id="moveQtyInput" placeholder="Ej. 2" min="0" step="any">
             </div>
             <div class="order-field">
               <label class="order-field__label">MOTIVO (OPCIONAL)</label>
-              <input class="order-field__input" type="text" id="outNoteInput" placeholder="Ej. se rompió, para receta, se lo llevó...">
+              <input class="order-field__input" type="text" id="moveNoteInput" placeholder="Ej. se rompió, para receta, se lo llevó...">
             </div>
-            <button class="btn btn--solid" id="outSubmitBtn" style="margin-top:.5rem">REGISTRAR SALIDA</button>
-            <p class="staff-msg" id="outMsg" hidden></p>
+            <button class="btn btn--solid" id="moveSubmitBtn" style="margin-top:.5rem">REGISTRAR SALIDA</button>
+            <p class="staff-msg" id="moveMsg" hidden></p>
             <p class="staff-note">Queda registrado con tu cuenta y la hora exacta.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- MODO 3: registrar entrada -->
-      <div id="modeIn" hidden>
-        <div class="staff-panel">
-          <div class="order-fieldset" style="padding:0;border:none">
-            <div class="order-legend" style="margin-bottom:1.5rem">REGISTRAR ENTRADA</div>
-            <div class="order-field">
-              <label class="order-field__label">ARTÍCULO</label>
-              <div class="item-picker">
-                <input class="order-field__input" type="text" id="inItemSearch" placeholder="🔍 Busca por nombre..." autocomplete="off">
-                <div class="item-picker__results" id="inItemResults" hidden></div>
-              </div>
-            </div>
-            <div class="order-field">
-              <label class="order-field__label">CANTIDAD QUE ENTRA</label>
-              <input class="order-field__input" type="number" id="inQtyInput" placeholder="Ej. 10" min="0" step="any">
-            </div>
-            <div class="order-field">
-              <label class="order-field__label">MOTIVO (OPCIONAL)</label>
-              <input class="order-field__input" type="text" id="inNoteInput" placeholder="Ej. compra a proveedor, conteo corregido...">
-            </div>
-            <button class="btn btn--solid" id="inSubmitBtn" style="margin-top:.5rem">REGISTRAR ENTRADA</button>
-            <p class="staff-msg" id="inMsg" hidden></p>
           </div>
         </div>
       </div>
@@ -429,16 +406,14 @@
     // ═══ Mode tabs ═══
     const tabs = {
       stock: document.getElementById('modeStockTab'),
-      out: document.getElementById('modeOutTab'),
-      in: document.getElementById('modeInTab'),
+      move: document.getElementById('modeMoveTab'),
       hist: document.getElementById('modeHistTab'),
       shop: document.getElementById('modeShopTab'),
       items: document.getElementById('modeItemsTab'),
     };
     const panels = {
       stock: document.getElementById('modeStock'),
-      out: document.getElementById('modeOut'),
-      in: document.getElementById('modeIn'),
+      move: document.getElementById('modeMove'),
       hist: document.getElementById('modeHist'),
       shop: document.getElementById('modeShop'),
       items: document.getElementById('modeItems'),
@@ -450,8 +425,7 @@
       });
     }
     tabs.stock.addEventListener('click', () => { setMode('stock'); loadItems(); });
-    tabs.out.addEventListener('click', () => setMode('out'));
-    tabs.in.addEventListener('click', () => setMode('in'));
+    tabs.move.addEventListener('click', () => setMode('move'));
     tabs.hist.addEventListener('click', () => { setMode('hist'); loadMovements(); });
     tabs.shop.addEventListener('click', () => { setMode('shop'); renderLowStockList(); loadShoppingList(); });
     tabs.items.addEventListener('click', () => setMode('items'));
@@ -505,6 +479,8 @@
           <span class="log-row__name">${item.name || 'Artículo'}</span>
           <span class="log-row__points ${isLow ? 'is-earn' : 'is-redeem'}">${stock}${item.unit ? ' ' + item.unit : ''}</span>
           <span class="log-row__meta">Actualizado: ${formatLogDate(item.updatedAt)}
+            <button type="button" class="inv-edit-link" data-move-item="${item.id}" data-move-dir="salida" style="color:#D4521A">− SALIDA</button>
+            <button type="button" class="inv-edit-link" data-move-item="${item.id}" data-move-dir="entrada">+ ENTRADA</button>
             ${isOwner ? `
               <button type="button" class="inv-edit-link" data-edit-item="${item.id}">EDITAR</button>
               <button type="button" class="inv-edit-link" data-delete-item="${item.id}" data-delete-name="${item.name || 'Artículo'}" style="color:#D4521A">ELIMINAR</button>
@@ -518,6 +494,9 @@
     document.getElementById('stockSearchInput').addEventListener('input', renderItemList);
 
     document.getElementById('itemList').addEventListener('click', async (e) => {
+      const moveBtn = e.target.closest('button[data-move-item]');
+      if (moveBtn) { startMove(moveBtn.dataset.moveItem, moveBtn.dataset.moveDir); return; }
+
       const editBtn = e.target.closest('button[data-edit-item]');
       if (editBtn) { startEditItem(editBtn.dataset.editItem); return; }
 
@@ -618,11 +597,47 @@
       return {
         getSelectedId: () => selectedId,
         reset: () => { selectedId = null; input.value = ''; results.hidden = true; },
+        selectById: (id) => {
+          const item = itemsCache.find((i) => i.id === id);
+          if (!item) return;
+          selectedId = item.id;
+          input.value = item.name;
+          results.hidden = true;
+        },
       };
     }
 
-    const outPicker = setupItemPicker('outItemSearch', 'outItemResults');
-    const inPicker = setupItemPicker('inItemSearch', 'inItemResults');
+    const movePicker = setupItemPicker('moveItemSearch', 'moveItemResults');
+
+    // ═══ Cambiar dirección (salida/entrada) ═══
+    let moveDirection = 'salida';
+
+    function setMoveDirection(dir) {
+      moveDirection = dir;
+      const outBtn = document.getElementById('moveDirOutBtn');
+      const inBtn = document.getElementById('moveDirInBtn');
+      outBtn.classList.toggle('on', dir === 'salida');
+      inBtn.classList.toggle('on', dir === 'entrada');
+      outBtn.style.borderColor = dir === 'salida' ? '#D4521A' : '';
+      inBtn.style.borderColor = dir === 'entrada' ? 'var(--green)' : '';
+      const isOut = dir === 'salida';
+      document.getElementById('moveLegend').textContent = isOut ? 'REGISTRAR SALIDA' : 'REGISTRAR ENTRADA';
+      document.getElementById('moveQtyLabel').textContent = isOut ? 'CANTIDAD QUE SALE' : 'CANTIDAD QUE ENTRA';
+      document.getElementById('moveNoteInput').placeholder = isOut
+        ? 'Ej. se rompió, para receta, se lo llevó...'
+        : 'Ej. compra a proveedor, conteo corregido...';
+      document.getElementById('moveSubmitBtn').textContent = isOut ? 'REGISTRAR SALIDA' : 'REGISTRAR ENTRADA';
+    }
+
+    document.getElementById('moveDirOutBtn').addEventListener('click', () => setMoveDirection('salida'));
+    document.getElementById('moveDirInBtn').addEventListener('click', () => setMoveDirection('entrada'));
+
+    function startMove(itemId, dir) {
+      setMoveDirection(dir);
+      movePicker.selectById(itemId);
+      setMode('move');
+      document.getElementById('moveQtyInput').focus();
+    }
 
     // ═══ Registrar movimiento (salida/entrada) ═══
     async function registerMovement({ itemId, qty, note, type, sign }) {
@@ -650,11 +665,12 @@
       return stockAfter;
     }
 
-    document.getElementById('outSubmitBtn').addEventListener('click', async () => {
-      const itemId = outPicker.getSelectedId();
-      const qty = parseFloat(document.getElementById('outQtyInput').value);
-      const note = document.getElementById('outNoteInput').value.trim();
-      const msg = document.getElementById('outMsg');
+    document.getElementById('moveSubmitBtn').addEventListener('click', async () => {
+      const itemId = movePicker.getSelectedId();
+      const qty = parseFloat(document.getElementById('moveQtyInput').value);
+      const note = document.getElementById('moveNoteInput').value.trim();
+      const msg = document.getElementById('moveMsg');
+      const isOut = moveDirection === 'salida';
       msg.hidden = true;
       if (!itemId || !qty || qty <= 0) {
         msg.textContent = 'Busca y selecciona un artículo de la lista, y escribe una cantidad válida.';
@@ -663,46 +679,19 @@
         return;
       }
       try {
-        const stockAfter = await registerMovement({ itemId, qty, note, type: 'salida', sign: -1 });
-        msg.textContent = `Salida registrada. Stock restante: ${stockAfter}.`;
-        msg.style.color = '#D4521A';
+        const stockAfter = await registerMovement({ itemId, qty, note, type: moveDirection, sign: isOut ? -1 : 1 });
+        msg.textContent = isOut
+          ? `Salida registrada. Stock restante: ${stockAfter}.`
+          : `Entrada registrada. Stock total: ${stockAfter}.`;
+        msg.style.color = isOut ? '#D4521A' : 'var(--green)';
         msg.hidden = false;
-        document.getElementById('outQtyInput').value = '';
-        document.getElementById('outNoteInput').value = '';
-        outPicker.reset();
+        document.getElementById('moveQtyInput').value = '';
+        document.getElementById('moveNoteInput').value = '';
+        movePicker.reset();
         loadItems();
         loadMovements();
       } catch (err) {
-        msg.textContent = 'No se pudo registrar la salida. Intenta de nuevo.';
-        msg.style.color = '#D4521A';
-        msg.hidden = false;
-      }
-    });
-
-    document.getElementById('inSubmitBtn').addEventListener('click', async () => {
-      const itemId = inPicker.getSelectedId();
-      const qty = parseFloat(document.getElementById('inQtyInput').value);
-      const note = document.getElementById('inNoteInput').value.trim();
-      const msg = document.getElementById('inMsg');
-      msg.hidden = true;
-      if (!itemId || !qty || qty <= 0) {
-        msg.textContent = 'Busca y selecciona un artículo de la lista, y escribe una cantidad válida.';
-        msg.style.color = '#D4521A';
-        msg.hidden = false;
-        return;
-      }
-      try {
-        const stockAfter = await registerMovement({ itemId, qty, note, type: 'entrada', sign: 1 });
-        msg.textContent = `Entrada registrada. Stock total: ${stockAfter}.`;
-        msg.style.color = 'var(--green)';
-        msg.hidden = false;
-        document.getElementById('inQtyInput').value = '';
-        document.getElementById('inNoteInput').value = '';
-        inPicker.reset();
-        loadItems();
-        loadMovements();
-      } catch (err) {
-        msg.textContent = 'No se pudo registrar la entrada. Intenta de nuevo.';
+        msg.textContent = isOut ? 'No se pudo registrar la salida. Intenta de nuevo.' : 'No se pudo registrar la entrada. Intenta de nuevo.';
         msg.style.color = '#D4521A';
         msg.hidden = false;
       }
