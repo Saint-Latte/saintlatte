@@ -87452,6 +87452,15 @@
           "basePrice": 55,
           "imageUrl": null,
           "modifierGroups": []
+        },
+        {
+          "id": "b0c3540f-c589-4089-83ae-7da1b0a5c6f3",
+          "name": "Panqué de limón",
+          "description": null,
+          "menuName": "Vitrina",
+          "basePrice": 65,
+          "imageUrl": null,
+          "modifierGroups": []
         }
       ]
     },
@@ -93401,6 +93410,6 @@
       }
     }
   },
-  "syncedAt": "2026-09-22T17:29:26.379Z",
+  "syncedAt": "2026-09-23T17:39:20.186Z",
   "restaurantId": "0a717e1b-ffd5-4491-b1df-4d352031967d"
 }
