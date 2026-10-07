@@ -1,6 +1,443 @@
 {
   "menus": [
     {
+      "id": "8c9fb5ff-e193-42d6-80ab-f1455724a2f3",
+      "name": "Specialty Coffee",
+      "sortOrder": 0,
+      "items": [
+        {
+          "id": "3ea7b28a-5318-4057-8a0d-07593341ba39",
+          "name": "Specialty Method",
+          "description": null,
+          "menuName": "Specialty Coffee",
+          "basePrice": 65,
+          "imageUrl": null,
+          "modifierGroups": [
+            {
+              "id": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+              "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+              "name": "Tipo de grano",
+              "description": null,
+              "defaultItemId": null,
+              "createdAt": "2026-05-06T03:29:51.000Z",
+              "updatedAt": "2026-05-06T03:32:14.000Z",
+              "deletedAt": null,
+              "modifierItems": [
+                {
+                  "id": "275330bd-34f6-4e1e-96c2-62d2e07ad252",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Red Honey",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-05-06T03:29:52.000Z",
+                  "updatedAt": "2026-05-06T03:29:52.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-05-06T03:29:54.000Z",
+                    "updatedAt": "2026-05-06T03:29:54.000Z",
+                    "modifierGroupId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                    "itemId": "275330bd-34f6-4e1e-96c2-62d2e07ad252"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "c50588e3-9efd-417d-9405-1d8ab9436569",
+                      "entityId": "275330bd-34f6-4e1e-96c2-62d2e07ad252",
+                      "entityType": "item",
+                      "contextId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-05-06T03:29:52.000Z",
+                      "updatedAt": "2026-05-06T03:29:52.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "a2228b25-31f2-47bf-8392-fc16e4ba535e",
+                      "entityId": "275330bd-34f6-4e1e-96c2-62d2e07ad252",
+                      "entityType": "item",
+                      "ownerId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000n:",
+                      "createdAt": "2026-05-06T03:29:52.000Z",
+                      "updatedAt": "2026-05-06T03:29:52.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "1cf17dde-9baf-4f8b-9e9d-973c5e55bd25",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "275330bd-34f6-4e1e-96c2-62d2e07ad252",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 20,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-05-06T03:29:52.000Z",
+                      "updatedAt": "2026-05-06T03:29:52.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "a4799502-6b62-4656-9271-71c069f15503",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Black Honey",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-05-06T03:29:52.000Z",
+                  "updatedAt": "2026-05-06T03:29:52.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-05-06T03:29:54.000Z",
+                    "updatedAt": "2026-05-06T03:29:54.000Z",
+                    "modifierGroupId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                    "itemId": "a4799502-6b62-4656-9271-71c069f15503"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "981185a6-874b-4780-9563-c85226dbec68",
+                      "entityId": "a4799502-6b62-4656-9271-71c069f15503",
+                      "entityType": "item",
+                      "contextId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-05-06T03:29:53.000Z",
+                      "updatedAt": "2026-05-06T03:29:53.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "27ccfa48-2fba-4ac6-81ad-7834b12c59d0",
+                      "entityId": "a4799502-6b62-4656-9271-71c069f15503",
+                      "entityType": "item",
+                      "ownerId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2026-05-06T03:29:53.000Z",
+                      "updatedAt": "2026-05-06T03:29:53.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "cc9374b5-9f09-4b3c-aec1-574d916214a1",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "a4799502-6b62-4656-9271-71c069f15503",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 20,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-05-06T03:29:53.000Z",
+                      "updatedAt": "2026-05-06T03:29:53.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "b11426af-3806-4e21-874b-af6fc32e1aaf",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Natural",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2025-10-23T18:02:19.000Z",
+                  "updatedAt": "2025-10-23T18:02:19.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-05-06T03:29:54.000Z",
+                    "updatedAt": "2026-05-06T03:29:54.000Z",
+                    "modifierGroupId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                    "itemId": "b11426af-3806-4e21-874b-af6fc32e1aaf"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "6f17debe-682b-4e2d-a75d-93bb9821566d",
+                      "entityId": "b11426af-3806-4e21-874b-af6fc32e1aaf",
+                      "entityType": "item",
+                      "contextId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-05-06T03:29:51.000Z",
+                      "updatedAt": "2026-05-06T03:29:51.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "6c00dc15-d80c-4eb3-b6b2-fa03c9e75c99",
+                      "entityId": "b11426af-3806-4e21-874b-af6fc32e1aaf",
+                      "entityType": "item",
+                      "ownerId": "00ee35ba-d723-4eec-b34e-30bbf1842c3f",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i00007:",
+                      "createdAt": "2026-05-19T18:14:50.000Z",
+                      "updatedAt": "2026-05-19T18:14:50.000Z"
+                    },
+                    {
+                      "id": "c45de9b3-8f16-4b32-a50d-0c3ef27221ca",
+                      "entityId": "b11426af-3806-4e21-874b-af6fc32e1aaf",
+                      "entityType": "item",
+                      "ownerId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i00007:",
+                      "createdAt": "2026-05-06T03:29:51.000Z",
+                      "updatedAt": "2026-05-06T03:29:51.000Z"
+                    },
+                    {
+                      "id": "c5c8e36a-295a-400b-9291-3de6061b5c0c",
+                      "entityId": "b11426af-3806-4e21-874b-af6fc32e1aaf",
+                      "entityType": "item",
+                      "ownerId": "b60e39cf-fb6a-4949-be35-76c2010b388a",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i00007:",
+                      "createdAt": "2025-10-23T18:02:19.000Z",
+                      "updatedAt": "2025-10-23T18:02:19.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "c523bb52-17c0-4d1b-9252-f9bf1adaa299",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "b11426af-3806-4e21-874b-af6fc32e1aaf",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": "modifier_group",
+                      "contextId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                      "amount": 25,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-05-06T03:29:51.000Z",
+                      "updatedAt": "2026-05-06T03:29:51.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "e82ecbd6-4088-4669-999f-f6ace00a03f1",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Yellow Honey",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-05-06T03:29:51.000Z",
+                  "updatedAt": "2026-05-06T03:29:51.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-05-06T03:29:54.000Z",
+                    "updatedAt": "2026-05-06T03:29:54.000Z",
+                    "modifierGroupId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                    "itemId": "e82ecbd6-4088-4669-999f-f6ace00a03f1"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "9a47ae0f-d2af-484a-b192-4e9b7849c673",
+                      "entityId": "e82ecbd6-4088-4669-999f-f6ace00a03f1",
+                      "entityType": "item",
+                      "contextId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-05-06T03:29:52.000Z",
+                      "updatedAt": "2026-05-06T03:29:52.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "7d024605-6bc1-4c87-8d5b-0164e0832729",
+                      "entityId": "e82ecbd6-4088-4669-999f-f6ace00a03f1",
+                      "entityType": "item",
+                      "ownerId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000f:",
+                      "createdAt": "2026-05-06T03:29:52.000Z",
+                      "updatedAt": "2026-05-06T03:29:52.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "aca35430-f518-4587-a626-dd39472e1576",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "e82ecbd6-4088-4669-999f-f6ace00a03f1",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": null,
+                      "contextId": null,
+                      "amount": 20,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-05-06T03:29:52.000Z",
+                      "updatedAt": "2026-05-06T03:29:52.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "f2f36eb2-fe11-42f9-999b-c05536fec02f",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Lavado",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2025-10-23T18:02:20.000Z",
+                  "updatedAt": "2025-10-23T18:02:20.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-05-06T03:29:54.000Z",
+                    "updatedAt": "2026-05-06T03:29:54.000Z",
+                    "modifierGroupId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                    "itemId": "f2f36eb2-fe11-42f9-999b-c05536fec02f"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "65d43a33-b516-4be4-ac3a-cf98a53877d2",
+                      "entityId": "f2f36eb2-fe11-42f9-999b-c05536fec02f",
+                      "entityType": "item",
+                      "contextId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": 1,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-05-06T03:29:53.000Z",
+                      "updatedAt": "2026-05-06T03:29:53.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "7a6ccf57-a888-4ab3-b34d-8febc51c6703",
+                      "entityId": "f2f36eb2-fe11-42f9-999b-c05536fec02f",
+                      "entityType": "item",
+                      "ownerId": "b60e39cf-fb6a-4949-be35-76c2010b388a",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000n:",
+                      "createdAt": "2025-10-23T18:02:20.000Z",
+                      "updatedAt": "2025-10-23T18:02:20.000Z"
+                    },
+                    {
+                      "id": "fa544ab1-9b2e-428b-ab73-ced105d8b4ba",
+                      "entityId": "f2f36eb2-fe11-42f9-999b-c05536fec02f",
+                      "entityType": "item",
+                      "ownerId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i00013:",
+                      "createdAt": "2026-05-06T03:29:53.000Z",
+                      "updatedAt": "2026-05-06T03:29:53.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "cc5a589a-d7e2-4d44-bb30-44b0c38ff0f8",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "f2f36eb2-fe11-42f9-999b-c05536fec02f",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": "modifier_group",
+                      "contextId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                      "amount": 15,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-05-06T03:29:53.000Z",
+                      "updatedAt": "2026-05-06T03:29:53.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                }
+              ],
+              "quantityConstraint": {
+                "id": "a371e61f-7a8d-4a37-9f10-f54b23642bea",
+                "entityId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                "entityType": "modifierGroup",
+                "contextId": null,
+                "contextType": null,
+                "min": 1,
+                "max": null,
+                "chargeAbove": 0,
+                "createdAt": "2026-05-06T03:29:51.000Z",
+                "updatedAt": "2026-05-06T03:29:51.000Z",
+                "deletedAt": null
+              },
+              "modifierGroupSortingOrder": {
+                "id": "3abc4c8e-97f5-4456-9eba-37ccbfab5304",
+                "entityId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
+                "entityType": "modifierGroup",
+                "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                "ownerType": "chain",
+                "lexorank": "0|i0000t:",
+                "createdAt": "2026-05-06T03:29:51.000Z",
+                "updatedAt": "2026-05-06T03:29:51.000Z"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "320ea547-b250-4b5e-96f8-e6bba7d6caba",
       "name": "Loving Caffeine",
       "sortOrder": 0,
@@ -1933,82 +2370,11 @@
               "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
               "name": "Specialty Coffee",
               "description": null,
-              "defaultItemId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
+              "defaultItemId": null,
               "createdAt": "2026-05-19T18:12:56.000Z",
-              "updatedAt": "2026-05-19T18:13:00.000Z",
+              "updatedAt": "2026-10-06T23:40:43.000Z",
               "deletedAt": null,
               "modifierItems": [
-                {
-                  "id": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Café de batalla",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-19T18:12:56.000Z",
-                  "updatedAt": "2026-05-19T18:12:56.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-19T18:12:58.000Z",
-                    "updatedAt": "2026-05-19T18:12:58.000Z",
-                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                    "itemId": "884102ef-e321-45bf-9d56-b4f649ccddfa"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "99f9eb77-3e11-4a56-936b-9e477c1b2903",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "cf904472-3b9e-4e33-b6ba-7ffc604c575e",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "9dd3c74e-2d1f-4cf0-a014-b94d65e9b2ba",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
                 {
                   "id": "ebb0de1d-a189-4122-b135-1269deaec7f0",
                   "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
@@ -2075,6 +2441,77 @@
                       "info": null,
                       "createdAt": "2026-05-19T18:12:58.000Z",
                       "updatedAt": "2026-05-19T18:12:58.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Café Regular",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-10-07T17:57:23.000Z",
+                  "updatedAt": "2026-10-07T17:57:23.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-10-07T17:57:25.000Z",
+                    "updatedAt": "2026-10-07T17:57:25.000Z",
+                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                    "itemId": "f444f4a3-d6eb-467b-886f-ec69e13d0457"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "4485c299-26a3-4307-a768-682ef2e2cfae",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": null,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "07436718-41f5-4990-8a1c-de9679ecab86",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "d85bcf9f-bdb0-4c98-87df-eb84d5710d39",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": "modifier_group",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
                       "deletedAt": null,
                       "channel": null
                     }
@@ -4035,82 +4472,11 @@
               "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
               "name": "Specialty Coffee",
               "description": null,
-              "defaultItemId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
+              "defaultItemId": null,
               "createdAt": "2026-05-19T18:12:56.000Z",
-              "updatedAt": "2026-05-19T18:13:00.000Z",
+              "updatedAt": "2026-10-06T23:40:43.000Z",
               "deletedAt": null,
               "modifierItems": [
-                {
-                  "id": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Café de batalla",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-19T18:12:56.000Z",
-                  "updatedAt": "2026-05-19T18:12:56.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-19T18:12:58.000Z",
-                    "updatedAt": "2026-05-19T18:12:58.000Z",
-                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                    "itemId": "884102ef-e321-45bf-9d56-b4f649ccddfa"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "99f9eb77-3e11-4a56-936b-9e477c1b2903",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "cf904472-3b9e-4e33-b6ba-7ffc604c575e",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "9dd3c74e-2d1f-4cf0-a014-b94d65e9b2ba",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
                 {
                   "id": "ebb0de1d-a189-4122-b135-1269deaec7f0",
                   "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
@@ -4177,6 +4543,77 @@
                       "info": null,
                       "createdAt": "2026-05-19T18:12:58.000Z",
                       "updatedAt": "2026-05-19T18:12:58.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Café Regular",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-10-07T17:57:23.000Z",
+                  "updatedAt": "2026-10-07T17:57:23.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-10-07T17:57:25.000Z",
+                    "updatedAt": "2026-10-07T17:57:25.000Z",
+                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                    "itemId": "f444f4a3-d6eb-467b-886f-ec69e13d0457"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "4485c299-26a3-4307-a768-682ef2e2cfae",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": null,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "07436718-41f5-4990-8a1c-de9679ecab86",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "d85bcf9f-bdb0-4c98-87df-eb84d5710d39",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": "modifier_group",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
                       "deletedAt": null,
                       "channel": null
                     }
@@ -6137,82 +6574,11 @@
               "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
               "name": "Specialty Coffee",
               "description": null,
-              "defaultItemId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
+              "defaultItemId": null,
               "createdAt": "2026-05-19T18:12:56.000Z",
-              "updatedAt": "2026-05-19T18:13:00.000Z",
+              "updatedAt": "2026-10-06T23:40:43.000Z",
               "deletedAt": null,
               "modifierItems": [
-                {
-                  "id": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Café de batalla",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-19T18:12:56.000Z",
-                  "updatedAt": "2026-05-19T18:12:56.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-19T18:12:58.000Z",
-                    "updatedAt": "2026-05-19T18:12:58.000Z",
-                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                    "itemId": "884102ef-e321-45bf-9d56-b4f649ccddfa"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "99f9eb77-3e11-4a56-936b-9e477c1b2903",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "cf904472-3b9e-4e33-b6ba-7ffc604c575e",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "9dd3c74e-2d1f-4cf0-a014-b94d65e9b2ba",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
                 {
                   "id": "ebb0de1d-a189-4122-b135-1269deaec7f0",
                   "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
@@ -6279,6 +6645,77 @@
                       "info": null,
                       "createdAt": "2026-05-19T18:12:58.000Z",
                       "updatedAt": "2026-05-19T18:12:58.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Café Regular",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-10-07T17:57:23.000Z",
+                  "updatedAt": "2026-10-07T17:57:23.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-10-07T17:57:25.000Z",
+                    "updatedAt": "2026-10-07T17:57:25.000Z",
+                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                    "itemId": "f444f4a3-d6eb-467b-886f-ec69e13d0457"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "4485c299-26a3-4307-a768-682ef2e2cfae",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": null,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "07436718-41f5-4990-8a1c-de9679ecab86",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "d85bcf9f-bdb0-4c98-87df-eb84d5710d39",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": "modifier_group",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
                       "deletedAt": null,
                       "channel": null
                     }
@@ -8239,82 +8676,11 @@
               "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
               "name": "Specialty Coffee",
               "description": null,
-              "defaultItemId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
+              "defaultItemId": null,
               "createdAt": "2026-05-19T18:12:56.000Z",
-              "updatedAt": "2026-05-19T18:13:00.000Z",
+              "updatedAt": "2026-10-06T23:40:43.000Z",
               "deletedAt": null,
               "modifierItems": [
-                {
-                  "id": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Café de batalla",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-19T18:12:56.000Z",
-                  "updatedAt": "2026-05-19T18:12:56.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-19T18:12:58.000Z",
-                    "updatedAt": "2026-05-19T18:12:58.000Z",
-                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                    "itemId": "884102ef-e321-45bf-9d56-b4f649ccddfa"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "99f9eb77-3e11-4a56-936b-9e477c1b2903",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "cf904472-3b9e-4e33-b6ba-7ffc604c575e",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "9dd3c74e-2d1f-4cf0-a014-b94d65e9b2ba",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
                 {
                   "id": "ebb0de1d-a189-4122-b135-1269deaec7f0",
                   "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
@@ -8381,6 +8747,77 @@
                       "info": null,
                       "createdAt": "2026-05-19T18:12:58.000Z",
                       "updatedAt": "2026-05-19T18:12:58.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Café Regular",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-10-07T17:57:23.000Z",
+                  "updatedAt": "2026-10-07T17:57:23.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-10-07T17:57:25.000Z",
+                    "updatedAt": "2026-10-07T17:57:25.000Z",
+                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                    "itemId": "f444f4a3-d6eb-467b-886f-ec69e13d0457"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "4485c299-26a3-4307-a768-682ef2e2cfae",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": null,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "07436718-41f5-4990-8a1c-de9679ecab86",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "d85bcf9f-bdb0-4c98-87df-eb84d5710d39",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": "modifier_group",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
                       "deletedAt": null,
                       "channel": null
                     }
@@ -10341,82 +10778,11 @@
               "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
               "name": "Specialty Coffee",
               "description": null,
-              "defaultItemId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
+              "defaultItemId": null,
               "createdAt": "2026-05-19T18:12:56.000Z",
-              "updatedAt": "2026-05-19T18:13:00.000Z",
+              "updatedAt": "2026-10-06T23:40:43.000Z",
               "deletedAt": null,
               "modifierItems": [
-                {
-                  "id": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Café de batalla",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-19T18:12:56.000Z",
-                  "updatedAt": "2026-05-19T18:12:56.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-19T18:12:58.000Z",
-                    "updatedAt": "2026-05-19T18:12:58.000Z",
-                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                    "itemId": "884102ef-e321-45bf-9d56-b4f649ccddfa"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "99f9eb77-3e11-4a56-936b-9e477c1b2903",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "cf904472-3b9e-4e33-b6ba-7ffc604c575e",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "9dd3c74e-2d1f-4cf0-a014-b94d65e9b2ba",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
                 {
                   "id": "ebb0de1d-a189-4122-b135-1269deaec7f0",
                   "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
@@ -10483,6 +10849,77 @@
                       "info": null,
                       "createdAt": "2026-05-19T18:12:58.000Z",
                       "updatedAt": "2026-05-19T18:12:58.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Café Regular",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-10-07T17:57:23.000Z",
+                  "updatedAt": "2026-10-07T17:57:23.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-10-07T17:57:25.000Z",
+                    "updatedAt": "2026-10-07T17:57:25.000Z",
+                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                    "itemId": "f444f4a3-d6eb-467b-886f-ec69e13d0457"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "4485c299-26a3-4307-a768-682ef2e2cfae",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": null,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "07436718-41f5-4990-8a1c-de9679ecab86",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "d85bcf9f-bdb0-4c98-87df-eb84d5710d39",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": "modifier_group",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
                       "deletedAt": null,
                       "channel": null
                     }
@@ -12443,82 +12880,11 @@
               "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
               "name": "Specialty Coffee",
               "description": null,
-              "defaultItemId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
+              "defaultItemId": null,
               "createdAt": "2026-05-19T18:12:56.000Z",
-              "updatedAt": "2026-05-19T18:13:00.000Z",
+              "updatedAt": "2026-10-06T23:40:43.000Z",
               "deletedAt": null,
               "modifierItems": [
-                {
-                  "id": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Café de batalla",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-19T18:12:56.000Z",
-                  "updatedAt": "2026-05-19T18:12:56.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-19T18:12:58.000Z",
-                    "updatedAt": "2026-05-19T18:12:58.000Z",
-                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                    "itemId": "884102ef-e321-45bf-9d56-b4f649ccddfa"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "99f9eb77-3e11-4a56-936b-9e477c1b2903",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "cf904472-3b9e-4e33-b6ba-7ffc604c575e",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "9dd3c74e-2d1f-4cf0-a014-b94d65e9b2ba",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
                 {
                   "id": "ebb0de1d-a189-4122-b135-1269deaec7f0",
                   "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
@@ -12585,6 +12951,77 @@
                       "info": null,
                       "createdAt": "2026-05-19T18:12:58.000Z",
                       "updatedAt": "2026-05-19T18:12:58.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Café Regular",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-10-07T17:57:23.000Z",
+                  "updatedAt": "2026-10-07T17:57:23.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-10-07T17:57:25.000Z",
+                    "updatedAt": "2026-10-07T17:57:25.000Z",
+                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                    "itemId": "f444f4a3-d6eb-467b-886f-ec69e13d0457"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "4485c299-26a3-4307-a768-682ef2e2cfae",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": null,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "07436718-41f5-4990-8a1c-de9679ecab86",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "d85bcf9f-bdb0-4c98-87df-eb84d5710d39",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": "modifier_group",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
                       "deletedAt": null,
                       "channel": null
                     }
@@ -14545,82 +14982,11 @@
               "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
               "name": "Specialty Coffee",
               "description": null,
-              "defaultItemId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
+              "defaultItemId": null,
               "createdAt": "2026-05-19T18:12:56.000Z",
-              "updatedAt": "2026-05-19T18:13:00.000Z",
+              "updatedAt": "2026-10-06T23:40:43.000Z",
               "deletedAt": null,
               "modifierItems": [
-                {
-                  "id": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Café de batalla",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-19T18:12:56.000Z",
-                  "updatedAt": "2026-05-19T18:12:56.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-19T18:12:58.000Z",
-                    "updatedAt": "2026-05-19T18:12:58.000Z",
-                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                    "itemId": "884102ef-e321-45bf-9d56-b4f649ccddfa"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "99f9eb77-3e11-4a56-936b-9e477c1b2903",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "cf904472-3b9e-4e33-b6ba-7ffc604c575e",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "9dd3c74e-2d1f-4cf0-a014-b94d65e9b2ba",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
                 {
                   "id": "ebb0de1d-a189-4122-b135-1269deaec7f0",
                   "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
@@ -14691,6 +15057,77 @@
                       "channel": null
                     }
                   ]
+                },
+                {
+                  "id": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Café Regular",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-10-07T17:57:23.000Z",
+                  "updatedAt": "2026-10-07T17:57:23.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-10-07T17:57:25.000Z",
+                    "updatedAt": "2026-10-07T17:57:25.000Z",
+                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                    "itemId": "f444f4a3-d6eb-467b-886f-ec69e13d0457"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "4485c299-26a3-4307-a768-682ef2e2cfae",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": null,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "07436718-41f5-4990-8a1c-de9679ecab86",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "d85bcf9f-bdb0-4c98-87df-eb84d5710d39",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": "modifier_group",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
                 }
               ],
               "quantityConstraint": {
@@ -14715,443 +15152,6 @@
                 "lexorank": "0|i0001p:",
                 "createdAt": "2026-05-19T18:12:56.000Z",
                 "updatedAt": "2026-05-19T18:12:56.000Z"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "8c9fb5ff-e193-42d6-80ab-f1455724a2f3",
-      "name": "Specialty Coffee",
-      "sortOrder": 0,
-      "items": [
-        {
-          "id": "3ea7b28a-5318-4057-8a0d-07593341ba39",
-          "name": "Specialty Method",
-          "description": null,
-          "menuName": "Specialty Coffee",
-          "basePrice": 65,
-          "imageUrl": null,
-          "modifierGroups": [
-            {
-              "id": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-              "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-              "name": "Tipo de grano",
-              "description": null,
-              "defaultItemId": null,
-              "createdAt": "2026-05-06T03:29:51.000Z",
-              "updatedAt": "2026-05-06T03:32:14.000Z",
-              "deletedAt": null,
-              "modifierItems": [
-                {
-                  "id": "275330bd-34f6-4e1e-96c2-62d2e07ad252",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Red Honey",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-06T03:29:52.000Z",
-                  "updatedAt": "2026-05-06T03:29:52.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-06T03:29:54.000Z",
-                    "updatedAt": "2026-05-06T03:29:54.000Z",
-                    "modifierGroupId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                    "itemId": "275330bd-34f6-4e1e-96c2-62d2e07ad252"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "c50588e3-9efd-417d-9405-1d8ab9436569",
-                      "entityId": "275330bd-34f6-4e1e-96c2-62d2e07ad252",
-                      "entityType": "item",
-                      "contextId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-06T03:29:52.000Z",
-                      "updatedAt": "2026-05-06T03:29:52.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "a2228b25-31f2-47bf-8392-fc16e4ba535e",
-                      "entityId": "275330bd-34f6-4e1e-96c2-62d2e07ad252",
-                      "entityType": "item",
-                      "ownerId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i0000n:",
-                      "createdAt": "2026-05-06T03:29:52.000Z",
-                      "updatedAt": "2026-05-06T03:29:52.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "1cf17dde-9baf-4f8b-9e9d-973c5e55bd25",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "275330bd-34f6-4e1e-96c2-62d2e07ad252",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 20,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-06T03:29:52.000Z",
-                      "updatedAt": "2026-05-06T03:29:52.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
-                {
-                  "id": "a4799502-6b62-4656-9271-71c069f15503",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Black Honey",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-06T03:29:52.000Z",
-                  "updatedAt": "2026-05-06T03:29:52.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-06T03:29:54.000Z",
-                    "updatedAt": "2026-05-06T03:29:54.000Z",
-                    "modifierGroupId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                    "itemId": "a4799502-6b62-4656-9271-71c069f15503"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "981185a6-874b-4780-9563-c85226dbec68",
-                      "entityId": "a4799502-6b62-4656-9271-71c069f15503",
-                      "entityType": "item",
-                      "contextId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-06T03:29:53.000Z",
-                      "updatedAt": "2026-05-06T03:29:53.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "27ccfa48-2fba-4ac6-81ad-7834b12c59d0",
-                      "entityId": "a4799502-6b62-4656-9271-71c069f15503",
-                      "entityType": "item",
-                      "ownerId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i0000v:",
-                      "createdAt": "2026-05-06T03:29:53.000Z",
-                      "updatedAt": "2026-05-06T03:29:53.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "cc9374b5-9f09-4b3c-aec1-574d916214a1",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "a4799502-6b62-4656-9271-71c069f15503",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 20,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-06T03:29:53.000Z",
-                      "updatedAt": "2026-05-06T03:29:53.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
-                {
-                  "id": "b11426af-3806-4e21-874b-af6fc32e1aaf",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Natural",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2025-10-23T18:02:19.000Z",
-                  "updatedAt": "2025-10-23T18:02:19.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-06T03:29:54.000Z",
-                    "updatedAt": "2026-05-06T03:29:54.000Z",
-                    "modifierGroupId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                    "itemId": "b11426af-3806-4e21-874b-af6fc32e1aaf"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "6f17debe-682b-4e2d-a75d-93bb9821566d",
-                      "entityId": "b11426af-3806-4e21-874b-af6fc32e1aaf",
-                      "entityType": "item",
-                      "contextId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-06T03:29:51.000Z",
-                      "updatedAt": "2026-05-06T03:29:51.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "6c00dc15-d80c-4eb3-b6b2-fa03c9e75c99",
-                      "entityId": "b11426af-3806-4e21-874b-af6fc32e1aaf",
-                      "entityType": "item",
-                      "ownerId": "00ee35ba-d723-4eec-b34e-30bbf1842c3f",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-19T18:14:50.000Z",
-                      "updatedAt": "2026-05-19T18:14:50.000Z"
-                    },
-                    {
-                      "id": "c45de9b3-8f16-4b32-a50d-0c3ef27221ca",
-                      "entityId": "b11426af-3806-4e21-874b-af6fc32e1aaf",
-                      "entityType": "item",
-                      "ownerId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-06T03:29:51.000Z",
-                      "updatedAt": "2026-05-06T03:29:51.000Z"
-                    },
-                    {
-                      "id": "c5c8e36a-295a-400b-9291-3de6061b5c0c",
-                      "entityId": "b11426af-3806-4e21-874b-af6fc32e1aaf",
-                      "entityType": "item",
-                      "ownerId": "b60e39cf-fb6a-4949-be35-76c2010b388a",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2025-10-23T18:02:19.000Z",
-                      "updatedAt": "2025-10-23T18:02:19.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "c523bb52-17c0-4d1b-9252-f9bf1adaa299",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "b11426af-3806-4e21-874b-af6fc32e1aaf",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": "modifier_group",
-                      "contextId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                      "amount": 25,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-06T03:29:51.000Z",
-                      "updatedAt": "2026-05-06T03:29:51.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
-                {
-                  "id": "e82ecbd6-4088-4669-999f-f6ace00a03f1",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Yellow Honey",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-06T03:29:51.000Z",
-                  "updatedAt": "2026-05-06T03:29:51.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-06T03:29:54.000Z",
-                    "updatedAt": "2026-05-06T03:29:54.000Z",
-                    "modifierGroupId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                    "itemId": "e82ecbd6-4088-4669-999f-f6ace00a03f1"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "9a47ae0f-d2af-484a-b192-4e9b7849c673",
-                      "entityId": "e82ecbd6-4088-4669-999f-f6ace00a03f1",
-                      "entityType": "item",
-                      "contextId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-06T03:29:52.000Z",
-                      "updatedAt": "2026-05-06T03:29:52.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "7d024605-6bc1-4c87-8d5b-0164e0832729",
-                      "entityId": "e82ecbd6-4088-4669-999f-f6ace00a03f1",
-                      "entityType": "item",
-                      "ownerId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i0000f:",
-                      "createdAt": "2026-05-06T03:29:52.000Z",
-                      "updatedAt": "2026-05-06T03:29:52.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "aca35430-f518-4587-a626-dd39472e1576",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "e82ecbd6-4088-4669-999f-f6ace00a03f1",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 20,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-06T03:29:52.000Z",
-                      "updatedAt": "2026-05-06T03:29:52.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
-                {
-                  "id": "f2f36eb2-fe11-42f9-999b-c05536fec02f",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Lavado",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2025-10-23T18:02:20.000Z",
-                  "updatedAt": "2025-10-23T18:02:20.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-06T03:29:54.000Z",
-                    "updatedAt": "2026-05-06T03:29:54.000Z",
-                    "modifierGroupId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                    "itemId": "f2f36eb2-fe11-42f9-999b-c05536fec02f"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "65d43a33-b516-4be4-ac3a-cf98a53877d2",
-                      "entityId": "f2f36eb2-fe11-42f9-999b-c05536fec02f",
-                      "entityType": "item",
-                      "contextId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-06T03:29:53.000Z",
-                      "updatedAt": "2026-05-06T03:29:53.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "7a6ccf57-a888-4ab3-b34d-8febc51c6703",
-                      "entityId": "f2f36eb2-fe11-42f9-999b-c05536fec02f",
-                      "entityType": "item",
-                      "ownerId": "b60e39cf-fb6a-4949-be35-76c2010b388a",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i0000n:",
-                      "createdAt": "2025-10-23T18:02:20.000Z",
-                      "updatedAt": "2025-10-23T18:02:20.000Z"
-                    },
-                    {
-                      "id": "fa544ab1-9b2e-428b-ab73-ced105d8b4ba",
-                      "entityId": "f2f36eb2-fe11-42f9-999b-c05536fec02f",
-                      "entityType": "item",
-                      "ownerId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00013:",
-                      "createdAt": "2026-05-06T03:29:53.000Z",
-                      "updatedAt": "2026-05-06T03:29:53.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "cc5a589a-d7e2-4d44-bb30-44b0c38ff0f8",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "f2f36eb2-fe11-42f9-999b-c05536fec02f",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": "modifier_group",
-                      "contextId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                      "amount": 15,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-06T03:29:53.000Z",
-                      "updatedAt": "2026-05-06T03:29:53.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                }
-              ],
-              "quantityConstraint": {
-                "id": "a371e61f-7a8d-4a37-9f10-f54b23642bea",
-                "entityId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                "entityType": "modifierGroup",
-                "contextId": null,
-                "contextType": null,
-                "min": 1,
-                "max": null,
-                "chargeAbove": 0,
-                "createdAt": "2026-05-06T03:29:51.000Z",
-                "updatedAt": "2026-05-06T03:29:51.000Z",
-                "deletedAt": null
-              },
-              "modifierGroupSortingOrder": {
-                "id": "3abc4c8e-97f5-4456-9eba-37ccbfab5304",
-                "entityId": "e9770990-34e6-41e7-8abe-bf49941f25f4",
-                "entityType": "modifierGroup",
-                "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                "ownerType": "chain",
-                "lexorank": "0|i0000t:",
-                "createdAt": "2026-05-06T03:29:51.000Z",
-                "updatedAt": "2026-05-06T03:29:51.000Z"
               }
             }
           ]
@@ -16701,82 +16701,11 @@
               "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
               "name": "Specialty Coffee",
               "description": null,
-              "defaultItemId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
+              "defaultItemId": null,
               "createdAt": "2026-05-19T18:12:56.000Z",
-              "updatedAt": "2026-05-19T18:13:00.000Z",
+              "updatedAt": "2026-10-06T23:40:43.000Z",
               "deletedAt": null,
               "modifierItems": [
-                {
-                  "id": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Café de batalla",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-19T18:12:56.000Z",
-                  "updatedAt": "2026-05-19T18:12:56.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-19T18:12:58.000Z",
-                    "updatedAt": "2026-05-19T18:12:58.000Z",
-                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                    "itemId": "884102ef-e321-45bf-9d56-b4f649ccddfa"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "99f9eb77-3e11-4a56-936b-9e477c1b2903",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "cf904472-3b9e-4e33-b6ba-7ffc604c575e",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "9dd3c74e-2d1f-4cf0-a014-b94d65e9b2ba",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
                 {
                   "id": "ebb0de1d-a189-4122-b135-1269deaec7f0",
                   "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
@@ -16843,6 +16772,77 @@
                       "info": null,
                       "createdAt": "2026-05-19T18:12:58.000Z",
                       "updatedAt": "2026-05-19T18:12:58.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Café Regular",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-10-07T17:57:23.000Z",
+                  "updatedAt": "2026-10-07T17:57:23.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-10-07T17:57:25.000Z",
+                    "updatedAt": "2026-10-07T17:57:25.000Z",
+                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                    "itemId": "f444f4a3-d6eb-467b-886f-ec69e13d0457"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "4485c299-26a3-4307-a768-682ef2e2cfae",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": null,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "07436718-41f5-4990-8a1c-de9679ecab86",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "d85bcf9f-bdb0-4c98-87df-eb84d5710d39",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": "modifier_group",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
                       "deletedAt": null,
                       "channel": null
                     }
@@ -18803,82 +18803,11 @@
               "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
               "name": "Specialty Coffee",
               "description": null,
-              "defaultItemId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
+              "defaultItemId": null,
               "createdAt": "2026-05-19T18:12:56.000Z",
-              "updatedAt": "2026-05-19T18:13:00.000Z",
+              "updatedAt": "2026-10-06T23:40:43.000Z",
               "deletedAt": null,
               "modifierItems": [
-                {
-                  "id": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Café de batalla",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-19T18:12:56.000Z",
-                  "updatedAt": "2026-05-19T18:12:56.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-19T18:12:58.000Z",
-                    "updatedAt": "2026-05-19T18:12:58.000Z",
-                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                    "itemId": "884102ef-e321-45bf-9d56-b4f649ccddfa"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "99f9eb77-3e11-4a56-936b-9e477c1b2903",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "cf904472-3b9e-4e33-b6ba-7ffc604c575e",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "9dd3c74e-2d1f-4cf0-a014-b94d65e9b2ba",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
                 {
                   "id": "ebb0de1d-a189-4122-b135-1269deaec7f0",
                   "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
@@ -18945,6 +18874,77 @@
                       "info": null,
                       "createdAt": "2026-05-19T18:12:58.000Z",
                       "updatedAt": "2026-05-19T18:12:58.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Café Regular",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-10-07T17:57:23.000Z",
+                  "updatedAt": "2026-10-07T17:57:23.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-10-07T17:57:25.000Z",
+                    "updatedAt": "2026-10-07T17:57:25.000Z",
+                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                    "itemId": "f444f4a3-d6eb-467b-886f-ec69e13d0457"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "4485c299-26a3-4307-a768-682ef2e2cfae",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": null,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "07436718-41f5-4990-8a1c-de9679ecab86",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "d85bcf9f-bdb0-4c98-87df-eb84d5710d39",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": "modifier_group",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
                       "deletedAt": null,
                       "channel": null
                     }
@@ -20905,82 +20905,11 @@
               "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
               "name": "Specialty Coffee",
               "description": null,
-              "defaultItemId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
+              "defaultItemId": null,
               "createdAt": "2026-05-19T18:12:56.000Z",
-              "updatedAt": "2026-05-19T18:13:00.000Z",
+              "updatedAt": "2026-10-06T23:40:43.000Z",
               "deletedAt": null,
               "modifierItems": [
-                {
-                  "id": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Café de batalla",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-19T18:12:56.000Z",
-                  "updatedAt": "2026-05-19T18:12:56.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-19T18:12:58.000Z",
-                    "updatedAt": "2026-05-19T18:12:58.000Z",
-                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                    "itemId": "884102ef-e321-45bf-9d56-b4f649ccddfa"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "99f9eb77-3e11-4a56-936b-9e477c1b2903",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "cf904472-3b9e-4e33-b6ba-7ffc604c575e",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "9dd3c74e-2d1f-4cf0-a014-b94d65e9b2ba",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
                 {
                   "id": "ebb0de1d-a189-4122-b135-1269deaec7f0",
                   "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
@@ -21047,6 +20976,77 @@
                       "info": null,
                       "createdAt": "2026-05-19T18:12:58.000Z",
                       "updatedAt": "2026-05-19T18:12:58.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Café Regular",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-10-07T17:57:23.000Z",
+                  "updatedAt": "2026-10-07T17:57:23.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-10-07T17:57:25.000Z",
+                    "updatedAt": "2026-10-07T17:57:25.000Z",
+                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                    "itemId": "f444f4a3-d6eb-467b-886f-ec69e13d0457"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "4485c299-26a3-4307-a768-682ef2e2cfae",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": null,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "07436718-41f5-4990-8a1c-de9679ecab86",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "d85bcf9f-bdb0-4c98-87df-eb84d5710d39",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": "modifier_group",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
                       "deletedAt": null,
                       "channel": null
                     }
@@ -22617,82 +22617,11 @@
               "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
               "name": "Specialty Coffee",
               "description": null,
-              "defaultItemId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
+              "defaultItemId": null,
               "createdAt": "2026-05-19T18:12:56.000Z",
-              "updatedAt": "2026-05-19T18:13:00.000Z",
+              "updatedAt": "2026-10-06T23:40:43.000Z",
               "deletedAt": null,
               "modifierItems": [
-                {
-                  "id": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Café de batalla",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-19T18:12:56.000Z",
-                  "updatedAt": "2026-05-19T18:12:56.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-19T18:12:58.000Z",
-                    "updatedAt": "2026-05-19T18:12:58.000Z",
-                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                    "itemId": "884102ef-e321-45bf-9d56-b4f649ccddfa"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "99f9eb77-3e11-4a56-936b-9e477c1b2903",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "cf904472-3b9e-4e33-b6ba-7ffc604c575e",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "9dd3c74e-2d1f-4cf0-a014-b94d65e9b2ba",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
                 {
                   "id": "ebb0de1d-a189-4122-b135-1269deaec7f0",
                   "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
@@ -22759,6 +22688,77 @@
                       "info": null,
                       "createdAt": "2026-05-19T18:12:58.000Z",
                       "updatedAt": "2026-05-19T18:12:58.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Café Regular",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-10-07T17:57:23.000Z",
+                  "updatedAt": "2026-10-07T17:57:23.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-10-07T17:57:25.000Z",
+                    "updatedAt": "2026-10-07T17:57:25.000Z",
+                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                    "itemId": "f444f4a3-d6eb-467b-886f-ec69e13d0457"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "4485c299-26a3-4307-a768-682ef2e2cfae",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": null,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "07436718-41f5-4990-8a1c-de9679ecab86",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "d85bcf9f-bdb0-4c98-87df-eb84d5710d39",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": "modifier_group",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
                       "deletedAt": null,
                       "channel": null
                     }
@@ -24719,82 +24719,11 @@
               "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
               "name": "Specialty Coffee",
               "description": null,
-              "defaultItemId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
+              "defaultItemId": null,
               "createdAt": "2026-05-19T18:12:56.000Z",
-              "updatedAt": "2026-05-19T18:13:00.000Z",
+              "updatedAt": "2026-10-06T23:40:43.000Z",
               "deletedAt": null,
               "modifierItems": [
-                {
-                  "id": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Café de batalla",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-19T18:12:56.000Z",
-                  "updatedAt": "2026-05-19T18:12:56.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-19T18:12:58.000Z",
-                    "updatedAt": "2026-05-19T18:12:58.000Z",
-                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                    "itemId": "884102ef-e321-45bf-9d56-b4f649ccddfa"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "99f9eb77-3e11-4a56-936b-9e477c1b2903",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "cf904472-3b9e-4e33-b6ba-7ffc604c575e",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "9dd3c74e-2d1f-4cf0-a014-b94d65e9b2ba",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
                 {
                   "id": "ebb0de1d-a189-4122-b135-1269deaec7f0",
                   "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
@@ -24861,6 +24790,77 @@
                       "info": null,
                       "createdAt": "2026-05-19T18:12:58.000Z",
                       "updatedAt": "2026-05-19T18:12:58.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Café Regular",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-10-07T17:57:23.000Z",
+                  "updatedAt": "2026-10-07T17:57:23.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-10-07T17:57:25.000Z",
+                    "updatedAt": "2026-10-07T17:57:25.000Z",
+                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                    "itemId": "f444f4a3-d6eb-467b-886f-ec69e13d0457"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "4485c299-26a3-4307-a768-682ef2e2cfae",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": null,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "07436718-41f5-4990-8a1c-de9679ecab86",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "d85bcf9f-bdb0-4c98-87df-eb84d5710d39",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": "modifier_group",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
                       "deletedAt": null,
                       "channel": null
                     }
@@ -25296,82 +25296,11 @@
               "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
               "name": "Specialty Coffee",
               "description": null,
-              "defaultItemId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
+              "defaultItemId": null,
               "createdAt": "2026-05-19T18:12:56.000Z",
-              "updatedAt": "2026-05-19T18:13:00.000Z",
+              "updatedAt": "2026-10-06T23:40:43.000Z",
               "deletedAt": null,
               "modifierItems": [
-                {
-                  "id": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Café de batalla",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-19T18:12:56.000Z",
-                  "updatedAt": "2026-05-19T18:12:56.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-19T18:12:58.000Z",
-                    "updatedAt": "2026-05-19T18:12:58.000Z",
-                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                    "itemId": "884102ef-e321-45bf-9d56-b4f649ccddfa"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "99f9eb77-3e11-4a56-936b-9e477c1b2903",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "cf904472-3b9e-4e33-b6ba-7ffc604c575e",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "9dd3c74e-2d1f-4cf0-a014-b94d65e9b2ba",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
                 {
                   "id": "ebb0de1d-a189-4122-b135-1269deaec7f0",
                   "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
@@ -25438,6 +25367,77 @@
                       "info": null,
                       "createdAt": "2026-05-19T18:12:58.000Z",
                       "updatedAt": "2026-05-19T18:12:58.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Café Regular",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-10-07T17:57:23.000Z",
+                  "updatedAt": "2026-10-07T17:57:23.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-10-07T17:57:25.000Z",
+                    "updatedAt": "2026-10-07T17:57:25.000Z",
+                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                    "itemId": "f444f4a3-d6eb-467b-886f-ec69e13d0457"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "4485c299-26a3-4307-a768-682ef2e2cfae",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": null,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "07436718-41f5-4990-8a1c-de9679ecab86",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "d85bcf9f-bdb0-4c98-87df-eb84d5710d39",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": "modifier_group",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
                       "deletedAt": null,
                       "channel": null
                     }
@@ -28923,82 +28923,11 @@
               "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
               "name": "Specialty Coffee",
               "description": null,
-              "defaultItemId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
+              "defaultItemId": null,
               "createdAt": "2026-05-19T18:12:56.000Z",
-              "updatedAt": "2026-05-19T18:13:00.000Z",
+              "updatedAt": "2026-10-06T23:40:43.000Z",
               "deletedAt": null,
               "modifierItems": [
-                {
-                  "id": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Café de batalla",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-19T18:12:56.000Z",
-                  "updatedAt": "2026-05-19T18:12:56.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-19T18:12:58.000Z",
-                    "updatedAt": "2026-05-19T18:12:58.000Z",
-                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                    "itemId": "884102ef-e321-45bf-9d56-b4f649ccddfa"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "99f9eb77-3e11-4a56-936b-9e477c1b2903",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "cf904472-3b9e-4e33-b6ba-7ffc604c575e",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "9dd3c74e-2d1f-4cf0-a014-b94d65e9b2ba",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
                 {
                   "id": "ebb0de1d-a189-4122-b135-1269deaec7f0",
                   "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
@@ -29065,6 +28994,77 @@
                       "info": null,
                       "createdAt": "2026-05-19T18:12:58.000Z",
                       "updatedAt": "2026-05-19T18:12:58.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Café Regular",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-10-07T17:57:23.000Z",
+                  "updatedAt": "2026-10-07T17:57:23.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-10-07T17:57:25.000Z",
+                    "updatedAt": "2026-10-07T17:57:25.000Z",
+                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                    "itemId": "f444f4a3-d6eb-467b-886f-ec69e13d0457"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "4485c299-26a3-4307-a768-682ef2e2cfae",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": null,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "07436718-41f5-4990-8a1c-de9679ecab86",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "d85bcf9f-bdb0-4c98-87df-eb84d5710d39",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": "modifier_group",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
                       "deletedAt": null,
                       "channel": null
                     }
@@ -65692,82 +65692,11 @@
               "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
               "name": "Specialty Coffee",
               "description": null,
-              "defaultItemId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
+              "defaultItemId": null,
               "createdAt": "2026-05-19T18:12:56.000Z",
-              "updatedAt": "2026-05-19T18:13:00.000Z",
+              "updatedAt": "2026-10-06T23:40:43.000Z",
               "deletedAt": null,
               "modifierItems": [
-                {
-                  "id": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Café de batalla",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-19T18:12:56.000Z",
-                  "updatedAt": "2026-05-19T18:12:56.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-19T18:12:58.000Z",
-                    "updatedAt": "2026-05-19T18:12:58.000Z",
-                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                    "itemId": "884102ef-e321-45bf-9d56-b4f649ccddfa"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "99f9eb77-3e11-4a56-936b-9e477c1b2903",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "cf904472-3b9e-4e33-b6ba-7ffc604c575e",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "9dd3c74e-2d1f-4cf0-a014-b94d65e9b2ba",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
                 {
                   "id": "ebb0de1d-a189-4122-b135-1269deaec7f0",
                   "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
@@ -65834,6 +65763,77 @@
                       "info": null,
                       "createdAt": "2026-05-19T18:12:58.000Z",
                       "updatedAt": "2026-05-19T18:12:58.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Café Regular",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-10-07T17:57:23.000Z",
+                  "updatedAt": "2026-10-07T17:57:23.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-10-07T17:57:25.000Z",
+                    "updatedAt": "2026-10-07T17:57:25.000Z",
+                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                    "itemId": "f444f4a3-d6eb-467b-886f-ec69e13d0457"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "4485c299-26a3-4307-a768-682ef2e2cfae",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": null,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "07436718-41f5-4990-8a1c-de9679ecab86",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "d85bcf9f-bdb0-4c98-87df-eb84d5710d39",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": "modifier_group",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
                       "deletedAt": null,
                       "channel": null
                     }
@@ -74678,82 +74678,11 @@
               "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
               "name": "Specialty Coffee",
               "description": null,
-              "defaultItemId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
+              "defaultItemId": null,
               "createdAt": "2026-05-19T18:12:56.000Z",
-              "updatedAt": "2026-05-19T18:13:00.000Z",
+              "updatedAt": "2026-10-06T23:40:43.000Z",
               "deletedAt": null,
               "modifierItems": [
-                {
-                  "id": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-                  "ownerType": "chain",
-                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                  "sizeGroupId": null,
-                  "name": "Café de batalla",
-                  "image": null,
-                  "featured": true,
-                  "description": null,
-                  "sku": null,
-                  "alergies": null,
-                  "preparationTime": null,
-                  "tags": null,
-                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-                  "createdAt": "2026-05-19T18:12:56.000Z",
-                  "updatedAt": "2026-05-19T18:12:56.000Z",
-                  "deletedAt": null,
-                  "modifierGroupItem": {
-                    "createdAt": "2026-05-19T18:12:58.000Z",
-                    "updatedAt": "2026-05-19T18:12:58.000Z",
-                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                    "itemId": "884102ef-e321-45bf-9d56-b4f649ccddfa"
-                  },
-                  "quantityConstraints": [
-                    {
-                      "id": "99f9eb77-3e11-4a56-936b-9e477c1b2903",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "contextType": "modifier_group",
-                      "min": 0,
-                      "max": 1,
-                      "chargeAbove": 0,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null
-                    }
-                  ],
-                  "itemSortingOrder": [
-                    {
-                      "id": "cf904472-3b9e-4e33-b6ba-7ffc604c575e",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-                      "ownerType": "modifierGroup",
-                      "lexorank": "0|i00007:",
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z"
-                    }
-                  ],
-                  "prices": [
-                    {
-                      "id": "9dd3c74e-2d1f-4cf0-a014-b94d65e9b2ba",
-                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-                      "ownerType": "chain",
-                      "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-                      "entityType": "item",
-                      "channelId": null,
-                      "contextType": null,
-                      "contextId": null,
-                      "amount": 0,
-                      "currency": null,
-                      "info": null,
-                      "createdAt": "2026-05-19T18:12:57.000Z",
-                      "updatedAt": "2026-05-19T18:12:57.000Z",
-                      "deletedAt": null,
-                      "channel": null
-                    }
-                  ]
-                },
                 {
                   "id": "ebb0de1d-a189-4122-b135-1269deaec7f0",
                   "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
@@ -74820,6 +74749,77 @@
                       "info": null,
                       "createdAt": "2026-05-19T18:12:58.000Z",
                       "updatedAt": "2026-05-19T18:12:58.000Z",
+                      "deletedAt": null,
+                      "channel": null
+                    }
+                  ]
+                },
+                {
+                  "id": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                  "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+                  "ownerType": "chain",
+                  "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                  "sizeGroupId": null,
+                  "name": "Café Regular",
+                  "image": null,
+                  "featured": true,
+                  "description": null,
+                  "sku": null,
+                  "alergies": null,
+                  "preparationTime": null,
+                  "tags": null,
+                  "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+                  "createdAt": "2026-10-07T17:57:23.000Z",
+                  "updatedAt": "2026-10-07T17:57:23.000Z",
+                  "deletedAt": null,
+                  "modifierGroupItem": {
+                    "createdAt": "2026-10-07T17:57:25.000Z",
+                    "updatedAt": "2026-10-07T17:57:25.000Z",
+                    "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                    "itemId": "f444f4a3-d6eb-467b-886f-ec69e13d0457"
+                  },
+                  "quantityConstraints": [
+                    {
+                      "id": "4485c299-26a3-4307-a768-682ef2e2cfae",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "contextType": "modifier_group",
+                      "min": 0,
+                      "max": null,
+                      "chargeAbove": 0,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
+                      "deletedAt": null
+                    }
+                  ],
+                  "itemSortingOrder": [
+                    {
+                      "id": "07436718-41f5-4990-8a1c-de9679ecab86",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "ownerType": "modifierGroup",
+                      "lexorank": "0|i0000v:",
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z"
+                    }
+                  ],
+                  "prices": [
+                    {
+                      "id": "d85bcf9f-bdb0-4c98-87df-eb84d5710d39",
+                      "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+                      "ownerType": "chain",
+                      "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+                      "entityType": "item",
+                      "channelId": null,
+                      "contextType": "modifier_group",
+                      "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+                      "amount": 0,
+                      "currency": null,
+                      "info": null,
+                      "createdAt": "2026-10-07T17:57:25.000Z",
+                      "updatedAt": "2026-10-07T17:57:25.000Z",
                       "deletedAt": null,
                       "channel": null
                     }
@@ -92048,82 +92048,11 @@
       "chainId": "93bb1f82-54c0-4a58-84d2-512408966b00",
       "name": "Specialty Coffee",
       "description": null,
-      "defaultItemId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
+      "defaultItemId": null,
       "createdAt": "2026-05-19T18:12:56.000Z",
-      "updatedAt": "2026-05-19T18:13:00.000Z",
+      "updatedAt": "2026-10-06T23:40:43.000Z",
       "deletedAt": null,
       "modifierItems": [
-        {
-          "id": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-          "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
-          "ownerType": "chain",
-          "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-          "sizeGroupId": null,
-          "name": "Café de batalla",
-          "image": null,
-          "featured": true,
-          "description": null,
-          "sku": null,
-          "alergies": null,
-          "preparationTime": null,
-          "tags": null,
-          "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
-          "createdAt": "2026-05-19T18:12:56.000Z",
-          "updatedAt": "2026-05-19T18:12:56.000Z",
-          "deletedAt": null,
-          "modifierGroupItem": {
-            "createdAt": "2026-05-19T18:12:58.000Z",
-            "updatedAt": "2026-05-19T18:12:58.000Z",
-            "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-            "itemId": "884102ef-e321-45bf-9d56-b4f649ccddfa"
-          },
-          "quantityConstraints": [
-            {
-              "id": "99f9eb77-3e11-4a56-936b-9e477c1b2903",
-              "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-              "entityType": "item",
-              "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-              "contextType": "modifier_group",
-              "min": 0,
-              "max": 1,
-              "chargeAbove": 0,
-              "createdAt": "2026-05-19T18:12:57.000Z",
-              "updatedAt": "2026-05-19T18:12:57.000Z",
-              "deletedAt": null
-            }
-          ],
-          "itemSortingOrder": [
-            {
-              "id": "cf904472-3b9e-4e33-b6ba-7ffc604c575e",
-              "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-              "entityType": "item",
-              "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
-              "ownerType": "modifierGroup",
-              "lexorank": "0|i00007:",
-              "createdAt": "2026-05-19T18:12:57.000Z",
-              "updatedAt": "2026-05-19T18:12:57.000Z"
-            }
-          ],
-          "prices": [
-            {
-              "id": "9dd3c74e-2d1f-4cf0-a014-b94d65e9b2ba",
-              "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
-              "ownerType": "chain",
-              "entityId": "884102ef-e321-45bf-9d56-b4f649ccddfa",
-              "entityType": "item",
-              "channelId": null,
-              "contextType": null,
-              "contextId": null,
-              "amount": 0,
-              "currency": null,
-              "info": null,
-              "createdAt": "2026-05-19T18:12:57.000Z",
-              "updatedAt": "2026-05-19T18:12:57.000Z",
-              "deletedAt": null,
-              "channel": null
-            }
-          ]
-        },
         {
           "id": "ebb0de1d-a189-4122-b135-1269deaec7f0",
           "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
@@ -92190,6 +92119,77 @@
               "info": null,
               "createdAt": "2026-05-19T18:12:58.000Z",
               "updatedAt": "2026-05-19T18:12:58.000Z",
+              "deletedAt": null,
+              "channel": null
+            }
+          ]
+        },
+        {
+          "id": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+          "groupId": "17866354-c1c1-4e6a-a460-f5d104811357",
+          "ownerType": "chain",
+          "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+          "sizeGroupId": null,
+          "name": "Café Regular",
+          "image": null,
+          "featured": true,
+          "description": null,
+          "sku": null,
+          "alergies": null,
+          "preparationTime": null,
+          "tags": null,
+          "taxId": "84b80057-d3ee-4531-a6b1-f8e45c424c29",
+          "createdAt": "2026-10-07T17:57:23.000Z",
+          "updatedAt": "2026-10-07T17:57:23.000Z",
+          "deletedAt": null,
+          "modifierGroupItem": {
+            "createdAt": "2026-10-07T17:57:25.000Z",
+            "updatedAt": "2026-10-07T17:57:25.000Z",
+            "modifierGroupId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+            "itemId": "f444f4a3-d6eb-467b-886f-ec69e13d0457"
+          },
+          "quantityConstraints": [
+            {
+              "id": "4485c299-26a3-4307-a768-682ef2e2cfae",
+              "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+              "entityType": "item",
+              "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+              "contextType": "modifier_group",
+              "min": 0,
+              "max": null,
+              "chargeAbove": 0,
+              "createdAt": "2026-10-07T17:57:25.000Z",
+              "updatedAt": "2026-10-07T17:57:25.000Z",
+              "deletedAt": null
+            }
+          ],
+          "itemSortingOrder": [
+            {
+              "id": "07436718-41f5-4990-8a1c-de9679ecab86",
+              "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+              "entityType": "item",
+              "ownerId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+              "ownerType": "modifierGroup",
+              "lexorank": "0|i0000v:",
+              "createdAt": "2026-10-07T17:57:25.000Z",
+              "updatedAt": "2026-10-07T17:57:25.000Z"
+            }
+          ],
+          "prices": [
+            {
+              "id": "d85bcf9f-bdb0-4c98-87df-eb84d5710d39",
+              "ownerId": "93bb1f82-54c0-4a58-84d2-512408966b00",
+              "ownerType": "chain",
+              "entityId": "f444f4a3-d6eb-467b-886f-ec69e13d0457",
+              "entityType": "item",
+              "channelId": null,
+              "contextType": "modifier_group",
+              "contextId": "464fce87-6341-44eb-bd47-a017fc02cd86",
+              "amount": 0,
+              "currency": null,
+              "info": null,
+              "createdAt": "2026-10-07T17:57:25.000Z",
+              "updatedAt": "2026-10-07T17:57:25.000Z",
               "deletedAt": null,
               "channel": null
             }
@@ -93410,6 +93410,6 @@
       }
     }
   },
-  "syncedAt": "2026-10-06T18:44:11.217Z",
+  "syncedAt": "2026-10-07T19:10:29.561Z",
   "restaurantId": "0a717e1b-ffd5-4491-b1df-4d352031967d"
 }
