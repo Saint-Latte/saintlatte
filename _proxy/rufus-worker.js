@@ -21,6 +21,17 @@
  * Devuelve las órdenes completadas de ese día (zona horaria fija -06:00),
  * ya hidratadas con sus items y pagos. El filtro Rufus/Toast y el ajuste de
  * 35% viven en el navegador (reporte-rufus.html) — aquí solo se protege la key.
+ *
+ * Además expone dos rutas para el acumulado automático (reporte-rufus-auto.html):
+ *   GET  /reset-date  → fecha desde la que se está acumulando (la crea si no existe)
+ *   POST /reset       → la reinicia a "hoy"
+ * Guardan un solo valor en Workers KV. Para activarlas:
+ *   Settings → Bindings → Add → "KV Namespace" → variable name: RUFUS_KV
+ *   (crea el namespace si no existe, ej. "rufus-report-state")
+ * No se guarda ningún total: cada vez que se pide el acumulado, el front-end
+ * vuelve a calcular día por día contra Polotab en vivo (mismo endpoint de
+ * arriba), así que una orden o producto borrado/editado después desaparece
+ * solo, sin necesidad de llevar una cuenta aparte.
  */
 
 const BASE_URL = 'https://api.polotab.com'
@@ -35,10 +46,16 @@ function corsHeaders(origin) {
   const allow = ALLOWED_ORIGINS.has(origin) ? origin : 'https://www.saintlatte.com'
   return {
     'Access-Control-Allow-Origin': allow,
-    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, X-Report-Key',
     'Access-Control-Max-Age': '86400',
   }
+}
+
+function hoyMx() {
+  // "Hoy" en zona horaria de CDMX (-06:00 fijo, igual que el resto del worker).
+  const ahora = new Date(Date.now() - 6 * 60 * 60 * 1000)
+  return ahora.toISOString().slice(0, 10)
 }
 
 function json(body, status, cors) {
@@ -81,7 +98,7 @@ export default {
       return new Response(null, { status: 204, headers: cors })
     }
 
-    if (request.method !== 'GET') {
+    if (!['GET', 'POST'].includes(request.method)) {
       return json({ error: 'Método no permitido' }, 405, cors)
     }
 
@@ -90,6 +107,29 @@ export default {
     }
 
     const url = new URL(request.url)
+
+    // ── Acumulado automático: fecha de reinicio guardada en KV ─────────────
+    if (url.pathname === '/reset-date' && request.method === 'GET') {
+      if (!env.RUFUS_KV) return json({ error: 'Falta el binding RUFUS_KV en el Worker' }, 500, cors)
+      let resetDate = await env.RUFUS_KV.get('resetDate')
+      if (!resetDate) {
+        resetDate = hoyMx()
+        await env.RUFUS_KV.put('resetDate', resetDate)
+      }
+      return json({ resetDate }, 200, cors)
+    }
+
+    if (url.pathname === '/reset' && request.method === 'POST') {
+      if (!env.RUFUS_KV) return json({ error: 'Falta el binding RUFUS_KV en el Worker' }, 500, cors)
+      const resetDate = hoyMx()
+      await env.RUFUS_KV.put('resetDate', resetDate)
+      return json({ resetDate }, 200, cors)
+    }
+
+    if (request.method !== 'GET') {
+      return json({ error: 'Método no permitido' }, 405, cors)
+    }
+
     const date = url.searchParams.get('date')
     if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
       return json({ error: 'Falta ?date=YYYY-MM-DD' }, 400, cors)
