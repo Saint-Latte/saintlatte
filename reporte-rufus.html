@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Saint Latte — Reporte Rufus/Toast por fecha.">
+  <title>Reporte Rufus/Toast — Saint Latte</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { cursor: auto !important; }
+    .rr-wrap { max-width: 980px; margin: 0 auto; padding: 48px 20px 100px; }
+    .rr-title { font-family: var(--ff-display); font-size: clamp(2rem, 5vw, 3rem); letter-spacing: .02em; margin-bottom: .3rem; }
+    .rr-sub { font-size: .85rem; color: rgba(255,254,249,.5); margin-bottom: 2rem; }
+    .rr-panel { background: var(--black-mid); border: 1px solid rgba(255,254,249,.12); padding: 1.5rem; margin-bottom: 1.5rem; }
+    .rr-row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end; }
+    .rr-field { display: flex; flex-direction: column; gap: .4rem; }
+    .rr-field label { font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,254,249,.55); }
+    .rr-field input {
+      background: var(--black); border: 1px solid rgba(255,254,249,.2); color: var(--cream);
+      padding: .6rem .7rem; font-family: var(--ff-body); font-size: .9rem; min-width: 160px;
+    }
+    .rr-btn {
+      background: var(--green); color: var(--cream); border: none; padding: .7rem 1.4rem;
+      font-family: var(--ff-body); font-weight: 600; font-size: .85rem; letter-spacing: .04em;
+      cursor: pointer; text-transform: uppercase;
+    }
+    .rr-btn:disabled { opacity: .5; cursor: not-allowed; }
+    .rr-btn:hover:not(:disabled) { background: var(--green-dark); }
+    .rr-msg { font-size: .82rem; color: var(--amber); margin-top: .9rem; min-height: 1.2em; }
+    .rr-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1px; margin-bottom: 1.5rem; }
+    .rr-card { background: var(--black-mid); border: 1px solid rgba(255,254,249,.1); padding: 1.1rem; }
+    .rr-card__label { font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,254,249,.5); }
+    .rr-card__value { font-family: var(--ff-display); font-size: 1.6rem; margin-top: .3rem; }
+    .rr-card--total { border-color: var(--green); }
+    .rr-card--total .rr-card__value { color: var(--green); }
+    table.rr-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+    .rr-table th, .rr-table td { text-align: left; padding: .55rem .6rem; border-bottom: 1px solid rgba(255,254,249,.08); }
+    .rr-table th { color: rgba(255,254,249,.5); font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; }
+    .rr-table tr.excluida { opacity: .45; }
+    .rr-pill { font-size: .68rem; padding: .2rem .5rem; border: 1px solid rgba(255,254,249,.2); display: inline-block; }
+    .rr-pill--card { border-color: var(--amber); color: var(--amber); }
+    .rr-pill--transfer { border-color: #D4521A; color: #D4521A; }
+    .rr-pill--cash { border-color: var(--green); color: var(--green); }
+    .rr-gate {
+      position: fixed; inset: 0; background: var(--black); display: flex; align-items: center;
+      justify-content: center; z-index: 50; padding: 20px;
+    }
+    .rr-gate-box { background: var(--black-mid); border: 1px solid rgba(255,254,249,.15); padding: 2rem; max-width: 360px; width: 100%; }
+    .rr-gate-box input { width: 100%; margin-top: 1rem; }
+    .rr-back { font-size: .78rem; color: rgba(255,254,249,.5); text-decoration: none; }
+    .rr-back:hover { color: var(--cream); }
+  </style>
+</head>
+<body>
+
+  <div class="rr-wrap">
+    <a href="staff-panel.html" class="rr-back">← Panel de staff</a>
+    <h1 class="rr-title">Reporte Rufus / Toast</h1>
+    <p class="rr-sub">Suma los artículos Rufus y Toast en un rango de fechas, aplica las reglas de pago (efectivo completo, tarjeta −35%, transferencia excluida) y da el resultado final.</p>
+
+    <div class="rr-panel">
+      <div class="rr-row">
+        <div class="rr-field">
+          <label for="desde">Desde</label>
+          <input type="date" id="desde">
+        </div>
+        <div class="rr-field">
+          <label for="hasta">Hasta</label>
+          <input type="date" id="hasta">
+        </div>
+        <button class="rr-btn" id="btnCalcular">Calcular</button>
+      </div>
+      <div class="rr-msg" id="msg"></div>
+    </div>
+
+    <div id="resultado" style="display:none;">
+      <div class="rr-cards" id="cards"></div>
+      <div class="rr-panel" style="overflow-x:auto;">
+        <table class="rr-table" id="tabla">
+          <thead>
+            <tr><th>Fecha</th><th>Folio</th><th>Producto</th><th>Cant</th><th>Total</th><th>Método</th><th>Ajustado</th></tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Candado simple: protege el reporte en un sitio público. -->
+  <div class="rr-gate" id="gate">
+    <div class="rr-gate-box">
+      <p style="font-size:.85rem;color:rgba(255,254,249,.7);">Clave de acceso al reporte</p>
+      <input type="password" id="gateInput" placeholder="Clave" autofocus>
+      <button class="rr-btn" id="gateBtn" style="margin-top:1rem;width:100%;">Entrar</button>
+      <p class="rr-msg" id="gateMsg"></p>
+    </div>
+  </div>
+
+  <script>
+    // Reemplaza esto con la URL real del Worker después de desplegarlo
+    // (ver _proxy/rufus-worker.js para las instrucciones de despliegue).
+    const WORKER_URL = 'https://REEMPLAZA-rufus-report.TU-SUBDOMINIO.workers.dev'
+
+    const DESCUENTO_TARJETA = 0.35
+    const MONEDA = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' })
+
+    const METODO_LABEL = { cash: 'Efectivo', card: 'Tarjeta', transfer: 'Transferencia' }
+    const METODO_PILL = { cash: 'rr-pill--cash', card: 'rr-pill--card', transfer: 'rr-pill--transfer' }
+
+    function esRufusOToast(nombre) {
+      const n = (nombre ?? '').toLowerCase()
+      return n.includes('rufus') || n.startsWith('toast')
+    }
+
+    function metodoDeOrden(order) {
+      const pagos = (order.payments ?? []).filter((p) => p.status === 'completed')
+      if (!pagos.length) return 'cash'
+      const top = pagos.reduce((max, p) => ((p.totalAmount ?? 0) > (max.totalAmount ?? 0) ? p : max), pagos[0])
+      return top.paymentMethod ?? 'cash'
+    }
+
+    function ajustar(total, metodo) {
+      if (metodo === 'transfer') return 0
+      if (metodo === 'card') return Math.round(total * (1 - DESCUENTO_TARJETA) * 100) / 100
+      return total
+    }
+
+    function* rangoFechas(desde, hasta) {
+      const d = new Date(`${desde}T00:00:00`)
+      const h = new Date(`${hasta}T00:00:00`)
+      for (let cur = d; cur <= h; cur = new Date(cur.getTime() + 86400000)) {
+        yield cur.toISOString().slice(0, 10)
+      }
+    }
+
+    function reportKey() {
+      try { return sessionStorage.getItem('rufusKey') || '' } catch { return '' }
+    }
+
+    async function fetchDia(fecha) {
+      const res = await fetch(`${WORKER_URL}?date=${fecha}`, {
+        headers: { 'X-Report-Key': reportKey() },
+      })
+      if (res.status === 401) {
+        try { sessionStorage.removeItem('rufusKey') } catch {}
+        document.getElementById('gate').style.display = 'flex'
+        throw new Error('Clave incorrecta o vencida')
+      }
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error ?? `Error ${res.status} consultando ${fecha}`)
+      return data
+    }
+
+    async function calcular() {
+      const desde = document.getElementById('desde').value
+      const hasta = document.getElementById('hasta').value
+      const msg = document.getElementById('msg')
+      const btn = document.getElementById('btnCalcular')
+
+      if (!desde || !hasta) { msg.textContent = 'Elige ambas fechas.'; return }
+      if (desde > hasta) { msg.textContent = '"Desde" no puede ser después de "hasta".'; return }
+
+      btn.disabled = true
+      document.getElementById('resultado').style.display = 'none'
+      const lineas = []
+
+      try {
+        for (const fecha of rangoFechas(desde, hasta)) {
+          msg.textContent = `Consultando ${fecha}…`
+          const { orders, fallidas } = await fetchDia(fecha)
+          if (fallidas) msg.textContent = `${fecha}: ${fallidas} orden(es) no se pudieron leer, se omiten.`
+
+          for (const order of orders ?? []) {
+            const metodo = metodoDeOrden(order)
+            const folio = order.internalOrderId ?? order.dayOrderNumber ?? order.id
+            for (const oi of order.orderItems ?? []) {
+              const nombre = oi.item?.name ?? oi._item?.name ?? 'Producto'
+              if (!esRufusOToast(nombre)) continue
+              const total = oi.totalAmount ?? 0
+              lineas.push({
+                fecha: (order.createdAt ?? fecha).slice(0, 10),
+                folio, nombre, cantidad: oi.quantity ?? 1, total, metodo,
+                ajustado: ajustar(total, metodo),
+              })
+            }
+          }
+        }
+
+        lineas.sort((a, b) => a.fecha.localeCompare(b.fecha) || String(a.folio).localeCompare(String(b.folio)))
+        render(lineas)
+        msg.textContent = lineas.length ? '' : 'No se encontraron artículos Rufus/Toast en ese rango.'
+      } catch (err) {
+        msg.textContent = err.message
+      } finally {
+        btn.disabled = false
+      }
+    }
+
+    function render(lineas) {
+      const porMetodo = { cash: { bruto: 0, ajustado: 0 }, card: { bruto: 0, ajustado: 0 }, transfer: { bruto: 0, ajustado: 0 } }
+      let bruto = 0, ajustado = 0
+      for (const l of lineas) {
+        bruto += l.total
+        ajustado += l.ajustado
+        const m = porMetodo[l.metodo] ?? (porMetodo[l.metodo] = { bruto: 0, ajustado: 0 })
+        m.bruto += l.total
+        m.ajustado += l.ajustado
+      }
+
+      const cards = document.getElementById('cards')
+      cards.innerHTML = Object.entries(porMetodo)
+        .filter(([, v]) => v.bruto > 0)
+        .map(([metodo, v]) => `
+          <div class="rr-card">
+            <div class="rr-card__label">${METODO_LABEL[metodo] ?? metodo}</div>
+            <div class="rr-card__value">${MONEDA.format(v.ajustado)}</div>
+            <div class="rr-card__label" style="margin-top:.4rem;">bruto ${MONEDA.format(v.bruto)}</div>
+          </div>
+        `).join('') + `
+          <div class="rr-card rr-card--total">
+            <div class="rr-card__label">Resultado final</div>
+            <div class="rr-card__value">${MONEDA.format(ajustado)}</div>
+            <div class="rr-card__label" style="margin-top:.4rem;">bruto ${MONEDA.format(bruto)}</div>
+          </div>
+        `
+
+      const tbody = document.getElementById('tbody')
+      tbody.innerHTML = lineas.map((l) => `
+        <tr class="${l.metodo === 'transfer' ? 'excluida' : ''}">
+          <td>${l.fecha}</td>
+          <td>${l.folio}</td>
+          <td>${l.nombre}${l.cantidad > 1 ? ` ×${l.cantidad}` : ''}</td>
+          <td>${l.cantidad}</td>
+          <td>${MONEDA.format(l.total)}</td>
+          <td><span class="rr-pill ${METODO_PILL[l.metodo] ?? ''}">${METODO_LABEL[l.metodo] ?? l.metodo}</span></td>
+          <td>${l.metodo === 'transfer' ? 'excluido' : MONEDA.format(l.ajustado)}</td>
+        </tr>
+      `).join('')
+
+      document.getElementById('resultado').style.display = 'block'
+    }
+
+    // ── Candado de acceso ──────────────────────────────────────────────────
+    function initGate() {
+      const gate = document.getElementById('gate')
+      if (reportKey()) { gate.style.display = 'none'; return }
+      document.getElementById('gateBtn').addEventListener('click', () => {
+        const val = document.getElementById('gateInput').value.trim()
+        if (!val) { document.getElementById('gateMsg').textContent = 'Escribe la clave.'; return }
+        try { sessionStorage.setItem('rufusKey', val) } catch {}
+        gate.style.display = 'none'
+      })
+      document.getElementById('gateInput').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') document.getElementById('gateBtn').click()
+      })
+    }
+
+    // ── Init ─────────────────────────────────────────────────────────────
+    const hoy = new Date().toISOString().slice(0, 10)
+    document.getElementById('desde').value = hoy
+    document.getElementById('hasta').value = hoy
+    document.getElementById('btnCalcular').addEventListener('click', calcular)
+    initGate()
+  </script>
+</body>
+</html>
