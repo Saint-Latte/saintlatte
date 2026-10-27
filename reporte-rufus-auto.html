@@ -133,6 +133,16 @@
       }
     }
 
+    // Convierte cualquier createdAt (venga con -06:00, Z/UTC u otro offset) a
+    // su fecha calendario real en CDMX. Un slice(0,10) ingenuo del string se
+    // equivoca de día cerca de la medianoche si Polotab manda hora en UTC.
+    function fechaLocalMx(iso) {
+      if (typeof iso !== 'string') return null
+      const d = new Date(iso)
+      if (Number.isNaN(d.getTime())) return null
+      return new Date(d.getTime() - 6 * 60 * 60 * 1000).toISOString().slice(0, 10)
+    }
+
     function reportKey() {
       try { return sessionStorage.getItem('rufusKey') || '' } catch { return '' }
     }
@@ -176,7 +186,7 @@
 
       try {
         const { resetDate } = await apiGet('/reset-date')
-        const hoy = new Date().toISOString().slice(0, 10)
+        const hoy = fechaLocalMx(new Date().toISOString())
         document.getElementById('sinceLabel').innerHTML = `Acumulando desde <b>${resetDate}</b> hasta hoy (<b>${hoy}</b>)`
 
         const lineas = []
@@ -189,7 +199,7 @@
           if (fallidas) msg.textContent = `${fecha}: ${fallidas} orden(es) no se pudieron leer, se omiten.`
 
           for (const order of orders ?? []) {
-            if (typeof order.createdAt === 'string' && order.createdAt.slice(0, 10) !== fecha) continue
+            if (fechaLocalMx(order.createdAt) !== fecha) continue
 
             const metodo = metodoDeOrden(order)
             const folio = order.internalOrderId ?? order.dayOrderNumber ?? order.id
@@ -201,7 +211,7 @@
               if (!esRufusOToast(nombre)) continue
               const total = oi.totalAmount ?? 0
               lineas.push({
-                fecha: (order.createdAt ?? fecha).slice(0, 10),
+                fecha: fechaLocalMx(order.createdAt) ?? fecha,
                 hora, folio, nombre, cantidad: oi.quantity ?? 1, total, metodo,
                 ajustado: ajustar(total, metodo),
               })

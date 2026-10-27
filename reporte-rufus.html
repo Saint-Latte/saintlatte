@@ -62,17 +62,13 @@
   <div class="rr-wrap">
     <a href="staff-panel.html" class="rr-back">← Panel de staff</a>
     <h1 class="rr-title">Reporte Rufus / Toast</h1>
-    <p class="rr-sub">Suma los artículos Rufus y Toast en un rango de fechas, aplica las reglas de pago (efectivo completo, tarjeta −35%, transferencia excluida) y da el resultado final. · <a href="reporte-rufus-auto.html" style="color:var(--green);">Ver acumulado automático →</a></p>
+    <p class="rr-sub">Suma los artículos Rufus y Toast de un día exacto, aplica las reglas de pago (efectivo completo, tarjeta −35%, transferencia excluida) y da el resultado final. · <a href="reporte-rufus-auto.html" style="color:var(--green);">Ver acumulado automático →</a></p>
 
     <div class="rr-panel">
       <div class="rr-row">
         <div class="rr-field">
-          <label for="desde">Desde</label>
-          <input type="date" id="desde">
-        </div>
-        <div class="rr-field">
-          <label for="hasta">Hasta</label>
-          <input type="date" id="hasta">
+          <label for="fecha">Fecha</label>
+          <input type="date" id="fecha">
         </div>
         <button class="rr-btn" id="btnCalcular">Calcular</button>
       </div>
@@ -132,12 +128,14 @@
       return total
     }
 
-    function* rangoFechas(desde, hasta) {
-      const d = new Date(`${desde}T00:00:00`)
-      const h = new Date(`${hasta}T00:00:00`)
-      for (let cur = d; cur <= h; cur = new Date(cur.getTime() + 86400000)) {
-        yield cur.toISOString().slice(0, 10)
-      }
+    // Convierte cualquier createdAt (venga con -06:00, Z/UTC u otro offset) a
+    // su fecha calendario real en CDMX. Un slice(0,10) ingenuo del string se
+    // equivoca de día cerca de la medianoche si Polotab manda hora en UTC.
+    function fechaLocalMx(iso) {
+      if (typeof iso !== 'string') return null
+      const d = new Date(iso)
+      if (Number.isNaN(d.getTime())) return null
+      return new Date(d.getTime() - 6 * 60 * 60 * 1000).toISOString().slice(0, 10)
     }
 
     function reportKey() {
@@ -159,51 +157,45 @@
     }
 
     async function calcular() {
-      const desde = document.getElementById('desde').value
-      const hasta = document.getElementById('hasta').value
+      const fecha = document.getElementById('fecha').value
       const msg = document.getElementById('msg')
       const btn = document.getElementById('btnCalcular')
 
-      if (!desde || !hasta) { msg.textContent = 'Elige ambas fechas.'; return }
-      if (desde > hasta) { msg.textContent = '"Desde" no puede ser después de "hasta".'; return }
+      if (!fecha) { msg.textContent = 'Elige una fecha.'; return }
 
       btn.disabled = true
       document.getElementById('resultado').style.display = 'none'
       const lineas = []
-      let dias = 0
 
       try {
-        for (const fecha of rangoFechas(desde, hasta)) {
-          dias++
-          msg.textContent = `Consultando ${fecha}…`
-          const { orders, fallidas } = await fetchDia(fecha)
-          if (fallidas) msg.textContent = `${fecha}: ${fallidas} orden(es) no se pudieron leer, se omiten.`
+        msg.textContent = `Consultando ${fecha}…`
+        const { orders, fallidas } = await fetchDia(fecha)
+        if (fallidas) msg.textContent = `${fallidas} orden(es) no se pudieron leer, se omiten.`
 
-          for (const order of orders ?? []) {
-            // Blindaje extra: si por lo que sea se coló una orden de otro día, se ignora aquí también.
-            if (typeof order.createdAt === 'string' && order.createdAt.slice(0, 10) !== fecha) continue
+        for (const order of orders ?? []) {
+          // Blindaje extra: si por lo que sea se coló una orden de otro día, se ignora aquí también.
+          if (fechaLocalMx(order.createdAt) !== fecha) continue
 
-            const metodo = metodoDeOrden(order)
-            const folio = order.internalOrderId ?? order.dayOrderNumber ?? order.id
-            const hora = order.createdAt
-              ? new Date(order.createdAt).toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Mexico_City' })
-              : '—'
-            for (const oi of order.orderItems ?? []) {
-              const nombre = oi.item?.name ?? oi._item?.name ?? 'Producto'
-              if (!esRufusOToast(nombre)) continue
-              const total = oi.totalAmount ?? 0
-              lineas.push({
-                fecha: (order.createdAt ?? fecha).slice(0, 10),
-                hora, folio, nombre, cantidad: oi.quantity ?? 1, total, metodo,
-                ajustado: ajustar(total, metodo),
-              })
-            }
+          const metodo = metodoDeOrden(order)
+          const folio = order.internalOrderId ?? order.dayOrderNumber ?? order.id
+          const hora = order.createdAt
+            ? new Date(order.createdAt).toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Mexico_City' })
+            : '—'
+          for (const oi of order.orderItems ?? []) {
+            const nombre = oi.item?.name ?? oi._item?.name ?? 'Producto'
+            if (!esRufusOToast(nombre)) continue
+            const total = oi.totalAmount ?? 0
+            lineas.push({
+              fecha: fechaLocalMx(order.createdAt) ?? fecha,
+              hora, folio, nombre, cantidad: oi.quantity ?? 1, total, metodo,
+              ajustado: ajustar(total, metodo),
+            })
           }
         }
 
-        lineas.sort((a, b) => a.fecha.localeCompare(b.fecha) || String(a.folio).localeCompare(String(b.folio)))
-        render(lineas, dias)
-        msg.textContent = lineas.length ? '' : 'No se encontraron artículos Rufus/Toast en ese rango.'
+        lineas.sort((a, b) => String(a.folio).localeCompare(String(b.folio)))
+        render(lineas, 1)
+        msg.textContent = lineas.length ? '' : 'No se encontraron artículos Rufus/Toast ese día.'
       } catch (err) {
         msg.textContent = err.message
       } finally {
@@ -278,10 +270,9 @@
     }
 
     // ── Init ─────────────────────────────────────────────────────────────
-    const hoy = new Date().toISOString().slice(0, 10)
-    document.getElementById('desde').value = hoy
-    document.getElementById('hasta').value = hoy
+    document.getElementById('fecha').value = fechaLocalMx(new Date().toISOString())
     document.getElementById('btnCalcular').addEventListener('click', calcular)
+    document.getElementById('fecha').addEventListener('keydown', (e) => { if (e.key === 'Enter') calcular() })
     initGate()
   </script>
 </body>

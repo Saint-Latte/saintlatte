@@ -58,6 +58,18 @@ function hoyMx() {
   return ahora.toISOString().slice(0, 10)
 }
 
+// Convierte cualquier createdAt (venga con -06:00, con Z/UTC, o con otro
+// offset) a su fecha calendario real en CDMX. Un slice(0,10) ingenuo del
+// string se equivoca de día cerca de la medianoche si Polotab manda la
+// hora en UTC en vez de -06:00, y eso es lo que colaba órdenes de otras
+// fechas en el reporte.
+function fechaLocalMx(iso) {
+  if (typeof iso !== 'string') return null
+  const d = new Date(iso)
+  if (Number.isNaN(d.getTime())) return null
+  return new Date(d.getTime() - 6 * 60 * 60 * 1000).toISOString().slice(0, 10)
+}
+
 function json(body, status, cors) {
   return new Response(JSON.stringify(body), {
     status,
@@ -159,9 +171,9 @@ export default {
 
       // El endpoint de Polotab no siempre respeta from/to de forma estricta
       // (a veces devuelve órdenes de otras fechas). Filtramos aquí por el
-      // día exacto solicitado, comparando la fecha local (-06:00) tal cual
-      // la manda Polotab en createdAt, para que nunca se cuele otro día.
-      const delDia = orders.filter((o) => typeof o.createdAt === 'string' && o.createdAt.slice(0, 10) === date)
+      // día exacto solicitado usando la fecha calendario real en CDMX, no
+      // un slice ingenuo del string.
+      const delDia = orders.filter((o) => fechaLocalMx(o.createdAt) === date)
 
       return json({ date, orders: delDia, fallidas }, 200, cors)
     } catch (err) {
