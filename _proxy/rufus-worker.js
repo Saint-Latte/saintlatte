@@ -117,7 +117,13 @@ export default {
         else fallidas++
       }
 
-      return json({ date, orders, fallidas }, 200, cors)
+      // El endpoint de Polotab no siempre respeta from/to de forma estricta
+      // (a veces devuelve órdenes de otras fechas). Filtramos aquí por el
+      // día exacto solicitado, comparando la fecha local (-06:00) tal cual
+      // la manda Polotab en createdAt, para que nunca se cuele otro día.
+      const delDia = orders.filter((o) => typeof o.createdAt === 'string' && o.createdAt.slice(0, 10) === date)
+
+      return json({ date, orders: delDia, fallidas }, 200, cors)
     } catch (err) {
       return json({ error: err.message ?? 'Error interno' }, 500, cors)
     }

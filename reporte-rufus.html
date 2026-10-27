@@ -83,7 +83,7 @@
       <div class="rr-panel" style="overflow-x:auto;">
         <table class="rr-table" id="tabla">
           <thead>
-            <tr><th>Fecha</th><th>Folio</th><th>Producto</th><th>Cant</th><th>Total</th><th>Método</th><th>Ajustado</th></tr>
+            <tr><th>Fecha</th><th>Hora</th><th>Folio</th><th>Producto</th><th>Cant</th><th>Total</th><th>Método</th><th>Ajustado</th></tr>
           </thead>
           <tbody id="tbody"></tbody>
         </table>
@@ -176,15 +176,21 @@
           if (fallidas) msg.textContent = `${fecha}: ${fallidas} orden(es) no se pudieron leer, se omiten.`
 
           for (const order of orders ?? []) {
+            // Blindaje extra: si por lo que sea se coló una orden de otro día, se ignora aquí también.
+            if (typeof order.createdAt === 'string' && order.createdAt.slice(0, 10) !== fecha) continue
+
             const metodo = metodoDeOrden(order)
             const folio = order.internalOrderId ?? order.dayOrderNumber ?? order.id
+            const hora = order.createdAt
+              ? new Date(order.createdAt).toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Mexico_City' })
+              : '—'
             for (const oi of order.orderItems ?? []) {
               const nombre = oi.item?.name ?? oi._item?.name ?? 'Producto'
               if (!esRufusOToast(nombre)) continue
               const total = oi.totalAmount ?? 0
               lineas.push({
                 fecha: (order.createdAt ?? fecha).slice(0, 10),
-                folio, nombre, cantidad: oi.quantity ?? 1, total, metodo,
+                hora, folio, nombre, cantidad: oi.quantity ?? 1, total, metodo,
                 ajustado: ajustar(total, metodo),
               })
             }
@@ -233,11 +239,12 @@
       tbody.innerHTML = lineas.map((l) => `
         <tr class="${l.metodo === 'transfer' ? 'excluida' : ''}">
           <td>${l.fecha}</td>
+          <td>${l.hora}</td>
           <td>${l.folio}</td>
           <td>${l.nombre}${l.cantidad > 1 ? ` ×${l.cantidad}` : ''}</td>
           <td>${l.cantidad}</td>
           <td>${MONEDA.format(l.total)}</td>
-          <td><span class="rr-pill ${METODO_PILL[l.metodo] ?? ''}">${METODO_LABEL[l.metodo] ?? l.metodo}</span></td>
+          <td><span class="rr-pill ${METODO_PILL[l.metodo] ?? ''}">${METODO_LABEL[l.metodo] ?? l.metodo}${l.metodo === 'card' ? ' −35%' : ''}</span></td>
           <td>${l.metodo === 'transfer' ? 'excluido' : MONEDA.format(l.ajustado)}</td>
         </tr>
       `).join('')
