@@ -54,6 +54,7 @@
     .rr-gate-box input { width: 100%; margin-top: 1rem; }
     .rr-back { font-size: .78rem; color: rgba(255,254,249,.5); text-decoration: none; }
     .rr-back:hover { color: var(--cream); }
+    .rr-ahorro { font-size: .7rem; color: rgba(255,254,249,.3); margin: .6rem 0 1.5rem; }
   </style>
 </head>
 <body>
@@ -80,6 +81,7 @@
 
     <div id="resultado" style="display:none;">
       <div class="rr-cards" id="cards"></div>
+      <p class="rr-ahorro" id="ahorroNote"></p>
       <div class="rr-panel" style="overflow-x:auto;">
         <table class="rr-table" id="tabla">
           <thead>
@@ -168,9 +170,11 @@
       btn.disabled = true
       document.getElementById('resultado').style.display = 'none'
       const lineas = []
+      let dias = 0
 
       try {
         for (const fecha of rangoFechas(desde, hasta)) {
+          dias++
           msg.textContent = `Consultando ${fecha}…`
           const { orders, fallidas } = await fetchDia(fecha)
           if (fallidas) msg.textContent = `${fecha}: ${fallidas} orden(es) no se pudieron leer, se omiten.`
@@ -198,7 +202,7 @@
         }
 
         lineas.sort((a, b) => a.fecha.localeCompare(b.fecha) || String(a.folio).localeCompare(String(b.folio)))
-        render(lineas)
+        render(lineas, dias)
         msg.textContent = lineas.length ? '' : 'No se encontraron artículos Rufus/Toast en ese rango.'
       } catch (err) {
         msg.textContent = err.message
@@ -207,7 +211,9 @@
       }
     }
 
-    function render(lineas) {
+    const AHORRO_POR_DIA = 100
+
+    function render(lineas, dias) {
       const porMetodo = { cash: { bruto: 0, ajustado: 0 }, card: { bruto: 0, ajustado: 0 }, transfer: { bruto: 0, ajustado: 0 } }
       let bruto = 0, ajustado = 0
       for (const l of lineas) {
@@ -234,6 +240,10 @@
             <div class="rr-card__label" style="margin-top:.4rem;">bruto ${MONEDA.format(bruto)}</div>
           </div>
         `
+
+      const ahorro = (dias ?? 0) * AHORRO_POR_DIA
+      document.getElementById('ahorroNote').textContent =
+        `ahorro: ${dias} día(s) × ${MONEDA.format(AHORRO_POR_DIA)} = ${MONEDA.format(ahorro)}  ·  disponible: ${MONEDA.format(ajustado - ahorro)}`
 
       const tbody = document.getElementById('tbody')
       tbody.innerHTML = lineas.map((l) => `
